@@ -132,7 +132,7 @@
             <p>The Fellowship and the AI Operations pathway will need funding partners, mentors from industry, and employers willing to host AI-focused briefs and placements. If that could be you, we would like to hear from you early.</p>
             <div class="backers-actions">
                 <a href="{{ route('partners') }}" class="ath-btn ath-btn-primary">Partner with us</a>
-                <span class="backers-alt">Or email <a href="mailto:hello@abisolaareola.com">hello@abisolaareola.com</a></span>
+                <span class="backers-alt">Or email <a href="mailto:hello@skillscoop.org">hello@skillscoop.org</a></span>
             </div>
         </div>
     </div>
