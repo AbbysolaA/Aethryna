@@ -98,14 +98,10 @@
             <svg class="fi-svg" viewBox="0 0 1000 360" role="img" aria-labelledby="fi-title" preserveAspectRatio="xMidYMid meet">
                 <title id="fi-title">The AI Labs flight path: the Method and Practice Space now, the Fellowship in 2027, and a full AI Operations pathway in 2028</title>
                 <defs>
-                    <pattern id="fi-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                        <path d="M 40 0 H 0 V 40" fill="none" stroke="rgba(3,139,137,0.07)" stroke-width="1"/>
-                    </pattern>
                     <marker id="fi-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
                         <path d="M 0 0 L 10 5 L 0 10 z" fill="#ee9d1d"/>
                     </marker>
                 </defs>
-                <rect x="0" y="0" width="1000" height="360" fill="url(#fi-grid)"/>
                 <path class="fi-line fi-line-now" d="M 90 300 C 240 300 300 190 470 185" pathLength="1"/>
                 <path class="fi-line fi-line-future" d="M 470 185 C 640 180 700 75 900 62" pathLength="1" marker-end="url(#fi-arrow)"/>
                 <g class="fi-node fi-node-1">
@@ -197,16 +193,6 @@
     color: #fff;
     position: relative;
     overflow: hidden;
-}
-.ailabs-hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-        linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
-    background-size: 44px 44px;
-    pointer-events: none;
 }
 .ailabs-hero::after {
     content: '';
