@@ -64,14 +64,17 @@
         <ul class="rhythm-list">
             <li>
                 <h4>Prompt of the week.</h4>
+                <code class="ps-tag">#ai-labs-prompt-of-the-week</code>
                 <p>A small, doable AI challenge every Monday. Members post attempts through the week.</p>
             </li>
             <li>
                 <h4>Tool of the month.</h4>
+                <code class="ps-tag">#ai-labs-tool-of-the-month</code>
                 <p>One AI tool explored in depth, with a starter guide, every month.</p>
             </li>
             <li>
                 <h4>Verification Corner.</h4>
+                <code class="ps-tag">#ai-labs-verification-corner</code>
                 <p>Members post AI failures they have caught, written up as short teaching cases. Our favourite channel, because AI getting it wrong is the most useful thing to study.</p>
             </li>
             <li>
@@ -91,30 +94,47 @@
             <h2>Where AI Labs is going</h2>
             <p class="flight-intro">AI Labs is designed to grow in stages, each one earned by the stage before it. Here is the flight path.</p>
         </div>
-        <div class="flight-timeline">
-            <div class="ft-stage">
-                <div class="ft-marker">
-                    <span class="ft-when">Now</span>
-                </div>
-                <div class="ft-body">
+        <div class="flight-infographic" id="flight-infographic">
+            <svg class="fi-svg" viewBox="0 0 1000 360" role="img" aria-labelledby="fi-title" preserveAspectRatio="xMidYMid meet">
+                <title id="fi-title">The AI Labs flight path: the Method and Practice Space now, the Fellowship in 2027, and a full AI Operations pathway in 2028</title>
+                <defs>
+                    <pattern id="fi-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <path d="M 40 0 H 0 V 40" fill="none" stroke="rgba(3,139,137,0.07)" stroke-width="1"/>
+                    </pattern>
+                    <marker id="fi-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#ee9d1d"/>
+                    </marker>
+                </defs>
+                <rect x="0" y="0" width="1000" height="360" fill="url(#fi-grid)"/>
+                <path class="fi-line fi-line-now" d="M 90 300 C 240 300 300 190 470 185" pathLength="1"/>
+                <path class="fi-line fi-line-future" d="M 470 185 C 640 180 700 75 900 62" pathLength="1" marker-end="url(#fi-arrow)"/>
+                <g class="fi-node fi-node-1">
+                    <circle class="fi-halo" cx="90" cy="300" r="14"/>
+                    <circle class="fi-dot fi-dot-live" cx="90" cy="300" r="9"/>
+                </g>
+                <g class="fi-node fi-node-2">
+                    <circle class="fi-dot fi-dot-next" cx="470" cy="185" r="9"/>
+                </g>
+                <g class="fi-node fi-node-3">
+                    <circle class="fi-dot fi-dot-next" cx="900" cy="62" r="9"/>
+                </g>
+                <text class="fi-year" x="90" y="340">NOW</text>
+                <text class="fi-year" x="470" y="228">2027</text>
+                <text class="fi-year" x="900" y="105">2028</text>
+            </svg>
+            <div class="fi-stages">
+                <div class="fi-stage">
+                    <span class="fi-chip fi-chip-live">Live from Cohort 1</span>
                     <h3>The Method and the Practice Space</h3>
                     <p>The verification-first method runs through every pathway in our pilot cohort. The Practice Space runs inside our community. Both are live from Cohort 1.</p>
                 </div>
-            </div>
-            <div class="ft-stage">
-                <div class="ft-marker">
-                    <span class="ft-when">2027</span>
-                </div>
-                <div class="ft-body">
+                <div class="fi-stage">
+                    <span class="fi-chip">Launches with Cohort 2</span>
                     <h3>The AI Labs Fellowship</h3>
                     <p>A six-month, part-time programme for Skills Co-op graduates who want AI as their primary craft. Fellows build and ship a real AI-augmented product, service, or tool under mentorship, and earn the AI Labs Fellow credential on shipping, not attendance. Launching with our second cohort.</p>
                 </div>
-            </div>
-            <div class="ft-stage">
-                <div class="ft-marker">
-                    <span class="ft-when">2028</span>
-                </div>
-                <div class="ft-body">
+                <div class="fi-stage">
+                    <span class="fi-chip">The destination</span>
                     <h3>A full AI Operations pathway</h3>
                     <p>The Fellowship's curriculum and evidence base will seed a complete pathway in AI Operations and Prompt Engineering, taking learners from foundations to professional AI-operations roles. This is the destination the earlier stages are building towards.</p>
                 </div>
@@ -150,7 +170,12 @@
 </section>
 
 @push('styles')
+<link href="https://fonts.bunny.net/css?family=ibm-plex-mono:500,600&display=swap" rel="stylesheet">
 <style>
+/* Hallmark · redesign (section-scope) · pre-emit critique: P4 H4 E4 S4 R5 V4
+ * scope: flight-path SVG infographic + hero blueprint texture + mono accents
+ * theme: existing brand tokens preserved (teal/gold/deep, Outfit + Figtree, +IBM Plex Mono for labels)
+ * motion: path draw-on-scroll · node pulse · staged fades — reduced-motion collapses all */
 :root {
     --ath-teal: #038b89;
     --ath-gold: #ee9d1d;
@@ -160,6 +185,7 @@
     --ath-muted: #57616a;
     --ath-trans: all 0.4s ease;
     --ath-radius: 32px;
+    --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
 }
 
 .ath-container { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
@@ -169,8 +195,30 @@
     padding: 160px 0 100px;
     background: var(--ath-deep);
     color: #fff;
+    position: relative;
+    overflow: hidden;
 }
-.ah-inner { max-width: 820px; }
+.ailabs-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+    background-size: 44px 44px;
+    pointer-events: none;
+}
+.ailabs-hero::after {
+    content: '';
+    position: absolute;
+    top: -30%;
+    right: -10%;
+    width: 60%;
+    height: 130%;
+    background: radial-gradient(closest-side, rgba(238,157,29,0.13), transparent 70%);
+    pointer-events: none;
+}
+.ah-inner { max-width: 820px; position: relative; z-index: 1; }
 .ah-subhead { font-size: 1.4rem; font-weight: 700; margin: 1.5rem 0 1rem; color: var(--ath-gold); font-family: 'Outfit', sans-serif; }
 .ah-lead { font-size: 1.15rem; line-height: 1.75; opacity: 0.9; max-width: 720px; }
 
@@ -216,37 +264,72 @@
 .rhythm-list li { padding-left: 28px; border-left: 3px solid var(--ath-teal); }
 .rhythm-list h4 { font-size: 1.15rem; color: var(--ath-deep); font-weight: 800; margin-bottom: 6px; font-family: 'Outfit', sans-serif; }
 .rhythm-list p { color: var(--ath-muted); line-height: 1.7; margin: 0; }
+.ps-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ath-teal);
+    background: rgba(3,139,137,0.08);
+    padding: 2px 10px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
 .practice-closing { font-size: 1.05rem; color: var(--ath-text); font-weight: 600; }
 
-/* Flight path timeline */
-.flight-timeline { position: relative; max-width: 760px; margin-bottom: 40px; }
-.flight-timeline::before {
-    content: '';
-    position: absolute;
-    left: 44px;
-    top: 20px;
-    bottom: 20px;
-    width: 3px;
-    background: rgba(3,139,137,0.15);
+/* Flight path infographic */
+.flight-infographic { margin-bottom: 40px; }
+.fi-svg { width: 100%; height: auto; display: block; margin-bottom: 16px; }
+.fi-line { fill: none; stroke-width: 3; }
+.fi-line-now { stroke: var(--ath-teal); }
+.fi-line-future { stroke: var(--ath-gold); stroke-dasharray: 0.022 0.014; }
+.fi-dot-live { fill: var(--ath-teal); }
+.fi-dot-next { fill: #fff; stroke: var(--ath-gold); stroke-width: 3; }
+.fi-halo { fill: rgba(3,139,137,0.18); transform-origin: 90px 300px; animation: fi-pulse 2.4s ease-in-out infinite; }
+.fi-year {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    font-weight: 600;
+    fill: var(--ath-muted);
+    text-anchor: middle;
+    letter-spacing: 2px;
 }
-.ft-stage { display: flex; gap: 40px; margin-bottom: 50px; position: relative; }
-.ft-stage:last-child { margin-bottom: 0; }
-.ft-marker { flex-shrink: 0; width: 90px; display: flex; justify-content: center; align-items: flex-start; }
-.ft-when {
-    background: var(--ath-deep);
-    color: #fff;
-    font-weight: 800;
-    font-size: 0.9rem;
-    padding: 10px 16px;
+@keyframes fi-pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.5); opacity: 0.4; }
+}
+
+/* Draw-on-scroll: hidden states only apply once JS adds .fi-anim, so no-JS users see everything */
+.fi-anim .fi-line-now { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.fi-anim .fi-line-future, .fi-anim .fi-node-2, .fi-anim .fi-node-3 { opacity: 0; }
+.fi-anim.in-view .fi-line-now { animation: fi-draw 800ms cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.fi-anim.in-view .fi-line-future { animation: fi-fade 600ms ease-out 650ms forwards; }
+.fi-anim.in-view .fi-node-2 { animation: fi-fade 400ms ease-out 550ms forwards; }
+.fi-anim.in-view .fi-node-3 { animation: fi-fade 400ms ease-out 1000ms forwards; }
+@keyframes fi-draw { to { stroke-dashoffset: 0; } }
+@keyframes fi-fade { to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+    .fi-anim .fi-line-now { stroke-dasharray: none; stroke-dashoffset: 0; animation: none; }
+    .fi-anim .fi-line-future, .fi-anim .fi-node-2, .fi-anim .fi-node-3 { opacity: 1; animation: none; }
+    .fi-halo { animation: none; }
+}
+
+.fi-stages { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; }
+.fi-stage h3 { font-size: 1.25rem; color: var(--ath-deep); font-weight: 800; margin-bottom: 8px; font-family: 'Outfit', sans-serif; }
+.fi-stage p { color: var(--ath-muted); line-height: 1.7; margin: 0; }
+.fi-chip {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 5px 12px;
     border-radius: 100px;
-    position: relative;
-    z-index: 2;
-    font-family: 'Outfit', sans-serif;
-    min-width: 70px;
-    text-align: center;
+    background: rgba(238,157,29,0.14);
+    color: #9a6510;
+    margin-bottom: 14px;
 }
-.ft-body h3 { font-size: 1.3rem; color: var(--ath-deep); font-weight: 800; margin-bottom: 8px; font-family: 'Outfit', sans-serif; }
-.ft-body p { color: var(--ath-muted); line-height: 1.7; margin: 0; }
+.fi-chip-live { background: rgba(3,139,137,0.12); color: var(--ath-teal); }
 .flight-honesty { font-size: 1rem; color: var(--ath-muted); font-style: italic; max-width: 760px; }
 
 /* Backers */
@@ -315,12 +398,47 @@
     .ailabs-hero { padding: 120px 0 80px; }
     .ailabs-section { padding: 70px 0; }
     .method-grid { grid-template-columns: 1fr; }
-    .flight-timeline::before { left: 34px; }
-    .ft-stage { gap: 24px; }
-    .ft-marker { width: 70px; }
+    .fi-svg { display: none; }
+    .fi-stages { grid-template-columns: 1fr; gap: 28px; }
+    .fi-stage { border-left: 3px solid var(--ath-teal); padding-left: 20px; }
+    .fi-stage::before {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        color: var(--ath-muted);
+        margin-bottom: 6px;
+    }
+    .fi-stage:nth-child(1)::before { content: 'NOW'; }
+    .fi-stage:nth-child(2)::before { content: '2027'; }
+    .fi-stage:nth-child(3)::before { content: '2028'; }
     .backers-actions { flex-direction: column; align-items: flex-start; }
 }
 </style>
+@endpush
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var fi = document.getElementById('flight-infographic');
+        if (!fi) return;
+        fi.classList.add('fi-anim');
+        if (!('IntersectionObserver' in window)) {
+            fi.classList.add('in-view');
+            return;
+        }
+        var obs = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    fi.classList.add('in-view');
+                    obs.disconnect();
+                }
+            });
+        }, { threshold: 0.35 });
+        obs.observe(fi);
+    });
+</script>
 @endpush
 
 @endsection
