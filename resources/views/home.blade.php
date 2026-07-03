@@ -208,24 +208,28 @@
                     <h3>Project and Product Delivery</h3>
                     <p>Organise and deliver digital work. Stakeholder communication, requirements, planning, and AI-assisted delivery. Roles: Project Coordinator, Business Analyst, Junior PM.</p>
                     <a href="{{ route('programs') }}#project-delivery" class="ath-link">Explore Track <i class="fas fa-arrow-right"></i></a>
+                    <a href="{{ route('ai-labs') }}" class="ath-ai-link">AI is embedded throughout. See how &rarr;</a>
                 </div>
                 <div class="ath-prog-item reveal-fade-up" style="--delay: 2">
                     <div class="ath-prog-icon"><i class="fas fa-chart-bar"></i></div>
                     <h3>Data and AI Analytics</h3>
                     <p>Work with numbers, evidence, and insight. SQL, spreadsheets, visualisation, and AI-assisted analysis with built-in verification. Roles: Data Analyst, Insight Analyst, AI Operations Analyst.</p>
                     <a href="{{ route('programs') }}#data-analytics" class="ath-link">Explore Track <i class="fas fa-arrow-right"></i></a>
+                    <a href="{{ route('ai-labs') }}" class="ath-ai-link">AI is embedded throughout. See how &rarr;</a>
                 </div>
                 <div class="ath-prog-item reveal-fade-up" style="--delay: 3">
                     <div class="ath-prog-icon"><i class="fas fa-palette"></i></div>
                     <h3>Digital Design and Marketing</h3>
                     <p>Create content, brand, and audience. Design fundamentals, content strategy, social, email, and analytics. AI-assisted creative work, used responsibly. Roles: Digital Marketer, UX Designer, Content Producer.</p>
                     <a href="{{ route('programs') }}#design-marketing" class="ath-link">Explore Track <i class="fas fa-arrow-right"></i></a>
+                    <a href="{{ route('ai-labs') }}" class="ath-ai-link">AI is embedded throughout. See how &rarr;</a>
                 </div>
                 <div class="ath-prog-item reveal-fade-up" style="--delay: 4">
                     <div class="ath-prog-icon"><i class="fas fa-tools"></i></div>
                     <h3>IT Support and Operations</h3>
                     <p>A fast, accessible route into digital work. Operating systems, troubleshooting, ticketing, user support, and AI-assisted support workflows. Roles: First-line IT Support, Service Desk Analyst, IT Operations.</p>
                     <a href="{{ route('programs') }}#it-support" class="ath-link">Explore Track <i class="fas fa-arrow-right"></i></a>
+                    <a href="{{ route('ai-labs') }}" class="ath-ai-link">AI is embedded throughout. See how &rarr;</a>
                 </div>
             </div>
             <div class="ath-coming-soon-block reveal-fade-up" style="margin-top: 50px; text-align: center; background: #fff; padding: 35px 40px; border-radius: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.05); border: 1px solid rgba(3,139,137,0.1);">
@@ -811,6 +815,9 @@
         .ath-stat-val { font-size: 3.5rem; font-weight: 800; color: var(--ath-teal); margin-bottom: 10px; line-height: 1; }
         .ath-stat-lab { font-weight: 600; color: var(--ath-muted); letter-spacing: 1px; text-transform: uppercase; font-size: 0.85rem; }
         .ath-stat-note { font-size: 0.78rem; color: var(--ath-muted); margin-top: 6px; opacity: 0.8; line-height: 1.4; }
+
+        .ath-ai-link { display: block; margin-top: 10px; font-size: 0.85rem; color: var(--ath-muted); text-decoration: none; font-weight: 600; transition: color 0.2s; }
+        .ath-ai-link:hover { color: var(--ath-teal); }
 
         /* Stories with Enhanced UI */
         .ath-testi-box {
