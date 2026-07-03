@@ -178,7 +178,7 @@
                 <div class="ath-step-card reveal-fade-up" style="--delay: 3">
                     <div class="ath-step-num">03</div>
                     <h4>Project Period (Weeks 13-24)</h4>
-                    <p>Twelve weeks working in a cross-track team on a business idea you originate together, run like a real company: delivery learners map it and gather requirements, builders ship it, and the whole team markets and sells what it makes. Present it, earn your full Skills Co-op Certificate. From here: employment, freelancing, or building your own thing.</p>
+                    <p>Twelve weeks in a cross-pathway team, building a real venture your team came up with, and launching and selling it for real. Or, if employment is your route, delivering a brief for a real employer. Either way, you ship something real, present it, and earn your full Skills Co-op Certificate.</p>
                 </div>
             </div>
         </div>
