@@ -159,7 +159,7 @@
     <div class="ath-container">
         <div class="learners-inner">
             <h2>Want to learn this way?</h2>
-            <p>Every pilot track includes the AI Method as standard. There is no separate AI course to buy and no prerequisite to meet. Start with the track that fits you.</p>
+            <p>Every pilot track includes the AI Method and the operator core as standard: you learn your craft, and you learn to sell it, support it, and run it with AI doing the heavy lifting. There is no separate AI course to buy and no prerequisite to meet. Start with the track that fits you.</p>
             <a href="{{ route('programs') }}" class="ath-btn ath-btn-primary">Explore our tracks</a>
         </div>
     </div>
