@@ -171,7 +171,7 @@
 /* Hallmark · redesign (section-scope) · pre-emit critique: P4 H4 E4 S4 R5 V4
  * scope: flight-path SVG infographic + hero blueprint texture + mono accents
  * theme: existing brand tokens preserved (teal/gold/deep, Outfit + Figtree, +IBM Plex Mono for labels)
- * motion: path draw-on-scroll · node pulse · staged fades — reduced-motion collapses all */
+ * motion: path draw-on-scroll · node pulse · staged fades (reduced-motion collapses all) */
 :root {
     --ath-teal: #038b89;
     --ath-gold: #ee9d1d;

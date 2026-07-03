@@ -166,7 +166,7 @@
             <details class="faq-item">
                 <summary>Can a small charity or community organisation partner with you?</summary>
                 <div class="faq-answer">
-                    <p>Yes, and we actively encourage it. A brief from a local food bank, housing association, or community interest company is as valuable to our learners as a corporate one — often more so, because the mission context adds meaning.</p>
+                    <p>Yes, and we actively encourage it. A brief from a local food bank, housing association, or community interest company is as valuable to our learners as a corporate one, often more so, because the mission context adds meaning.</p>
                 </div>
             </details>
             <details class="faq-item">

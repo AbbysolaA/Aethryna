@@ -97,7 +97,7 @@
         <div class="next-inner">
             <span class="ath-sub">Coming soon</span>
             <h2>The stories we are waiting to tell</h2>
-            <p>Cohort 1 begins in January 2027. When learners complete the programme, we will publish their stories here — with their permission and in their own words. Until then, you can help us write those stories.</p>
+            <p>Cohort 1 begins in January 2027. When learners complete the programme, we will publish their stories here, with their permission and in their own words. Until then, you can help us write those stories.</p>
             <div class="next-actions">
                 <a href="{{ route('register') }}" class="ath-btn ath-btn-primary">Join the founding cohort</a>
                 <a href="{{ route('partners') }}" class="ath-btn ath-btn-outline">Become a partner</a>
