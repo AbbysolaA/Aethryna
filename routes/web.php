@@ -82,6 +82,9 @@ Route::prefix('assessment')->name('assessment.')->group(function () {
 Route::get('/partners', [PageController::class, 'partners'])->name('partners');
 Route::post('/partners/enquiry', [PageController::class, 'partnerEnquiry'])->name('partners.enquiry');
 
+// ── AI Labs ───────────────────────────────────────────────────────────────────
+Route::get('/ai-labs', [PageController::class, 'aiLabs'])->name('ai-labs');
+
 // ── Legal pages ──────────────────────────────────────────────────────────────
 Route::get('/privacy',         [PageController::class, 'privacy'])->name('privacy');
 Route::get('/terms',           [PageController::class, 'terms'])->name('terms');

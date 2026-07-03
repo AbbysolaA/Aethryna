@@ -92,6 +92,12 @@ event(new SessionRegistered());
             ->with('success', "Thank you for registering! We'll send you details about our next panel session to your email address.");
     }
 
+    // ── AI Labs ──────────────────────────────────────────────────────────────
+    public function aiLabs()
+    {
+        return view('ai-labs');
+    }
+
     // ── Partners ─────────────────────────────────────────────────────────────
     public function partners()
     {
