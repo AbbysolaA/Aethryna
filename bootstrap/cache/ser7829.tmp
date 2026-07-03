@@ -1,0 +1,51 @@
+<?php return array (
+  'providers' => 
+  array (
+    0 => 'Laravel\\Breeze\\BreezeServiceProvider',
+    1 => 'Laravel\\Pail\\PailServiceProvider',
+    2 => 'Laravel\\Sail\\SailServiceProvider',
+    3 => 'Laravel\\Socialite\\SocialiteServiceProvider',
+    4 => 'Laravel\\Tinker\\TinkerServiceProvider',
+    5 => 'Carbon\\Laravel\\ServiceProvider',
+    6 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    7 => 'Termwind\\Laravel\\TermwindServiceProvider',
+    8 => 'Resend\\Laravel\\ResendServiceProvider',
+    9 => 'Resend\\Laravel\\ResendServiceProvider',
+    10 => 'App\\Providers\\AppServiceProvider',
+    11 => 'App\\Providers\\AppServiceProvider',
+  ),
+  'eager' => 
+  array (
+    0 => 'Laravel\\Pail\\PailServiceProvider',
+    1 => 'Carbon\\Laravel\\ServiceProvider',
+    2 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    3 => 'Termwind\\Laravel\\TermwindServiceProvider',
+    4 => 'Resend\\Laravel\\ResendServiceProvider',
+    5 => 'Resend\\Laravel\\ResendServiceProvider',
+    6 => 'App\\Providers\\AppServiceProvider',
+    7 => 'App\\Providers\\AppServiceProvider',
+  ),
+  'deferred' => 
+  array (
+    'Laravel\\Breeze\\Console\\InstallCommand' => 'Laravel\\Breeze\\BreezeServiceProvider',
+    'Laravel\\Sail\\Console\\InstallCommand' => 'Laravel\\Sail\\SailServiceProvider',
+    'Laravel\\Sail\\Console\\PublishCommand' => 'Laravel\\Sail\\SailServiceProvider',
+    'Laravel\\Socialite\\Contracts\\Factory' => 'Laravel\\Socialite\\SocialiteServiceProvider',
+    'command.tinker' => 'Laravel\\Tinker\\TinkerServiceProvider',
+  ),
+  'when' => 
+  array (
+    'Laravel\\Breeze\\BreezeServiceProvider' => 
+    array (
+    ),
+    'Laravel\\Sail\\SailServiceProvider' => 
+    array (
+    ),
+    'Laravel\\Socialite\\SocialiteServiceProvider' => 
+    array (
+    ),
+    'Laravel\\Tinker\\TinkerServiceProvider' => 
+    array (
+    ),
+  ),
+);

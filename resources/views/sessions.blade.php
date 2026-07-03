@@ -76,8 +76,8 @@
                         <div class="meta-item">
                             <i class="fas fa-calendar-alt"></i>
                             <div>
-                                <strong>Next Session</strong>
-                                <span>{{ $nextSession->event_date->format('l j F Y, g:ia') }} BST</span>
+                                <strong>Frequency</strong>
+                                <span>Monthly (dates announced via email)</span>
                             </div>
                         </div>
                         <div class="meta-item">
@@ -91,7 +91,7 @@
                             <i class="fas fa-laptop"></i>
                             <div>
                                 <strong>Format</strong>
-                                <span>{{ $nextSession->format }}</span>
+                                <span>Virtual (Eventbrite), link sent after registration</span>
                             </div>
                         </div>
                         <div class="meta-item">
