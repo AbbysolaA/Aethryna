@@ -30,6 +30,7 @@
                         <li><a href="{{ route('home') }}">Home</a></li>
                         <li><a href="{{ route('about') }}">About Us</a></li>
                         <li><a href="{{ route('pathway') }}">Transformation Pathway</a></li>
+                        <li><a href="{{ route('ai-labs') }}">AI Labs</a></li>
                         <li><a href="{{ route('impact') }}">Our Impact</a></li>
                         <li><a href="{{ route('stories') }}">Success Stories</a></li>
                         <li><a href="{{ route('sessions') }}">Sessions & Events</a></li>
