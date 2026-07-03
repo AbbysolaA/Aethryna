@@ -77,7 +77,7 @@
                             <h4>Building Futures Together</h4>
                             <p>SkillsCo-op is a community-led digital skills programme. We work with people who face real barriers to employment: NEET young people, career changers, migrants, refugees, and justice-involved individuals. Every place is fully funded.</p>
                             <p>Our approach combines personalised mentorship with practical, project-based learning and community support designed around dignity and belonging.</p>
-                            <p>Every Skills Co-op learner becomes confident with AI tools, regardless of their pathway. We teach AI as a working tool, with the discipline to check what it produces and the judgement to override it when needed. This is what modern digital work looks like, and it is what employers are now looking for.</p>
+                            <p>Every Skills Co-op learner becomes confident with AI tools, regardless of their pathway. We teach AI as a working tool, with the discipline to check what it produces and the judgement to override it when needed. This is what modern digital work looks like, and it is what employers are now looking for. Read about our AI Method and where we are taking it at <a href="{{ route('ai-labs') }}" style="color: var(--ath-teal); font-weight: 700;">AI Labs</a>.</p>
                     </div>
                 </div>
                 <div class="ath-about-features">
