@@ -21,18 +21,91 @@
                     <div class="pathway-diagram">
                         <div class="phase phase-1">
                             <div class="phase-icon"><i class="fas fa-seedling"></i></div>
-                            <div class="phase-title">Foundation</div>
+                            <div class="phase-title">Foundations</div>
                         </div>
                         <div class="phase-connector"><i class="fas fa-angle-right"></i></div>
                         <div class="phase phase-2">
                             <div class="phase-icon"><i class="fas fa-rocket"></i></div>
-                            <div class="phase-title">Specialization</div>
+                            <div class="phase-title">Specialised Training</div>
                         </div>
                         <div class="phase-connector"><i class="fas fa-angle-right"></i></div>
                         <div class="phase phase-3">
                             <div class="phase-icon"><i class="fas fa-award"></i></div>
-                            <div class="phase-title">Independence</div>
+                            <div class="phase-title">Project Period</div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 25-Week Journey Infographic -->
+    <section class="journey-section" id="journey">
+        <div class="ath-container">
+            <div class="section-title">
+                <span class="ath-sub">The 25-Week Journey</span>
+                <h2>How the pathway unfolds</h2>
+                <p>Three certificates. One cohort. A community for life.</p>
+            </div>
+            <div class="pathway-journey" id="pathway-journey">
+                <svg class="pj-svg" viewBox="0 0 1000 300" role="img" aria-labelledby="pj-title" preserveAspectRatio="xMidYMid meet">
+                    <title id="pj-title">The 25-week journey: Foundations in weeks 0 to 4 ending in certificate one, Specialised Training in weeks 5 to 12 ending in certificate two, and the Project Period in weeks 13 to 24 ending in certificate three</title>
+                    <defs>
+                        <marker id="pj-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#ee9d1d"/>
+                        </marker>
+                    </defs>
+
+                    <path class="pj-line pj-seg1" d="M 60 225 C 110 222 160 212 205 205" pathLength="1"/>
+                    <path class="pj-line pj-seg2" d="M 205 205 C 305 195 400 175 500 160" pathLength="1"/>
+                    <path class="pj-line pj-seg3" d="M 500 160 C 650 138 800 115 940 95" pathLength="1"/>
+                    <path class="pj-line pj-tail" d="M 940 95 C 958 92 972 90 988 88" pathLength="1" marker-end="url(#pj-arrow)"/>
+
+                    <g class="pj-g0">
+                        <circle class="pj-start" cx="60" cy="225" r="6"/>
+                        <text class="pj-week" x="60" y="258">WK 0</text>
+                    </g>
+                    <g class="pj-g1">
+                        <text class="pj-stage" x="130" y="168">Foundations</text>
+                        <text class="pj-weeks" x="130" y="186">Weeks 0-4</text>
+                        <circle class="pj-badge" cx="205" cy="205" r="15"/>
+                        <text class="pj-num" x="205" y="210">1</text>
+                        <text class="pj-cert" x="205" y="240">Certificate 1</text>
+                        <text class="pj-week" x="205" y="258">WK 4</text>
+                    </g>
+                    <g class="pj-g2">
+                        <text class="pj-stage" x="352" y="118">Specialised Training</text>
+                        <text class="pj-weeks" x="352" y="136">Weeks 5-12</text>
+                        <circle class="pj-badge" cx="500" cy="160" r="15"/>
+                        <text class="pj-num" x="500" y="165">2</text>
+                        <text class="pj-cert" x="500" y="195">Certificate 2</text>
+                        <text class="pj-week" x="500" y="213">WK 12</text>
+                    </g>
+                    <g class="pj-g3">
+                        <text class="pj-stage" x="720" y="52">Project Period</text>
+                        <text class="pj-weeks" x="720" y="70">Weeks 13-24</text>
+                        <circle class="pj-badge" cx="940" cy="95" r="15"/>
+                        <text class="pj-num" x="940" y="100">3</text>
+                        <text class="pj-cert" x="940" y="130">Certificate 3</text>
+                        <text class="pj-week" x="940" y="148">WK 24</text>
+                    </g>
+                </svg>
+
+                <div class="pj-stages">
+                    <div class="pj-stage">
+                        <span class="pj-stage-weeks">WEEKS 0-4</span>
+                        <h3>Foundations</h3>
+                        <span class="pj-chip">Certificate 1 on completion</span>
+                    </div>
+                    <div class="pj-stage">
+                        <span class="pj-stage-weeks">WEEKS 5-12</span>
+                        <h3>Specialised Training</h3>
+                        <span class="pj-chip">Certificate 2 on completion</span>
+                    </div>
+                    <div class="pj-stage">
+                        <span class="pj-stage-weeks">WEEKS 13-24</span>
+                        <h3>Project Period</h3>
+                        <span class="pj-chip">Certificate 3 on completion</span>
                     </div>
                 </div>
             </div>
@@ -54,8 +127,8 @@
             </div>
             <div class="overview-stats">
                 <div class="stat">
-                    <span class="stat-number">12 to 18</span>
-                    <span class="stat-label">Months</span>
+                    <span class="stat-number">25</span>
+                    <span class="stat-label">Weeks</span>
                 </div>
                 <div class="stat">
                     <span class="stat-number">100%</span>
@@ -73,9 +146,9 @@
     <section class="phase-section phase-1-bg">
         <div class="ath-container">
             <div class="phase-header">
-                <div class="phase-badge">Phase 1</div>
-                <h2>Digital Foundations</h2>
-                <p>3-6 months of building confidence, basic digital literacy, and growth mindset</p>
+                <div class="phase-badge">Phase 1 · Weeks 0 to 4</div>
+                <h2>Foundations</h2>
+                <p>Building confidence, digital fluency, and a growth mindset</p>
             </div>
             <div class="phase-content">
                 <div class="phase-description">
@@ -92,7 +165,7 @@
                         </ul>
                     </div>
                     <div class="phase-duration">
-                        <i class="fas fa-clock"></i> <strong>Duration:</strong> 3-6 months (part-time)
+                        <i class="fas fa-clock"></i> <strong>Duration:</strong> Weeks 0 to 4, ending with Certificate 1
                     </div>
                 </div>
                 <div class="phase-skills">
@@ -132,9 +205,9 @@
     <section class="phase-section phase-2-bg">
         <div class="ath-container">
             <div class="phase-header">
-                <div class="phase-badge">Phase 2</div>
-                <h2>Skill Specialization</h2>
-                <p>6-12 months of project-based learning in your chosen track</p>
+                <div class="phase-badge">Phase 2 · Weeks 5 to 12</div>
+                <h2>Specialised Training</h2>
+                <p>Project-based learning in your chosen track</p>
             </div>
             <div class="phase-content">
                 <div class="phase-description">
@@ -184,7 +257,7 @@
                     @endif
 
                     <div class="phase-duration">
-                        <i class="fas fa-calendar-alt"></i> <strong>Duration:</strong> 6-12 months (full-time)
+                        <i class="fas fa-calendar-alt"></i> <strong>Duration:</strong> Weeks 5 to 12, ending with Certificate 2
                     </div>
                 </div>
                 <div class="phase-projects">
@@ -216,8 +289,8 @@
     <section class="phase-section phase-3-bg">
         <div class="ath-container">
             <div class="phase-header">
-                <div class="phase-badge">Phase 3</div>
-                <h2>Economic Independence</h2>
+                <div class="phase-badge">Phase 3 · Weeks 13 to 24</div>
+                <h2>Project Period</h2>
                 <p>Build a portfolio through real projects and develop employment readiness</p>
             </div>
             <div class="phase-content">
@@ -235,7 +308,7 @@
                         </ul>
                     </div>
                     <div class="phase-duration">
-                        <i class="fas fa-award"></i> <strong>Goal:</strong> Sustainable Employment
+                        <i class="fas fa-award"></i> <strong>Goal:</strong> Certificate 3, a portfolio, and sustainable employment
                     </div>
                 </div>
                 <div class="phase-career">
@@ -313,7 +386,11 @@
     </section>
 
     @push('styles')
+    <link href="https://fonts.bunny.net/css?family=ibm-plex-mono:500,600&display=swap" rel="stylesheet">
     <style>
+        /* Hallmark · redesign (section-scope) · pre-emit critique: P4 H4 E4 S4 R5 V4
+         * scope: 25-week journey SVG infographic, plain background per user preference
+         * theme: existing brand tokens preserved · motion: staged path draw + badge pops, reduced-motion safe */
         :root {
             --ath-teal: #038b89;
             --ath-gold: #ee9d1d;
@@ -324,6 +401,96 @@
             --ath-muted: #57616a;
             --ath-trans: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             --ath-radius: 24px;
+            --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+        }
+
+        /* 25-Week Journey Infographic */
+        .journey-section { padding: 100px 0; background: #fff; }
+        .pj-svg { width: 100%; height: auto; display: block; }
+        .pj-line { fill: none; stroke: var(--ath-teal); stroke-width: 3; }
+        .pj-tail { stroke: var(--ath-gold); stroke-dasharray: 0.18 0.14; }
+        .pj-start { fill: var(--ath-teal); }
+        .pj-badge { fill: var(--ath-gold); }
+        .pj-num {
+            fill: #fff;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 15px;
+            text-anchor: middle;
+        }
+        .pj-stage {
+            fill: var(--ath-deep);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            text-anchor: middle;
+        }
+        .pj-weeks, .pj-week {
+            fill: var(--ath-muted);
+            font-family: var(--font-mono);
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-anchor: middle;
+        }
+        .pj-cert {
+            fill: var(--ath-deep);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            text-anchor: middle;
+        }
+
+        /* Staged draw-on-scroll: hidden states apply only once JS adds .pj-anim */
+        .pj-anim .pj-seg1, .pj-anim .pj-seg2, .pj-anim .pj-seg3 { stroke-dasharray: 1; stroke-dashoffset: 1; }
+        .pj-anim .pj-tail, .pj-anim .pj-g1, .pj-anim .pj-g2, .pj-anim .pj-g3 { opacity: 0; }
+        .pj-anim.in-view .pj-seg1 { animation: pj-draw 500ms cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .pj-anim.in-view .pj-seg2 { animation: pj-draw 500ms cubic-bezier(0.16, 1, 0.3, 1) 450ms forwards; }
+        .pj-anim.in-view .pj-seg3 { animation: pj-draw 500ms cubic-bezier(0.16, 1, 0.3, 1) 950ms forwards; }
+        .pj-anim.in-view .pj-g1 { animation: pj-fade 400ms ease-out 400ms forwards; }
+        .pj-anim.in-view .pj-g2 { animation: pj-fade 400ms ease-out 900ms forwards; }
+        .pj-anim.in-view .pj-g3 { animation: pj-fade 400ms ease-out 1400ms forwards; }
+        .pj-anim.in-view .pj-tail { animation: pj-fade 400ms ease-out 1650ms forwards; }
+        @keyframes pj-draw { to { stroke-dashoffset: 0; } }
+        @keyframes pj-fade { to { opacity: 1; } }
+        @media (prefers-reduced-motion: reduce) {
+            .pj-anim .pj-seg1, .pj-anim .pj-seg2, .pj-anim .pj-seg3 { stroke-dasharray: none; stroke-dashoffset: 0; animation: none; }
+            .pj-anim .pj-tail, .pj-anim .pj-g1, .pj-anim .pj-g2, .pj-anim .pj-g3 { opacity: 1; animation: none; }
+        }
+
+        /* Mobile stacked fallback */
+        .pj-stages { display: none; }
+        @media (max-width: 768px) {
+            .pj-svg { display: none; }
+            .pj-stages { display: grid; grid-template-columns: 1fr; gap: 28px; }
+            .pj-stage { border-left: 3px solid var(--ath-teal); padding-left: 20px; }
+            .pj-stage-weeks {
+                display: block;
+                font-family: var(--font-mono);
+                font-size: 0.75rem;
+                font-weight: 600;
+                letter-spacing: 2px;
+                color: var(--ath-muted);
+                margin-bottom: 6px;
+            }
+            .pj-stage h3 {
+                font-size: 1.25rem;
+                color: var(--ath-deep);
+                font-weight: 800;
+                margin-bottom: 10px;
+                font-family: 'Outfit', sans-serif;
+            }
+            .pj-chip {
+                display: inline-block;
+                font-family: var(--font-mono);
+                font-size: 0.72rem;
+                font-weight: 600;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                padding: 5px 12px;
+                border-radius: 100px;
+                background: rgba(238,157,29,0.14);
+                color: #9a6510;
+            }
         }
 
         .ath-container {
@@ -1038,6 +1205,26 @@
         document.querySelectorAll('.track').forEach(track => {
             observer.observe(track);
         });
+
+        // Journey infographic draw-on-scroll
+        (function () {
+            var pj = document.getElementById('pathway-journey');
+            if (!pj) return;
+            pj.classList.add('pj-anim');
+            if (!('IntersectionObserver' in window)) {
+                pj.classList.add('in-view');
+                return;
+            }
+            var pjObs = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        pj.classList.add('in-view');
+                        pjObs.disconnect();
+                    }
+                });
+            }, { threshold: 0.35 });
+            pjObs.observe(pj);
+        })();
     </script>
     @endpush
 @endsection
