@@ -150,6 +150,35 @@
         </div>
     </section>
 
+    <!-- The Common Core -->
+    <section class="core-section" id="common-core">
+        <div class="ath-container">
+            <div class="core-header">
+                <span class="ath-sub">The Common Core</span>
+                <h2>What every learner gets, whatever the track</h2>
+                <p>Specialist tracks make you employable in a field. The common core makes you independent in any of them. Every SkillsCo-op learner, in every cohort, is trained in three things, all wrapped in AI and automations.</p>
+            </div>
+            <div class="core-grid">
+                <div class="core-card">
+                    <div class="core-icon"><i class="fas fa-tools"></i></div>
+                    <h3>IT support and operations basics</h3>
+                    <p>Troubleshoot your own tools, support your own products and services, and keep the things you build running.</p>
+                </div>
+                <div class="core-card">
+                    <div class="core-icon"><i class="fas fa-handshake"></i></div>
+                    <h3>Tech sales and customer success</h3>
+                    <p>Market your services, sell what you make, and look after the people who buy it. Business development here is not a separate career; it is a survival skill.</p>
+                </div>
+                <div class="core-card">
+                    <div class="core-icon"><i class="fas fa-briefcase"></i></div>
+                    <h3>Freelance service delivery</h3>
+                    <p>Scope work, price it, deliver it, and get paid for it, so you can earn independently from the day you graduate.</p>
+                </div>
+            </div>
+            <p class="core-note">And when you work in a team, you play to your strengths. That is the essence of the group venture that closes the programme.</p>
+        </div>
+    </section>
+
     <!-- Pathway Overview -->
     <section id="pathway-details" class="pathway-overview">
         <div class="ath-container">
@@ -357,16 +386,17 @@
             </div>
             <div class="phase-content">
                 <div class="phase-description">
-                    <h3>Ongoing mentorship and career advancement</h3>
-                    <p>The final phase focuses on transitioning to professional employment. You'll learn job search strategies, interview skills, and begin earning through freelance work while receiving continued mentorship.</p>
+                    <h3>Your team, your product, run like a real company</h3>
+                    <p>The Project Period closes with a group venture. Teams are not handed a hypothetical exercise: they come up with a business idea themselves. Delivery learners map the idea, gather requirements, and hand over to the builders, exactly as they would in a company. Designers, developers, and analysts build it. Then the whole team markets and sells what it has made, with each member playing to their strengths.</p>
+                    <p>Alongside the venture, this phase builds employment readiness: job search strategies, interview skills, and continued mentorship into work or freelancing.</p>
                     <div class="phase-objectives">
                         <h4>Key Objectives:</h4>
                         <ul>
-                            <li>Develop job search and interview skills</li>
-                            <li>Build a professional network and online presence</li>
-                            <li>Gain freelance experience and build income</li>
-                            <li>Secure full-time employment in your field</li>
-                            <li>Continue professional development and growth</li>
+                            <li>Originate a business idea as a team, not a hypothetical brief</li>
+                            <li>Map requirements and hand over, as in a real company</li>
+                            <li>Build, ship, and present your team's product</li>
+                            <li>Market and sell what you make, with AI in your toolkit</li>
+                            <li>Develop job search, interview, and freelance readiness</li>
                         </ul>
                     </div>
                     <div class="phase-duration">
@@ -558,6 +588,51 @@
             .pj-anim .pj-tail, .pj-anim .pj-g1, .pj-anim .pj-g2, .pj-anim .pj-g3,
             .pj-anim .pj-area, .pj-anim .pj-guide, .pj-anim .pj-tail-label { opacity: 1; animation: none; }
             .pj-anim .pj-badge-g { transform: scale(1); animation: none; }
+        }
+
+        /* The Common Core statement band */
+        .core-section {
+            padding: 100px 0;
+            background: var(--ath-deep);
+            color: #fff;
+        }
+        .core-header { max-width: 760px; margin-bottom: 50px; }
+        .core-header h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            font-family: 'Outfit', sans-serif;
+            margin: 8px 0 20px;
+        }
+        .core-header p { font-size: 1.15rem; line-height: 1.75; opacity: 0.9; }
+        .core-section .ath-sub { color: var(--ath-gold); }
+        .core-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+        .core-card {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 36px;
+        }
+        .core-icon {
+            width: 50px; height: 50px;
+            background: rgba(238, 157, 29, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ath-gold);
+            font-size: 1.2rem;
+            margin-bottom: 18px;
+        }
+        .core-card h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: 10px; font-family: 'Outfit', sans-serif; }
+        .core-card p { opacity: 0.85; line-height: 1.7; font-size: 0.98rem; margin: 0; }
+        .core-note { font-size: 1.05rem; font-style: italic; opacity: 0.85; max-width: 700px; }
+        @media (max-width: 992px) {
+            .core-grid { grid-template-columns: 1fr; }
         }
 
         /* Mobile stacked fallback */
