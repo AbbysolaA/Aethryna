@@ -175,7 +175,7 @@
 .ah-lead { font-size: 1.15rem; line-height: 1.75; opacity: 0.9; max-width: 720px; }
 
 /* Section layout */
-.ailabs-section { padding: 100px 0; border-bottom: 1px solid rgba(0,0,0,0.04); }
+.ailabs-section { padding: 100px 0; border-bottom: 1px solid rgba(0,0,0,0.04); background: #fff; }
 .section-label { margin-bottom: 50px; }
 .section-label h2 { font-size: clamp(2rem, 4vw, 2.8rem); color: var(--ath-deep); font-weight: 800; font-family: 'Outfit', sans-serif; margin: 8px 0 20px; }
 .method-intro, .practice-intro, .flight-intro { font-size: 1.15rem; color: var(--ath-text); line-height: 1.7; max-width: 760px; }
