@@ -31,6 +31,7 @@
         <div class="section-label">
             <span class="ath-sub">The model</span>
             <h2>How it works</h2>
+            <p class="how-intro">The back-half of every Skills Co-op cohort is a twelve-week Project Period, and it runs on two tracks. On the Venture Track, teams build and launch a real micro-venture of their own. On the Brief Track, a cross-pathway team of five to seven learners (project coordinators, data analysts, designers, support specialists) takes on a real brief from a partner: over twelve weeks the team scopes, plans, builds, verifies, documents, and presents a solution. Partner briefs power the Brief Track, and partners are also welcome as guests at Venture Track reviews and launches, which many find the most direct way to see what our graduates can do.</p>
         </div>
         <div class="how-grid">
             <div class="how-step">
@@ -105,6 +106,11 @@
                 <i class="fas fa-graduation-cap"></i>
                 <h3>Optional recruitment pathway</h3>
                 <p>There is no obligation to hire, but many partners choose to. You will have already seen what the learner can do before you make any decision.</p>
+            </div>
+            <div class="gain-card">
+                <i class="fas fa-rocket"></i>
+                <h3>A front-row seat at Venture Track launches</h3>
+                <p>Watching a team take a product to market is a strong and honest hiring signal.</p>
             </div>
         </div>
     </div>
@@ -273,6 +279,7 @@
 .partners-section { padding: 100px 0; border-bottom: 1px solid rgba(0,0,0,0.04); }
 .section-label { margin-bottom: 60px; }
 .section-label h2 { font-size: clamp(2rem, 4vw, 2.8rem); color: var(--ath-deep); font-weight: 800; font-family: 'Outfit', sans-serif; margin-top: 8px; }
+.how-intro { max-width: 820px; color: var(--ath-muted); line-height: 1.75; font-size: 1.05rem; margin-top: 18px; }
 
 /* How it works */
 .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
