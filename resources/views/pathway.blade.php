@@ -151,12 +151,12 @@
     </section>
 
     <!-- The Common Core -->
-    <section class="core-section" id="common-core">
+    <section class="core-section" id="operator-core">
         <div class="ath-container">
             <div class="core-header">
-                <span class="ath-sub">The Common Core</span>
+                <span class="ath-sub">The Operator Core</span>
                 <h2>What every learner gets, whatever the track</h2>
-                <p>Specialist tracks make you employable in a field. The common core makes you independent in any of them. Every SkillsCo-op learner, in every cohort, is trained in three things, all wrapped in AI and automations.</p>
+                <p>Specialist tracks make you employable in a field. The operator core makes you independent in any of them. Every SkillsCo-op learner, in every cohort, is trained in three things, all wrapped in AI and automations.</p>
             </div>
             <div class="core-grid">
                 <div class="core-card">
