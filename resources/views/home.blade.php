@@ -239,6 +239,40 @@
         </div>
     </section>
 
+    <!-- Operator Core Section (Change 14b) -->
+    <section class="ath-section ath-operator" id="operator-core">
+        <div class="ath-container">
+            <div class="ath-section-header reveal-fade-up">
+                <span class="ath-sub">The Operator Core</span>
+                <h2>Whatever your track, you graduate able to run your own work</h2>
+                <p>Every Skills Co-op learner, in every track, learns the basics that turn a skill into a livelihood: how to support your own product, how to sell and market your own services, and how to run your own service delivery with AI and automation doing the heavy lifting. We call it the operator core. It is why a Skills Co-op designer can find her own clients, a Skills Co-op analyst can handle his own support questions, and every graduate can stand on their own feet, employed, freelancing, or building something of their own.</p>
+            </div>
+            <div class="ath-operator-grid">
+                <div class="ath-feature reveal-fade-up" style="--delay: 1">
+                    <div class="ath-feature-icon"><i class="fas fa-handshake"></i></div>
+                    <div class="ath-feature-body">
+                        <h4>Sell your work.</h4>
+                        <p>Pricing, pitching, and finding clients. Taught to everyone, not just the sales track.</p>
+                    </div>
+                </div>
+                <div class="ath-feature reveal-fade-up" style="--delay: 2">
+                    <div class="ath-feature-icon"><i class="fas fa-tools"></i></div>
+                    <div class="ath-feature-body">
+                        <h4>Support your work.</h4>
+                        <p>First-line support, troubleshooting, and keeping your users happy. Taught to everyone.</p>
+                    </div>
+                </div>
+                <div class="ath-feature reveal-fade-up" style="--delay: 3">
+                    <div class="ath-feature-icon"><i class="fas fa-robot"></i></div>
+                    <div class="ath-feature-body">
+                        <h4>Run your work.</h4>
+                        <p>AI and automation for the admin, so one person can operate like a team.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Impact Section -->
     <section class="ath-section ath-impact" id="impact">
         <div class="ath-container">
@@ -818,6 +852,10 @@
 
         .ath-ai-link { display: block; margin-top: 10px; font-size: 0.85rem; color: var(--ath-muted); text-decoration: none; font-weight: 600; transition: color 0.2s; }
         .ath-ai-link:hover { color: var(--ath-teal); }
+
+        .ath-operator { background: #fff; }
+        .ath-operator-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; margin-top: 20px; }
+        @media (max-width: 992px) { .ath-operator-grid { grid-template-columns: 1fr; } }
 
         /* Stories with Enhanced UI */
         .ath-testi-box {
