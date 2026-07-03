@@ -252,47 +252,71 @@
                     <h3>Choose your track and master your craft</h3>
                     <p>In this phase, you'll dive deep into your chosen specialization. Working with industry mentors, you'll complete real-world projects, build a professional portfolio, and gain hands-on experience that employers value.</p>
                     <div class="phase-tracks">
-                        @forelse($pathways->take(4) as $pathway)
-                            <div class="track">
-                                <h4>{{ $pathway->name }}</h4>
-                                <p>{{ Str::limit($pathway->description, 120) }}</p>
-                                <div class="track-skills">
-                                    @if(is_array($pathway->skills))
-                                        @foreach(array_slice($pathway->skills, 0, 3) as $skill)
-                                            <span>{{ $skill }}</span>
-                                        @endforeach
-                                    @endif
-                                </div>
+                        <div class="track">
+                            <h4>Project and Product Delivery</h4>
+                            <p>Organise and deliver digital work. Stakeholder communication, requirements, planning, and AI-assisted delivery.</p>
+                            <div class="track-skills">
+                                <span>Planning</span>
+                                <span>Requirements</span>
+                                <span>AI-assisted delivery</span>
                             </div>
-                        @empty
-                            <div class="track">
-                                <h4>Web Development Track</h4>
-                                <p>Learn HTML, CSS, JavaScript, and modern frameworks to build websites and web applications.</p>
-                                <div class="track-skills">
-                                    <span>HTML/CSS</span>
-                                    <span>JavaScript</span>
-                                    <span>React/Vue</span>
-                                </div>
+                        </div>
+                        <div class="track">
+                            <h4>Data and AI Analytics</h4>
+                            <p>Work with numbers, evidence, and insight. SQL, spreadsheets, visualisation, and AI-assisted analysis with built-in verification.</p>
+                            <div class="track-skills">
+                                <span>SQL</span>
+                                <span>Visualisation</span>
+                                <span>AI analysis</span>
                             </div>
-                            <div class="track">
-                                <h4>Digital Design Track</h4>
-                                <p>Master UI/UX design, graphic design, and visual communication using industry-standard tools.</p>
-                                <div class="track-skills">
-                                    <span>Figma</span>
-                                    <span>UI/UX</span>
-                                    <span>Adobe Suite</span>
-                                </div>
+                        </div>
+                        <div class="track">
+                            <h4>Digital Design and Marketing</h4>
+                            <p>Create content, brand, and audience. Design fundamentals, content strategy, social, email, and analytics. AI-assisted creative work, used responsibly.</p>
+                            <div class="track-skills">
+                                <span>Design fundamentals</span>
+                                <span>Content strategy</span>
+                                <span>Social and email</span>
                             </div>
-                        @endforelse
+                        </div>
+                        <div class="track">
+                            <h4>IT Support and Operations</h4>
+                            <p>A fast, accessible route into digital work. Operating systems, troubleshooting, ticketing, user support, and AI-assisted support workflows.</p>
+                            <div class="track-skills">
+                                <span>Troubleshooting</span>
+                                <span>Ticketing</span>
+                                <span>User support</span>
+                            </div>
+                        </div>
                     </div>
 
-                    @if($pathways->count() > 4)
-                        <div class="see-more-container">
-                            <a href="{{ route('programs') }}" class="btn-see-more">
-                                Explore All Programs <i class="fas fa-arrow-right"></i>
-                            </a>
+                    <div class="tracks-coming">
+                        <h4 class="tracks-coming-title">Launching with Cohort 2</h4>
+                        <div class="tracks-coming-grid">
+                            <div class="track track--soon">
+                                <h4>Software Development</h4>
+                                <span class="soon-chip">Coming soon</span>
+                            </div>
+                            <div class="track track--soon">
+                                <h4>Cyber Security</h4>
+                                <span class="soon-chip">Coming soon</span>
+                            </div>
+                            <div class="track track--soon">
+                                <h4>Cloud and DevOps</h4>
+                                <span class="soon-chip">Coming soon</span>
+                            </div>
+                            <div class="track track--soon">
+                                <h4>Tech Sales and Customer Success</h4>
+                                <span class="soon-chip">Coming soon</span>
+                            </div>
                         </div>
-                    @endif
+                    </div>
+
+                    <div class="see-more-container">
+                        <a href="{{ route('programs') }}" class="btn-see-more">
+                            Explore All Programs <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
 
                     <div class="phase-duration">
                         <i class="fas fa-calendar-alt"></i> <strong>Duration:</strong> Weeks 5 to 12, ending with Certificate 2
@@ -961,6 +985,55 @@
             font-size: 0.85rem;
             font-weight: 700;
             border: 1px solid rgba(3, 139, 137, 0.1);
+        }
+
+        /* Cohort 2 coming-soon tracks */
+        .tracks-coming { margin: 40px 0 10px; }
+        .tracks-coming-title {
+            color: var(--ath-muted);
+            font-weight: 800;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 18px;
+        }
+        .tracks-coming-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+        }
+        .track--soon {
+            padding: 20px 24px;
+            border-left-color: rgba(3, 139, 137, 0.25);
+            background: rgba(248, 251, 251, 0.6);
+            box-shadow: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .track--soon:hover { transform: none; box-shadow: none; }
+        .track--soon h4 {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--ath-muted);
+        }
+        .soon-chip {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 4px 11px;
+            border-radius: 100px;
+            background: rgba(238, 157, 29, 0.14);
+            color: #9a6510;
+            white-space: nowrap;
+        }
+        @media (max-width: 576px) {
+            .tracks-coming-grid { grid-template-columns: 1fr; }
         }
 
         /* See More Link */
