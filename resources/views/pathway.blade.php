@@ -48,47 +48,85 @@
                 <p>Three certificates. One cohort. A community for life.</p>
             </div>
             <div class="pathway-journey" id="pathway-journey">
-                <svg class="pj-svg" viewBox="0 0 1000 300" role="img" aria-labelledby="pj-title" preserveAspectRatio="xMidYMid meet">
+                <svg class="pj-svg" viewBox="0 0 1000 430" role="img" aria-labelledby="pj-title" preserveAspectRatio="xMidYMid meet">
                     <title id="pj-title">The 25-week journey: Foundations in weeks 0 to 4 ending in certificate one, Specialised Training in weeks 5 to 12 ending in certificate two, and the Project Period in weeks 13 to 24 ending in certificate three</title>
                     <defs>
                         <marker id="pj-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
                             <path d="M 0 0 L 10 5 L 0 10 z" fill="#ee9d1d"/>
                         </marker>
+                        <linearGradient id="pj-area-fill" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0" stop-color="#038b89" stop-opacity="0.13"/>
+                            <stop offset="1" stop-color="#038b89" stop-opacity="0"/>
+                        </linearGradient>
                     </defs>
 
-                    <path class="pj-line pj-seg1" d="M 60 225 C 110 222 160 212 205 205" pathLength="1"/>
-                    <path class="pj-line pj-seg2" d="M 205 205 C 305 195 400 175 500 160" pathLength="1"/>
-                    <path class="pj-line pj-seg3" d="M 500 160 C 650 138 800 115 940 95" pathLength="1"/>
-                    <path class="pj-line pj-tail" d="M 940 95 C 958 92 972 90 988 88" pathLength="1" marker-end="url(#pj-arrow)"/>
-
-                    <g class="pj-g0">
-                        <circle class="pj-start" cx="60" cy="225" r="6"/>
-                        <text class="pj-week" x="60" y="258">WK 0</text>
+                    <!-- Week axis -->
+                    <g class="pj-axis">
+                        <line x1="60" y1="360" x2="940" y2="360"/>
+                        <line class="pj-tick" x1="60" y1="356" x2="60" y2="364"/>
+                        <line class="pj-tick" x1="207" y1="356" x2="207" y2="364"/>
+                        <line class="pj-tick" x1="353" y1="356" x2="353" y2="364"/>
+                        <line class="pj-tick" x1="500" y1="356" x2="500" y2="364"/>
+                        <line class="pj-tick" x1="647" y1="356" x2="647" y2="364"/>
+                        <line class="pj-tick" x1="793" y1="356" x2="793" y2="364"/>
+                        <line class="pj-tick" x1="940" y1="356" x2="940" y2="364"/>
+                        <text class="pj-axis-num" x="60" y="388">0</text>
+                        <text class="pj-axis-num" x="207" y="388">4</text>
+                        <text class="pj-axis-num" x="353" y="388">8</text>
+                        <text class="pj-axis-num" x="500" y="388">12</text>
+                        <text class="pj-axis-num" x="647" y="388">16</text>
+                        <text class="pj-axis-num" x="793" y="388">20</text>
+                        <text class="pj-axis-num" x="940" y="388">24</text>
+                        <text class="pj-axis-caption" x="500" y="414">WEEK</text>
                     </g>
+
+                    <!-- Area under the trajectory -->
+                    <path class="pj-area" d="M 60 320 C 110 316 160 300 207 290 C 300 272 420 235 500 220 C 650 192 820 150 940 130 L 940 360 L 60 360 Z"/>
+
+                    <!-- Milestone guides down to the axis -->
+                    <line class="pj-guide" x1="207" y1="344" x2="207" y2="356"/>
+                    <line class="pj-guide" x1="500" y1="276" x2="500" y2="356"/>
+                    <line class="pj-guide" x1="940" y1="186" x2="940" y2="356"/>
+
+                    <!-- Trajectory -->
+                    <path class="pj-line pj-seg1" d="M 60 320 C 110 316 160 300 207 290" pathLength="1"/>
+                    <path class="pj-line pj-seg2" d="M 207 290 C 300 272 420 235 500 220" pathLength="1"/>
+                    <path class="pj-line pj-seg3" d="M 500 220 C 650 192 820 150 940 130" pathLength="1"/>
+                    <path class="pj-line pj-tail" d="M 940 130 C 958 127 970 125 985 122" pathLength="1" marker-end="url(#pj-arrow)"/>
+
+                    <circle class="pj-start" cx="60" cy="320" r="7"/>
+
                     <g class="pj-g1">
-                        <text class="pj-stage" x="130" y="168">Foundations</text>
-                        <text class="pj-weeks" x="130" y="186">Weeks 0-4</text>
-                        <circle class="pj-badge" cx="205" cy="205" r="15"/>
-                        <text class="pj-num" x="205" y="210">1</text>
-                        <text class="pj-cert" x="205" y="240">Certificate 1</text>
-                        <text class="pj-week" x="205" y="258">WK 4</text>
+                        <text class="pj-stage" x="133" y="230">Foundations</text>
+                        <text class="pj-weeks" x="133" y="252">WEEKS 0-4</text>
+                        <g class="pj-badge-g">
+                            <circle class="pj-badge-ring" cx="207" cy="290" r="24"/>
+                            <circle class="pj-badge" cx="207" cy="290" r="17"/>
+                            <text class="pj-num" x="207" y="296">1</text>
+                        </g>
+                        <text class="pj-cert" x="207" y="338">Certificate 1</text>
                     </g>
                     <g class="pj-g2">
-                        <text class="pj-stage" x="352" y="118">Specialised Training</text>
-                        <text class="pj-weeks" x="352" y="136">Weeks 5-12</text>
-                        <circle class="pj-badge" cx="500" cy="160" r="15"/>
-                        <text class="pj-num" x="500" y="165">2</text>
-                        <text class="pj-cert" x="500" y="195">Certificate 2</text>
-                        <text class="pj-week" x="500" y="213">WK 12</text>
+                        <text class="pj-stage" x="353" y="160">Specialised Training</text>
+                        <text class="pj-weeks" x="353" y="182">WEEKS 5-12</text>
+                        <g class="pj-badge-g">
+                            <circle class="pj-badge-ring" cx="500" cy="220" r="24"/>
+                            <circle class="pj-badge" cx="500" cy="220" r="17"/>
+                            <text class="pj-num" x="500" y="226">2</text>
+                        </g>
+                        <text class="pj-cert" x="500" y="268">Certificate 2</text>
                     </g>
                     <g class="pj-g3">
-                        <text class="pj-stage" x="720" y="52">Project Period</text>
-                        <text class="pj-weeks" x="720" y="70">Weeks 13-24</text>
-                        <circle class="pj-badge" cx="940" cy="95" r="15"/>
-                        <text class="pj-num" x="940" y="100">3</text>
-                        <text class="pj-cert" x="940" y="130">Certificate 3</text>
-                        <text class="pj-week" x="940" y="148">WK 24</text>
+                        <text class="pj-stage" x="720" y="72">Project Period</text>
+                        <text class="pj-weeks" x="720" y="94">WEEKS 13-24</text>
+                        <g class="pj-badge-g">
+                            <circle class="pj-badge-ring" cx="940" cy="130" r="24"/>
+                            <circle class="pj-badge" cx="940" cy="130" r="17"/>
+                            <text class="pj-num" x="940" y="136">3</text>
+                        </g>
+                        <text class="pj-cert" x="940" y="178">Certificate 3</text>
                     </g>
+                    <text class="pj-tail-label" x="988" y="98">A community for life</text>
                 </svg>
 
                 <div class="pj-stages">
@@ -406,60 +444,102 @@
 
         /* 25-Week Journey Infographic */
         .journey-section { padding: 100px 0; background: #fff; }
+        .pathway-journey {
+            background: var(--ath-light);
+            border: 1px solid rgba(3, 139, 137, 0.08);
+            border-radius: 32px;
+            padding: 50px 45px 30px;
+        }
         .pj-svg { width: 100%; height: auto; display: block; }
-        .pj-line { fill: none; stroke: var(--ath-teal); stroke-width: 3; }
+        .pj-axis line { stroke: rgba(5, 88, 96, 0.15); stroke-width: 1; }
+        .pj-axis-num {
+            fill: var(--ath-muted);
+            font-family: var(--font-mono);
+            font-size: 13px;
+            text-anchor: middle;
+        }
+        .pj-axis-caption {
+            fill: rgba(87, 97, 106, 0.55);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-anchor: middle;
+        }
+        .pj-area { fill: url(#pj-area-fill); }
+        .pj-guide { stroke: rgba(5, 88, 96, 0.15); stroke-width: 1.5; stroke-dasharray: 4 5; }
+        .pj-line { fill: none; stroke: var(--ath-teal); stroke-width: 3.5; stroke-linecap: round; }
         .pj-tail { stroke: var(--ath-gold); stroke-dasharray: 0.18 0.14; }
         .pj-start { fill: var(--ath-teal); }
+        .pj-badge-g { filter: drop-shadow(0 5px 10px rgba(238, 157, 29, 0.35)); }
+        .pj-badge-ring { fill: #fff; stroke: var(--ath-gold); stroke-width: 3; }
         .pj-badge { fill: var(--ath-gold); }
         .pj-num {
             fill: #fff;
             font-family: 'Outfit', sans-serif;
             font-weight: 800;
-            font-size: 15px;
+            font-size: 17px;
             text-anchor: middle;
         }
         .pj-stage {
             fill: var(--ath-deep);
             font-family: 'Outfit', sans-serif;
-            font-weight: 700;
-            font-size: 18px;
+            font-weight: 800;
+            font-size: 22px;
             text-anchor: middle;
         }
-        .pj-weeks, .pj-week {
+        .pj-weeks {
             fill: var(--ath-muted);
             font-family: var(--font-mono);
-            font-size: 12px;
-            letter-spacing: 1px;
+            font-size: 13px;
+            letter-spacing: 2px;
             text-anchor: middle;
         }
         .pj-cert {
             fill: var(--ath-deep);
             font-family: 'Outfit', sans-serif;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 14px;
             text-anchor: middle;
+        }
+        .pj-tail-label {
+            fill: #9a6510;
+            font-family: 'Outfit', sans-serif;
+            font-style: italic;
+            font-size: 14px;
+            text-anchor: end;
         }
 
         /* Staged draw-on-scroll: hidden states apply only once JS adds .pj-anim */
         .pj-anim .pj-seg1, .pj-anim .pj-seg2, .pj-anim .pj-seg3 { stroke-dasharray: 1; stroke-dashoffset: 1; }
-        .pj-anim .pj-tail, .pj-anim .pj-g1, .pj-anim .pj-g2, .pj-anim .pj-g3 { opacity: 0; }
+        .pj-anim .pj-tail, .pj-anim .pj-g1, .pj-anim .pj-g2, .pj-anim .pj-g3,
+        .pj-anim .pj-area, .pj-anim .pj-guide, .pj-anim .pj-tail-label { opacity: 0; }
+        .pj-anim .pj-badge-g { transform-box: fill-box; transform-origin: center; transform: scale(0.6); }
         .pj-anim.in-view .pj-seg1 { animation: pj-draw 500ms cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         .pj-anim.in-view .pj-seg2 { animation: pj-draw 500ms cubic-bezier(0.16, 1, 0.3, 1) 450ms forwards; }
         .pj-anim.in-view .pj-seg3 { animation: pj-draw 500ms cubic-bezier(0.16, 1, 0.3, 1) 950ms forwards; }
         .pj-anim.in-view .pj-g1 { animation: pj-fade 400ms ease-out 400ms forwards; }
         .pj-anim.in-view .pj-g2 { animation: pj-fade 400ms ease-out 900ms forwards; }
         .pj-anim.in-view .pj-g3 { animation: pj-fade 400ms ease-out 1400ms forwards; }
-        .pj-anim.in-view .pj-tail { animation: pj-fade 400ms ease-out 1650ms forwards; }
+        .pj-anim.in-view .pj-g1 .pj-badge-g { animation: pj-fade 400ms ease-out 400ms forwards, pj-pop 450ms cubic-bezier(0.34, 1.3, 0.64, 1) 400ms forwards; }
+        .pj-anim.in-view .pj-g2 .pj-badge-g { animation: pj-fade 400ms ease-out 900ms forwards, pj-pop 450ms cubic-bezier(0.34, 1.3, 0.64, 1) 900ms forwards; }
+        .pj-anim.in-view .pj-g3 .pj-badge-g { animation: pj-fade 400ms ease-out 1400ms forwards, pj-pop 450ms cubic-bezier(0.34, 1.3, 0.64, 1) 1400ms forwards; }
+        .pj-anim.in-view .pj-area, .pj-anim.in-view .pj-guide { animation: pj-fade 700ms ease-out 1500ms forwards; }
+        .pj-anim.in-view .pj-tail { animation: pj-fade 400ms ease-out 1750ms forwards; }
+        .pj-anim.in-view .pj-tail-label { animation: pj-fade 400ms ease-out 1900ms forwards; }
         @keyframes pj-draw { to { stroke-dashoffset: 0; } }
         @keyframes pj-fade { to { opacity: 1; } }
+        @keyframes pj-pop { to { transform: scale(1); } }
         @media (prefers-reduced-motion: reduce) {
             .pj-anim .pj-seg1, .pj-anim .pj-seg2, .pj-anim .pj-seg3 { stroke-dasharray: none; stroke-dashoffset: 0; animation: none; }
-            .pj-anim .pj-tail, .pj-anim .pj-g1, .pj-anim .pj-g2, .pj-anim .pj-g3 { opacity: 1; animation: none; }
+            .pj-anim .pj-tail, .pj-anim .pj-g1, .pj-anim .pj-g2, .pj-anim .pj-g3,
+            .pj-anim .pj-area, .pj-anim .pj-guide, .pj-anim .pj-tail-label { opacity: 1; animation: none; }
+            .pj-anim .pj-badge-g { transform: scale(1); animation: none; }
         }
 
         /* Mobile stacked fallback */
         .pj-stages { display: none; }
         @media (max-width: 768px) {
+            .pathway-journey { padding: 30px 24px; }
             .pj-svg { display: none; }
             .pj-stages { display: grid; grid-template-columns: 1fr; gap: 28px; }
             .pj-stage { border-left: 3px solid var(--ath-teal); padding-left: 20px; }
