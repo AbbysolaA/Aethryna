@@ -44,7 +44,7 @@
                         <li><a href="{{ route('programs') }}#project-product">Project and Product Delivery</a></li>
                         <li><a href="{{ route('programs') }}#data-ai">Data and AI Analytics</a></li>
                         <li><a href="{{ route('programs') }}#digital-design">Digital Design and Marketing</a></li>
-                        <li><a href="{{ route('programs') }}#it-support">IT Support and Operations</a></li>
+                        <li><a href="{{ route('programs') }}#software-dev">Software Development</a></li>
                     </ul>
                 </div>
 

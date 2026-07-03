@@ -2,8 +2,8 @@
 
 @section('title', 'SkillsCo-op | Digital Skills for Real Careers')
 
-@section('meta_description', 'Funded digital skills programmes for people facing barriers to employment. Project and Product Delivery, Data and AI Analytics, Digital Design and Marketing, and IT Support. AI tools embedded throughout. Based in Liverpool, open across the UK.')
-@section('og_description', 'Funded digital skills programmes for people facing barriers to employment. Project and Product Delivery, Data and AI Analytics, Digital Design and Marketing, and IT Support. AI tools embedded throughout. Based in Liverpool, open across the UK.')
+@section('meta_description', 'Funded digital skills programmes for people facing barriers to employment. Project and Product Delivery, Data and AI Analytics, Digital Design and Marketing, and Software Development. AI tools embedded throughout. Based in Liverpool, open across the UK.')
+@section('og_description', 'Funded digital skills programmes for people facing barriers to employment. Project and Product Delivery, Data and AI Analytics, Digital Design and Marketing, and Software Development. AI tools embedded throughout. Based in Liverpool, open across the UK.')
 
 @section('content')
 
@@ -178,7 +178,7 @@
                 <div class="ath-step-card reveal-fade-up" style="--delay: 3">
                     <div class="ath-step-num">03</div>
                     <h4>Project Period (Weeks 13-24)</h4>
-                    <p>Twelve weeks working in a cross-pathway team on a real brief from an employer or community partner. You ship something real, present it, and earn your full Skills Co-op Certificate. From here: employment, freelancing, or building your own thing.</p>
+                    <p>Twelve weeks working in a cross-track team on a business idea you originate together, run like a real company: delivery learners map it and gather requirements, builders ship it, and the whole team markets and sells what it makes. Present it, earn your full Skills Co-op Certificate. From here: employment, freelancing, or building your own thing.</p>
                 </div>
             </div>
         </div>
@@ -225,16 +225,16 @@
                     <a href="{{ route('ai-labs') }}" class="ath-ai-link">AI is embedded throughout. See how &rarr;</a>
                 </div>
                 <div class="ath-prog-item reveal-fade-up" style="--delay: 4">
-                    <div class="ath-prog-icon"><i class="fas fa-tools"></i></div>
-                    <h3>IT Support and Operations</h3>
-                    <p>A fast, accessible route into digital work. Operating systems, troubleshooting, ticketing, user support, and AI-assisted support workflows. Roles: First-line IT Support, Service Desk Analyst, IT Operations.</p>
-                    <a href="{{ route('programs') }}#it-support" class="ath-link">Explore Track <i class="fas fa-arrow-right"></i></a>
+                    <div class="ath-prog-icon"><i class="fas fa-code"></i></div>
+                    <h3>Software Development</h3>
+                    <p>Build and ship working software. Web fundamentals, APIs, modern tooling, and AI-assisted development with verification built in. Roles: Junior Software Developer, Frontend Developer, Automation Developer.</p>
+                    <a href="{{ route('programs') }}#software-dev" class="ath-link">Explore Track <i class="fas fa-arrow-right"></i></a>
                     <a href="{{ route('ai-labs') }}" class="ath-ai-link">AI is embedded throughout. See how &rarr;</a>
                 </div>
             </div>
             <div class="ath-coming-soon-block reveal-fade-up" style="margin-top: 50px; text-align: center; background: #fff; padding: 35px 40px; border-radius: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.05); border: 1px solid rgba(3,139,137,0.1);">
                 <h4 style="color: var(--ath-deep); font-size: 1.2rem; margin-bottom: 10px;">More tracks coming with Cohort 2</h4>
-                <p style="color: var(--ath-muted); margin: 0;">Software Development, Cyber Security, Cloud and DevOps, and Tech Sales and Customer Success will launch with our second cohort.</p>
+                <p style="color: var(--ath-muted); margin: 0;">IT Support and Operations, Cyber Security, Cloud and DevOps, and Tech Sales and Customer Success will launch with our second cohort.</p>
             </div>
         </div>
     </section>

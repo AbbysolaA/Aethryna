@@ -280,12 +280,12 @@
                             </div>
                         </div>
                         <div class="track">
-                            <h4>IT Support and Operations</h4>
-                            <p>A fast, accessible route into digital work. Operating systems, troubleshooting, ticketing, user support, and AI-assisted support workflows.</p>
+                            <h4>Software Development</h4>
+                            <p>Build and ship working software. Web fundamentals, APIs, modern tooling, and AI-assisted development with verification built in.</p>
                             <div class="track-skills">
-                                <span>Troubleshooting</span>
-                                <span>Ticketing</span>
-                                <span>User support</span>
+                                <span>Web fundamentals</span>
+                                <span>APIs</span>
+                                <span>AI-assisted coding</span>
                             </div>
                         </div>
                     </div>
@@ -294,7 +294,7 @@
                         <h4 class="tracks-coming-title">Launching with Cohort 2</h4>
                         <div class="tracks-coming-grid">
                             <div class="track track--soon">
-                                <h4>Software Development</h4>
+                                <h4>IT Support and Operations</h4>
                                 <span class="soon-chip">Coming soon</span>
                             </div>
                             <div class="track track--soon">

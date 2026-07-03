@@ -391,24 +391,24 @@
                     <span>AI tools embedded: content creation, campaign strategy, brand assets</span>
                 </div>
             </div>
-            <!-- IT Support and Operations -->
+            <!-- Software Development -->
             <div class="analysis-card">
                 <div class="a-track-head">
-                    <i class="fas fa-headset"></i>
-                    <h3>IT Support and Operations</h3>
+                    <i class="fas fa-code"></i>
+                    <h3>Software Development</h3>
                 </div>
                 <div class="a-track-body">
                     <div class="a-metric">
                         <span class="a-label">Depth measure</span>
-                        <span class="a-val">Support documentation portfolio</span>
+                        <span class="a-val">Working software portfolio</span>
                     </div>
                     <div class="a-metric">
                         <span class="a-label">Durability target</span>
-                        <span class="a-val">IT support technician or service desk role</span>
+                        <span class="a-val">Junior developer or automation role</span>
                     </div>
                 </div>
                 <div class="a-track-footer">
-                    <span>AI tools embedded: troubleshooting guides, process automation, ticketing</span>
+                    <span>AI tools embedded: code generation with verification, testing, automation</span>
                 </div>
             </div>
         </div>
@@ -452,7 +452,7 @@
                         <i class="fas fa-check-circle"></i>
                         <div>
                             <strong>Four specialised tracks</strong>
-                            <span>Project Delivery, Data and AI, Digital Design and Marketing, and IT Support and Operations.</span>
+                            <span>Project Delivery, Data and AI, Digital Design and Marketing, and Software Development.</span>
                         </div>
                     </div>
                     <div class="i-check">

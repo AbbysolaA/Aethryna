@@ -134,9 +134,9 @@
                 <p>Redesigning a page or leaflet, building a social campaign, creating brand assets, writing and structuring digital content.</p>
             </div>
             <div class="brief-track">
-                <div class="bt-icon"><i class="fas fa-headset"></i></div>
-                <h3>IT Support and Operations</h3>
-                <p>Building a help guide, documenting a support process, researching a tooling solution, creating an onboarding walkthrough.</p>
+                <div class="bt-icon"><i class="fas fa-code"></i></div>
+                <h3>Software Development</h3>
+                <p>A small web app or internal tool, automating a manual process, or building a prototype you have not had the capacity to test.</p>
             </div>
         </div>
         <p class="briefs-note">Not sure if your challenge fits? Send it anyway. We will tell you honestly whether it is a good match and suggest adjustments if needed.</p>
@@ -230,7 +230,7 @@
                             <option value="Project and Product Delivery" {{ old('brief_type') === 'Project and Product Delivery' ? 'selected' : '' }}>Project and Product Delivery</option>
                             <option value="Data and AI Analytics" {{ old('brief_type') === 'Data and AI Analytics' ? 'selected' : '' }}>Data and AI Analytics</option>
                             <option value="Digital Design and Marketing" {{ old('brief_type') === 'Digital Design and Marketing' ? 'selected' : '' }}>Digital Design and Marketing</option>
-                            <option value="IT Support and Operations" {{ old('brief_type') === 'IT Support and Operations' ? 'selected' : '' }}>IT Support and Operations</option>
+                            <option value="Software Development" {{ old('brief_type') === 'Software Development' ? 'selected' : '' }}>Software Development</option>
                             <option value="Not sure" {{ old('brief_type') === 'Not sure' ? 'selected' : '' }}>Not sure yet</option>
                         </select>
                     </div>
