@@ -13,7 +13,7 @@
             <div class="narrative-content reveal-fade-up">
                 <span class="ath-badge">Pre-pilot</span>
                 <h1 class="ath-title">Stories from the <span class="ath-gradient-text">journey so far.</span></h1>
-                <p>We are pre-pilot. Our stories are the foundations we are laying: the conversations we have had, the network we are building, and the curriculum we have designed before a single learner joins.</p>
+                <p>Cohort 1 launches January 2027. Until it does, our stories are the foundations we are laying: the conversations we have had, the network we are building, and the curriculum we have designed before a single learner joins.</p>
                 <a href="#milestones" class="hero-scroll-invite" style="text-decoration: none; color: inherit; cursor: pointer;">
                     <span>Read the journey</span>
                     <div class="scroll-dot"></div>

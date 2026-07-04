@@ -88,12 +88,16 @@
                 @php
                     $icon = 'fa-laptop-code';
                     $colorClass = 'web-dev';
-                    if (stripos($pathway->name, 'Design') !== false) { $icon = 'fa-palette'; $colorClass = 'digital-design'; }
-                    elseif (stripos($pathway->name, 'Development') !== false || stripos($pathway->name, 'Web') !== false) { $icon = 'fa-code'; $colorClass = 'web-dev'; }
-                    elseif (stripos($pathway->name, 'Support') !== false || stripos($pathway->name, 'IT') !== false) { $icon = 'fa-tools'; $colorClass = 'it-support'; }
-                    elseif (stripos($pathway->name, 'Sales') !== false || stripos($pathway->name, 'Marketing') !== false) { $icon = 'fa-chart-line'; $colorClass = 'digital-sales'; }
+                    $anchorId = null;
+                    $nameLc = strtolower($pathway->name);
+                    if (str_contains($nameLc, 'project')) { $icon = 'fa-tasks'; $colorClass = 'web-dev'; $anchorId = 'project-product'; }
+                    elseif (str_contains($nameLc, 'data')) { $icon = 'fa-chart-bar'; $colorClass = 'digital-sales'; $anchorId = 'data-ai'; }
+                    elseif (str_contains($nameLc, 'design')) { $icon = 'fa-palette'; $colorClass = 'digital-design'; $anchorId = 'digital-design'; }
+                    elseif (str_contains($nameLc, 'software') || str_contains($nameLc, 'development') || str_contains($nameLc, 'web')) { $icon = 'fa-code'; $colorClass = 'web-dev'; $anchorId = 'software-dev'; }
+                    elseif (str_contains($nameLc, 'support') || str_contains($nameLc, 'it')) { $icon = 'fa-tools'; $colorClass = 'it-support'; }
+                    elseif (str_contains($nameLc, 'sales') || str_contains($nameLc, 'marketing')) { $icon = 'fa-chart-line'; $colorClass = 'digital-sales'; }
                 @endphp
-                <div class="track-card {{ $colorClass }}">
+                <div class="track-card {{ $colorClass }}" @if($anchorId) id="{{ $anchorId }}" @endif>
                     <div class="track-header">
                         <div class="track-icon">
                             <i class="fas {{ $icon }}"></i>

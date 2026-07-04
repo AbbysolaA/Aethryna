@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
         // Seed panel sessions and speakers
         $this->call([
             Panel1Seeder::class,
+            Panel2Seeder::class,
         ]);
     }
 }
