@@ -1,842 +1,694 @@
 @extends('layouts.aethryna')
 
-@section('title', 'About SkillsCo-op | Widening Access to Digital Skills & Meaningful Progression')
+@section('title', 'About SkillsCo-op | Digital skills for the people the system misses')
 
-@section('meta_description', 'Meet the team behind SkillsCo-op and learn how Aethryna Digital Skills Co-op CIC is widening access to digital careers for underserved communities across the UK.')
-@section('og_description', 'Meet the team behind SkillsCo-op and learn how Aethryna Digital Skills Co-op CIC is widening access to digital careers for underserved communities across the UK.')
+@section('meta_description', 'SkillsCo-op is a funded 25-week digital skills programme for people facing barriers to employment. We train whole economic units: craft, verification-first AI, and the operator basics to sell, support, and run your own work.')
+@section('og_description', 'SkillsCo-op is a funded 25-week digital skills programme for people facing barriers to employment. We train whole economic units: craft, verification-first AI, and the operator basics to sell, support, and run your own work.')
 
 @section('content')
 
-    <!-- Hero Section -->
-    <section class="about-hero">
-        <div class="hero-content">
-            <h1>About SkillsCo-op</h1>
-            <p>Widening access to digital skills and meaningful progression for underserved communities</p>
+<!-- Hero -->
+<section class="ab-hero">
+    <div class="ath-container">
+        <div class="ab-hero-inner">
+            <span class="ab-eyebrow">About SkillsCo-op</span>
+            <h1 class="ab-title">Digital skills for the people the system <span class="ab-gradient">misses.</span></h1>
+            <p class="ab-lede">SkillsCo-op is a funded 25-week digital skills programme built for people the traditional pipeline was never designed for. Career changers. Refugees. Young people out of work. People returning after prison, illness, or caring responsibilities. We teach them their craft, we embed AI as a working tool, and we teach them to sell, support, and run their own work. Graduates leave as whole economic units, not just specialists.</p>
+            <div class="ab-hero-actions">
+                <a href="{{ route('pathway') }}" class="ab-btn ab-btn-primary">See the pathway</a>
+                <a href="{{ route('partners') }}" class="ab-btn ab-btn-ghost">Partner with us</a>
+            </div>
         </div>
-        <div class="hero-shapes">
-            <div class="shape"></div>
-            <div class="shape"></div>
-            <div class="shape"></div>
-        </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Mission Section -->
-    <section class="mission">
-        <div class="section-title">
-            <h2>Our Mission</h2>
-            <p>Widening access to digital skills and meaningful career progression for underserved communities</p>
+<!-- Why we exist -->
+<section class="ab-why">
+    <div class="ath-container">
+        <div class="ab-why-grid">
+            <div class="ab-why-copy">
+                <span class="ath-sub">Why we exist</span>
+                <h2>The old pipeline was not built for everyone.</h2>
+                <p>Digital skills programmes in the UK reach the people already closest to the market. The bootcamp graduate who could pay the fee. The Russell Group student on a placement. The apprentice already inside a supportive employer. SkillsCo-op exists for everyone else.</p>
+                <p>We work with NEET young people, career changers, migrants and refugees, and justice-involved learners. We teach them the digital work employers now need, and we give them the operator basics so they never depend on a single employer to earn a living.</p>
+            </div>
+            <div class="ab-why-stats">
+                <div class="ab-stat-card">
+                    <div class="ab-stat-num">100%</div>
+                    <div class="ab-stat-lbl">of learner places are funded</div>
+                </div>
+                <div class="ab-stat-card">
+                    <div class="ab-stat-num">25</div>
+                    <div class="ab-stat-lbl">weeks from foundations to launch</div>
+                </div>
+                <div class="ab-stat-card">
+                    <div class="ab-stat-num">3</div>
+                    <div class="ab-stat-lbl">certificates along the journey</div>
+                </div>
+                <div class="ab-stat-card">
+                    <div class="ab-stat-num">4</div>
+                    <div class="ab-stat-lbl">pilot tracks for Cohort 1</div>
+                </div>
+            </div>
         </div>
-        <div class="mission-content">
-            <div class="mission-text">
-                <h3>Building Futures Together</h3>
-                <p>SkillsCo-op is a community-driven skills cooperative designed to widen access to digital skills and
-                    meaningful progression for underserved communities. Through our structured curriculum, pathways, and
-                    delivery architecture, we connect aspiring learners with experienced professionals who guide them toward
-                    achieving their personal and professional goals.</p>
-                <p>Our approach combines personalised mentorship with skill-building workshops, trauma-informed learning
-                    design, and community engagement opportunities that prepare learners for the challenges of tomorrow.</p>
+    </div>
+</section>
 
-                <div class="mission-stats">
-                    <div class="stat">
-                        <span class="stat-number">4</span>
-                        <span class="stat-label">Specialist Tracks</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">100%</span>
-                        <span class="stat-label">Tuition Funded</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">3</span>
-                        <span class="stat-label">Phase Pathway</span>
-                    </div>
-                </div>
-            </div>
-            <div class="mission-image">
-                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=870&auto=format&fit=crop"
-                    alt="Community learning and collaboration">
-            </div>
+<!-- What makes us different -->
+<section class="ab-pillars">
+    <div class="ath-container">
+        <div class="ab-pillars-header">
+            <span class="ath-sub">The Skills Co-op difference</span>
+            <h2>Four things you will not find bundled anywhere else.</h2>
         </div>
-    </section>
+        <div class="ab-pillars-grid">
+            <article class="ab-pillar">
+                <span class="ab-pillar-num">01</span>
+                <h3>Verification-first AI</h3>
+                <p>Every learner uses AI from week one, and every learner is trained to check its output, spot bias, and override it when it is wrong. The habit is called the AI Method.</p>
+                <a href="{{ route('ai-labs') }}" class="ab-pillar-link">Read about the AI Method &rarr;</a>
+            </article>
+            <article class="ab-pillar">
+                <span class="ab-pillar-num">02</span>
+                <h3>The Operator Core</h3>
+                <p>Sell your work. Support your work. Run your work with AI. Taught to every learner in every track, so graduates can market and deliver a service on the day they leave.</p>
+                <a href="{{ route('pathway') }}#operator-core" class="ab-pillar-link">See the Operator Core &rarr;</a>
+            </article>
+            <article class="ab-pillar">
+                <span class="ab-pillar-num">03</span>
+                <h3>The Venture Track</h3>
+                <p>The last twelve weeks are not a hypothetical brief. Teams originate a business idea, run the professional handoff chain, ship it, then launch and sell it. Or take a Brief Track for those pursuing employment.</p>
+                <a href="{{ route('pathway') }}" class="ab-pillar-link">See the 25-week journey &rarr;</a>
+            </article>
+            <article class="ab-pillar">
+                <span class="ab-pillar-num">04</span>
+                <h3>Trauma-informed by design</h3>
+                <p>Every part of the programme, from ideation to graduation, is built around dignity, psychological safety, and belonging. Not as a bolt-on. As the foundation.</p>
+                <a href="{{ route('impact') }}" class="ab-pillar-link">See our Outcomes Framework &rarr;</a>
+            </article>
+        </div>
+    </div>
+</section>
 
-    <!-- Values Section -->
-    <section class="values">
-        <div class="section-title">
-            <h2>Our Core Values</h2>
-            <p>The principles that guide everything we do</p>
+<!-- Team -->
+<section class="ab-team">
+    <div class="ath-container">
+        <div class="ab-team-header">
+            <span class="ath-sub">The Team</span>
+            <h2>Practitioners across data, learning, and community</h2>
+            <p>SkillsCo-op is designed and delivered by people who have themselves navigated non-traditional routes into digital work. The founding team brings expertise across data science, project delivery, behavioural design, and enterprise technology.</p>
         </div>
-        <div class="values-grid">
-            <div class="value-card">
-                <div class="value-icon">
-                    <i class="fas fa-hands-helping"></i>
+        <div class="ab-team-grid">
+            <article class="ab-member">
+                <div class="ab-member-photo" style="background-image:url('{{ asset('images/team/abisola.jpg') }}');">
+                    <div class="ab-member-gradient"></div>
                 </div>
-                <h3>Mentorship</h3>
-                <p>We believe in the power of one-on-one relationships to transform lives and build lasting connections
-                    between mentors and learners.</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon">
-                    <i class="fas fa-graduation-cap"></i>
-                </div>
-                <h3>Accessibility</h3>
-                <p>Quality education and skill development are fundamental rights. We provide accessible, fully funded
-                    learning opportunities for all.</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon">
-                    <i class="fas fa-heart"></i>
-                </div>
-                <h3>Dignity & Belonging</h3>
-                <p>Every learner journey is built on evidence, dignity, and belonging. We design trauma-informed,
-                    psychologically safe learning experiences.</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <h3>Community</h3>
-                <p>Strong communities are built on collaboration and support. We foster inclusive environments where
-                    everyone can thrive.</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon">
-                    <i class="fas fa-lightbulb"></i>
-                </div>
-                <h3>Innovation</h3>
-                <p>We embrace AI-driven products, data science, and new technologies to create better solutions for digital
-                    skills development.</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon">
-                    <i class="fas fa-balance-scale"></i>
-                </div>
-                <h3>Equity</h3>
-                <p>We are committed to addressing systemic barriers and ensuring equal opportunities for all, regardless of
-                    background.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Team Section -->
-    <section class="team">
-        <div class="section-title">
-            <h2>Our Leadership Team</h2>
-            <p>Meet the passionate individuals driving the SkillsCo-op mission forward</p>
-        </div>
-        <div class="team-grid">
-            <!-- Abisola Areola -->
-            <div class="team-member">
-                <div class="member-image">
-                    <img src="{{ asset('images/team/abisola.jpg') }}" alt="Abisola Areola">
-                </div>
-                <div class="member-info">
+                <div class="ab-member-body">
+                    <div class="ab-member-role">Founder &amp; Executive Director</div>
                     <h3>Abisola Areola</h3>
-                    <p class="member-role">Founder & Executive Director</p>
-                    <p class="member-credentials">Project Manager &bull; Data Analyst &bull; AI & Digital Transformation</p>
-                    <p class="member-bio">Data analytics and project management professional who designed the entire
-                        SkillsCo-op model; curriculum, pathways, and delivery architecture to widen access to digital skills
-                        and meaningful progression for underserved communities.</p>
+                    <p class="ab-member-cred">Project Manager · Data Analyst · AI &amp; Digital Transformation</p>
+                    <p class="ab-member-bio">Data analytics and project management professional who designed the entire SkillsCo-op model: the curriculum, pathways, and delivery architecture that widens access to digital skills and meaningful progression for underserved communities.</p>
                 </div>
-            </div>
-
-            <!-- Farouk Abdulrazaq -->
-            <div class="team-member">
-                <div class="member-image">
-                    <img src="{{ asset('images/team/farouk.jpg') }}" alt="Farouk Abdulrazaq">
+            </article>
+            <article class="ab-member">
+                <div class="ab-member-photo" style="background-image:url('{{ asset('images/team/farouk.jpg') }}');">
+                    <div class="ab-member-gradient"></div>
                 </div>
-                <div class="member-info">
+                <div class="ab-member-body">
+                    <div class="ab-member-role">Director of Learner Wellbeing, Safeguarding &amp; Behavioural Design</div>
                     <h3>Saheed Bello</h3>
-                    <p class="member-role">Director of learner wellbeing, safeguarding & behavioural design</p>
-                    <p class="member-credentials">MSc Social Psychology PhD Researcher</p>
-                    <p class="member-bio">Leads the design of trauma-informed, psychologically safe learning experiences
-                        across all SkillsCo-op programmes, ensuring every learner journey is built on evidence, dignity, and
-                        belonging.</p>
+                    <p class="ab-member-cred">MSc Social Psychology · PhD Researcher</p>
+                    <p class="ab-member-bio">Leads the design of trauma-informed, psychologically safe learning experiences across every SkillsCo-op programme, ensuring every learner journey is built on evidence, dignity, and belonging.</p>
                 </div>
-            </div>
-
-            <!-- Saheed Bello -->
-            <div class="team-member">
-                <div class="member-image">
-                    <img src="{{ asset('images/team/saheed.jpg') }}" alt="Saheed Bello">
+            </article>
+            <article class="ab-member">
+                <div class="ab-member-photo" style="background-image:url('{{ asset('images/team/saheed.jpg') }}');">
+                    <div class="ab-member-gradient"></div>
                 </div>
-                <div class="member-info">
+                <div class="ab-member-body">
+                    <div class="ab-member-role">Adviser · Enterprise Technology &amp; Go-To-Market</div>
                     <h3>Seun Adetule</h3>
-                    <p class="member-role">UK Global Tech Talent Awardee</p>
-                    <p class="member-credentials">AI & Digital Transformation B2B SaaS Sales</p>
-                    <p class="member-bio">Over a decade of experience in enterprise technology, Go-To-Market strategy, and
-                        AI-driven business growth. Brings expertise in scaling technology ventures to SkillsCo-op's mission.
-                    </p>
+                    <p class="ab-member-cred">UK Global Tech Talent Awardee · AI &amp; B2B SaaS Sales</p>
+                    <p class="ab-member-bio">Over a decade of experience in enterprise technology, go-to-market strategy, and AI-driven business growth. Brings expertise in scaling technology ventures to the SkillsCo-op mission.</p>
                 </div>
-            </div>
-
-            <!-- Idowu Seun Adetule -->
-            <div class="team-member">
-                <div class="member-image">
-                    <img src="{{ asset('images/team/idowu.jpg') }}" alt="Idowu Seun Adetule">
+            </article>
+            <article class="ab-member">
+                <div class="ab-member-photo" style="background-image:url('{{ asset('images/team/idowu.jpg') }}');">
+                    <div class="ab-member-gradient"></div>
                 </div>
-                <div class="member-info">
+                <div class="ab-member-body">
+                    <div class="ab-member-role">Adviser · Data, AI &amp; Impact Technology</div>
                     <h3>Farouk Adams</h3>
-                    <p class="member-role">Adviser - data, AI & impact technology</p>
-                    <p class="member-credentials">MSc Data Science - STEM Ambassador</p>
-                    <p class="member-bio">Data scientist and health-tech innovator with experience building AI-driven
-                        products in education and healthcare. Co-founder of Soraflake, bringing deep expertise in using data
-                        and machine learning to improve outcomes for underserved communities.
-                    </p>
+                    <p class="ab-member-cred">MSc Data Science · STEM Ambassador</p>
+                    <p class="ab-member-bio">Data scientist and health-tech innovator with experience building AI-driven products in education and healthcare. Co-founder of Soraflake, bringing deep expertise in using data and machine learning to improve outcomes for underserved communities.</p>
                 </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- Values -->
+<section class="ab-values">
+    <div class="ath-container">
+        <div class="ab-values-header">
+            <span class="ath-sub">What we stand for</span>
+            <h2>Six principles we test every decision against</h2>
+        </div>
+        <div class="ab-values-grid">
+            <div class="ab-value">
+                <div class="ab-value-icon"><i class="fas fa-hands-helping"></i></div>
+                <h3>Mentorship</h3>
+                <p>Real relationships between working professionals and learners, not scripted content.</p>
+            </div>
+            <div class="ab-value">
+                <div class="ab-value-icon"><i class="fas fa-unlock-alt"></i></div>
+                <h3>Accessibility</h3>
+                <p>Quality is a right, not a paywall. Every place is fully funded and every learner has a path in.</p>
+            </div>
+            <div class="ab-value">
+                <div class="ab-value-icon"><i class="fas fa-heart"></i></div>
+                <h3>Dignity &amp; Belonging</h3>
+                <p>Trauma-informed and psychologically safe. Nobody is asked to perform who they are not.</p>
+            </div>
+            <div class="ab-value">
+                <div class="ab-value-icon"><i class="fas fa-users"></i></div>
+                <h3>Community</h3>
+                <p>Membership does not end with the cohort. Alumni become mentors, co-founders, and hiring partners.</p>
+            </div>
+            <div class="ab-value">
+                <div class="ab-value-icon"><i class="fas fa-robot"></i></div>
+                <h3>AI with judgement</h3>
+                <p>AI does the bulk of the work. Humans provide checks, judgement, verification, direction, and ethics.</p>
+            </div>
+            <div class="ab-value">
+                <div class="ab-value-icon"><i class="fas fa-balance-scale"></i></div>
+                <h3>Equity</h3>
+                <p>Barriers are systemic. So are the solutions. We remove structural friction, not just individual friction.</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- History Section -->
-    <section class="history">
-        <div class="section-title">
-            <h2>Our Story</h2>
-            <p>How SkillsCo-op came to be</p>
+<!-- Timeline -->
+<section class="ab-story">
+    <div class="ath-container">
+        <div class="ab-story-header">
+            <span class="ath-sub">How we got here</span>
+            <h2>A short history of the model</h2>
         </div>
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <h3>The Vision</h3>
-                    <p>SkillsCo-op was born from a recognition that too many talented individuals in underserved communities
-                        lacked access to quality digital skills training and meaningful career pathways.</p>
-                </div>
-                <div class="timeline-marker"></div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <h3>The Model</h3>
-                    <p>Our founder Abisola Areola designed the entire SkillsCo-op model (curriculum, pathways, and
-                        delivery architecture), drawing on her expertise in data analytics, project management, and
-                        digital transformation.</p>
-                </div>
-                <div class="timeline-marker"></div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <h3>Building the Team</h3>
-                    <p>Assembled a team of experts across data science, social psychology, enterprise technology, and
-                        community development to create an integrated approach to skills training.</p>
-                </div>
-                <div class="timeline-marker"></div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <h3>The Pathway</h3>
-                    <p>Designed the 25-week Skills Co-op Pathway around four pilot tracks: Project and Product Delivery, Data and AI Analytics, Digital Design and Marketing, and Software Development. Every place fully funded.</p>
-                </div>
-                <div class="timeline-marker"></div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <h3>Looking Ahead</h3>
-                    <p>Expanding our impact through monthly panel sessions, AI-powered assessment tools, and deeper
-                        community partnerships to reach more underserved learners across the UK.</p>
-                </div>
-                <div class="timeline-marker"></div>
-            </div>
-        </div>
-    </section>
+        <ol class="ab-timeline">
+            <li>
+                <span class="ab-time-tag">The Question</span>
+                <h3>What would a different pipeline look like?</h3>
+                <p>SkillsCo-op began with a recognition: talented people in underserved communities were being routinely passed over by digital skills programmes designed around learners who already had a way in.</p>
+            </li>
+            <li>
+                <span class="ab-time-tag">The Model</span>
+                <h3>Curriculum, pathways, and delivery architecture</h3>
+                <p>Founder Abisola Areola designed the whole model: 25 weeks, three certificates, four tracks, an operator core, and a project period that ends with a real venture or a real employer brief.</p>
+            </li>
+            <li>
+                <span class="ab-time-tag">The Team</span>
+                <h3>Practitioners across the disciplines the model needs</h3>
+                <p>Data science, social psychology, enterprise technology, and community development, brought together around a single mission and a shared operating language.</p>
+            </li>
+            <li>
+                <span class="ab-time-tag">The Pathway</span>
+                <h3>Four pilot tracks, all fully funded</h3>
+                <p>Project and Product Delivery, Data and AI Analytics, Digital Design and Marketing, and Software Development, each with AI embedded from week one and the operator core running through every module.</p>
+            </li>
+            <li>
+                <span class="ab-time-tag">Now</span>
+                <h3>Cohort 1 launches January 2027</h3>
+                <p>Thirty founding places. The AI Labs Practice Space live from day one. The panel sessions running monthly. The flight path to the AI Labs Fellowship in 2027 already public.</p>
+            </li>
+        </ol>
+    </div>
+</section>
 
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="cta-content">
-            <h2>Join Our Mission</h2>
-            <p>Whether you're seeking digital skills growth or a professional wanting to mentor, there's a place for you at
-                SkillsCo-op.</p>
-            <div class="cta-buttons">
-                <a href="{{ route('register') }}" class="btn btn-primary">Become a Learner</a>
-                <a href="mailto:hello@skillscoop.org" class="btn btn-outline">Become a Mentor</a>
+<!-- CTA -->
+<section class="ab-cta">
+    <div class="ath-container">
+        <div class="ab-cta-grid">
+            <div class="ab-cta-card ab-cta-learner">
+                <span class="ab-cta-eyebrow">For learners</span>
+                <h3>Ready to build your own way in?</h3>
+                <p>Applications for the founding cohort are open now. Places are limited to thirty.</p>
+                <a href="{{ route('register') }}" class="ab-btn ab-btn-primary">Start your application</a>
+            </div>
+            <div class="ab-cta-card ab-cta-partner">
+                <span class="ab-cta-eyebrow">For partners</span>
+                <h3>Back the pipeline, or bring a brief.</h3>
+                <p>Fund a place, share a real business challenge, or offer a placement to a graduating cohort.</p>
+                <a href="{{ route('partners') }}" class="ab-btn ab-btn-ghost">Partner with us</a>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
+@push('styles')
+<link href="https://fonts.bunny.net/css?family=ibm-plex-mono:500,600&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --ath-teal: #038b89;
+        --ath-gold: #ee9d1d;
+        --ath-deep: #055860;
+        --ath-navy: #0a2530;
+        --ath-light: #F8FBFB;
+        --ath-text: #404952;
+        --ath-muted: #57616a;
+        --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+    }
+
+    .ath-container { max-width: 1250px; margin: 0 auto; padding: 0 5%; }
+
+    /* ── Hero ────────────────────────────────────────────────────────── */
+    .ab-hero {
+        padding: 180px 0 100px;
+        background: linear-gradient(180deg, var(--ath-deep) 0%, var(--ath-navy) 100%);
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+    }
+    .ab-hero::after {
+        content: '';
+        position: absolute;
+        top: -20%; right: -10%;
+        width: 60%; height: 130%;
+        background: radial-gradient(closest-side, rgba(238,157,29,0.16), transparent 70%);
+        pointer-events: none;
+    }
+    .ab-hero-inner { max-width: 880px; position: relative; z-index: 1; }
+    .ab-eyebrow {
+        display: inline-block;
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
+        font-weight: 600;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--ath-gold);
+        margin-bottom: 22px;
+        padding-left: 14px;
+        border-left: 4px solid var(--ath-gold);
+    }
+    .ab-title {
+        font-family: 'Outfit', sans-serif;
+        font-size: clamp(2.4rem, 6vw, 4.2rem);
+        font-weight: 800;
+        line-height: 1.05;
+        margin-bottom: 26px;
+    }
+    .ab-gradient {
+        background: linear-gradient(135deg, var(--ath-gold), #fff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .ab-lede {
+        font-size: 1.15rem;
+        line-height: 1.75;
+        color: rgba(255,255,255,0.82);
+        max-width: 780px;
+        margin-bottom: 36px;
+    }
+    .ab-hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .ab-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 28px;
+        border-radius: 100px;
+        font-weight: 700;
+        font-size: 0.98rem;
+        text-decoration: none;
+        transition: all 0.25s ease;
+    }
+    .ab-btn-primary { background: var(--ath-gold); color: #fff; }
+    .ab-btn-primary:hover { background: #fff; color: var(--ath-navy); transform: translateY(-2px); }
+    .ab-btn-ghost {
+        background: rgba(255,255,255,0.06);
+        color: #fff;
+        border: 1px solid rgba(255,255,255,0.18);
+    }
+    .ab-btn-ghost:hover { background: rgba(255,255,255,0.12); }
+
+    .ath-sub {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--ath-gold);
+        margin-bottom: 12px;
+    }
+
+    /* ── Why we exist ─────────────────────────────────────────────────── */
+    .ab-why { padding: 110px 0; background: #fff; }
+    .ab-why-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 80px;
+        align-items: center;
+    }
+    .ab-why-copy h2 {
+        font-family: 'Outfit', sans-serif;
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+        color: var(--ath-deep);
+        font-weight: 800;
+        line-height: 1.15;
+        margin-bottom: 22px;
+    }
+    .ab-why-copy p {
+        color: var(--ath-text);
+        font-size: 1.05rem;
+        line-height: 1.75;
+        margin-bottom: 16px;
+    }
+    .ab-why-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+    }
+    .ab-stat-card {
+        background: var(--ath-light);
+        border: 1px solid rgba(3,139,137,0.1);
+        border-radius: 20px;
+        padding: 28px 24px;
+        transition: border-color 0.3s, transform 0.3s;
+    }
+    .ab-stat-card:hover { border-color: var(--ath-teal); transform: translateY(-4px); }
+    .ab-stat-num {
+        font-family: 'Outfit', sans-serif;
+        font-size: clamp(2rem, 5vw, 2.8rem);
+        font-weight: 800;
+        color: var(--ath-teal);
+        line-height: 1;
+        margin-bottom: 8px;
+    }
+    .ab-stat-lbl { color: var(--ath-muted); font-size: 0.92rem; line-height: 1.5; }
+
+    /* ── Pillars ─────────────────────────────────────────────────────── */
+    .ab-pillars { padding: 110px 0; background: var(--ath-light); }
+    .ab-pillars-header { max-width: 780px; margin-bottom: 50px; }
+    .ab-pillars-header h2 {
+        font-family: 'Outfit', sans-serif;
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+        color: var(--ath-deep);
+        font-weight: 800;
+        line-height: 1.15;
+    }
+    .ab-pillars-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+    }
+    .ab-pillar {
+        background: #fff;
+        border: 1px solid rgba(3,139,137,0.1);
+        border-radius: 24px;
+        padding: 36px;
+        transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        position: relative;
+    }
+    .ab-pillar:hover {
+        border-color: var(--ath-gold);
+        transform: translateY(-4px);
+        box-shadow: 0 20px 60px rgba(3,139,137,0.08);
+    }
+    .ab-pillar-num {
+        display: inline-block;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        color: var(--ath-gold);
+        margin-bottom: 14px;
+        padding: 4px 10px;
+        border-radius: 100px;
+        background: rgba(238,157,29,0.12);
+    }
+    .ab-pillar h3 {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.4rem;
+        color: var(--ath-deep);
+        font-weight: 800;
+        margin-bottom: 12px;
+    }
+    .ab-pillar p {
+        color: var(--ath-muted);
+        line-height: 1.7;
+        margin-bottom: 18px;
+    }
+    .ab-pillar-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--ath-teal);
+        font-weight: 700;
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: gap 0.2s;
+    }
+    .ab-pillar-link:hover { gap: 14px; color: var(--ath-gold); }
+
+    /* ── Team ────────────────────────────────────────────────────────── */
+    .ab-team { padding: 110px 0; background: #fff; }
+    .ab-team-header { max-width: 780px; margin-bottom: 50px; }
+    .ab-team-header h2 {
+        font-family: 'Outfit', sans-serif;
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+        color: var(--ath-deep);
+        font-weight: 800;
+        line-height: 1.15;
+        margin-bottom: 16px;
+    }
+    .ab-team-header p {
+        color: var(--ath-muted);
+        font-size: 1.05rem;
+        line-height: 1.7;
+    }
+    .ab-team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 28px;
+    }
+    .ab-member {
+        background: var(--ath-navy);
+        border-radius: 24px;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.08);
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s, border-color 0.3s;
+    }
+    .ab-member:hover { transform: translateY(-6px); border-color: rgba(238,157,29,0.4); }
+    .ab-member-photo {
+        aspect-ratio: 4 / 5;
+        position: relative;
+        background-color: #12303c;
+        background-size: cover;
+        background-position: center top;
+    }
+    .ab-member-gradient {
+        position: absolute; inset: 0;
+        background: linear-gradient(180deg, transparent 40%, rgba(10,37,48,0.7) 78%, var(--ath-navy) 100%);
+    }
+    .ab-member-body {
+        padding: 26px 28px 30px;
+        margin-top: -10px;
+        color: #fff;
+    }
+    .ab-member-role {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--ath-gold);
+        margin-bottom: 10px;
+    }
+    .ab-member h3 {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        margin-bottom: 8px;
+        display: inline-block;
+        border-bottom: 3px solid var(--ath-gold);
+        padding-bottom: 2px;
+    }
+    .ab-member-cred {
+        color: rgba(255,255,255,0.75);
+        font-size: 0.92rem;
+        margin-bottom: 12px;
+    }
+    .ab-member-bio {
+        color: rgba(255,255,255,0.7);
+        font-size: 0.92rem;
+        line-height: 1.7;
+    }
+
+    /* ── Values ──────────────────────────────────────────────────────── */
+    .ab-values { padding: 110px 0; background: var(--ath-light); }
+    .ab-values-header { max-width: 780px; margin-bottom: 50px; }
+    .ab-values-header h2 {
+        font-family: 'Outfit', sans-serif;
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+        color: var(--ath-deep);
+        font-weight: 800;
+        line-height: 1.15;
+    }
+    .ab-values-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+    }
+    .ab-value {
+        background: #fff;
+        border: 1px solid rgba(3,139,137,0.08);
+        border-radius: 20px;
+        padding: 28px;
+        transition: border-color 0.3s, transform 0.3s;
+    }
+    .ab-value:hover { border-color: var(--ath-teal); transform: translateY(-3px); }
+    .ab-value-icon {
+        width: 50px; height: 50px;
+        background: rgba(3,139,137,0.1);
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--ath-teal);
+        font-size: 1.25rem;
+        margin-bottom: 18px;
+    }
+    .ab-value h3 {
+        font-family: 'Outfit', sans-serif;
+        color: var(--ath-deep);
+        font-weight: 800;
+        font-size: 1.15rem;
+        margin-bottom: 8px;
+    }
+    .ab-value p { color: var(--ath-muted); line-height: 1.7; font-size: 0.95rem; }
+
+    /* ── Timeline ────────────────────────────────────────────────────── */
+    .ab-story { padding: 110px 0; background: #fff; }
+    .ab-story-header { max-width: 780px; margin-bottom: 50px; }
+    .ab-story-header h2 {
+        font-family: 'Outfit', sans-serif;
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+        color: var(--ath-deep);
+        font-weight: 800;
+        line-height: 1.15;
+    }
+    .ab-timeline {
+        list-style: none;
+        padding: 0 0 0 34px;
+        margin: 0;
+        max-width: 900px;
+        position: relative;
+    }
+    .ab-timeline::before {
+        content: '';
+        position: absolute;
+        left: 0; top: 20px; bottom: 20px;
+        width: 3px;
+        background: linear-gradient(180deg, var(--ath-teal) 0%, var(--ath-gold) 100%);
+        border-radius: 2px;
+    }
+    .ab-timeline li {
+        position: relative;
+        padding: 24px 32px 30px;
+        margin-bottom: 20px;
+        background: var(--ath-light);
+        border-radius: 20px;
+        border: 1px solid rgba(3,139,137,0.08);
+    }
+    .ab-timeline li::before {
+        content: '';
+        position: absolute;
+        left: -42px; top: 34px;
+        width: 14px; height: 14px;
+        background: var(--ath-gold);
+        border: 3px solid #fff;
+        border-radius: 50%;
+        box-shadow: 0 0 0 3px rgba(238,157,29,0.2);
+    }
+    .ab-time-tag {
+        display: inline-block;
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--ath-teal);
+        margin-bottom: 8px;
+    }
+    .ab-timeline h3 {
+        font-family: 'Outfit', sans-serif;
+        color: var(--ath-deep);
+        font-weight: 800;
+        font-size: 1.2rem;
+        margin-bottom: 8px;
+    }
+    .ab-timeline p { color: var(--ath-text); line-height: 1.7; margin: 0; }
+
+    /* ── CTA ─────────────────────────────────────────────────────────── */
+    .ab-cta { padding: 100px 0; background: var(--ath-light); }
+    .ab-cta-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+    }
+    .ab-cta-card {
+        border-radius: 28px;
+        padding: 50px;
+    }
+    .ab-cta-learner { background: linear-gradient(135deg, var(--ath-teal), var(--ath-deep)); color: #fff; }
+    .ab-cta-partner { background: var(--ath-navy); color: #fff; position: relative; overflow: hidden; }
+    .ab-cta-partner::before {
+        content: '';
+        position: absolute;
+        top: -30%; right: -20%;
+        width: 70%; height: 130%;
+        background: radial-gradient(closest-side, rgba(238,157,29,0.18), transparent 70%);
+        pointer-events: none;
+    }
+    .ab-cta-card > * { position: relative; z-index: 1; }
+    .ab-cta-eyebrow {
+        display: inline-block;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--ath-gold);
+        margin-bottom: 14px;
+    }
+    .ab-cta-card h3 {
+        font-family: 'Outfit', sans-serif;
+        font-size: clamp(1.6rem, 3vw, 2rem);
+        font-weight: 800;
+        margin-bottom: 12px;
+    }
+    .ab-cta-card p {
+        color: rgba(255,255,255,0.85);
+        line-height: 1.7;
+        margin-bottom: 26px;
+    }
+
+    /* ── Responsive ──────────────────────────────────────────────────── */
+    @media (max-width: 992px) {
+        .ab-why-grid { grid-template-columns: 1fr; gap: 50px; }
+        .ab-pillars-grid { grid-template-columns: 1fr; }
+        .ab-cta-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+        .ab-hero { padding: 140px 0 80px; }
+        .ab-why-stats { grid-template-columns: 1fr; }
+        .ab-cta-card { padding: 36px 28px; }
+    }
+</style>
+@endpush
 
-    @push('styles')
-        <style>
-            :root {
-                --ath-teal: #038b89;
-                --ath-gold: #ee9d1d;
-                --ath-deep: #055860;
-                --ath-light: #F8FBFB;
-                --ath-white: #ffffff;
-                --ath-text: #404952;
-                --ath-muted: #57616a;
-                --ath-trans: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-                --ath-radius: 24px;
-            }
-
-            /* General Section Header */
-            .section-title {
-                text-align: left;
-                margin-bottom: 3rem;
-                max-width: 1200px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            .section-title h2,
-            .mission-text h3 {
-                font-size: clamp(2.2rem, 4vw, 3rem);
-                color: var(--ath-deep);
-                font-weight: 800;
-                margin-bottom: 1rem;
-                line-height: 1.2;
-            }
-
-            .section-title p {
-                font-size: 1.2rem;
-                color: var(--ath-muted);
-                line-height: 1.6;
-                max-width: 800px;
-            }
-
-            /* About Hero Section */
-            .about-hero {
-                height: 60vh;
-                background: linear-gradient(135deg, var(--ath-deep), var(--ath-teal));
-                background-size: cover;
-                background-position: center;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
-                color: white;
-                position: relative;
-                overflow: hidden;
-            }
-
-            .about-hero .hero-content h1 {
-                font-size: clamp(3rem, 8vw, 5rem);
-                font-weight: 800;
-                margin-bottom: 1.5rem;
-                text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-            }
-
-            .about-hero .hero-content p {
-                font-size: 1.4rem;
-                max-width: 700px;
-                margin: 0 auto;
-                opacity: 0.9;
-            }
-
-            .hero-shapes {
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                top: 0;
-                left: 0;
-                pointer-events: none;
-            }
-
-            .hero-shapes .shape {
-                position: absolute;
-                background: linear-gradient(135deg, var(--ath-teal), transparent);
-                border-radius: 50%;
-                filter: blur(40px);
-                opacity: 0.3;
-                animation: float 8s ease-in-out infinite;
-            }
-
-            .hero-shapes .shape:nth-child(1) {
-                width: 300px;
-                height: 300px;
-                top: 10%;
-                left: 5%;
-                animation-delay: 0s;
-            }
-
-            .hero-shapes .shape:nth-child(2) {
-                width: 200px;
-                height: 200px;
-                top: 60%;
-                right: 10%;
-                animation-delay: 2s;
-                background: linear-gradient(135deg, var(--ath-gold), transparent);
-            }
-
-            .hero-shapes .shape:nth-child(3) {
-                width: 150px;
-                height: 150px;
-                bottom: 20%;
-                left: 20%;
-                animation-delay: 4s;
-            }
-
-            @keyframes float {
-
-                0%,
-                100% {
-                    transform: translateY(0px) rotate(0deg) scale(1);
-                }
-
-                50% {
-                    transform: translateY(-40px) rotate(180deg) scale(1.1);
-                }
-            }
-
-            /* Mission Section */
-            .mission {
-                padding: 100px 5%;
-                background: var(--ath-light);
-                margin-top: -50px;
-                position: relative;
-                z-index: 10;
-            }
-
-            .mission-content {
-                max-width: 1200px;
-                margin: 0 auto;
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 5rem;
-                align-items: center;
-            }
-
-            .mission-text p {
-                font-size: 1.1rem;
-                margin-bottom: 2rem;
-                color: var(--ath-text);
-                line-height: 1.8;
-            }
-
-            .mission-stats {
-                display: flex;
-                gap: 3rem;
-                margin-top: 3rem;
-            }
-
-            .mission-stats .stat {
-                text-align: center;
-            }
-
-            .mission-stats .stat-number {
-                font-size: 2.5rem;
-                font-weight: 800;
-                color: var(--ath-teal);
-                display: block;
-            }
-
-            .mission-stats .stat-label {
-                font-size: 1rem;
-                color: var(--ath-text);
-                margin-top: 0.5rem;
-            }
-
-            .mission-image img {
-                width: 100%;
-                border-radius: var(--ath-radius);
-                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
-            }
-
-            /* Values Section */
-            .values {
-                padding: 8rem 5%;
-                background: white;
-            }
-
-            .values-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-                gap: 3rem;
-                max-width: 1200px;
-                margin: 0 auto;
-            }
-
-            .value-card {
-                background: var(--ath-light);
-                padding: 3rem 2rem;
-                border-radius: var(--ath-radius);
-                text-align: center;
-                transition: var(--ath-trans);
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-                position: relative;
-                overflow: hidden;
-            }
-
-            .value-card::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 5px;
-                background: linear-gradient(90deg, var(--ath-teal), var(--ath-gold));
-            }
-
-            .value-card:hover {
-                transform: translateY(-10px);
-                box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
-            }
-
-            .value-icon {
-                width: 80px;
-                height: 80px;
-                background: linear-gradient(135deg, var(--ath-teal), var(--ath-gold));
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin: 0 auto 2rem;
-                color: white;
-                font-size: 2rem;
-                transition: var(--ath-trans);
-            }
-
-            .value-card:hover .value-icon {
-                transform: scale(1.1);
-            }
-
-            .value-card h3 {
-                font-size: 1.5rem;
-                margin-bottom: 1.5rem;
-                color: var(--ath-deep);
-            }
-
-            .value-card p {
-                color: var(--ath-text);
-                line-height: 1.7;
-            }
-
-            /* Team Section */
-            .team {
-                padding: 100px 5%;
-                background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            }
-
-            .team-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 3rem;
-                max-width: 1200px;
-                margin: 0 auto;
-            }
-
-            .team-member {
-                background: white;
-                border-radius: var(--ath-radius);
-                overflow: hidden;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-                transition: var(--ath-trans);
-            }
-
-            .team-member:hover {
-                transform: translateY(-10px);
-                box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
-            }
-
-            .member-image {
-                height: 260px;
-                overflow: hidden;
-            }
-
-            .member-image img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                transition: var(--ath-trans);
-            }
-
-            .team-member:hover .member-image img {
-                transform: scale(1.05);
-            }
-
-            .member-info {
-                padding: 2rem;
-            }
-
-            .member-info h3 {
-                font-size: 1.4rem;
-                margin-bottom: 0.5rem;
-                color: var(--ath-deep);
-                font-weight: 700;
-            }
-
-            .member-role {
-                color: var(--ath-gold);
-                font-weight: 600;
-                margin-bottom: 0.5rem;
-                font-size: 0.9rem;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-            }
-
-            .member-credentials {
-                color: var(--ath-teal);
-                font-weight: 600;
-                font-size: 0.85rem;
-                margin-bottom: 1rem;
-            }
-
-            .member-bio {
-                color: var(--ath-text);
-                line-height: 1.6;
-                font-size: 0.95rem;
-            }
-
-            /* History Section */
-            .history {
-                padding: 100px 5%;
-                background: white;
-            }
-
-            .timeline {
-                max-width: 800px;
-                margin: 0 auto;
-                position: relative;
-            }
-
-            .timeline::before {
-                content: '';
-                position: absolute;
-                left: 50%;
-                top: 0;
-                bottom: 0;
-                width: 2px;
-                background: linear-gradient(to bottom, var(--ath-teal), var(--ath-gold));
-                transform: translateX(-50%);
-            }
-
-            .timeline-item {
-                margin-bottom: 4rem;
-                position: relative;
-                width: 100%;
-            }
-
-            .timeline-item:nth-child(even) .timeline-content {
-                margin-left: auto;
-                margin-right: 0;
-                text-align: right;
-            }
-
-            .timeline-content {
-                background: var(--ath-light);
-                padding: 2.5rem;
-                border-radius: var(--ath-radius);
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-                max-width: 420px;
-                position: relative;
-                margin-left: 60px;
-                transition: var(--ath-trans);
-            }
-
-            .timeline-item:nth-child(even) .timeline-content {
-                margin-left: auto;
-                margin-right: 60px;
-            }
-
-            .timeline-content h3 {
-                color: var(--ath-teal);
-                margin-bottom: 1rem;
-                font-size: 1.4rem;
-                font-weight: 700;
-            }
-
-            .timeline-content p {
-                color: var(--ath-text);
-                line-height: 1.6;
-            }
-
-            .timeline-marker {
-                position: absolute;
-                left: 50%;
-                top: 2rem;
-                width: 20px;
-                height: 20px;
-                background: var(--ath-gold);
-                border-radius: 50%;
-                border: 4px solid white;
-                box-shadow: 0 0 0 4px var(--ath-teal);
-                transform: translateX(-50%);
-                z-index: 1;
-            }
-
-            /* CTA Section */
-            .cta {
-                background: linear-gradient(135deg, var(--ath-teal), var(--ath-deep));
-                color: white;
-                text-align: center;
-                padding: 100px 2rem;
-                position: relative;
-                overflow: hidden;
-            }
-
-            .cta-content {
-                max-width: 800px;
-                margin: 0 auto;
-                position: relative;
-                z-index: 2;
-            }
-
-            .cta h2 {
-                font-size: 3.5rem;
-                margin-bottom: 2rem;
-            }
-
-            .cta p {
-                font-size: 1.4rem;
-                margin-bottom: 3rem;
-                opacity: 0.9;
-            }
-
-            .cta-buttons {
-                display: flex;
-                gap: 2rem;
-                justify-content: center;
-            }
-
-            /* Mobile Responsive */
-            @media (max-width: 992px) {
-                .about-hero .hero-content h1 {
-                    font-size: 3rem;
-                }
-
-                .mission-content {
-                    grid-template-columns: 1fr;
-                    gap: 3rem;
-                }
-
-                .mission-stats {
-                    justify-content: center;
-                }
-
-                .values-grid {
-                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                }
-
-                .team-grid {
-                    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                }
-
-                .timeline::before {
-                    left: 30px;
-                }
-
-                .timeline-marker {
-                    left: 30px;
-                }
-
-                .timeline-content {
-                    margin-left: 80px;
-                    max-width: none;
-                }
-
-                .timeline-item:nth-child(even) .timeline-content {
-                    margin-left: 80px;
-                    margin-right: 0;
-                    text-align: left;
-                }
-            }
-
-            @media (max-width: 768px) {
-                .about-hero {
-                    height: 50vh;
-                }
-
-                .about-hero .hero-content h1 {
-                    font-size: 2.5rem;
-                }
-
-                .about-hero .hero-content p {
-                    font-size: 1.2rem;
-                }
-
-                .values-grid {
-                    grid-template-columns: 1fr;
-                }
-
-                .team-grid {
-                    grid-template-columns: 1fr;
-                }
-
-                .cta h2 {
-                    font-size: 2.8rem;
-                }
-
-                .cta-buttons {
-                    flex-direction: column;
-                    align-items: center;
-                }
-
-                .timeline::before {
-                    display: none;
-                }
-
-                .timeline-marker {
-                    display: none;
-                }
-
-                .timeline-content {
-                    margin-left: 0;
-                    text-align: left;
-                }
-
-                .timeline-item:nth-child(even) .timeline-content {
-                    margin-left: 0;
-                }
-            }
-
-            @media (max-width: 576px) {
-                .about-hero .hero-content h1 {
-                    font-size: 2rem;
-                }
-
-                .mission-stats {
-                    flex-direction: column;
-                    gap: 2rem;
-                }
-
-                .value-card {
-                    padding: 2rem 1.5rem;
-                }
-
-                .member-info {
-                    padding: 1.5rem;
-                }
-
-                .cta h2 {
-                    font-size: 2.2rem;
-                }
-
-                .cta p {
-                    font-size: 1.2rem;
-                }
-            }
-        </style>
-    @endpush
-
-    @push('scripts')
-        <script>
-            // Intersection Observer for animations
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, observerOptions);
-
-            // Observe all sections
-            document.querySelectorAll('section').forEach(section => {
-                observer.observe(section);
-            });
-
-            // Observe value cards
-            document.querySelectorAll('.value-card').forEach(card => {
-                observer.observe(card);
-            });
-
-            // Observe team members
-            document.querySelectorAll('.team-member').forEach(member => {
-                observer.observe(member);
-            });
-
-            // Observe timeline items
-            document.querySelectorAll('.timeline-item').forEach(item => {
-                observer.observe(item);
-            });
-        </script>
-    @endpush
 @endsection
