@@ -9,13 +9,13 @@
         </div>
 
         <div class="nav-links">
-            <a href="{{ route('about') }}">About</a>
-            <a href="{{ route('pathway') }}">Pathway</a>
-            <a href="{{ route('programs') }}">Programs</a>
-            <a href="{{ route('impact') }}">Impact</a>
-            <a href="{{ route('stories') }}">Stories</a>
-            <a href="{{ route('sessions') }}">Sessions</a>
-            <a href="{{ route('partners') }}">Partner with us</a>
+            <a href="{{ route('about') }}" @class(['is-active' => request()->routeIs('about')])>About</a>
+            <a href="{{ route('pathway') }}" @class(['is-active' => request()->routeIs('pathway')])>Pathway</a>
+            <a href="{{ route('programs') }}" @class(['is-active' => request()->routeIs('programs')])>Programs</a>
+            <a href="{{ route('impact') }}" @class(['is-active' => request()->routeIs('impact')])>Impact</a>
+            <a href="{{ route('stories') }}" @class(['is-active' => request()->routeIs('stories')])>Stories</a>
+            <a href="{{ route('sessions') }}" @class(['is-active' => request()->routeIs('sessions')])>Sessions</a>
+            <a href="{{ route('partners') }}" @class(['is-active' => request()->routeIs('partners')])>Partner with us</a>
         </div>
 
         <div class="nav-buttons">
@@ -48,14 +48,14 @@
         </button>
 
         <div class="mobile-nav-links">
-            <a href="{{ route('home') }}">Home</a>
-            <a href="{{ route('about') }}">About</a>
-            <a href="{{ route('pathway') }}">Pathway</a>
-            <a href="{{ route('programs') }}">Programs</a>
-            <a href="{{ route('impact') }}">Impact</a>
-            <a href="{{ route('stories') }}">Stories</a>
-            <a href="{{ route('sessions') }}">Sessions</a>
-            <a href="{{ route('partners') }}">Partner with us</a>
+            <a href="{{ route('home') }}" @class(['is-active' => request()->routeIs('home')])>Home</a>
+            <a href="{{ route('about') }}" @class(['is-active' => request()->routeIs('about')])>About</a>
+            <a href="{{ route('pathway') }}" @class(['is-active' => request()->routeIs('pathway')])>Pathway</a>
+            <a href="{{ route('programs') }}" @class(['is-active' => request()->routeIs('programs')])>Programs</a>
+            <a href="{{ route('impact') }}" @class(['is-active' => request()->routeIs('impact')])>Impact</a>
+            <a href="{{ route('stories') }}" @class(['is-active' => request()->routeIs('stories')])>Stories</a>
+            <a href="{{ route('sessions') }}" @class(['is-active' => request()->routeIs('sessions')])>Sessions</a>
+            <a href="{{ route('partners') }}" @class(['is-active' => request()->routeIs('partners')])>Partner with us</a>
         </div>
         <div class="mobile-nav-buttons">
             @auth

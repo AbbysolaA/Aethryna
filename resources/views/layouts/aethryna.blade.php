@@ -69,6 +69,26 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/aethryna.css') }}">
 
+    <style>
+        /* Active-page nav indicator (site-wide) */
+        .nav-links a.is-active { color: #ee9d1d; position: relative; }
+        .nav-links a.is-active::after {
+            content: '';
+            position: absolute;
+            left: 0; right: 0;
+            bottom: -6px;
+            height: 2px;
+            background: #ee9d1d;
+            border-radius: 2px;
+        }
+        #navbar.scrolled .nav-links a.is-active { color: #ee9d1d; }
+        .mobile-nav-links a.is-active {
+            color: #ee9d1d;
+            border-left: 3px solid #ee9d1d;
+            padding-left: 12px;
+        }
+    </style>
+
     @stack('styles')
 </head>
 <body class="font-sans antialiased">
