@@ -55,7 +55,7 @@
                 <div class="detail-card">
                     <div class="detail-icon"><i class="fas fa-lightbulb"></i></div>
                     <h3>Skill Spotlights</h3>
-                    <p>Each session features a closer look into one of our learning tracks: Web Development, Digital Design, IT Support, or Digital Sales.</p>
+                    <p>Each session features a closer look into one of our pilot tracks: Project and Product Delivery, Data and AI Analytics, Digital Design and Marketing, or Software Development.</p>
                 </div>
             </div>
         </div>

@@ -221,8 +221,7 @@
             <div class="timeline-item">
                 <div class="timeline-content">
                     <h3>The Pathway</h3>
-                    <p>Launched the three-phase Digital Transformation Pathway with specialised tracks in Web Development,
-                        Digital Design, IT Support, and Digital Sales, all fully funded for learners.</p>
+                    <p>Designed the 25-week Skills Co-op Pathway around four pilot tracks: Project and Product Delivery, Data and AI Analytics, Digital Design and Marketing, and Software Development. Every place fully funded.</p>
                 </div>
                 <div class="timeline-marker"></div>
             </div>
