@@ -179,34 +179,88 @@
             <div class="section-title">
                 <span class="ath-sub">Get Started</span>
                 <h2>How to Apply</h2>
-                <p>Simple steps to start your career transformation</p>
+                <p>Four steps from curious to enrolled in our founding cohort</p>
             </div>
-            <div class="process-steps">
-            <div class="process-step">
-                <div class="step-number">01</div>
-                <h3>Take Assessment</h3>
-                <p>Complete our 2-minute career assessment to identify your ideal track</p>
+
+            <div class="apply-infographic" id="apply-infographic">
+                <svg class="ai-svg" viewBox="0 0 1000 300" role="img" aria-labelledby="ai-title" preserveAspectRatio="xMidYMid meet">
+                    <title id="ai-title">The four-step application: assessment, application review, conversation with the team, and enrolment for the January 2027 cohort.</title>
+                    <defs>
+                        <marker id="ai-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#ee9d1d"/>
+                        </marker>
+                        <linearGradient id="ai-fill" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0" stop-color="#038b89" stop-opacity="0.11"/>
+                            <stop offset="1" stop-color="#038b89" stop-opacity="0"/>
+                        </linearGradient>
+                    </defs>
+
+                    <path class="ai-area" d="M 90 190 C 200 170 320 150 380 145 C 500 138 560 138 620 145 C 720 155 820 130 900 100 L 900 260 L 90 260 Z"/>
+
+                    <path class="ai-line ai-seg1" d="M 90 190 C 200 170 320 150 380 145" pathLength="1"/>
+                    <path class="ai-line ai-seg2" d="M 380 145 C 500 138 560 138 620 145" pathLength="1"/>
+                    <path class="ai-line ai-seg3" d="M 620 145 C 720 155 820 130 900 100" pathLength="1"/>
+                    <path class="ai-line ai-tail" d="M 900 100 C 920 96 940 91 970 85" pathLength="1" marker-end="url(#ai-arrow)"/>
+
+                    <g class="ai-node ai-node-1">
+                        <circle class="ai-ring" cx="90" cy="190" r="26"/>
+                        <circle class="ai-dot" cx="90" cy="190" r="19"/>
+                        <text class="ai-num" x="90" y="197">1</text>
+                        <text class="ai-lbl" x="90" y="238">Assess</text>
+                        <text class="ai-sub-lbl" x="90" y="256">2 minutes</text>
+                    </g>
+                    <g class="ai-node ai-node-2">
+                        <circle class="ai-ring" cx="380" cy="145" r="26"/>
+                        <circle class="ai-dot" cx="380" cy="145" r="19"/>
+                        <text class="ai-num" x="380" y="152">2</text>
+                        <text class="ai-lbl" x="380" y="193">Apply</text>
+                        <text class="ai-sub-lbl" x="380" y="211">A short form</text>
+                    </g>
+                    <g class="ai-node ai-node-3">
+                        <circle class="ai-ring" cx="620" cy="145" r="26"/>
+                        <circle class="ai-dot" cx="620" cy="145" r="19"/>
+                        <text class="ai-num" x="620" y="152">3</text>
+                        <text class="ai-lbl" x="620" y="193">Meet us</text>
+                        <text class="ai-sub-lbl" x="620" y="211">A 30-minute chat</text>
+                    </g>
+                    <g class="ai-node ai-node-4">
+                        <circle class="ai-ring ai-ring-final" cx="900" cy="100" r="26"/>
+                        <circle class="ai-dot ai-dot-final" cx="900" cy="100" r="19"/>
+                        <text class="ai-num" x="900" y="107">4</text>
+                        <text class="ai-lbl" x="900" y="148">Enrol</text>
+                        <text class="ai-sub-lbl" x="900" y="166">Cohort 1 Jan 2027</text>
+                    </g>
+                </svg>
+
+                <ol class="ai-stages">
+                    <li>
+                        <span class="ai-tag">Step 1 · 2 minutes</span>
+                        <h3>Take the assessment</h3>
+                        <p>A short set of questions helps us understand where you are today and which pilot track fits you best. No preparation needed.</p>
+                    </li>
+                    <li>
+                        <span class="ai-tag">Step 2 · A short form</span>
+                        <h3>Complete your application</h3>
+                        <p>Tell us a little about yourself, your circumstances, and why you want to join. No CV, no essay. Human questions with human answers.</p>
+                    </li>
+                    <li>
+                        <span class="ai-tag">Step 3 · 30-minute chat</span>
+                        <h3>Meet the team</h3>
+                        <p>A friendly conversation so we understand your goals and you get honest answers to your questions. This is not a test.</p>
+                    </li>
+                    <li>
+                        <span class="ai-tag">Step 4 · Cohort 1 begins January 2027</span>
+                        <h3>Enrol and begin</h3>
+                        <p>If we are a good fit, you enrol in your track. Onboarding, community access, and Week 0 foundations start here.</p>
+                    </li>
+                </ol>
             </div>
-            <div class="process-step">
-                <div class="step-number">02</div>
-                <h3>Application Review</h3>
-                <p>Our team reviews your application and assessment results</p>
+
+            <div class="application-cta">
+                <h3>Places are limited to 30. Apply early.</h3>
+                <p>Applications for the founding cohort are open now. We review as they arrive.</p>
+                <a href="{{ route('register') }}" class="btn btn-primary">Start your application</a>
             </div>
-            <div class="process-step">
-                <div class="step-number">03</div>
-                <h3>Interview</h3>
-                <p>Meet with our admissions team for a personal interview</p>
-            </div>
-            <div class="process-step">
-                <div class="step-number">04</div>
-                <h3>Start Learning</h3>
-                <p>Begin your journey with orientation and your first classes</p>
-            </div>
-        </div>
-        <div class="application-cta">
-            <h3>Ready to Start Your Tech Career?</h3>
-            <p>Applications are reviewed on a rolling basis. Don't wait - your future self will thank you!</p>
-            <a href="{{ route('register') }}" class="btn btn-primary">Apply Now</a>
         </div>
     </section>
 
@@ -654,48 +708,108 @@
         .application-process .section-title h2 { color: #fff; }
         .application-process .section-title p { color: rgba(255,255,255,0.7); }
 
-        .process-steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
+        /* Application infographic */
+        .apply-infographic {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 32px;
+            padding: 40px 40px 20px;
             margin-bottom: 60px;
         }
+        .ai-svg { width: 100%; height: auto; display: block; margin-bottom: 20px; }
+        .ai-line { fill: none; stroke: var(--ath-teal); stroke-width: 3.5; stroke-linecap: round; }
+        .ai-tail { stroke: var(--ath-gold); stroke-dasharray: 0.18 0.14; }
+        .ai-area { fill: url(#ai-fill); }
+        .ai-ring { fill: rgba(255, 255, 255, 0.08); stroke: var(--ath-teal); stroke-width: 2; }
+        .ai-dot { fill: var(--ath-teal); }
+        .ai-ring-final { stroke: var(--ath-gold); }
+        .ai-dot-final { fill: var(--ath-gold); }
+        .ai-num {
+            fill: #fff;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 18px;
+            text-anchor: middle;
+        }
+        .ai-lbl {
+            fill: #fff;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 17px;
+            text-anchor: middle;
+        }
+        .ai-sub-lbl {
+            fill: rgba(255,255,255,0.65);
+            font-family: 'IBM Plex Mono', 'Courier New', monospace;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-anchor: middle;
+        }
 
-        .process-step {
+        .ai-anim .ai-seg1, .ai-anim .ai-seg2, .ai-anim .ai-seg3 { stroke-dasharray: 1; stroke-dashoffset: 1; }
+        .ai-anim .ai-tail, .ai-anim .ai-area, .ai-anim .ai-node-2, .ai-anim .ai-node-3, .ai-anim .ai-node-4 { opacity: 0; }
+        .ai-anim.in-view .ai-seg1 { animation: ai-draw 500ms cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .ai-anim.in-view .ai-seg2 { animation: ai-draw 500ms cubic-bezier(0.16, 1, 0.3, 1) 500ms forwards; }
+        .ai-anim.in-view .ai-seg3 { animation: ai-draw 500ms cubic-bezier(0.16, 1, 0.3, 1) 1000ms forwards; }
+        .ai-anim.in-view .ai-node-2 { animation: ai-fade 400ms ease-out 450ms forwards; }
+        .ai-anim.in-view .ai-node-3 { animation: ai-fade 400ms ease-out 950ms forwards; }
+        .ai-anim.in-view .ai-node-4 { animation: ai-fade 400ms ease-out 1450ms forwards; }
+        .ai-anim.in-view .ai-area { animation: ai-fade 700ms ease-out 1200ms forwards; }
+        .ai-anim.in-view .ai-tail { animation: ai-fade 400ms ease-out 1650ms forwards; }
+        @keyframes ai-draw { to { stroke-dashoffset: 0; } }
+        @keyframes ai-fade { to { opacity: 1; } }
+        @media (prefers-reduced-motion: reduce) {
+            .ai-anim .ai-seg1, .ai-anim .ai-seg2, .ai-anim .ai-seg3 { stroke-dasharray: none; stroke-dashoffset: 0; animation: none; }
+            .ai-anim .ai-tail, .ai-anim .ai-area, .ai-anim .ai-node-2, .ai-anim .ai-node-3, .ai-anim .ai-node-4 { opacity: 1; animation: none; }
+        }
+
+        .ai-stages {
+            list-style: none;
+            padding: 0;
+            margin: 30px 0 10px;
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 24px;
+        }
+        .ai-stages li {
+            padding: 24px;
             background: rgba(255, 255, 255, 0.05);
-            padding: 40px;
-            border-radius: var(--ath-radius);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            transition: var(--ath-trans);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
-
-        .process-step:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--ath-gold);
-        }
-
-        .step-number {
-            font-size: 3rem;
-            font-weight: 800;
-            color: rgba(238, 157, 29, 0.2);
-            position: absolute;
-            top: 20px; right: 30px;
-            line-height: 1;
-        }
-
-        .process-step h3 {
+        .ai-tag {
+            display: inline-block;
+            font-family: 'IBM Plex Mono', 'Courier New', monospace;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 100px;
+            background: rgba(238, 157, 29, 0.15);
             color: var(--ath-gold);
-            font-weight: 800;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
+            margin-bottom: 12px;
         }
-
-        .process-step p {
-            color: rgba(255,255,255,0.8);
-            line-height: 1.6;
-            font-size: 1rem;
+        .ai-stages h3 {
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+        }
+        .ai-stages p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.65;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+        @media (max-width: 992px) {
+            .ai-stages { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 640px) {
+            .ai-svg { display: none; }
+            .apply-infographic { padding: 24px; }
+            .ai-stages { grid-template-columns: 1fr; }
         }
 
         .application-cta {
@@ -925,6 +1039,26 @@
                 }
             });
         });
+
+        // Application infographic draw-on-scroll
+        (function () {
+            var ai = document.getElementById('apply-infographic');
+            if (!ai) return;
+            ai.classList.add('ai-anim');
+            if (!('IntersectionObserver' in window)) {
+                ai.classList.add('in-view');
+                return;
+            }
+            var aiObs = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        ai.classList.add('in-view');
+                        aiObs.disconnect();
+                    }
+                });
+            }, { threshold: 0.35 });
+            aiObs.observe(ai);
+        })();
 
         // Intersection Observer for animations
         const observerOptions = {
