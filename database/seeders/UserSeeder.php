@@ -27,7 +27,9 @@ class UserSeeder extends Seeder
             ]);
         }
 
-        if (!User::where('email', 'system@aethryna.com')->exists()) {
+        // NOTE: checked email now matches the inserted email so the idempotency
+        // guard actually works (previously .com was checked but .org was inserted).
+        if (!User::where('email', 'system@aethryna.org')->exists()) {
             User::create([
                 'name' => 'System Administrator',
                 'email' => 'system@aethryna.org',
@@ -37,38 +39,41 @@ class UserSeeder extends Seeder
             ]);
         }
 
-        // Create Regular Users (only if they don't exist)
-        $regularUsers = [
-            ['name' => 'Sarah Johnson', 'email' => 'sarah.johnson@email.com'],
-            ['name' => 'Michael Chen', 'email' => 'michael.chen@email.com'],
-            ['name' => 'Amara Okafor', 'email' => 'amara.okafor@email.com'],
-            ['name' => 'David Rodriguez', 'email' => 'david.rodriguez@email.com'],
-            ['name' => 'Priya Patel', 'email' => 'priya.patel@email.com'],
-            ['name' => 'James Wilson', 'email' => 'james.wilson@email.com'],
-            ['name' => 'Fatima Al-Zahra', 'email' => 'fatima.alzahra@email.com'],
-            ['name' => 'Carlos Mendes', 'email' => 'carlos.mendes@email.com'],
-        ];
+        // Fabricated regular users and factory-generated learners are dev-only.
+        // We do not want fake learner accounts in production. Skip them unless
+        // explicitly opted in via SEED_DEMO_USERS=true in the environment.
+        if (env('SEED_DEMO_USERS', false) === true) {
+            $regularUsers = [
+                ['name' => 'Sarah Johnson', 'email' => 'sarah.johnson@email.com'],
+                ['name' => 'Michael Chen', 'email' => 'michael.chen@email.com'],
+                ['name' => 'Amara Okafor', 'email' => 'amara.okafor@email.com'],
+                ['name' => 'David Rodriguez', 'email' => 'david.rodriguez@email.com'],
+                ['name' => 'Priya Patel', 'email' => 'priya.patel@email.com'],
+                ['name' => 'James Wilson', 'email' => 'james.wilson@email.com'],
+                ['name' => 'Fatima Al-Zahra', 'email' => 'fatima.alzahra@email.com'],
+                ['name' => 'Carlos Mendes', 'email' => 'carlos.mendes@email.com'],
+            ];
 
-        foreach ($regularUsers as $userData) {
-            if (!User::where('email', $userData['email'])->exists()) {
-                User::create([
-                    'name' => $userData['name'],
-                    'email' => $userData['email'],
-                    'password' => Hash::make('password'),
+            foreach ($regularUsers as $userData) {
+                if (!User::where('email', $userData['email'])->exists()) {
+                    User::create([
+                        'name' => $userData['name'],
+                        'email' => $userData['email'],
+                        'password' => Hash::make('password'),
+                        'role' => 'user',
+                        'email_verified_at' => now(),
+                    ]);
+                }
+            }
+
+            $currentUserCount = User::count();
+            if ($currentUserCount < 20) {
+                $usersToCreate = 20 - $currentUserCount;
+                User::factory($usersToCreate)->create([
                     'role' => 'user',
                     'email_verified_at' => now(),
                 ]);
             }
-        }
-
-        // Create additional users using factory (only if we don't have enough users)
-        $currentUserCount = User::count();
-        if ($currentUserCount < 20) {
-            $usersToCreate = 20 - $currentUserCount;
-            User::factory($usersToCreate)->create([
-                'role' => 'user',
-                'email_verified_at' => now(),
-            ]);
         }
 
         $this->command->info('User seeding completed successfully!');
