@@ -1,9 +1,9 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Partner with SkillsCo-op')
+@section('title', 'Partner With Us | SkillsCo-op')
 
-@section('meta_description', 'Partner with SkillsCo-op to provide real project briefs for our learners and help shape the next generation of digital talent. Find out how our employer partnership model works.')
-@section('og_description', 'Partner with SkillsCo-op to provide real project briefs for our learners and help shape the next generation of digital talent.')
+@section('meta_description', 'Partner with SkillsCo-op to help build AI-era digital skills pathways for NEET young people, justice-involved adults, and women re-entering the workforce. Funders, employers, and mentors welcome.')
+@section('og_description', 'Partner with SkillsCo-op to help build AI-era digital skills pathways for NEET young people, justice-involved adults, and women re-entering the workforce. Funders, employers, and mentors welcome.')
 
 @section('content')
 

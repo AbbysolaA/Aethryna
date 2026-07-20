@@ -1,9 +1,9 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Our Impact | SkillsCo-op')
+@section('title', 'Impact | SkillsCo-op\'s Approach to Outcomes That Matter')
 
-@section('meta_description', 'See how SkillsCo-op measures success. Honest targets, real commitments, and the national context that drives our mission to close the digital opportunity gap.')
-@section('og_description', 'See how SkillsCo-op measures success. Honest targets, real commitments, and the national context that drives our mission to close the digital opportunity gap.')
+@section('meta_description', 'How SkillsCo-op measures what matters: completion, confidence, and real routes into work. Building the evidence base for AI-era digital skills training that actually works.')
+@section('og_description', 'How SkillsCo-op measures what matters: completion, confidence, and real routes into work. Building the evidence base for AI-era digital skills training that actually works.')
 
 @push('styles')
 <style>

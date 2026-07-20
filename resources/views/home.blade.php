@@ -1,9 +1,9 @@
 @extends('layouts.aethryna')
 
-@section('title', 'SkillsCo-op | Digital Skills for Real Careers')
+@section('title', 'SkillsCo-op | Digital Skills, AI Literacy, and Real Career Pathways')
 
-@section('meta_description', 'Funded digital skills programmes for people facing barriers to employment. Project and Product Delivery, Data and AI Analytics, Product Design and Marketing, and Software Development. AI tools embedded throughout. Based in Liverpool, open across the UK.')
-@section('og_description', 'Funded digital skills programmes for people facing barriers to employment. Project and Product Delivery, Data and AI Analytics, Product Design and Marketing, and Software Development. AI tools embedded throughout. Based in Liverpool, open across the UK.')
+@section('meta_description', 'SkillsCo-op builds free, AI-integrated digital skills pathways for NEET young people, justice-involved adults, and women re-entering the workforce. Four pathways, real mentorship, and routes into real work.')
+@section('og_description', 'SkillsCo-op builds free, AI-integrated digital skills pathways for NEET young people, justice-involved adults, and women re-entering the workforce. Four pathways, real mentorship, and routes into real work.')
 
 @section('content')
 

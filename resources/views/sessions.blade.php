@@ -1,9 +1,9 @@
 @extends('layouts.aethryna')
 
-@section('title', 'The SkillsCo-op Sessions')
+@section('title', 'The Skills Co-op Sessions | Monthly Panel Series on AI, Work, and Inclusion')
 
-@section('meta_description', 'The SkillsCo-op Sessions: free monthly panel discussions with practitioners, researchers, and community leaders. Open to everyone. Join the next conversation.')
-@section('og_description', 'The SkillsCo-op Sessions: free monthly panel discussions with practitioners, researchers, and community leaders. Open to everyone. Join the next conversation.')
+@section('meta_description', 'A free monthly panel series exploring AI, work, and inclusion. Honest conversations with practitioners, researchers, and industry leaders. No jargon walls, no gatekeeping.')
+@section('og_description', 'A free monthly panel series exploring AI, work, and inclusion. Honest conversations with practitioners, researchers, and industry leaders. No jargon walls, no gatekeeping.')
 
 @section('content')
 

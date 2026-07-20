@@ -1,9 +1,9 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Skills Pathway Programs | SkillsCo-op')
+@section('title', 'Programmes | Free Digital Skills Training with SkillsCo-op')
 
-@section('meta_description', 'Explore SkillsCo-op specialised learning tracks including Web Development, Digital Design, IT Support, Data Analytics and more. All places fully funded for eligible participants.')
-@section('og_description', 'Explore SkillsCo-op specialised learning tracks including Web Development, Digital Design, IT Support, Data Analytics and more. All places fully funded for eligible participants.')
+@section('meta_description', 'Structured, AI-native training with mentorship, real project work, and pathways into freelance and employed work. Free for NEET young people, justice-involved adults, and women re-entering the workforce.')
+@section('og_description', 'Structured, AI-native training with mentorship, real project work, and pathways into freelance and employed work. Free for NEET young people, justice-involved adults, and women re-entering the workforce.')
 
 @section('content')
 

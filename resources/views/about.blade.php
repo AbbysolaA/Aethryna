@@ -1,9 +1,9 @@
 @extends('layouts.aethryna')
 
-@section('title', 'About SkillsCo-op | Digital skills for the people the system misses')
+@section('title', 'About SkillsCo-op | Aethryna Digital Skills Co-Op CIC')
 
-@section('meta_description', 'SkillsCo-op is a funded 25-week digital skills programme for people facing barriers to employment. We train whole economic units: craft, verification-first AI, and the operator basics to sell, support, and run your own work.')
-@section('og_description', 'SkillsCo-op is a funded 25-week digital skills programme for people facing barriers to employment. We train whole economic units: craft, verification-first AI, and the operator basics to sell, support, and run your own work.')
+@section('meta_description', 'SkillsCo-op is the public-facing brand of Aethryna Digital Skills Co-Op CIC, a UK Community Interest Company closing the digital skills gap for the people the labour market overlooks.')
+@section('og_description', 'SkillsCo-op is the public-facing brand of Aethryna Digital Skills Co-Op CIC, a UK Community Interest Company closing the digital skills gap for the people the labour market overlooks.')
 
 @section('content')
 

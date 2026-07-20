@@ -1,9 +1,9 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Digital Transformation Pathway | SkillsCo-op')
+@section('title', 'Pathways | Project Delivery, Data & AI, Design, and Software Development')
 
-@section('meta_description', 'Our three-phase Digital Transformation Pathway takes learners from digital foundations to independent employment. Fully funded for all participants. Start with a free assessment.')
-@section('og_description', 'Our three-phase Digital Transformation Pathway takes learners from digital foundations to independent employment. Fully funded for all participants. Start with a free assessment.')
+@section('meta_description', 'Four free, AI-integrated learning pathways: Project and Product Delivery, Data and AI Analytics, Product Design and Marketing, and Software Development. Built around where the jobs are actually going.')
+@section('og_description', 'Four free, AI-integrated learning pathways: Project and Product Delivery, Data and AI Analytics, Product Design and Marketing, and Software Development. Built around where the jobs are actually going.')
 
 @section('content')
 

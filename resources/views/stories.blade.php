@@ -1,9 +1,9 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Stories from the Journey - SkillsCo-op')
+@section('title', 'Stories | Voices from the SkillsCo-op Community')
 
-@section('meta_description', 'We are pre-pilot. Read about the foundations we are laying: our panel series, our adviser network, and the curriculum milestones that will define our first cohort.')
-@section('og_description', 'We are pre-pilot. Read about the foundations we are laying: our panel series, adviser network, and curriculum milestones.')
+@section('meta_description', 'Real stories from the SkillsCo-op community, learners, mentors, and partners building digital skills and AI literacy pathways together.')
+@section('og_description', 'Real stories from the SkillsCo-op community, learners, mentors, and partners building digital skills and AI literacy pathways together.')
 
 @section('content')
 <!-- Hero -->
