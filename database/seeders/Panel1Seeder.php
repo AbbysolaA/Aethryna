@@ -84,11 +84,11 @@ class Panel1Seeder extends Seeder
                 'sort_order'   => 5,
             ],
             [
-                'name'         => 'Sean Adetule',
+                'name'         => 'Seun Adetule',
                 'title'        => 'Global Partnerships and Digital Transformation Expert',
                 'company'      => 'UK Global Talent Awardee',
-                'bio'          => 'Sean Adetule is a Global Partnerships and Digital Transformation Expert and a UK Global Talent Awardee. His work sits inside the practice of AI adoption at scale, where global platforms meet enterprise integration, and he brings a working view of who the AI economy is actually being built for, and who it is leaving behind.',
-                'photo_path'   => 'images/speakers/sean-adetule.jpg',
+                'bio'          => 'Seun Adetule is a Global Partnerships and Digital Transformation Expert and a UK Global Talent Awardee. His work sits inside the practice of AI adoption at scale, where global platforms meet enterprise integration, and he brings a working view of who the AI economy is actually being built for, and who it is leaving behind.',
+                'photo_path'   => 'images/speakers/seun-adetule.jpg',
                 'linkedin_url' => null,
                 'topic'        => 'Global partnerships, digital transformation, and AI adoption at scale',
                 'sort_order'   => 6,
@@ -116,12 +116,15 @@ class Panel1Seeder extends Seeder
         }
         $session->speakers()->sync($syncData);
 
-        // Clean up: Ravi Rabheru was announced on the pre-event flyer but Sean
-        // Adetule was on the actual panel. Delete Ravi's orphan speaker row
-        // if no other panels reference him.
-        $ravi = PanelSpeaker::where('name', 'Ravi Rabheru')->first();
-        if ($ravi && $ravi->sessions()->count() === 0) {
-            $ravi->delete();
+        // Clean up orphan speaker rows from lineup churn:
+        //   Ravi Rabheru was on the pre-event flyer, not on the actual panel.
+        //   Sean Adetule appeared in an interim seed before we standardised on
+        //   the Yoruba spelling Seun; the About page uses Seun so we align.
+        foreach (['Ravi Rabheru', 'Sean Adetule'] as $orphanName) {
+            $orphan = PanelSpeaker::where('name', $orphanName)->first();
+            if ($orphan && $orphan->sessions()->count() === 0) {
+                $orphan->delete();
+            }
         }
 
         // ── Attach recording video for past-sessions archive ─────────────────
