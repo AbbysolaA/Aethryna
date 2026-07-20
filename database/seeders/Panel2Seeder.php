@@ -52,9 +52,9 @@ class Panel2Seeder extends Seeder
             ],
             [
                 'name'         => 'Miriam Fearon',
-                'title'        => 'Customer Success Leader · Breast Cancer Care Patient Advocate',
+                'title'        => 'Customer Success Leader · Women\'s Health Equity Advocate',
                 'company'      => null,
-                'bio'          => 'Miriam Fearon is a Customer Success Leader in tech and a Breast Cancer Care Patient Advocate. She brings a rare dual perspective to this conversation: what it actually feels like to navigate AI-assisted healthcare decisions from the patient side, informed by a working knowledge of how the technology functions.',
+                'bio'          => 'Miriam Fearon is a Customer Success Leader in tech and a Women\'s Health Equity Advocate. She brings a rare dual perspective to this conversation: what it actually feels like to navigate AI-assisted healthcare decisions from the patient side, informed by a working knowledge of how the technology functions.',
                 'photo_path'   => 'images/speakers/miriam-fearon.jpg',
                 'linkedin_url' => null,
                 'topic'        => 'The patient advocate and AI practitioner lens',
