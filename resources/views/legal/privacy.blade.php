@@ -39,7 +39,7 @@
         .legal-breadcrumb a {color: rgba(255,255,255,0.7); text-decoration: none;}
         .legal-breadcrumb a:hover {color: var(--gold);}
         .legal-breadcrumb span {color: rgba(255,255,255,0.5);}
-       legal-breadcrumb .current {color: #fff; font-weight: 600;}
+        .legal-breadcrumb .current {color: #fff; font-weight: 600;}
         .legal-hero h1 {font-size: 2.5rem; font-weight: 800; margin: 0 0 12px;}
         .legal-subtitle {font-size: 1.05rem; color: rgba(255,255,255,0.85); margin: 0 0 24px;}
         .legal-meta {display: flex; flex-wrap: wrap; gap: 20px;}
