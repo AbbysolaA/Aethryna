@@ -34,28 +34,12 @@ class Panel2Seeder extends Seeder
             $panel2Attributes
         );
 
-        // ── Speakers ─────────────────────────────────────────────────────────
+        // ── Speakers (final lineup: Bola, Miriam, Yinka in run-of-show order) ─
+        // Metra Rowe was announced on the pre-event flyer but was replaced by
+        // Miriam Fearon on the night. The sync() call below is authoritative:
+        // any speaker attached to Panel 2 that is not in this list gets
+        // detached automatically, so the DB always matches the actual lineup.
         $speakers = [
-            [
-                'name'         => 'Metra Rowe',
-                'title'        => 'Inclusive Culture Change Advisor',
-                'company'      => 'Starling Business Solutions',
-                'bio'          => 'Metra Rowe is an Inclusive Culture Change Advisor and Founder of Starling Business Solutions. She works with organisations to shift culture, systems, and leadership behaviour so that inclusion is not a policy statement but a daily practice, particularly as AI-driven decisions reshape who gets seen and who does not.',
-                'photo_path'   => 'images/speakers/metra-rowe.jpg',
-                'linkedin_url' => null,
-                'topic'        => 'Bias and equity in automated public services',
-                'sort_order'   => 1,
-            ],
-            [
-                'name'         => 'Dr Yinka Laosebikan',
-                'title'        => 'MD and CEO, Medihealth International',
-                'company'      => 'Medihealth International',
-                'bio'          => 'Dr Yinka Laosebikan is a Healthcare Entrepreneur and Digital Health Pioneer, and MD and CEO of Medihealth International. His work sits at the intersection of clinical care and digital transformation, and he brings a practitioner view on where AI is genuinely helping patients and where it is quietly leaving them behind.',
-                'photo_path'   => 'images/speakers/yinka-laosebikan.jpg',
-                'linkedin_url' => null,
-                'topic'        => 'AI adoption inside healthcare and digital exclusion',
-                'sort_order'   => 2,
-            ],
             [
                 'name'         => 'Dr Bola John FRSA',
                 'title'        => 'Founder, New Roots Strong Wings CIC',
@@ -64,26 +48,53 @@ class Panel2Seeder extends Seeder
                 'photo_path'   => 'images/speakers/bola-john.jpg',
                 'linkedin_url' => null,
                 'topic'        => 'The human impact of algorithmic decision-making',
+                'sort_order'   => 1,
+            ],
+            [
+                'name'         => 'Miriam Fearon',
+                'title'        => 'Customer Success Leader · Breast Cancer Care Patient Advocate',
+                'company'      => null,
+                'bio'          => 'Miriam Fearon is a Customer Success Leader in tech and a Breast Cancer Care Patient Advocate. She brings a rare dual perspective to this conversation: what it actually feels like to navigate AI-assisted healthcare decisions from the patient side, informed by a working knowledge of how the technology functions.',
+                'photo_path'   => 'images/speakers/miriam-fearon.jpg',
+                'linkedin_url' => null,
+                'topic'        => 'The patient advocate and AI practitioner lens',
+                'sort_order'   => 2,
+            ],
+            [
+                'name'         => 'Dr Yinka Laosebikan',
+                'title'        => 'MD and CEO, Medihealth International',
+                'company'      => 'Medihealth International',
+                'bio'          => 'Dr Yinka Laosebikan is a Healthcare Entrepreneur and Digital Health Pioneer, and MD and CEO of Medihealth International. His work sits where clinical care meets digital transformation, and he brings a practitioner view on where AI is genuinely helping patients and where it is quietly leaving them behind.',
+                'photo_path'   => 'images/speakers/yinka-laosebikan.jpg',
+                'linkedin_url' => null,
+                'topic'        => 'AI adoption inside healthcare and digital exclusion',
                 'sort_order'   => 3,
             ],
         ];
 
+        // Build sync payload and let sync() detach anyone no longer on the list.
+        $syncData = [];
         foreach ($speakers as $data) {
             $topic      = $data['topic'];
             $sort_order = $data['sort_order'];
             unset($data['topic'], $data['sort_order']);
 
-            $speaker = PanelSpeaker::firstOrCreate(
+            $speaker = PanelSpeaker::updateOrCreate(
                 ['name' => $data['name']],
                 $data
             );
 
-            if (! $session->speakers()->where('panel_speaker_id', $speaker->id)->exists()) {
-                $session->speakers()->attach($speaker->id, [
-                    'topic'      => $topic,
-                    'sort_order' => $sort_order,
-                ]);
-            }
+            $syncData[$speaker->id] = [
+                'topic'      => $topic,
+                'sort_order' => $sort_order,
+            ];
+        }
+        $session->speakers()->sync($syncData);
+
+        // Clean up: if Metra Rowe now has no panels attached, delete the row.
+        $metra = PanelSpeaker::where('name', 'Metra Rowe')->first();
+        if ($metra && $metra->sessions()->count() === 0) {
+            $metra->delete();
         }
 
         // ── Attach recording video for past-sessions archive ─────────────────
