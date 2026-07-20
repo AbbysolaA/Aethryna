@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             Panel1Seeder::class,
             Panel2Seeder::class,
+            Panel3Seeder::class,
         ]);
     }
 }

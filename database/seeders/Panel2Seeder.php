@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\PanelMedia;
 use App\Models\PanelSession;
 use App\Models\PanelSpeaker;
 use Illuminate\Database\Seeder;
@@ -14,21 +15,23 @@ class Panel2Seeder extends Seeder
         PanelSession::where('slug', 'panel-1-ai-is-not-coming-its-here')
             ->update(['status' => 'past']);
 
-        // ── Panel Session 2 ──────────────────────────────────────────────────
-        $session = PanelSession::firstOrCreate(
+        // ── Panel Session 2 (past: took place 14 July 2026) ─────────────────
+        $panel2Attributes = [
+            'title'           => 'The Skills Co-op Sessions: Panel 2',
+            'tagline'         => 'AI, Public Services, and the People Left Out',
+            'description'     => 'An honest conversation about how AI is being adopted across healthcare, public institutions, and essential services, who is benefiting from that shift, and who is being overlooked or actively harmed by it.',
+            'event_date'      => '2026-07-14 18:30:00',
+            'duration'        => '60 minutes',
+            'format'          => 'Online',
+            'eventbrite_url'  => null,
+            'recording_url'   => 'https://www.youtube.com/live/y64Zw2c42Hs',
+            'status'          => 'past',
+            'sort_order'      => 2,
+        ];
+
+        $session = PanelSession::updateOrCreate(
             ['slug' => 'panel-2-ai-public-services-and-the-people-left-out'],
-            [
-                'title'           => 'The Skills Co-op Sessions: Panel 2',
-                'tagline'         => 'AI, Public Services, and the People Left Out',
-                'description'     => 'An honest conversation about how AI is being adopted across healthcare, public institutions, and essential services, who is benefiting from that shift, and who is being overlooked or actively harmed by it.',
-                'event_date'      => '2026-07-14 18:30:00',
-                'duration'        => '60 minutes',
-                'format'          => 'Online',
-                'eventbrite_url'  => null,
-                'recording_url'   => null,
-                'status'          => 'upcoming',
-                'sort_order'      => 2,
-            ]
+            $panel2Attributes
         );
 
         // ── Speakers ─────────────────────────────────────────────────────────
@@ -83,6 +86,19 @@ class Panel2Seeder extends Seeder
             }
         }
 
-        $this->command->info('Panel 2 seeded: ' . $session->title . ' with ' . count($speakers) . ' speakers. Panel 1 marked as past.');
+        // ── Attach recording video for past-sessions archive ─────────────────
+        PanelMedia::updateOrCreate(
+            [
+                'panel_session_id' => $session->id,
+                'type'             => 'video',
+                'url'              => 'https://www.youtube.com/live/y64Zw2c42Hs',
+            ],
+            [
+                'caption'    => 'Full recording: AI, Public Services, and the People Left Out',
+                'sort_order' => 1,
+            ]
+        );
+
+        $this->command->info('Panel 2 seeded: ' . $session->title . ' with ' . count($speakers) . ' speakers. Panel 1 marked as past. Panel 2 marked as past with YouTube recording.');
     }
 }
