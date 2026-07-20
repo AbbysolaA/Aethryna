@@ -38,7 +38,7 @@ class Panel1Seeder extends Seeder
                 'title'        => 'People Strategist and HR Leader',
                 'company'      => null,
                 'bio'          => 'An experienced People Strategist and HR Leader with deep expertise in building high-performing teams, shaping organisational culture, and driving human-centred change at scale. Mike brings a practitioner lens to questions of workforce transformation and what AI means for people strategy.',
-                'photo_path'   => 'images/speakers/mike-banwo.png',
+                'photo_path'   => 'images/speakers/mike-banwo.jpg',
                 'linkedin_url' => null,
                 'topic'        => 'People strategy and workforce transformation in the age of AI',
                 'sort_order'   => 1,
@@ -48,7 +48,7 @@ class Panel1Seeder extends Seeder
                 'title'        => 'AI Governance Practitioner and Computer Science Educator',
                 'company'      => null,
                 'bio'          => 'Frances Agba is a Computer Science Educator and AI Governance Practitioner. Her work focuses on AI governance architecture, risk and assurance, and policy, with a particular emphasis on institutional accountability for communities underserved by mainstream AI frameworks. She is currently conducting active research on English-centric AI safety alignment failures across Nigerian languages.',
-                'photo_path'   => 'images/speakers/frankie-agba.png',
+                'photo_path'   => 'images/speakers/frankie-agba.jpg',
                 'linkedin_url' => null,
                 'topic'        => 'AI governance, ethics, and responsible practice',
                 'sort_order'   => 2,
@@ -58,7 +58,7 @@ class Panel1Seeder extends Seeder
                 'title'        => 'Healthcare Data Professional and Founder',
                 'company'      => 'The Women\'s Voice Circle',
                 'bio'          => 'Josephine De-love Yeboah is an NHS Data Professional who has transitioned from clinical administration into data, digital services, and business analysis. She is the Founder of The Women\'s Voice Circle, a monthly community space created to support women through connection, wellbeing, and empowerment. Josephine is passionate about inclusion, confidence-building, and helping women navigate career transitions in an increasingly digital world.',
-                'photo_path'   => 'images/speakers/josephine-yeboah.png',
+                'photo_path'   => 'images/speakers/josephine-yeboah.jpg',
                 'linkedin_url' => null,
                 'topic'        => 'Data skills, healthcare, and community voice',
                 'sort_order'   => 3,
@@ -68,7 +68,7 @@ class Panel1Seeder extends Seeder
                 'title'        => 'Managing Director',
                 'company'      => 'Credera Consulting',
                 'bio'          => 'Andrea is Managing Director at Credera Consulting, a global consultancy at the intersection of strategy, technology, and transformation. She brings insight from Credera\'s research into the AI gender gap, and what organisations need to do to ensure that AI benefits everyone, not just those already in the room.',
-                'photo_path'   => 'images/speakers/andrea-marshall-webb.png',
+                'photo_path'   => 'images/speakers/andrea-marshall-webb.jpg',
                 'linkedin_url' => null,
                 'topic'        => 'The AI gender gap and organisational responsibility',
                 'sort_order'   => 4,
@@ -78,17 +78,17 @@ class Panel1Seeder extends Seeder
                 'title'        => 'AI Solutions Architect and Founder',
                 'company'      => 'Santander UK / MKAI',
                 'bio'          => 'Jaisal is a Generative AI thought leader and mentor with 20 years of experience in the emerging technology industry. He is dedicated to bridging the gap between AI innovation and professional development, with a core focus on STEM and equipping people with the skills to thrive in an AI-driven economy while navigating it ethically. Jaisal volunteers across multiple global organisations, raising the bar for innovation with the right guardrails, and has been recognised with multiple awards for his contributions to digital, technology, and STEM.',
-                'photo_path'   => 'images/speakers/jaisal-surana.png',
+                'photo_path'   => 'images/speakers/jaisal-surana.jpg',
                 'linkedin_url' => null,
                 'topic'        => 'Applied AI in enterprise and responsible deployment',
                 'sort_order'   => 5,
             ],
             [
-                'name'         => 'Seun Adetule',
+                'name'         => 'Sean Adetule',
                 'title'        => 'Global Partnerships and Digital Transformation Expert',
                 'company'      => 'UK Global Talent Awardee',
-                'bio'          => 'Seun Adetule is a Global Partnerships and Digital Transformation Expert and a UK Global Talent Awardee. His work sits inside the practice of AI adoption at scale, where global platforms meet enterprise integration, and he brings a working view of who the AI economy is actually being built for, and who it is leaving behind.',
-                'photo_path'   => 'images/speakers/seun-adetule.png',
+                'bio'          => 'Sean Adetule is a Global Partnerships and Digital Transformation Expert and a UK Global Talent Awardee. His work sits inside the practice of AI adoption at scale, where global platforms meet enterprise integration, and he brings a working view of who the AI economy is actually being built for, and who it is leaving behind.',
+                'photo_path'   => 'images/speakers/sean-adetule.jpg',
                 'linkedin_url' => null,
                 'topic'        => 'Global partnerships, digital transformation, and AI adoption at scale',
                 'sort_order'   => 6,
@@ -118,9 +118,11 @@ class Panel1Seeder extends Seeder
 
         // Clean up orphan speaker rows from lineup churn:
         //   Ravi Rabheru was on the pre-event flyer, not on the actual panel.
-        //   Sean Adetule appeared in an interim seed before we standardised on
-        //   the Yoruba spelling Seun; the About page uses Seun so we align.
-        foreach (['Ravi Rabheru', 'Sean Adetule'] as $orphanName) {
+        //   Seun Adetule is the spelling used on the About team block; the
+        //   panel uses Sean because that is how his speaker pack introduces
+        //   him. If an interim seed created a "Seun Adetule" panel row, this
+        //   sweeps it up so we do not end up with two rows for one person.
+        foreach (['Ravi Rabheru', 'Seun Adetule'] as $orphanName) {
             $orphan = PanelSpeaker::where('name', $orphanName)->first();
             if ($orphan && $orphan->sessions()->count() === 0) {
                 $orphan->delete();
