@@ -67,8 +67,14 @@
         .legal-nav li {margin-bottom: 4px;}
         .legal-nav a {color: var(--teal); text-decoration: none; font-size: 0.9rem;}
         .legal-nav a:hover {color: var(--deep); text-decoration: underline;}
+        .legal-info-box {background: var(--bg-light); border: 1px solid var(--border); border-radius: 10px; padding: 4px 22px; margin: 20px 0;}
+        .legal-info-row {display: grid; grid-template-columns: 180px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--border); align-items: baseline;}
+        .legal-info-row:last-child {border-bottom: none;}
+        .legal-info-label {font-weight: 700; color: var(--muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em;}
+        .legal-info-value {color: var(--text); font-size: 0.95rem; line-height: 1.55;}
         @media (max-width: 600px) {
             .legal-hero h1 {font-size: 1.8rem;}
+            .legal-info-row {grid-template-columns: 1fr; gap: 2px; padding: 12px 0;}
         }
     </style>
 
