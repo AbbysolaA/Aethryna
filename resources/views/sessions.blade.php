@@ -18,11 +18,14 @@
             <p class="ss-lede">A monthly panel series with practitioners, researchers, and community leaders. Free. Online. Open to everyone.</p>
 
             @if($nextSession)
+                @php $isPlaceholder = $nextSession->speakers->isEmpty(); @endphp
                 <div class="ss-next-strip">
                     <span class="ss-next-label">Next panel</span>
                     <span class="ss-next-topic">{{ $nextSession->tagline }}</span>
-                    <span class="ss-next-date"><i class="far fa-calendar"></i> {{ $nextSession->event_date->format('j F Y') }}</span>
-                    <span class="ss-next-time"><i class="far fa-clock"></i> {{ $nextSession->event_date->format('g:ia') }} UK</span>
+                    @unless($isPlaceholder)
+                        <span class="ss-next-date"><i class="far fa-calendar"></i> {{ $nextSession->event_date->format('j F Y') }}</span>
+                        <span class="ss-next-time"><i class="far fa-clock"></i> {{ $nextSession->event_date->format('g:ia') }} UK</span>
+                    @endunless
                 </div>
                 <div class="ss-hero-actions">
                     @if($nextSession->eventbrite_url)
@@ -32,7 +35,9 @@
                     @else
                         <a href="#register-section" class="ss-btn ss-btn-primary"><i class="fas fa-user-plus"></i> Reserve your spot</a>
                     @endif
-                    <a href="#speakers" class="ss-btn ss-btn-ghost">Meet the speakers</a>
+                    @unless($isPlaceholder)
+                        <a href="#speakers" class="ss-btn ss-btn-ghost">Meet the speakers</a>
+                    @endunless
                 </div>
             @else
                 <div class="ss-hero-actions">
@@ -52,6 +57,7 @@
             <h2 class="ss-panel-topic">{{ $nextSession->tagline }}</h2>
             <p class="ss-panel-desc">{{ $nextSession->description }}</p>
 
+            @if($nextSession->speakers->isNotEmpty())
             <div class="ss-panel-meta">
                 <div class="ss-meta-cell">
                     <span class="ss-meta-lbl">Date</span>
@@ -74,6 +80,7 @@
                     <span class="ss-meta-val">Free</span>
                 </div>
             </div>
+            @endif
         </div>
 
         @if($nextSession->speakers->isNotEmpty())
@@ -210,8 +217,8 @@
     </div>
 </section>
 
-@if($nextSession)
-<!-- Call for Speakers -->
+@if($nextSession && $nextSession->speakers->isNotEmpty())
+<!-- Call for Speakers (only when a real panel is being finalised) -->
 <section class="ss-cfs">
     <div class="ath-container">
         <div class="ss-cfs-card">

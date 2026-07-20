@@ -7,57 +7,61 @@ use App\Models\PanelSpeaker;
 use Illuminate\Database\Seeder;
 
 /**
- * Panel 3 scaffold.
+ * Panel 3 seeder.
  *
- * Fill in the TODO markers below when the panel details are confirmed:
- *   - slug (kebab-case, must be unique)
- *   - tagline (the panel topic, shown as the h2 on the sessions page)
- *   - description (2 to 4 sentences)
- *   - event_date (Y-m-d H:i:s, London time)
- *   - eventbrite_url (once tickets go live)
- *   - speakers array (name, title, company, bio, photo_path, linkedin_url, topic)
+ * This currently seeds a lightweight "Coming soon" placeholder card so the
+ * sessions page shows that Panel 3 is being planned. When the real details
+ * are confirmed, replace the placeholder values below with the real ones
+ * and re-run: php artisan db:seed --class=Panel3Seeder --force
  *
- * When ready, run: php artisan db:seed --class=Panel3Seeder --force
+ * When you add real speakers, uncomment the speaker template block and
+ * duplicate it per confirmed speaker.
  */
 class Panel3Seeder extends Seeder
 {
     public function run(): void
     {
-        // ── Mark Panel 2 as past just in case Panel3Seeder runs standalone ──
+        // Mark Panel 2 as past just in case Panel3Seeder runs standalone.
         PanelSession::where('slug', 'panel-2-ai-public-services-and-the-people-left-out')
             ->where('status', '!=', 'past')
             ->update(['status' => 'past']);
 
         // ── Panel Session 3 ──────────────────────────────────────────────────
+        // Placeholder values until the real details are confirmed. The site
+        // treats an upcoming panel with no speakers as a coming-soon card and
+        // hides the metadata band (see sessions.blade.php).
         $panel3Attributes = [
             'title'           => 'The Skills Co-op Sessions: Panel 3',
-            'tagline'         => 'TODO: Panel 3 topic (short, punchy — becomes the h2 on the sessions page)',
-            'description'     => 'TODO: 2 to 4 sentences describing what the panel will cover, who it is for, and what listeners will take away.',
-            'event_date'      => '2026-08-11 18:30:00', // TODO: confirm date and time (Europe/London)
+            'tagline'         => 'Panel 3 · Coming soon',
+            'description'     => 'The next Skills Co-op Sessions panel is being planned. Topic, date, and speakers announced soon. Reserve your spot below to be first to hear when the details land.',
+            'event_date'      => '2026-09-30 18:30:00',   // placeholder target; update when confirmed
             'duration'        => '60 minutes',
             'format'          => 'Online',
-            'eventbrite_url'  => null,                  // TODO: paste Eventbrite URL when live
-            'recording_url'   => null,                  // fill in after the event
+            'eventbrite_url'  => null,
+            'recording_url'   => null,
             'status'          => 'upcoming',
             'sort_order'      => 3,
         ];
 
-        // Safety guard: refuse to seed while TODO placeholders remain, so a
-        // scaffold panel never leaks to the public sessions page. Fill in the
-        // real slug and tagline above, then re-run this seeder.
-        if (str_starts_with($panel3Attributes['tagline'], 'TODO:') || str_contains('panel-3-TODO-slug', 'TODO')) {
-            $this->command->warn('Panel 3 still has TODO placeholders. Skipping seed. Fill in the details in Panel3Seeder.php, then re-run: php artisan db:seed --class=Panel3Seeder --force');
+        // Safety guard: refuse to seed if the tagline is still one of the
+        // legacy TODO placeholder strings. This runs against the tagline
+        // itself, not a literal string, so it does not fire on legitimate
+        // "Coming soon" content.
+        if (str_starts_with($panel3Attributes['tagline'], 'TODO:')) {
+            $this->command->warn('Panel 3 still has TODO placeholders in the tagline. Skipping seed. Fill in the details and re-run.');
             return;
         }
 
         $session = PanelSession::updateOrCreate(
-            ['slug' => 'panel-3-TODO-slug'],            // TODO: change to real slug
+            ['slug' => 'panel-3-coming-soon'],
             $panel3Attributes
         );
 
         // ── Speakers ─────────────────────────────────────────────────────────
-        // Duplicate the block below for each confirmed speaker. Keep sort_order
-        // sequential (1, 2, 3, ...) so they render in the intended order.
+        // Uncomment and duplicate this block per confirmed speaker. Keep
+        // sort_order sequential (1, 2, 3, ...) so they render in the intended
+        // order. Using sync() below means removing a speaker from this list
+        // detaches them from the panel on the next seed run.
         $speakers = [
             /*
             [
@@ -65,32 +69,36 @@ class Panel3Seeder extends Seeder
                 'title'        => 'TODO Job title',
                 'company'      => 'TODO Company (or null)',
                 'bio'          => 'TODO Short bio, one paragraph.',
-                'photo_path'   => 'images/speakers/todo-slug.jpg',  // upload to public/images/speakers/
-                'linkedin_url' => null,                             // or full https URL
+                'photo_path'   => 'images/speakers/todo-slug.jpg',
+                'linkedin_url' => null,
                 'topic'        => 'TODO What this speaker will speak to',
                 'sort_order'   => 1,
             ],
             */
         ];
 
+        $syncData = [];
         foreach ($speakers as $data) {
             $topic      = $data['topic'];
             $sort_order = $data['sort_order'];
             unset($data['topic'], $data['sort_order']);
 
-            $speaker = PanelSpeaker::firstOrCreate(
+            $speaker = PanelSpeaker::updateOrCreate(
                 ['name' => $data['name']],
                 $data
             );
 
-            if (! $session->speakers()->where('panel_speaker_id', $speaker->id)->exists()) {
-                $session->speakers()->attach($speaker->id, [
-                    'topic'      => $topic,
-                    'sort_order' => $sort_order,
-                ]);
-            }
+            $syncData[$speaker->id] = [
+                'topic'      => $topic,
+                'sort_order' => $sort_order,
+            ];
         }
+        $session->speakers()->sync($syncData);
 
-        $this->command->info('Panel 3 scaffold seeded. Fill in TODOs, then re-run this seeder to update.');
+        // Clean up: remove the old placeholder slug from the initial scaffold
+        // if it happens to be in the DB.
+        PanelSession::where('slug', 'panel-3-TODO-slug')->delete();
+
+        $this->command->info('Panel 3 seeded: ' . $session->title . ' with ' . count($speakers) . ' speakers.');
     }
 }
