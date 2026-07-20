@@ -33,8 +33,8 @@ class Panel3Seeder extends Seeder
         $panel3Attributes = [
             'title'           => 'The Skills Co-op Sessions: Panel 3',
             'tagline'         => 'Panel 3 · Coming soon',
-            'description'     => 'The next Skills Co-op Sessions panel is being planned. Topic, date, and speakers announced soon. Reserve your spot below to be first to hear when the details land.',
-            'event_date'      => '2026-09-30 18:30:00',   // placeholder target; update when confirmed
+            'description'     => 'The next Skills Co-op Sessions panel lands on 18 August 2026. Topic and speakers announced soon. Reserve your spot below to be first to hear when the details land.',
+            'event_date'      => '2026-08-18 18:30:00',   // confirmed date; topic and speakers still to be finalised
             'duration'        => '60 minutes',
             'format'          => 'Online',
             'eventbrite_url'  => null,
