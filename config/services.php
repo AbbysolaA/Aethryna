@@ -44,4 +44,31 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env('GOOGLE_REDIRECT_URI'),
     ],
+
+    'indexnow' => [
+        // Set INDEXNOW_KEY in .env to a random hex string (16-128 chars).
+        // Generate one with: php -r "echo bin2hex(random_bytes(16));"
+        // Leave unset to disable IndexNow entirely (artisan command becomes a no-op).
+        'key'      => env('INDEXNOW_KEY'),
+        'endpoint' => env('INDEXNOW_ENDPOINT', 'https://api.indexnow.org/indexnow'),
+        'host'     => env('INDEXNOW_HOST', 'skillscoop.org'),
+
+        // Public URLs to submit when the artisan command runs without args.
+        // Add new pages here when you create them.
+        'urls' => [
+            '/',
+            '/about',
+            '/pathway',
+            '/programs',
+            '/impact',
+            '/stories',
+            '/sessions',
+            '/partners',
+            '/ai-labs',
+            '/privacy',
+            '/terms',
+            '/cookies',
+            '/acceptable-use',
+        ],
+    ],
 ];

@@ -85,6 +85,17 @@ Route::post('/partners/enquiry', [PageController::class, 'partnerEnquiry'])->nam
 // ── AI Labs ───────────────────────────────────────────────────────────────────
 Route::get('/ai-labs', [PageController::class, 'aiLabs'])->name('ai-labs');
 
+// ── IndexNow verification file ───────────────────────────────────────────────
+// Serves the key file that Bing / Yandex / Seznam fetch to prove ownership.
+// The key lives in .env (INDEXNOW_KEY), never in git. Rotation is a single
+// env change plus php artisan config:clear. Route is constrained to hex so
+// it cannot shadow real static files.
+Route::get('/{key}.txt', function (string $key) {
+    $expected = config('services.indexnow.key');
+    abort_unless($expected && hash_equals($expected, $key), 404);
+    return response($expected, 200, ['Content-Type' => 'text/plain; charset=utf-8']);
+})->where('key', '[a-f0-9]{16,128}');
+
 // ── Legal pages ──────────────────────────────────────────────────────────────
 Route::get('/privacy',         [PageController::class, 'privacy'])->name('privacy');
 Route::get('/terms',           [PageController::class, 'terms'])->name('terms');
