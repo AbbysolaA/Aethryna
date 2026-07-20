@@ -96,6 +96,41 @@ Route::get('/{key}.txt', function (string $key) {
     return response($expected, 200, ['Content-Type' => 'text/plain; charset=utf-8']);
 })->where('key', '[a-f0-9]{16,128}');
 
+// ── XML sitemap ─────────────────────────────────────────────────────────────
+// Generated from the same URL list used by IndexNow so both stay in sync.
+// Add or remove pages in config/services.php > indexnow > urls, and both
+// this sitemap and the next IndexNow push pick up the change automatically.
+Route::get('/sitemap.xml', function () {
+    $paths = config('services.indexnow.urls', []);
+    $host  = config('services.indexnow.host', 'skillscoop.org');
+    // Deploy time as the sitemap-wide lastmod — good enough for a small site
+    // and honest (changes every deploy, stable between deploys).
+    $lastmod = date('c', @filemtime(base_path('routes/web.php')) ?: time());
+
+    $xml  = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+    $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+    foreach ($paths as $path) {
+        $url = 'https://' . $host . '/' . ltrim($path, '/');
+        $url = $path === '/' ? 'https://' . $host . '/' : rtrim($url, '/');
+        $xml .= "  <url>\n";
+        $xml .= "    <loc>" . htmlspecialchars($url, ENT_XML1) . "</loc>\n";
+        $xml .= "    <lastmod>{$lastmod}</lastmod>\n";
+        $xml .= "  </url>\n";
+    }
+    $xml .= '</urlset>' . "\n";
+
+    return response($xml, 200, ['Content-Type' => 'application/xml; charset=utf-8']);
+});
+
+// ── robots.txt ──────────────────────────────────────────────────────────────
+// Points crawlers at the sitemap. Also generated to avoid a stale physical
+// file drifting from what the app actually serves.
+Route::get('/robots.txt', function () {
+    $host = config('services.indexnow.host', 'skillscoop.org');
+    $body = "User-agent: *\nAllow: /\n\nSitemap: https://{$host}/sitemap.xml\n";
+    return response($body, 200, ['Content-Type' => 'text/plain; charset=utf-8']);
+});
+
 // ── Legal pages ──────────────────────────────────────────────────────────────
 Route::get('/privacy',         [PageController::class, 'privacy'])->name('privacy');
 Route::get('/terms',           [PageController::class, 'terms'])->name('terms');
