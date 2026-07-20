@@ -84,34 +84,44 @@ class Panel1Seeder extends Seeder
                 'sort_order'   => 5,
             ],
             [
-                'name'         => 'Ravi Rabheru',
-                'title'        => 'Global AI Partnerships, ByteDance / Forbes AI Advisor',
-                'company'      => 'ByteDance',
-                'bio'          => 'Ravi leads Global AI Partnerships at ByteDance and serves as a Forbes AI Advisor, working at the very front edge of how AI platforms are being adopted globally. He brings a rare combination of big-tech perspective and advisory experience to questions of where AI is heading and what that means for skills, opportunity, and access.',
-                'photo_path'   => 'images/speakers/ravi-rabheru.jpg',
+                'name'         => 'Sean Adetule',
+                'title'        => 'Global Partnerships and Digital Transformation Expert',
+                'company'      => 'UK Global Talent Awardee',
+                'bio'          => 'Sean Adetule is a Global Partnerships and Digital Transformation Expert and a UK Global Talent Awardee. His work sits inside the practice of AI adoption at scale, where global platforms meet enterprise integration, and he brings a working view of who the AI economy is actually being built for, and who it is leaving behind.',
+                'photo_path'   => 'images/speakers/sean-adetule.jpg',
                 'linkedin_url' => null,
-                'topic'        => 'Global AI adoption and what it means for opportunity',
+                'topic'        => 'Global partnerships, digital transformation, and AI adoption at scale',
                 'sort_order'   => 6,
             ],
         ];
 
+        // Build sync payload and let sync() detach anyone no longer on the list.
+        // This is how we can swap speakers safely: remove them from the array
+        // above, re-run the seeder, and the DB catches up automatically.
+        $syncData = [];
         foreach ($speakers as $data) {
             $topic      = $data['topic'];
             $sort_order = $data['sort_order'];
             unset($data['topic'], $data['sort_order']);
 
-            $speaker = PanelSpeaker::firstOrCreate(
+            $speaker = PanelSpeaker::updateOrCreate(
                 ['name' => $data['name']],
                 $data
             );
 
-            // Attach to session if not already attached
-            if (! $session->speakers()->where('panel_speaker_id', $speaker->id)->exists()) {
-                $session->speakers()->attach($speaker->id, [
-                    'topic'      => $topic,
-                    'sort_order' => $sort_order,
-                ]);
-            }
+            $syncData[$speaker->id] = [
+                'topic'      => $topic,
+                'sort_order' => $sort_order,
+            ];
+        }
+        $session->speakers()->sync($syncData);
+
+        // Clean up: Ravi Rabheru was announced on the pre-event flyer but Sean
+        // Adetule was on the actual panel. Delete Ravi's orphan speaker row
+        // if no other panels reference him.
+        $ravi = PanelSpeaker::where('name', 'Ravi Rabheru')->first();
+        if ($ravi && $ravi->sessions()->count() === 0) {
+            $ravi->delete();
         }
 
         // ── Attach recording video for past-sessions archive ─────────────────
