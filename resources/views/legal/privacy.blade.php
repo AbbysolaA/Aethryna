@@ -101,7 +101,7 @@
             <p>For the purposes of data protection law, <strong>Aethryna Digital Skills Co‑op CIC</strong> is the <strong>data controller</strong> for all personal data collected through the SkillsCo‑op website and services.</p>
             <div class="legal-info-box">
                 <div class="legal-info-row"><span class="legal-info-label">Data controller</span><span class="legal-info-value">Aethryna Digital Skills Co‑op CIC (trading as SkillsCo‑op)</span></div>
-                <div class="legal-info-row"><span class="legal-info-label">Company number</span><span class="legal-info-value">[CIC company number]</span></div>
+                <div class="legal-info-row"><span class="legal-info-label">Company number</span><span class="legal-info-value">17007317</span></div>
                 <div class="legal-info-row"><span class="legal-info-label">Registered address</span><span class="legal-info-value">Unit A 82 James Carter Road, Mildenhall, United Kingdom IP28 7DE</span></div>
                 <div class="legal-info-row"><span class="legal-info-label">Contact email</span><span class="legal-info-value">info@skillscoop.org</span></div>
                 <div class="legal-info-row"><span class="legal-info-label">Applicable law</span><span class="legal-info-value">UK GDPR and the Data Protection Act 2018</span></div>
