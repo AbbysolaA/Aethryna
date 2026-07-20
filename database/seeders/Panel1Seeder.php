@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\PanelMedia;
 use App\Models\PanelSession;
 use App\Models\PanelSpeaker;
 use Illuminate\Database\Seeder;
@@ -11,21 +12,23 @@ class Panel1Seeder extends Seeder
 {
     public function run(): void
     {
-        // ── Panel Session 1 ──────────────────────────────────────────────────
-        $session = PanelSession::firstOrCreate(
+        // ── Panel Session 1 (past: took place 16 June 2026) ─────────────────
+        $panel1Attributes = [
+            'title'           => 'The Skills Co-op Sessions: Panel 1',
+            'tagline'         => 'AI Is Not Coming, It\'s Here. Now What?',
+            'description'     => 'Our first panel session brings together six practitioners from across AI, data, HR, healthcare, and tech leadership to ask a simple question: now that AI is here, what does that mean for people in underserved communities? What skills matter, what jobs are changing, and how do we make sure the people who need opportunity most are not left behind?',
+            'event_date'      => '2026-06-16 18:30:00',
+            'duration'        => '90 minutes',
+            'format'          => 'Virtual (Riverside Live), streamed to LinkedIn and YouTube',
+            'eventbrite_url'  => 'https://www.eventbrite.co.uk/e/the-skills-co-op-sessions-tickets-1990225897234',
+            'recording_url'   => 'https://www.youtube.com/live/TrXW9mTv00c',
+            'status'          => 'past',
+            'sort_order'      => 1,
+        ];
+
+        $session = PanelSession::updateOrCreate(
             ['slug' => 'panel-1-ai-is-not-coming-its-here'],
-            [
-                'title'           => 'The Skills Co-op Sessions: Panel 1',
-                'tagline'         => 'AI Is Not Coming, It\'s Here. Now What?',
-                'description'     => 'Our first panel session brings together six practitioners from across AI, data, HR, healthcare, and tech leadership to ask a simple question: now that AI is here, what does that mean for people in underserved communities? What skills matter, what jobs are changing, and how do we make sure the people who need opportunity most are not left behind?',
-                'event_date'      => '2026-06-16 18:30:00',
-                'duration'        => '90 minutes',
-                'format'          => 'Virtual (Riverside Live), streamed to LinkedIn and YouTube',
-                'eventbrite_url'  => 'https://www.eventbrite.co.uk/e/the-skills-co-op-sessions-tickets-1990225897234',
-                'recording_url'   => null, // add after the session
-                'status'          => 'upcoming',
-                'sort_order'      => 1,
-            ]
+            $panel1Attributes
         );
 
         // ── Speakers ─────────────────────────────────────────────────────────
@@ -111,6 +114,19 @@ class Panel1Seeder extends Seeder
             }
         }
 
-        $this->command->info('Panel 1 seeded: ' . $session->title . ' with ' . count($speakers) . ' speakers.');
+        // ── Attach recording video for past-sessions archive ─────────────────
+        PanelMedia::updateOrCreate(
+            [
+                'panel_session_id' => $session->id,
+                'type'             => 'video',
+                'url'              => 'https://www.youtube.com/live/TrXW9mTv00c',
+            ],
+            [
+                'caption'    => 'Full recording: AI Is Not Coming, It\'s Here. Now What?',
+                'sort_order' => 1,
+            ]
+        );
+
+        $this->command->info('Panel 1 seeded: ' . $session->title . ' with ' . count($speakers) . ' speakers. Marked as past with YouTube recording.');
     }
 }

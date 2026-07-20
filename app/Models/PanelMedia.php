@@ -17,14 +17,16 @@ class PanelMedia extends Model
         return $this->belongsTo(PanelSession::class);
     }
 
-    // Convert a YouTube watch URL to an embed URL automatically
+    // Convert any YouTube URL variant to a privacy-friendly embed URL.
+    // Uses youtube-nocookie.com to bypass the consent.youtube.com interstitial
+    // that some browsers (and some corporate networks) block on embed load.
+    // Handles: watch?v=ID, youtu.be/ID, /live/ID, /shorts/ID, /embed/ID.
     public function embedUrl(): string
     {
         if ($this->type === 'video') {
             $url = $this->url;
-            // youtube.com/watch?v=ID -> youtube.com/embed/ID
-            if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/', $url, $m)) {
-                return 'https://www.youtube.com/embed/' . $m[1];
+            if (preg_match('#(?:youtube\.com/(?:watch\?v=|live/|shorts/|embed/)|youtu\.be/)([\w-]+)#', $url, $m)) {
+                return 'https://www.youtube-nocookie.com/embed/' . $m[1];
             }
         }
         return $this->url;

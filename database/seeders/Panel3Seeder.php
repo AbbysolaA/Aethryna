@@ -42,6 +42,14 @@ class Panel3Seeder extends Seeder
             'sort_order'      => 3,
         ];
 
+        // Safety guard: refuse to seed while TODO placeholders remain, so a
+        // scaffold panel never leaks to the public sessions page. Fill in the
+        // real slug and tagline above, then re-run this seeder.
+        if (str_starts_with($panel3Attributes['tagline'], 'TODO:') || str_contains('panel-3-TODO-slug', 'TODO')) {
+            $this->command->warn('Panel 3 still has TODO placeholders. Skipping seed. Fill in the details in Panel3Seeder.php, then re-run: php artisan db:seed --class=Panel3Seeder --force');
+            return;
+        }
+
         $session = PanelSession::updateOrCreate(
             ['slug' => 'panel-3-TODO-slug'],            // TODO: change to real slug
             $panel3Attributes
