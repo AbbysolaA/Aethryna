@@ -2,8 +2,8 @@
 
 @section('title', 'SkillsCo-op | Digital Skills for Real Careers')
 
-@section('meta_description', 'Funded digital skills programmes for people facing barriers to employment. Project and Product Delivery, Data and AI Analytics, Digital Design and Marketing, and Software Development. AI tools embedded throughout. Based in Liverpool, open across the UK.')
-@section('og_description', 'Funded digital skills programmes for people facing barriers to employment. Project and Product Delivery, Data and AI Analytics, Digital Design and Marketing, and Software Development. AI tools embedded throughout. Based in Liverpool, open across the UK.')
+@section('meta_description', 'Funded digital skills programmes for people facing barriers to employment. Project and Product Delivery, Data and AI Analytics, Product Design and Marketing, and Software Development. AI tools embedded throughout. Based in Liverpool, open across the UK.')
+@section('og_description', 'Funded digital skills programmes for people facing barriers to employment. Project and Product Delivery, Data and AI Analytics, Product Design and Marketing, and Software Development. AI tools embedded throughout. Based in Liverpool, open across the UK.')
 
 @section('content')
 
@@ -219,9 +219,9 @@
                 </div>
                 <div class="ath-prog-item reveal-fade-up" style="--delay: 3">
                     <div class="ath-prog-icon"><i class="fas fa-palette"></i></div>
-                    <h3>Digital Design and Marketing</h3>
-                    <p>Create content, brand, and audience. Design fundamentals, content strategy, social, email, and analytics. AI-assisted creative work, used responsibly. Roles: Digital Marketer, UX Designer, Content Producer.</p>
-                    <a href="{{ route('programs') }}#design-marketing" class="ath-link">Explore Track <i class="fas fa-arrow-right"></i></a>
+                    <h3>Product Design and Marketing</h3>
+                    <p>Design digital products and put them in front of an audience. Figma, UX fundamentals, prototyping, brand, content, social, and analytics. AI-assisted creative work, used responsibly. Roles: Junior Product Designer, UX Designer, Digital Marketer.</p>
+                    <a href="{{ route('programs') }}#product-design" class="ath-link">Explore Track <i class="fas fa-arrow-right"></i></a>
                     <a href="{{ route('ai-labs') }}" class="ath-ai-link">AI is embedded throughout. See how &rarr;</a>
                 </div>
                 <div class="ath-prog-item reveal-fade-up" style="--delay: 4">

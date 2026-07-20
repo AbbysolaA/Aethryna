@@ -371,24 +371,24 @@
                     <span>AI tools embedded: data wrangling, insight generation, visualisation</span>
                 </div>
             </div>
-            <!-- Digital Design and Marketing -->
+            <!-- Product Design and Marketing -->
             <div class="analysis-card">
                 <div class="a-track-head">
                     <i class="fas fa-paint-brush"></i>
-                    <h3>Digital Design and Marketing</h3>
+                    <h3>Product Design and Marketing</h3>
                 </div>
                 <div class="a-track-body">
                     <div class="a-metric">
                         <span class="a-label">Depth measure</span>
-                        <span class="a-val">Creative and campaign portfolio</span>
+                        <span class="a-val">Product design and campaign portfolio</span>
                     </div>
                     <div class="a-metric">
                         <span class="a-label">Durability target</span>
-                        <span class="a-val">Digital marketing or design assistant role</span>
+                        <span class="a-val">Junior product designer or marketing role</span>
                     </div>
                 </div>
                 <div class="a-track-footer">
-                    <span>AI tools embedded: content creation, campaign strategy, brand assets</span>
+                    <span>AI tools embedded: research synthesis, prototyping, content creation, campaign strategy</span>
                 </div>
             </div>
             <!-- Software Development -->
@@ -452,7 +452,7 @@
                         <i class="fas fa-check-circle"></i>
                         <div>
                             <strong>Four specialised tracks</strong>
-                            <span>Project Delivery, Data and AI, Digital Design and Marketing, and Software Development.</span>
+                            <span>Project Delivery, Data and AI, Product Design and Marketing, and Software Development.</span>
                         </div>
                     </div>
                     <div class="i-check">

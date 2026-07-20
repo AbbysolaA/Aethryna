@@ -136,8 +136,8 @@
             </div>
             <div class="brief-track">
                 <div class="bt-icon"><i class="fas fa-paint-brush"></i></div>
-                <h3>Digital Design and Marketing</h3>
-                <p>Redesigning a page or leaflet, building a social campaign, creating brand assets, writing and structuring digital content.</p>
+                <h3>Product Design and Marketing</h3>
+                <p>Designing a small product feature or landing page, prototyping an idea you have not had time to test, redesigning an existing flow, or running a creative campaign around something you already do.</p>
             </div>
             <div class="brief-track">
                 <div class="bt-icon"><i class="fas fa-code"></i></div>
@@ -235,7 +235,7 @@
                             <option value="" disabled {{ old('brief_type') ? '' : 'selected' }}>Select a track</option>
                             <option value="Project and Product Delivery" {{ old('brief_type') === 'Project and Product Delivery' ? 'selected' : '' }}>Project and Product Delivery</option>
                             <option value="Data and AI Analytics" {{ old('brief_type') === 'Data and AI Analytics' ? 'selected' : '' }}>Data and AI Analytics</option>
-                            <option value="Digital Design and Marketing" {{ old('brief_type') === 'Digital Design and Marketing' ? 'selected' : '' }}>Digital Design and Marketing</option>
+                            <option value="Product Design and Marketing" {{ old('brief_type') === 'Product Design and Marketing' ? 'selected' : '' }}>Product Design and Marketing</option>
                             <option value="Software Development" {{ old('brief_type') === 'Software Development' ? 'selected' : '' }}>Software Development</option>
                             <option value="Not sure" {{ old('brief_type') === 'Not sure' ? 'selected' : '' }}>Not sure yet</option>
                         </select>

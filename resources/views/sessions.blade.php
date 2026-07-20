@@ -140,7 +140,7 @@
             <div class="ss-expect-card">
                 <div class="ss-expect-icon"><i class="fas fa-lightbulb"></i></div>
                 <h3>Track spotlights</h3>
-                <p>Each session touches one of our pilot tracks: Project and Product Delivery, Data and AI Analytics, Digital Design and Marketing, or Software Development.</p>
+                <p>Each session touches one of our pilot tracks: Project and Product Delivery, Data and AI Analytics, Product Design and Marketing, or Software Development.</p>
             </div>
         </div>
     </div>

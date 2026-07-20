@@ -7,7 +7,7 @@
     <!-- Primary Meta Tags -->
     <title>@yield('title', 'SkillsCo-op | Digital Skills for Real Careers')</title>
     <meta name="title" content="@yield('meta_title', 'SkillsCo-op | Digital Skills for Real Careers')">
-    <meta name="description" content="@yield('meta_description', 'SkillsCo-op is a funded 25-week digital skills programme for people facing barriers to employment. Four pilot tracks: Project and Product Delivery, Data and AI Analytics, Digital Design and Marketing, and Software Development. Based in Liverpool, open across the UK.')">
+    <meta name="description" content="@yield('meta_description', 'SkillsCo-op is a funded 25-week digital skills programme for people facing barriers to employment. Four pilot tracks: Project and Product Delivery, Data and AI Analytics, Product Design and Marketing, and Software Development. Based in Liverpool, open across the UK.')">
     <meta name="keywords" content="@yield('meta_keywords', 'digital skills training, funded programme, Liverpool, career change, NEET, IT support, digital design, data analytics, project management, AI skills, underserved communities')">
     <meta name="author" content="SkillsCo-op">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">

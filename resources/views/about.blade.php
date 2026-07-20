@@ -215,7 +215,7 @@
             <li>
                 <span class="ab-time-tag">The Pathway</span>
                 <h3>Four pilot tracks, all fully funded</h3>
-                <p>Project and Product Delivery, Data and AI Analytics, Digital Design and Marketing, and Software Development, each with AI embedded from week one and the operator core running through every module.</p>
+                <p>Project and Product Delivery, Data and AI Analytics, Product Design and Marketing, and Software Development, each with AI embedded from week one and the operator core running through every module.</p>
             </li>
             <li>
                 <span class="ab-time-tag">Now</span>

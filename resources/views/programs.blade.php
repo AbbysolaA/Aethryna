@@ -92,7 +92,7 @@
                     $nameLc = strtolower($pathway->name);
                     if (str_contains($nameLc, 'project')) { $icon = 'fa-tasks'; $colorClass = 'web-dev'; $anchorId = 'project-product'; }
                     elseif (str_contains($nameLc, 'data')) { $icon = 'fa-chart-bar'; $colorClass = 'digital-sales'; $anchorId = 'data-ai'; }
-                    elseif (str_contains($nameLc, 'design')) { $icon = 'fa-palette'; $colorClass = 'digital-design'; $anchorId = 'digital-design'; }
+                    elseif (str_contains($nameLc, 'design')) { $icon = 'fa-palette'; $colorClass = 'product-design'; $anchorId = 'product-design'; }
                     elseif (str_contains($nameLc, 'software') || str_contains($nameLc, 'development') || str_contains($nameLc, 'web')) { $icon = 'fa-code'; $colorClass = 'web-dev'; $anchorId = 'software-dev'; }
                     elseif (str_contains($nameLc, 'support') || str_contains($nameLc, 'it')) { $icon = 'fa-tools'; $colorClass = 'it-support'; }
                     elseif (str_contains($nameLc, 'sales') || str_contains($nameLc, 'marketing')) { $icon = 'fa-chart-line'; $colorClass = 'digital-sales'; }
@@ -574,7 +574,7 @@
             background: var(--ath-teal);
         }
 
-        .track-card.digital-design .track-header::after { background: #e84393; }
+        .track-card.product-design .track-header::after { background: #e84393; }
         .track-card.it-support .track-header::after { background: #0984e3; }
         .track-card.digital-sales .track-header::after { background: #2ed573; }
 

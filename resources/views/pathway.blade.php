@@ -300,12 +300,12 @@
                             </div>
                         </div>
                         <div class="track">
-                            <h4>Digital Design and Marketing</h4>
-                            <p>Create content, brand, and audience. Design fundamentals, content strategy, social, email, and analytics. AI-assisted creative work, used responsibly.</p>
+                            <h4>Product Design and Marketing</h4>
+                            <p>Design digital products and market what you build. UX fundamentals, Figma, prototyping, brand, content, social, and analytics. AI-assisted creative work, used responsibly.</p>
                             <div class="track-skills">
-                                <span>Design fundamentals</span>
-                                <span>Content strategy</span>
-                                <span>Social and email</span>
+                                <span>Figma and UX</span>
+                                <span>Prototyping</span>
+                                <span>Brand and marketing</span>
                             </div>
                         </div>
                         <div class="track">
