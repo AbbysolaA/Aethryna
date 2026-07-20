@@ -81,6 +81,9 @@
 
     <div class="footer-bottom">
         <div class="footer-container">
+            <p class="company-details">
+                SkillsCo-op is the trading name of <strong>Aethryna Digital Skills Co-op CIC</strong>, a Community Interest Company registered in England and Wales. Company No. <strong>17007317</strong>. Registered office: Unit A 82 James Carter Road, Mildenhall, United Kingdom IP28 7DE.
+            </p>
             <div class="bottom-content">
                 <p>&copy; {{ date('Y') }} SkillsCo-op. All Rights Reserved.</p>
                 <div class="legal-links">
@@ -274,6 +277,22 @@
         background: rgba(0, 0, 0, 0.2);
         padding: 2rem 0;
         border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .company-details {
+        color: rgba(245, 245, 245, 0.55);
+        font-size: 0.85rem;
+        line-height: 1.7;
+        max-width: 900px;
+        margin: 0 auto 1.5rem;
+        text-align: center;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .company-details strong {
+        color: rgba(245, 245, 245, 0.8);
+        font-weight: 700;
     }
 
     .bottom-content {
