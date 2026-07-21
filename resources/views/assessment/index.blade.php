@@ -1,6 +1,9 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Find Your Pathway - SkillsCo-op')
+@section('title', 'Find Your Pathway | SkillsCo-op Assessment')
+
+@section('meta_description', 'A two-minute assessment to match you with the SkillsCo-op pilot track that fits you best: Project and Product Delivery, Data and AI Analytics, Product Design and Marketing, or Software Development.')
+@section('og_description', 'A two-minute assessment to match you with the SkillsCo-op pilot track that fits you best: Project and Product Delivery, Data and AI Analytics, Product Design and Marketing, or Software Development.')
 
 @section('content')
     <!-- Assessment Start Hero -->

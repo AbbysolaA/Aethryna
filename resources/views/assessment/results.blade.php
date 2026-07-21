@@ -1,6 +1,9 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Your Pathway Results - SkillsCo-op')
+@section('title', 'Your Pathway Results | SkillsCo-op')
+
+@section('meta_description', 'Your recommended SkillsCo-op pilot track and next steps to apply for the founding cohort launching January 2027.')
+@section('og_description', 'Your recommended SkillsCo-op pilot track and next steps to apply for the founding cohort launching January 2027.')
 
 @section('content')
     <section class="bg-gradient-to-r from-teal-700 to-teal-900 text-white py-16 px-8 relative overflow-hidden">

@@ -123,11 +123,27 @@ Route::get('/sitemap.xml', function () {
 });
 
 // ── robots.txt ──────────────────────────────────────────────────────────────
-// Points crawlers at the sitemap. Also generated to avoid a stale physical
-// file drifting from what the app actually serves.
+// Points crawlers at the sitemap and hides files that look like pages but
+// are not: search-console verification files and the IndexNow key file both
+// have HTML/txt extensions and no meta or h1, which trips SEO scanners.
 Route::get('/robots.txt', function () {
     $host = config('services.indexnow.host', 'skillscoop.org');
-    $body = "User-agent: *\nAllow: /\n\nSitemap: https://{$host}/sitemap.xml\n";
+    $body  = "User-agent: *\n";
+    $body .= "Allow: /\n";
+    $body .= "\n";
+    $body .= "# Verification files — required for Search Console but not content.\n";
+    $body .= "Disallow: /googlec84eff80aae46a44.html\n";
+    $body .= "\n";
+    $body .= "# Auth and account pages — not content, do not index.\n";
+    $body .= "Disallow: /login\n";
+    $body .= "Disallow: /register\n";
+    $body .= "Disallow: /password/\n";
+    $body .= "Disallow: /email/\n";
+    $body .= "Disallow: /dashboard\n";
+    $body .= "Disallow: /admin/\n";
+    $body .= "Disallow: /profile\n";
+    $body .= "\n";
+    $body .= "Sitemap: https://{$host}/sitemap.xml\n";
     return response($body, 200, ['Content-Type' => 'text/plain; charset=utf-8']);
 });
 

@@ -2,6 +2,9 @@
 
 @section('title', 'Pathway Assessment - Question ' . $questionNumber . ' | SkillsCo-op')
 
+@section('meta_description', 'Answer a few short questions and we will match you to the SkillsCo-op pilot track that fits you best. Takes about two minutes.')
+@section('og_description', 'Answer a few short questions and we will match you to the SkillsCo-op pilot track that fits you best. Takes about two minutes.')
+
 @section('content')
 <section class="min-h-screen bg-gradient-to-br from-teal-50 to-teal-100 py-16 px-8">
     <div class="max-w-2xl mx-auto">
