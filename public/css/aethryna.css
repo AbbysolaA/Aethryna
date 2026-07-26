@@ -2,6 +2,12 @@
 :root {
     --teal: #055860;
     --gold: #E8B647;
+    /* Deeper amber, for the navigation bar only. The bar carries small white
+       text across its entire width, and --gold is far too light to support
+       it: white on #E8B647 measures 1.87:1 where 4.5:1 is required. This
+       keeps the same teal into warm gold sweep at a brightness white can
+       actually sit on. Everything else still uses --gold. */
+    --gold-deep: #9a6510;
     --black: #0C0C0C;
     --light: #F5F5F5;
     --dark-gray: #1a1a1a;
@@ -25,7 +31,7 @@
     align-items: center;
     z-index: 1000;
     transition: var(--transition);
-    background: linear-gradient(135deg, var(--teal), var(--gold));
+    background: linear-gradient(135deg, var(--teal), var(--gold-deep));
 }
 
 #navbar.scrolled {
@@ -179,6 +185,21 @@
     color: var(--dark-gray);
     transform: translateY(-2px);
     box-shadow: 0 10px 25px rgba(232, 182, 71, 0.3);
+}
+
+/* In the bar, Login is gold text on a warm gold background, which measures
+   3.02:1. The markup already asks for white (class="text-white btn
+   btn-outline"), it was just losing to .btn-outline. Scoped to the navbar
+   so buttons elsewhere on the site keep the gold outline. */
+#navbar .btn-outline {
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+#navbar .btn-outline:hover {
+    background: #ffffff;
+    color: var(--teal);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
 }
 
 .btn-primary {
