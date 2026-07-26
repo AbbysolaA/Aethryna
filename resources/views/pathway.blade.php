@@ -631,7 +631,11 @@
         .core-card h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: 10px; font-family: 'Outfit', sans-serif; }
         .core-card p { opacity: 0.85; line-height: 1.7; font-size: 0.98rem; margin: 0; }
         .core-note { font-size: 1.05rem; font-style: italic; opacity: 0.85; max-width: 700px; }
-        @media (max-width: 992px) {
+        @media (max-width: 1200px) {
+            .core-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 760px) {
             .core-grid { grid-template-columns: 1fr; }
         }
 

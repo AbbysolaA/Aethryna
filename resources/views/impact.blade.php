@@ -192,6 +192,24 @@
 .btn-outline-white { border: 2px solid #fff; color: #fff; padding: 15px 35px; border-radius: 100px; text-decoration: none; font-weight: 800; transition: var(--ath-trans); }
 .btn-outline-white:hover { background: #fff; color: var(--ath-deep); }
 
+/* Framework cards. Previously an inline 3-column grid with no override at
+   any width, so it overflowed on phones. */
+.framework-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 60px; }
+.analysis-grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+/* Laptop step. Without this, 3 and 4 column grids stayed full-width down to
+   992px and became cramped between 1024 and 1280. */
+@media (max-width: 1200px) {
+    .analysis-grid { grid-template-columns: repeat(2, 1fr); }
+    .framework-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 760px) {
+    .framework-grid { grid-template-columns: 1fr; }
+    .analysis-grid,
+    .analysis-grid-2 { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 992px) {
     .hero-split, .board-grid, .stats-grid-dashboard, .regional-split { grid-template-columns: 1fr; gap: 60px; }
     .analysis-grid { grid-template-columns: 1fr 1fr; }
@@ -263,7 +281,7 @@
             <p>We measure impact across three dimensions: breadth (how many people we reach and from which backgrounds), depth (the skill and confidence gain during the programme), and durability (where people are six months after they leave). All three matter. We will publish all three.</p>
         </div>
         <!-- Outcomes Framework cards -->
-        <div class="framework-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:60px;">
+        <div class="framework-grid">
             <div class="fw-card" style="background:#fff;border:2px solid rgba(3,139,137,0.15);border-radius:24px;padding:36px;">
                 <div style="width:44px;height:44px;background:rgba(3,139,137,0.1);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--ath-teal);font-size:1.2rem;margin-bottom:16px;"><i class="fas fa-expand-arrows-alt"></i></div>
                 <h3 style="font-size:1.2rem;color:var(--ath-deep);font-weight:800;margin-bottom:8px;">Breadth</h3>
@@ -330,7 +348,7 @@
             <span class="ath-sub">Track Record</span>
             <h2>Where Each Track Leads</h2>
         </div>
-        <div class="analysis-grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="analysis-grid analysis-grid-2">
             <!-- Project and Product Delivery -->
             <div class="analysis-card">
                 <div class="a-track-head">

@@ -537,7 +537,7 @@
 
         .tracks-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
             gap: 40px;
         }
 
@@ -807,8 +807,8 @@
             font-size: 0.95rem;
             margin: 0;
         }
-        @media (max-width: 992px) {
-            .ai-stages { grid-template-columns: 1fr 1fr; }
+        @media (max-width: 1200px) {
+            .ai-stages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         }
         @media (max-width: 640px) {
             .ai-svg { display: none; }

@@ -87,6 +87,54 @@
             border-left: 3px solid #ee9d1d;
             padding-left: 12px;
         }
+
+        /* Visually hidden, still read by screen readers. Used for form labels
+           where the design relies on a placeholder. */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Keyboard focus. The site had no focus styles at all, so anyone
+           navigating by keyboard could not tell where they were. Only shows
+           for keyboard users, not on mouse click. */
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible,
+        textarea:focus-visible,
+        summary:focus-visible,
+        [tabindex]:focus-visible {
+            outline: 3px solid #ee9d1d;
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        /* On the dark teal nav, gold on teal is too low contrast for a focus
+           ring, so use white there. */
+        #navbar a:focus-visible,
+        #navbar button:focus-visible {
+            outline-color: #ffffff;
+        }
+
+        /* Respect reduced-motion preferences across the whole site. */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
     </style>
 
     @stack('styles')

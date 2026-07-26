@@ -300,6 +300,58 @@
 }
 
 /* Responsive Design */
+
+/* Laptop step. The nav carries 7 links plus 2 buttons, which at 1280px
+   leaves only ~35px of slack and overflows entirely for admins (whose
+   buttons are wider). Tighten spacing before the hamburger takes over. */
+@media (max-width: 1280px) {
+    .nav-links {
+        gap: 1.5rem;
+    }
+
+    .nav-links a {
+        font-size: 0.92rem;
+    }
+
+    .btn {
+        padding: 0.7rem 1.3rem;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 1120px) {
+    .nav-links {
+        gap: 1.1rem;
+    }
+
+    .nav-links a {
+        font-size: 0.88rem;
+    }
+
+    .btn {
+        padding: 0.6rem 1.05rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* Hand over to the mobile menu at 1024px rather than 768px. Between those
+   two widths the flex row was shrinking and wrapping link text. */
+@media (max-width: 1024px) {
+    .nav-links,
+    .nav-buttons {
+        display: none;
+    }
+
+    .mobile-menu {
+        display: block;
+    }
+}
+
+/* Nav links had no padding, giving a ~24px hit area. */
+.nav-links a {
+    padding: 10px 2px;
+}
+
 @media (max-width: 768px) {
     .nav-links {
         display: none;

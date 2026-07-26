@@ -79,8 +79,9 @@
                         @else
                             <form class="newsletter-form" action="{{ route('waitlist.store') }}" method="POST">
                                 @csrf
-                                <input type="email" name="email" placeholder="Your email address" required>
-                                <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                                <label for="footer-waitlist-email" class="sr-only">Your email address</label>
+                                <input type="email" id="footer-waitlist-email" name="email" placeholder="Your email address" required>
+                                <button type="submit" aria-label="Join the waitlist"><i class="fas fa-paper-plane" aria-hidden="true"></i></button>
                             </form>
                             @error('email')
                                 <p class="newsletter-error">{{ $message }}</p>
@@ -132,6 +133,21 @@
         padding-bottom: 4rem;
     }
 
+    /* Laptop step. At 1280px the 1fr columns computed to ~183px, so the
+       longer track names wrapped onto three lines. */
+    @media (max-width: 1280px) {
+        .footer-grid {
+            gap: 2.5rem;
+            grid-template-columns: 1.6fr 1fr 1fr 1.4fr;
+        }
+    }
+
+    /* Long addresses and emails must not push the layout wider. */
+    .contact-item span,
+    .footer-links a {
+        overflow-wrap: anywhere;
+    }
+
     .footer-logo img {
         height: 50px;
         margin-bottom: 1.5rem;
@@ -150,8 +166,8 @@
     }
 
     .social-icon {
-        width: 40px;
-        height: 40px;
+        width: 44px;
+        height: 44px;
         background: rgba(255, 255, 255, 0.1);
         display: flex;
         align-items: center;
@@ -202,6 +218,8 @@
         text-decoration: none;
         transition: var(--transition);
         font-size: 0.95rem;
+        display: inline-block;
+        padding: 4px 0;
     }
 
     .footer-links a:hover {
@@ -271,8 +289,8 @@
         background: var(--teal);
         color: white;
         border: none;
-        width: 45px;
-        height: 40px;
+        width: 46px;
+        height: 44px;
         border-radius: 50%;
         cursor: pointer;
         transition: var(--transition);

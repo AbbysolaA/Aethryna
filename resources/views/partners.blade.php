@@ -419,6 +419,12 @@
 }
 .partners-hero .ath-sub { color: rgba(255,255,255,0.7); }
 
+/* Laptop step: three columns were cramped between 1024 and 1280. */
+@media (max-width: 1200px) {
+    .how-grid { grid-template-columns: repeat(2, 1fr); }
+    .briefs-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
 @media (max-width: 992px) {
     .how-grid { grid-template-columns: 1fr; }
     .ask-grid { grid-template-columns: 1fr; gap: 40px; }

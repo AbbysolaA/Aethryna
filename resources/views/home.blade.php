@@ -408,8 +408,12 @@
 
         /* Hero Fixes */
         .ath-hero {
-            height: 100vh;
-            min-height: 700px;
+            /* layouts/aethryna wraps every page in <main class="py-20">, which
+               adds 80px top and bottom. A 100vh hero on top of that overflowed
+               the viewport by 160px, pushing the CTAs below the fold on
+               laptops. Subtract the wrapper so the hero is exactly one screen,
+               with a floor so it does not collapse on short windows. */
+            min-height: max(560px, calc(100vh - 160px));
             display: flex;
             align-items: center;
             position: relative;
