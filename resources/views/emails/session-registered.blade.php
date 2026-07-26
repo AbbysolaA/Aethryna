@@ -99,7 +99,7 @@
             <p style="margin:0 0 12px 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:11px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:#8a8f86;">What to expect</p>
             <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                 <tr><td style="padding:6px 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:15px; line-height:22px; color:#2b333a;">&middot;&nbsp; Real practitioners, not slide decks</td></tr>
-                <tr><td style="padding:6px 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:15px; line-height:22px; color:#2b333a;">&middot;&nbsp; Honest Q&amp;A &mdash; hard questions welcome</td></tr>
+                <tr><td style="padding:6px 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:15px; line-height:22px; color:#2b333a;">&middot;&nbsp; Honest Q&amp;A, hard questions welcome</td></tr>
                 <tr><td style="padding:6px 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:15px; line-height:22px; color:#2b333a;">&middot;&nbsp; A community that keeps going after the session</td></tr>
             </table>
         </td>

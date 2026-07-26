@@ -189,6 +189,21 @@ class AssessmentController extends Controller
             'completed_at' => now()
         ]);
 
+        // Email the results so the learner has them outside the session.
+        // Fail-soft: a mail problem must never block seeing the results page.
+        $recipient = $assessment->user?->email ?? auth()->user()?->email;
+        if ($recipient) {
+            try {
+                \Illuminate\Support\Facades\Mail::to($recipient)
+                    ->send(new \App\Mail\AssessmentCompleted($assessment));
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning('Assessment results email failed', [
+                    'assessment_id' => $assessment->id,
+                    'error'         => $e->getMessage(),
+                ]);
+            }
+        }
+
         return redirect()->route('assessment.results');
     }
 

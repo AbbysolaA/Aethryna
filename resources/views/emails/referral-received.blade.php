@@ -69,7 +69,7 @@
                                 Contact
                             </p>
                             <p style="margin:0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:14px; line-height:22px; font-style:italic; color:#8a8f86;">
-                                Contact details withheld &mdash; no consent recorded. Reach the referred person via the referrer below.
+                                Contact details withheld, no consent recorded. Reach the referred person via the referrer below.
                             </p>
                         @endif
                     </td>

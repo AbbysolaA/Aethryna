@@ -2,59 +2,34 @@
 
 namespace App\Notifications;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class WelcomeEmail extends Notification implements ShouldQueue
+/**
+ * Welcome notification sent when a new account is created.
+ *
+ * Deliberately NOT ShouldQueue. QUEUE_CONNECTION is 'database', and the
+ * production host does not run a persistent queue worker, so a queued
+ * notification would sit in the jobs table and never send. Sending inline
+ * costs the user a moment on registration but actually arrives.
+ *
+ * The mail body itself is the branded Mailable in App\Mail\WelcomeEmail,
+ * which extends the shared emails.layout shell and ships a plain-text
+ * alternative.
+ */
+class WelcomeEmail extends Notification
 {
-    use Queueable;
-
-    /**
-     * Create a new notification instance.
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @return array<int, string>
-     */
     public function via(object $notifiable): array
     {
         return ['mail'];
     }
 
-    /**
-     * Get the mail representation of the notification.
-     */
-    public function toMail(object $notifiable): MailMessage
+    public function toMail(object $notifiable): \App\Mail\WelcomeEmail
     {
-        return (new MailMessage)
-            ->subject('Welcome to SkillsCo-op')
-            ->greeting('Hi ' . $notifiable->name . '!')
-            ->line('Thank you for joining SkillsCo-op. You are now part of a community built around widening access to digital skills and meaningful career progression.')
-            ->line('Take our free career assessment to find the track that fits your goals and strengths.')
-            ->line('Explore your learning pathway across Web Development, Digital Design, IT Support, and Digital Sales.')
-            ->line('Register for an upcoming panel session to hear directly from practitioners.')
-            ->action('Go to Your Dashboard', url('/dashboard'))
-            ->line('If you have any questions, reply to this email or contact us at hello@skillscoop.org.')
-            ->salutation('The SkillsCo-op Team');
+        return new \App\Mail\WelcomeEmail($notifiable);
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(object $notifiable): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 }
