@@ -86,6 +86,12 @@ Route::post('/partners/enquiry', [PageController::class, 'partnerEnquiry'])->nam
 // ── AI Labs ───────────────────────────────────────────────────────────────────
 Route::get('/ai-labs', [PageController::class, 'aiLabs'])->name('ai-labs');
 
+// ── Mentors ───────────────────────────────────────────────────────────────────
+// Public page explaining what mentoring involves and how to volunteer. The
+// authenticated /mentor/* routes below are the logged-in mentor's own area and
+// are unrelated.
+Route::get('/mentors', [PageController::class, 'mentors'])->name('mentors');
+
 // ── Partner referrals ────────────────────────────────────────────────────────
 // Public form for partners (community orgs, DWP, church groups etc.) to refer
 // someone who could benefit. Consent-gated for the referred person's contact;

@@ -18,6 +18,8 @@
                                 class="fab fa-tiktok"></i></a>
                         <a href="https://www.linkedin.com/company/theskillscoop/" class="social-icon"><i
                                 class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.youtube.com/@TheSkillsCoOpSessions" class="social-icon"
+                            aria-label="Skills Co-op Sessions on YouTube"><i class="fab fa-youtube"></i></a>
                         <a href="https://www.instagram.com/aethrynafoundation?igsh=MWh1YmpwNGd6Nnc0NQ=="
                             class="social-icon"><i class="fab fa-instagram"></i></a>
                     </div>
@@ -34,6 +36,7 @@
                         <li><a href="{{ route('impact') }}">Our Impact</a></li>
                         <li><a href="{{ route('stories') }}">Success Stories</a></li>
                         <li><a href="{{ route('sessions') }}">Sessions & Events</a></li>
+                        <li><a href="{{ route('mentors') }}">Become a Mentor</a></li>
                         <li><a href="{{ route('referral.create') }}">Refer Someone</a></li>
                     </ul>
                 </div>

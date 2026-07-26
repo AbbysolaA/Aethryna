@@ -117,6 +117,12 @@ class PageController extends Controller
         return view('ai-labs');
     }
 
+    // ── Mentors ──────────────────────────────────────────────────────────────
+    public function mentors()
+    {
+        return view('mentors');
+    }
+
     // ── Partners ─────────────────────────────────────────────────────────────
     public function partners()
     {

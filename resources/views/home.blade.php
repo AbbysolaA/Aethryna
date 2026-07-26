@@ -45,7 +45,7 @@
                     <h1 class="ath-title">Connect. Lead. <span class="ath-gradient-text">Impact.</span></h1>
                     <p>One-to-one guidance from people already working in the industry, in a community built around belonging and mutual support.</p>
                     <div class="ath-hero-btns">
-                        <a href="{{ route('sessions') }}" class="ath-btn ath-btn-primary">Become a mentor</a>
+                        <a href="{{ route('mentors') }}" class="ath-btn ath-btn-primary">Become a mentor</a>
                         <a href="{{ route('stories') }}" class="ath-btn ath-btn-outline">Read our stories</a>
                     </div>
                 </div>
@@ -323,7 +323,7 @@
                     <p class="ath-quote">"This is where the first success stories will be written, and one of them could be yours. We are opening places now for our founding cohort of learners and mentors. Step in early and help shape what SkillsCo-op becomes."</p>
                     <div class="ath-testi-user" style="justify-content:center; gap:16px;">
                         <a href="{{ route('register') }}" class="ath-btn ath-btn-primary">Claim Your Place</a>
-                        <a href="{{ route('sessions') }}" class="ath-btn" style="background:transparent;color:var(--ath-deep);border:2px solid var(--ath-deep);">Become a Mentor</a>
+                        <a href="{{ route('mentors') }}" class="ath-btn" style="background:transparent;color:var(--ath-deep);border:2px solid var(--ath-deep);">Become a Mentor</a>
                     </div>
                 </div>
             </div>

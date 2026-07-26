@@ -455,7 +455,7 @@
                         <p>"This is where our first success stories will be written. We are opening places now for our founding cohort of learners and mentors. Step in early and help shape what SkillsCo-op becomes."</p>
                         <div class="story-author" style="justify-content: center; margin-top: 24px; gap: 16px; display: flex; flex-wrap: wrap;">
                             <a href="{{ route('register') }}" class="btn btn-primary">Claim Your Place</a>
-                            <a href="{{ route('sessions') }}" class="btn btn-outline">Become a Mentor</a>
+                            <a href="{{ route('mentors') }}" class="btn btn-outline">Become a Mentor</a>
                         </div>
                     </div>
                 </div>
