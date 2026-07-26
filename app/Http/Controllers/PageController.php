@@ -68,11 +68,28 @@ class PageController extends Controller
             'referral_source' => 'nullable|string|max:255',
         ]);
 
-        // Prepare event details
-        $eventLink = 'https://www.eventbrite.co.uk/e/the-skills-co-op-sessions-tickets-1990225897234?utm-campaign=social&utm-content=attendeeshare&utm-medium=discovery&utm-term=listing&utm-source=wsa&aff=ebdsshwebmobile';
-        $imageUrl = asset('images/event_image.jpeg');
-        // Send registration email with event details
-        Mail::to($validated['email'])->send(new \App\Mail\SessionRegisteredMail($eventLink, $imageUrl));
+        // Send the confirmation email if there is a real upcoming panel to
+        // confirm against. Previously the eventbrite URL was hard-coded to
+        // Panel 1's ticket page, which meant everyone who registered after
+        // Panel 1 finished got a broken link.
+        $nextSession = \App\Models\PanelSession::upcoming()
+            ->with('speakers')
+            ->first();
+
+        if ($nextSession) {
+            try {
+                Mail::to($validated['email'])->send(new \App\Mail\SessionRegisteredMail(
+                    $nextSession,
+                    $validated['name'],
+                    $validated['interest_type'],
+                ));
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning('Session registration email failed', [
+                    'email' => $validated['email'],
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
 
         // Sync to EmailOctopus (fails soft: never blocks the registration)
         $nameParts = preg_split('/\s+/', trim($validated['name']), 2);
@@ -86,7 +103,7 @@ class PageController extends Controller
         );
 
         // Fire event after successful registration
-event(new SessionRegistered());
+        event(new SessionRegistered());
 
         return redirect()->route('sessions')
             ->with('success', "Thank you for registering! We'll send you details about our next panel session to your email address.");
