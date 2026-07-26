@@ -59,12 +59,11 @@
                         <button class="flex-1 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-bold hover:bg-gray-200 transition-colors text-sm" onclick="alert('Logging session interface would open here.')">
                             <i class="fas fa-pen mr-1"></i> Log
                         </button>
-                        <form action="{{ route('coach.flag', $learner->id) }}" method="POST" onsubmit="return confirm('Flag a concern for this learner?');" class="flex-none">
-                            @csrf
-                            <button type="submit" class="bg-red-50 text-red-500 px-4 py-2 rounded-lg font-bold hover:bg-red-100 transition-colors text-sm" title="Flag Concern">
-                                <i class="fas fa-flag"></i>
-                            </button>
-                        </form>
+                        <a href="{{ route('safeguarding.create', $learner->id) }}"
+                            class="flex-none bg-red-50 text-red-500 px-4 py-2 rounded-lg font-bold hover:bg-red-100 transition-colors text-sm inline-flex items-center"
+                            title="Raise a safeguarding concern">
+                            <i class="fas fa-flag"></i>
+                        </a>
                     </div>
                 </div>
             @empty

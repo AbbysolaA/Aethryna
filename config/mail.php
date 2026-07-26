@@ -115,4 +115,19 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Skills Co-op'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Operational inboxes
+    |--------------------------------------------------------------------------
+    |
+    | Where internal notifications are delivered. Override per environment in
+    | .env. Safeguarding concerns should go to the named safeguarding lead,
+    | not a shared inbox, once that address is confirmed.
+    |
+    */
+
+    'referral_inbox' => env('MAIL_REFERRAL_INBOX', 'hello@skillscoop.org'),
+
+    'safeguarding_inbox' => env('MAIL_SAFEGUARDING_INBOX', 'hello@skillscoop.org'),
+
 ];

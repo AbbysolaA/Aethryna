@@ -61,6 +61,18 @@ Route::middleware(['auth', 'verified', 'coach'])->prefix('coach')->name('coach.'
     Route::post('/flag/{learner}', [\App\Http\Controllers\CoachController::class, 'flagConcern'])->name('flag');
 });
 
+// ── Safeguarding ─────────────────────────────────────────────────────────────
+// Raising a concern is open to mentors, coaches and admins alike (the role
+// check lives in SafeguardingController), because anyone who notices something
+// should be able to escalate it. The concern is recorded in the database and
+// the safeguarding lead is notified for review and decision.
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/safeguarding/concern/{learner}', [\App\Http\Controllers\SafeguardingController::class, 'create'])
+        ->name('safeguarding.create');
+    Route::post('/safeguarding/concern/{learner}', [\App\Http\Controllers\SafeguardingController::class, 'store'])
+        ->name('safeguarding.store');
+});
+
 // Mentor Routes
 Route::middleware(['auth', 'verified', 'mentor'])->prefix('mentor')->name('mentor.')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\MentorController::class, 'dashboard'])->name('dashboard');
