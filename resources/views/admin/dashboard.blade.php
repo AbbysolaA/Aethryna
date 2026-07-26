@@ -100,6 +100,23 @@
                     </div>
                     <span class="text-sm font-semibold text-red-700 text-center">Safeguarding</span>
                 </a>
+
+                @php
+                    $overdueRisks = \App\Models\Risk::where('status', '!=', 'closed')
+                        ->whereNotNull('review_due')
+                        ->whereDate('review_due', '<', now())
+                        ->count();
+                @endphp
+                <a href="{{ route('admin.risks.index') }}"
+                    class="relative flex flex-col items-center p-4 bg-amber-50 rounded-lg hover:bg-amber-100 transition-colors">
+                    @if ($overdueRisks > 0)
+                        <span class="absolute top-2 right-2 min-w-6 h-6 px-2 bg-amber-600 text-white text-xs font-bold rounded-full flex items-center justify-center">{{ $overdueRisks }}</span>
+                    @endif
+                    <div class="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center text-white mb-3">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <span class="text-sm font-semibold text-amber-700 text-center">Risk Register</span>
+                </a>
             </div>
         </div>
     </section>

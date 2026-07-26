@@ -47,6 +47,16 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
         ->name('safeguarding.show');
     Route::patch('/safeguarding/{concern}', [\App\Http\Controllers\SafeguardingController::class, 'update'])
         ->name('safeguarding.update');
+
+    // Organisational risk register. Separate from safeguarding concerns: a
+    // concern is an incident about a named person, a risk is an organisational
+    // exposure.
+    Route::get('/risks', [\App\Http\Controllers\RiskController::class, 'index'])->name('risks.index');
+    Route::get('/risks/create', [\App\Http\Controllers\RiskController::class, 'create'])->name('risks.create');
+    Route::post('/risks', [\App\Http\Controllers\RiskController::class, 'store'])->name('risks.store');
+    Route::get('/risks/{risk}/edit', [\App\Http\Controllers\RiskController::class, 'edit'])->name('risks.edit');
+    Route::patch('/risks/{risk}', [\App\Http\Controllers\RiskController::class, 'update'])->name('risks.update');
+    Route::delete('/risks/{risk}', [\App\Http\Controllers\RiskController::class, 'destroy'])->name('risks.destroy');
     
     // Pathway Management
     Route::get('/content/pathway/create', [AdminController::class, 'createPathway'])->name('content.pathway.create');
