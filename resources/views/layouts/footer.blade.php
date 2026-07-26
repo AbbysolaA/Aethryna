@@ -34,6 +34,7 @@
                         <li><a href="{{ route('impact') }}">Our Impact</a></li>
                         <li><a href="{{ route('stories') }}">Success Stories</a></li>
                         <li><a href="{{ route('sessions') }}">Sessions & Events</a></li>
+                        <li><a href="{{ route('referral.create') }}">Refer Someone</a></li>
                     </ul>
                 </div>
 
