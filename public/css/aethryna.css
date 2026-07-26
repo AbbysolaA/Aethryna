@@ -495,6 +495,13 @@
     border-radius: 2px;
 }
 
+/* Belt and braces: the hidden attribute alone is enough in a modern
+   browser, but an explicit rule means no later display declaration can
+   accidentally reveal the closed panel. */
+.nav-dropdown-menu[hidden] {
+    display: none !important;
+}
+
 .nav-dropdown-menu {
     position: absolute;
     top: calc(100% + 10px);

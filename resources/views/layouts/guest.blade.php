@@ -49,8 +49,8 @@
     </script>
 
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/aethryna.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ @filemtime(public_path('css/app.css')) ?: '1' }}">
+    <link rel="stylesheet" href="{{ asset('css/aethryna.css') }}?v={{ @filemtime(public_path('css/aethryna.css')) ?: '1' }}">
 
     @stack('styles')
 
