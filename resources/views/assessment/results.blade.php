@@ -114,16 +114,17 @@
                         </div>
 
                         <div class="mt-8 pt-6 border-t border-gray-200">
-                            <div class="flex flex-wrap gap-4 justify-center">
+                            <div class="flex flex-wrap gap-4 justify-center items-center">
                                 <a href="{{ route('pathway') }}"
-                                    class="bg-teal-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-teal-600 transition-colors">
+                                    class="inline-flex items-center justify-center border-2 border-transparent bg-teal-500 text-white px-6 py-3 rounded-lg font-semibold leading-none hover:bg-teal-600 transition-colors">
                                     See the 25-week pathway
                                 </a>
                                 <a href="{{ route('programs') }}"
-                                    class="border-2 border-teal-500 text-teal-500 px-6 py-3 rounded-lg font-semibold hover:bg-teal-500 hover:text-white transition-colors">
+                                    class="inline-flex items-center justify-center border-2 border-teal-500 text-teal-500 px-6 py-3 rounded-lg font-semibold leading-none hover:bg-teal-500 hover:text-white transition-colors">
                                     Compare all tracks
                                 </a>
-                                <a href="{{ route('sessions') }}" class="text-gray-600 hover:text-teal-600 font-medium">
+                                <a href="{{ route('sessions') }}"
+                                    class="inline-flex items-center justify-center border-2 border-transparent text-gray-600 px-6 py-3 rounded-lg font-semibold leading-none hover:text-teal-600 transition-colors">
                                     Meet us at a panel &rarr;
                                 </a>
                             </div>
