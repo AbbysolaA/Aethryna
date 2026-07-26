@@ -20,6 +20,11 @@ $completedAssessments = Assessment::where('user_id', Auth::id())->where('status'
 
         // Get popular pathways
         $popularPathways = Pathway::active()->take(6)->get();
+
+        // Real-time programme data for the dashboard tiles (replaces the
+        // previously hard-coded fabricated stats: 1,247 active learners and
+        // 89% job placement rate did not exist and were removed).
+        $nextPanel = \App\Models\PanelSession::upcoming()->first();
     @endphp
 
     <!-- Dashboard Header -->
@@ -144,27 +149,32 @@ $completedAssessments = Assessment::where('user_id', Auth::id())->where('status'
                     <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white mb-3">
                         <i class="fas fa-route"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-teal-700 mb-2">Available Pathways</h3>
-                    <p class="text-2xl font-bold text-teal-600">{{ $popularPathways->count() }}</p>
-                    <p class="text-sm text-gray-600">Learning tracks</p>
+                    <h3 class="text-lg font-semibold text-teal-700 mb-2">Pilot Tracks</h3>
+                    <p class="text-2xl font-bold text-teal-600">4</p>
+                    <p class="text-sm text-gray-600">Launching with Cohort 1</p>
                 </div>
 
                 <div class="bg-gray-50 p-6 rounded-2xl shadow-sm">
                     <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white mb-3">
-                        <i class="fas fa-users"></i>
+                        <i class="fas fa-microphone-alt"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-teal-700 mb-2">Community</h3>
-                    <p class="text-2xl font-bold text-teal-600">1,247</p>
-                    <p class="text-sm text-gray-600">Active learners</p>
+                    <h3 class="text-lg font-semibold text-teal-700 mb-2">Next Panel</h3>
+                    @if ($nextPanel)
+                        <p class="text-2xl font-bold text-teal-600">{{ $nextPanel->event_date->format('j M') }}</p>
+                        <p class="text-sm text-gray-600">{{ Str::limit($nextPanel->tagline, 42) }}</p>
+                    @else
+                        <p class="text-2xl font-bold text-teal-600">—</p>
+                        <p class="text-sm text-gray-600">Details announced soon</p>
+                    @endif
                 </div>
 
                 <div class="bg-gray-50 p-6 rounded-2xl shadow-sm">
                     <div class="w-12 h-12 bg-gold rounded-full flex items-center justify-center text-black mb-3">
-                        <i class="fas fa-star"></i>
+                        <i class="fas fa-flag-checkered"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-teal-700 mb-2">Success Rate</h3>
-                    <p class="text-2xl font-bold text-teal-600">89%</p>
-                    <p class="text-sm text-gray-600">Job placement rate</p>
+                    <h3 class="text-lg font-semibold text-teal-700 mb-2">Cohort 1</h3>
+                    <p class="text-2xl font-bold text-teal-600">Jan 2027</p>
+                    <p class="text-sm text-gray-600">30 founding places</p>
                 </div>
             </div>
         </div>

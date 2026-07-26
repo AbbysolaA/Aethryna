@@ -17,7 +17,7 @@ class ReferralReceived extends Mailable
 
     public function build()
     {
-        $data = $this->buildViewData();
+        $data = $this->messagePayload();
 
         return $this
             ->subject($data['subject'])
@@ -27,11 +27,12 @@ class ReferralReceived extends Mailable
     }
 
     /**
-     * Prepare the payload for both the HTML and text views. Keeping this in
-     * one place means the two renderings can never disagree — and puts the
-     * consent gating in code, not in template logic.
+     * Prepare the payload for both the HTML and text views. Renamed from
+     * buildViewData() so we do not accidentally override the parent
+     * Mailable::buildViewData() which is public and used by Laravel at
+     * render time.
      */
-    protected function buildViewData(): array
+    protected function messagePayload(): array
     {
         $r = $this->referral;
 
@@ -54,7 +55,7 @@ class ReferralReceived extends Mailable
             'preheader'    => trim($r->referred_first_name
                 . ' · ' . ($cohortTitle ?? 'cohort unsure')
                 . ' · referred by ' . $r->referrer_name),
-            'logoUrl'      => 'https://skillscoop.org/images/logo_white.png',
+            'logoUrl'      => 'https://skillscoop.org/email/skills-coop-mark.png',
             'supportEmail' => 'hello@skillscoop.org',
             'footerNote'   => 'You are receiving this because you are listed as a referral contact for Skills Co-op. Contact details are only shared with the referred person\'s consent.',
             'year'         => date('Y'),
