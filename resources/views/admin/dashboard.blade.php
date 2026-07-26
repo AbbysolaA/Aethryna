@@ -86,6 +86,20 @@
                     </div>
                     <span class="text-sm font-semibold text-purple-700 text-center">User Management</span>
                 </a>
+
+                @php
+                    $openConcerns = \App\Models\SafeguardingConcern::whereIn('status', ['new', 'acknowledged'])->count();
+                @endphp
+                <a href="{{ route('admin.safeguarding.index') }}"
+                    class="relative flex flex-col items-center p-4 bg-red-50 rounded-lg hover:bg-red-100 transition-colors">
+                    @if ($openConcerns > 0)
+                        <span class="absolute top-2 right-2 min-w-6 h-6 px-2 bg-red-600 text-white text-xs font-bold rounded-full flex items-center justify-center">{{ $openConcerns }}</span>
+                    @endif
+                    <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white mb-3">
+                        <i class="fas fa-shield-halved"></i>
+                    </div>
+                    <span class="text-sm font-semibold text-red-700 text-center">Safeguarding</span>
+                </a>
             </div>
         </div>
     </section>

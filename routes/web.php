@@ -38,6 +38,15 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::delete('/users/{user}', [AdminController::class, 'destroyUser'])->name('users.destroy');
     Route::get('/reports', [AdminController::class, 'reports'])->name('reports');
     Route::get('/content', [AdminController::class, 'content'])->name('content');
+
+    // Safeguarding review: the lead works through open concerns and records
+    // decisions against each one.
+    Route::get('/safeguarding', [\App\Http\Controllers\SafeguardingController::class, 'index'])
+        ->name('safeguarding.index');
+    Route::get('/safeguarding/{concern}', [\App\Http\Controllers\SafeguardingController::class, 'show'])
+        ->name('safeguarding.show');
+    Route::patch('/safeguarding/{concern}', [\App\Http\Controllers\SafeguardingController::class, 'update'])
+        ->name('safeguarding.update');
     
     // Pathway Management
     Route::get('/content/pathway/create', [AdminController::class, 'createPathway'])->name('content.pathway.create');

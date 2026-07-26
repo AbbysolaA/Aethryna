@@ -89,4 +89,70 @@ class SafeguardingController extends Controller
             ->route('safeguarding.create', $learner)
             ->with('success', 'Concern recorded and sent to the safeguarding lead for review. Reference SC-' . $concern->id . '.');
     }
+
+    // ── Review screen (safeguarding lead) ────────────────────────────────────
+
+    /**
+     * Open concerns first, urgent before routine, oldest urgent at the top so
+     * nothing quietly ages out of sight.
+     */
+    public function index(Request $request)
+    {
+        $status = $request->query('status', 'open');
+
+        $query = SafeguardingConcern::with(['learner', 'raisedBy', 'reviewedBy']);
+
+        if ($status === 'open') {
+            $query->whereIn('status', ['new', 'acknowledged']);
+        } elseif (in_array($status, ['new', 'acknowledged', 'actioned', 'closed'], true)) {
+            $query->where('status', $status);
+        }
+
+        $concerns = $query
+            ->orderByRaw("CASE WHEN urgency = 'urgent' THEN 0 ELSE 1 END")
+            ->orderBy('created_at')
+            ->paginate(20)
+            ->withQueryString();
+
+        $counts = [
+            'open'         => SafeguardingConcern::whereIn('status', ['new', 'acknowledged'])->count(),
+            'new'          => SafeguardingConcern::where('status', 'new')->count(),
+            'acknowledged' => SafeguardingConcern::where('status', 'acknowledged')->count(),
+            'actioned'     => SafeguardingConcern::where('status', 'actioned')->count(),
+            'closed'       => SafeguardingConcern::where('status', 'closed')->count(),
+            'all'          => SafeguardingConcern::count(),
+        ];
+
+        return view('admin.safeguarding.index', compact('concerns', 'status', 'counts'));
+    }
+
+    public function show(SafeguardingConcern $concern)
+    {
+        $concern->load(['learner', 'raisedBy', 'reviewedBy']);
+
+        return view('admin.safeguarding.show', compact('concern'));
+    }
+
+    /**
+     * Record the lead's decision. Every update stamps who reviewed it and
+     * when, so the trail is complete without a separate audit table.
+     */
+    public function update(Request $request, SafeguardingConcern $concern)
+    {
+        $validated = $request->validate([
+            'status'       => ['required', 'in:new,acknowledged,actioned,closed'],
+            'review_notes' => ['nullable', 'string', 'max:5000'],
+        ]);
+
+        $concern->update([
+            'status'              => $validated['status'],
+            'review_notes'        => $validated['review_notes'] ?? $concern->review_notes,
+            'reviewed_by_user_id' => auth()->id(),
+            'reviewed_at'         => now(),
+        ]);
+
+        return redirect()
+            ->route('admin.safeguarding.show', $concern)
+            ->with('success', 'Decision recorded against SC-' . $concern->id . '.');
+    }
 }
