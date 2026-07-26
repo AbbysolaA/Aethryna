@@ -111,8 +111,16 @@
     left: 0;
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, var(--teal), var(--gold));
+    /* White on the unscrolled bar. The brand gradient runs teal to gold,
+       which is the same two colours as the bar behind it, so whichever end
+       of the nav you hover, half the underline vanishes into the
+       background. The gradient returns on the dark scrolled bar below. */
+    background: #ffffff;
     transition: var(--transition);
+}
+
+#navbar.scrolled .nav-links a::after {
+    background: linear-gradient(90deg, var(--teal), var(--gold));
 }
 
 .nav-links a:hover::after {
@@ -440,18 +448,30 @@
    this file.
    ========================================================================== */
 
-/* Active-page nav indicator (site-wide) */
-.nav-links a.is-active { color: #ee9d1d; position: relative; }
+/* Active-page nav indicator (site-wide).
+
+   The unscrolled bar is a teal-to-gold gradient, so gold text disappears
+   against the gold end where the last few nav items sit. The active state
+   is therefore pure white and bolder than its neighbours, with a white
+   underline, which holds up across the whole gradient. Once scrolled the
+   bar turns near-black and gold reads well, so it returns there. */
+.nav-links a.is-active { color: #ffffff; font-weight: 700; position: relative; }
 .nav-links a.is-active::after {
     content: '';
     position: absolute;
     left: 0; right: 0;
+    /* The base .nav-links a::after sets width: 0 for the hover animation.
+       An absolutely positioned box with left, right and width all set
+       ignores right and uses width, so without this the active underline
+       stays zero wide and never shows. */
+    width: 100%;
     bottom: -6px;
     height: 2px;
-    background: #ee9d1d;
+    background: #ffffff;
     border-radius: 2px;
 }
 #navbar.scrolled .nav-links a.is-active { color: #ee9d1d; }
+#navbar.scrolled .nav-links a.is-active::after { background: #ee9d1d; }
 .mobile-nav-links a.is-active {
     color: #ee9d1d;
     border-left: 3px solid #ee9d1d;
@@ -483,7 +503,7 @@
 .nav-dropdown-caret { transition: transform 0.25s ease; }
 .nav-dropdown.is-open .nav-dropdown-caret { transform: rotate(180deg); }
 
-.nav-dropdown-toggle.is-active { color: #ee9d1d; }
+.nav-dropdown-toggle.is-active { color: #ffffff; font-weight: 700; }
 .nav-dropdown-toggle.is-active::after {
     content: '';
     position: absolute;
@@ -491,9 +511,11 @@
     right: 14px;
     bottom: 2px;
     height: 2px;
-    background: #ee9d1d;
+    background: #ffffff;
     border-radius: 2px;
 }
+#navbar.scrolled .nav-dropdown-toggle.is-active { color: #ee9d1d; }
+#navbar.scrolled .nav-dropdown-toggle.is-active::after { background: #ee9d1d; }
 
 /* Belt and braces: the hidden attribute alone is enough in a modern
    browser, but an explicit rule means no later display declaration can
