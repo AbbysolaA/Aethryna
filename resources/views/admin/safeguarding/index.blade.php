@@ -160,7 +160,7 @@
 .sgr-status-closed { background: rgba(0,0,0,0.07); color: var(--ath-muted); }
 .sgr-row h3 { font-family: 'Outfit', sans-serif; font-size: 1.08rem; font-weight: 800; color: var(--ath-deep); margin: 0 0 5px; }
 .sgr-excerpt { color: var(--ath-text); font-size: 0.92rem; line-height: 1.6; margin: 0 0 7px; }
-.sgr-meta { font-size: 0.82rem; color: var(--ath-muted); margin: 0; }
+.sgr-meta { font-size: 0.86rem; color: var(--ath-muted); margin: 0; line-height: 1.5; }
 .sgr-row-arrow { color: rgba(0,0,0,0.2); flex-shrink: 0; }
 
 .sgr-empty { background: #fff; border-radius: 18px; padding: 60px 30px; text-align: center; border: 1px solid rgba(0,0,0,0.06); }

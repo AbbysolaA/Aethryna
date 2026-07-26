@@ -557,7 +557,7 @@
                 margin: 0 0 4px;
                 line-height: 1.15;
             }
-            .db-stat-note { font-size: 0.83rem; color: var(--ath-muted); margin: 0; line-height: 1.45; }
+            .db-stat-note { font-size: 0.87rem; color: var(--ath-muted); margin: 0; line-height: 1.5; }
 
             /* Panels */
             .db-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }

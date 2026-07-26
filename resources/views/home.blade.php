@@ -855,7 +855,7 @@
         
         .ath-stat-val { font-size: 3.5rem; font-weight: 800; color: var(--ath-teal); margin-bottom: 10px; line-height: 1; }
         .ath-stat-lab { font-weight: 600; color: var(--ath-muted); letter-spacing: 1px; text-transform: uppercase; font-size: 0.85rem; }
-        .ath-stat-note { font-size: 0.78rem; color: var(--ath-muted); margin-top: 6px; opacity: 0.8; line-height: 1.4; }
+        .ath-stat-note { font-size: 0.85rem; color: #6b757e; margin-top: 6px; line-height: 1.5; }
 
         .ath-ai-link { display: block; margin-top: 10px; font-size: 0.85rem; color: var(--ath-muted); text-decoration: none; font-weight: 600; transition: color 0.2s; }
         .ath-ai-link:hover { color: var(--ath-teal); }

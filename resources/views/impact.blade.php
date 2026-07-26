@@ -111,7 +111,15 @@
     display: flex;
     justify-content: center;
     gap: 40px;
+    /* Always allow horizontal scroll rather than only below 768px. With four
+       items at a 40px gap this bar could clip between 768 and 992px, hiding
+       the last link with no way to reach it. */
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
 }
+
+.i-nav::-webkit-scrollbar { display: none; }
 
 .i-nav a {
     color: var(--ath-muted);
@@ -119,6 +127,20 @@
     text-decoration: none;
     font-size: 0.95rem;
     transition: var(--ath-trans);
+    /* Was a ~22px hit area in a sticky bar. */
+    padding: 11px 2px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Once the row no longer fits comfortably, stop centring so the first item
+   stays anchored at the left edge and the rest scroll into view. */
+@media (max-width: 1100px) {
+    .i-nav {
+        justify-content: flex-start;
+        gap: 26px;
+        padding: 0 5%;
+    }
 }
 
 .i-nav a:hover, .i-nav a.active { color: var(--ath-teal); }

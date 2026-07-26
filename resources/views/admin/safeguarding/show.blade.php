@@ -230,7 +230,7 @@
 .sgd-secondary { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 0.93rem; color: var(--ath-teal); text-decoration: none; }
 .sgd-secondary:hover { color: var(--ath-gold); }
 
-.sgd-footnote { font-size: 0.84rem; color: var(--ath-muted); font-style: italic; margin-top: 18px; }
+.sgd-footnote { font-size: 0.87rem; color: var(--ath-muted); font-style: italic; margin-top: 18px; line-height: 1.55; }
 
 @media (max-width: 640px) {
     .sgd-wrap { padding: 120px 0 60px; }

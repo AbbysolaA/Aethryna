@@ -866,7 +866,7 @@
         margin-bottom: 24px;
     }
     .ss-video iframe { width: 100%; aspect-ratio: 16 / 9; border-radius: 12px; border: 0; }
-    .ss-caption { font-size: 0.82rem; color: var(--ath-muted); margin: 8px 0 0; }
+    .ss-caption { font-size: 0.87rem; color: var(--ath-muted); margin: 8px 0 0; line-height: 1.5; }
     .ss-past-speakers-lbl {
         font-family: var(--font-mono);
         font-size: 0.72rem;

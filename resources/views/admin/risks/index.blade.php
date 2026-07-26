@@ -216,7 +216,7 @@
 .rk-row h3 { font-family: 'Outfit', sans-serif; font-size: 1.06rem; font-weight: 800; color: var(--ath-deep); margin: 0 0 5px; }
 .rk-mitigation { font-size: 0.9rem; color: var(--ath-text); line-height: 1.55; margin: 0 0 5px; }
 .rk-mitigation.rk-none { color: #b3261e; font-style: italic; }
-.rk-meta { font-size: 0.81rem; color: var(--ath-muted); margin: 0; }
+.rk-meta { font-size: 0.86rem; color: var(--ath-muted); margin: 0; line-height: 1.5; }
 .rk-row-arrow { color: rgba(0,0,0,0.18); flex-shrink: 0; }
 
 .rk-empty { background: #fff; border-radius: 18px; padding: 60px 30px; text-align: center; border: 1px solid rgba(0,0,0,0.06); }
