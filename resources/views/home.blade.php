@@ -308,6 +308,9 @@
         </div>
     </section>
 
+    {{-- Partner logo wall — renders nothing until at least one partner is active in config/partners.php --}}
+    <x-partner-wall />
+
     <!-- Success Stories -->
     <section class="ath-section ath-stories" id="stories">
         <div class="ath-container">
