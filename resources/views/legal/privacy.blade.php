@@ -148,6 +148,7 @@
                         <tr><td><strong>Newsletter / wait‑list</strong></td><td>Email address</td><td>Provided via the footer sign‑up form</td><td>To send programme updates, panel announcements and learning resources</td></tr>
                         <tr><td><strong>Career assessment</strong></td><td>Your responses to the pathway assessment questions, linked to your account</td><td>Provided by you</td><td>To recommend the most suitable learning track for your goals</td></tr>
                         <tr><td><strong>Mentoring records</strong></td><td>Session date and duration, topics covered, action items, mentor notes, learner engagement rating</td><td>Entered by mentors or coaches (internal staff)</td><td>To track learning progress and provide consistent support across sessions</td></tr>
+                        <tr><td><strong>Partner referrals</strong></td><td>Referrer name, email, organisation and role. First name and (only if consent is confirmed) contact details of the person being referred, plus optional context</td><td>Provided by the referring partner via the /refer form</td><td>To follow up with prospective learners referred by community partners. Contact details of the referred person are only stored when the referrer explicitly confirms they have consent</td></tr>
                         <tr><td><strong>Technical and security data</strong></td><td>Session tokens, password reset tokens, application cache data, server logs</td><td>Generated automatically</td><td>To keep your account secure and the site functioning correctly</td></tr>
                     </tbody>
                 </table>
@@ -222,6 +223,7 @@
                         <tr><td>Session registration records</td><td>3 years from the date of the session</td><td>Evidence programme activity and community impact reporting</td></tr>
                         <tr><td>Newsletter / wait‑list email</td><td>Until you unsubscribe or withdraw consent</td><td>We only send communications while you have consented</td></tr>
                         <tr><td>Mentoring session notes</td><td>Duration of the mentoring relationship + 2 years</td><td>Provide continuity of support and evidence programme outcomes</td></tr>
+                        <tr><td>Partner referral records</td><td>12 months from submission, unless the person becomes a learner (in which case account retention applies)</td><td>Balance between following up sensibly with a prospective learner and not holding third-party personal data longer than needed</td></tr>
                         <tr><td>Password reset tokens</td><td>1 hour (automatically deleted)</td><td>Security – short‑lived one‑time use tokens</td></tr>
                         <tr><td>Server and security logs</td><td>90 days</td><td>Standard practice for security monitoring and debugging</td></tr>
                     </tbody>

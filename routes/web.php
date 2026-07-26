@@ -4,6 +4,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ReferralController;
 use App\Http\Controllers\WaitlistController;
 use Illuminate\Support\Facades\Route;
 
@@ -84,6 +85,15 @@ Route::post('/partners/enquiry', [PageController::class, 'partnerEnquiry'])->nam
 
 // ── AI Labs ───────────────────────────────────────────────────────────────────
 Route::get('/ai-labs', [PageController::class, 'aiLabs'])->name('ai-labs');
+
+// ── Partner referrals ────────────────────────────────────────────────────────
+// Public form for partners (community orgs, DWP, church groups etc.) to refer
+// someone who could benefit. Consent-gated for the referred person's contact;
+// rate-limited to prevent abuse.
+Route::get('/refer', [ReferralController::class, 'create'])->name('referral.create');
+Route::post('/refer', [ReferralController::class, 'store'])
+    ->middleware('throttle:5,60')
+    ->name('referral.store');
 
 // ── IndexNow verification file ───────────────────────────────────────────────
 // Serves the key file that Bing / Yandex / Seznam fetch to prove ownership.
