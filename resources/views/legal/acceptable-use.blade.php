@@ -9,7 +9,7 @@
 
     <section class="legal-hero">
         <div class="legal-container">
-            <nav class="legal-breadcrumb"><a href="/">Home</a><span>/</span><a href="#">Legal</a><span>/</span><span class="current">Acceptable Use Policy</span></nav>
+            <nav class="legal-breadcrumb"><a href="/">Home</a><span>/</span><span>Legal</span><span>/</span><span class="current">Acceptable Use Policy</span></nav>
             <h1>Acceptable Use Policy</h1>
             <p class="legal-subtitle">The conduct expected of all learners, mentors, partners, and visitors on the SkillsCo-op platform.</p>
             <div class="legal-meta">

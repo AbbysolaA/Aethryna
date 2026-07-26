@@ -103,7 +103,7 @@
                         <p class="text-sm text-gray-500">Find your pathway</p>
                     </a>
                     
-                    <a href="/pathways" class="group p-4 rounded-xl hover:bg-orange-50 transition-colors border border-gray-100">
+                    <a href="/pathway" class="group p-4 rounded-xl hover:bg-orange-50 transition-colors border border-gray-100">
                         <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-[#E8B647] group-hover:text-white transition-colors">
                             <i class="fas fa-route text-[#E8B647] text-xl group-hover:text-white"></i>
                         </div>

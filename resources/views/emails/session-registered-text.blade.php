@@ -16,14 +16,14 @@ Duration: {{ $panelDuration }}
 @if ($speakers && $speakers->isNotEmpty())
 ON THE PANEL
 @foreach ($speakers as $speaker)
-- {{ $speaker->name }}@if ($speaker->title) — {{ $speaker->title }}@endif
+- {{ $speaker->name }}@if ($speaker->title), {{ $speaker->title }}@endif
 
 @endforeach
 @endif
 
 WHAT TO EXPECT
 - Real practitioners, not slide decks
-- Honest Q&A — hard questions welcome
+- Honest Q&A, hard questions welcome
 - A community that keeps going after the session
 
 @if ($eventbriteUrl)

@@ -22,6 +22,10 @@
             @auth
                 @if(auth()->user()->isAdmin())
                     <a href="{{ route('admin.dashboard') }}" class="btn btn-outline">Admin Dashboard</a>
+                @elseif(auth()->user()->isCoach())
+                    <a href="{{ route('coach.dashboard') }}" class="btn btn-outline">Coach Dashboard</a>
+                @elseif(auth()->user()->isMentor())
+                    <a href="{{ route('mentor.dashboard') }}" class="btn btn-outline">Mentor Dashboard</a>
                 @else
                     <a href="{{ route('dashboard') }}" class="btn btn-outline">Dashboard</a>
                 @endif
@@ -61,6 +65,10 @@
             @auth
                 @if(auth()->user()->isAdmin())
                     <a href="{{ route('admin.dashboard') }}" class="btn btn-outline">Admin Dashboard</a>
+                @elseif(auth()->user()->isCoach())
+                    <a href="{{ route('coach.dashboard') }}" class="btn btn-outline">Coach Dashboard</a>
+                @elseif(auth()->user()->isMentor())
+                    <a href="{{ route('mentor.dashboard') }}" class="btn btn-outline">Mentor Dashboard</a>
                 @else
                     <a href="{{ route('dashboard') }}" class="btn btn-outline">Dashboard</a>
                 @endif

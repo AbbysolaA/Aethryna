@@ -94,6 +94,7 @@ Route::get('/refer', [ReferralController::class, 'create'])->name('referral.crea
 Route::post('/refer', [ReferralController::class, 'store'])
     ->middleware('throttle:5,60')
     ->name('referral.store');
+Route::get('/refer/thanks', [ReferralController::class, 'thanks'])->name('referral.thanks');
 
 // ── IndexNow verification file ───────────────────────────────────────────────
 // Serves the key file that Bing / Yandex / Seznam fetch to prove ownership.

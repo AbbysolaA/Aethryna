@@ -69,11 +69,20 @@
                             <i class="fas fa-paper-plane"></i>
                             <p>Join our waitlist</p>
                         </div>
-                        <form class="newsletter-form" action="{{ route('waitlist.store') }}" method="POST">
-                            @csrf
-                            <input type="email" name="email" placeholder="Your email address" required>
-                            <button type="submit"><i class="fas fa-paper-plane"></i></button>
-                        </form>
+                        @if (session('waitlist_success'))
+                            <p class="newsletter-success">
+                                <i class="fas fa-check-circle"></i> {{ session('waitlist_success') }}
+                            </p>
+                        @else
+                            <form class="newsletter-form" action="{{ route('waitlist.store') }}" method="POST">
+                                @csrf
+                                <input type="email" name="email" placeholder="Your email address" required>
+                                <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                            </form>
+                            @error('email')
+                                <p class="newsletter-error">{{ $message }}</p>
+                            @enderror
+                        @endif
                     </div>
                 </div>
             </div>
@@ -267,6 +276,31 @@
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    .newsletter-success {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(3, 139, 137, 0.15);
+        border: 1px solid rgba(3, 139, 137, 0.4);
+        border-radius: 10px;
+        padding: 12px 16px;
+        color: #d9f2f0;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    .newsletter-success i {
+        color: var(--teal);
+        flex-shrink: 0;
+    }
+
+    .newsletter-error {
+        color: #ffb4a8;
+        font-size: 0.82rem;
+        margin: 8px 0 0;
     }
 
     .newsletter-form button:hover {

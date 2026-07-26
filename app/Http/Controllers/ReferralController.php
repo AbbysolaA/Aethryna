@@ -58,6 +58,13 @@ class ReferralController extends Controller
             ]);
         }
 
+        // Post/Redirect/Get: redirect rather than rendering the view straight
+        // from the POST, so the URL updates and a refresh cannot resubmit.
+        return redirect()->route('referral.thanks');
+    }
+
+    public function thanks()
+    {
         return view('referrals.thanks');
     }
 }

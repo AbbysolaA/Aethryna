@@ -105,7 +105,9 @@ class PageController extends Controller
         // Fire event after successful registration
         event(new SessionRegistered());
 
-        return redirect()->route('sessions')
+        // Anchor the redirect at the registration block, otherwise the success
+        // message renders far below the fold and the user never sees it.
+        return redirect()->to(route('sessions') . '#register-section')
             ->with('success', "Thank you for registering! We'll send you details about our next panel session to your email address.");
     }
 

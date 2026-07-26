@@ -115,16 +115,16 @@
 
                         <div class="mt-8 pt-6 border-t border-gray-200">
                             <div class="flex flex-wrap gap-4 justify-center">
-                                <a href="{{ route('programs') }}"
+                                <a href="{{ route('pathway') }}"
                                     class="bg-teal-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-teal-600 transition-colors">
-                                    Explore {{ $pathway->name }}
+                                    See the 25-week pathway
                                 </a>
-                                <a href="{{ route('register') }}"
+                                <a href="{{ route('programs') }}"
                                     class="border-2 border-teal-500 text-teal-500 px-6 py-3 rounded-lg font-semibold hover:bg-teal-500 hover:text-white transition-colors">
-                                    Join Next Cohort
+                                    Compare all tracks
                                 </a>
-                                <a href="#" class="text-gray-600 hover:text-teal-600 font-medium">
-                                    Talk to Mentor →
+                                <a href="{{ route('sessions') }}" class="text-gray-600 hover:text-teal-600 font-medium">
+                                    Meet us at a panel &rarr;
                                 </a>
                             </div>
                         </div>
@@ -177,11 +177,11 @@
                         class="w-16 h-16 bg-teal-500 rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
                         <i class="fas fa-users"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-teal-700 mb-2">Find a Mentor</h3>
-                    <p class="text-gray-600 mb-4">Get personalized guidance from experienced professionals.</p>
-                    <a href="#"
+                    <h3 class="text-xl font-semibold text-teal-700 mb-2">Meet the Community</h3>
+                    <p class="text-gray-600 mb-4">Join a free panel session and meet practitioners working in your track.</p>
+                    <a href="{{ route('sessions') }}"
                         class="bg-teal-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-teal-600 transition-colors">
-                        Connect
+                        See sessions
                     </a>
                 </div>
 

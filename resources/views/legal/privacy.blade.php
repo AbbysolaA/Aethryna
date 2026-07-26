@@ -9,7 +9,7 @@
         <div class="legal-container">
             <nav class="legal-breadcrumb">
                 <a href="/">Home</a><span>/</span>
-                <a href="#">Legal</a><span>/</span>
+                <span>Legal</span><span>/</span>
                 <span class="current">Privacy Policy</span>
             </nav>
             <h1>Privacy Policy</h1>

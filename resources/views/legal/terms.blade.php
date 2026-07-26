@@ -9,7 +9,7 @@
 
     <section class="legal-hero">
         <div class="legal-container">
-            <nav class="legal-breadcrumb"><a href="/">Home</a><span>/</span><a href="#">Legal</a><span>/</span><span class="current">Terms of Service</span></nav>
+            <nav class="legal-breadcrumb"><a href="/">Home</a><span>/</span><span>Legal</span><span>/</span><span class="current">Terms of Service</span></nav>
             <h1>Terms of Service</h1>
             <p class="legal-subtitle">The agreement governing your use of the SkillsCo-op platform and services.</p>
             <div class="legal-meta">

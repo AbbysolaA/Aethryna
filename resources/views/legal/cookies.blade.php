@@ -9,7 +9,7 @@
 
     <section class="legal-hero">
         <div class="legal-container">
-            <nav class="legal-breadcrumb"><a href="/">Home</a><span>/</span><a href="#">Legal</a><span>/</span><span class="current">Cookie Policy</span></nav>
+            <nav class="legal-breadcrumb"><a href="/">Home</a><span>/</span><span>Legal</span><span>/</span><span class="current">Cookie Policy</span></nav>
             <h1>Cookie Policy</h1>
             <p class="legal-subtitle">We use only strictly necessary cookies and one optional functional cookie. No tracking, no advertising.</p>
             <div class="legal-meta">

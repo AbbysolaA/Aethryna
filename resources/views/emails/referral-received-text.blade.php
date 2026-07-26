@@ -12,11 +12,11 @@ Cohort: {{ $cohort }}
 @if ($contactConsented && !empty($contact))
 Contact (consent given): {{ $contact }}
 @else
-Contact details withheld — no consent recorded. Reach the referred person via the referrer below.
+Contact details withheld, no consent recorded. Reach the referred person via the referrer below.
 @endif
 
 REFERRER
-{{ $referrerName }} — {{ $referrerEmail }}
+{{ $referrerName }} ({{ $referrerEmail }})
 Organisation: {{ $organisation ?: 'Not provided' }}
 Role: {{ $role ?: 'Not provided' }}
 

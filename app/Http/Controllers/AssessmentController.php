@@ -72,6 +72,13 @@ class AssessmentController extends Controller
             return redirect()->route('assessment.index');
         }
 
+        // Guard: a finished assessment should not be answerable again. Without
+        // this, revisiting /assessment/question/{n} after completing lets the
+        // scores be mutated a second time.
+        if ($assessment->status === 'completed') {
+            return redirect()->route('assessment.results');
+        }
+
         $question = Question::active()
             ->where('question_number', $questionNumber)
             ->with('answers')
@@ -100,6 +107,11 @@ class AssessmentController extends Controller
 
         if (!$assessment) {
             return redirect()->route('assessment.index');
+        }
+
+        // Same guard as question(): never mutate scores on a finished assessment.
+        if ($assessment->status === 'completed') {
+            return redirect()->route('assessment.results');
         }
 
         $question = Question::active()
