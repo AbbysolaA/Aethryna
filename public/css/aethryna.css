@@ -432,3 +432,179 @@
         transform: translateX(0);
     }
 }
+
+/* ==========================================================================
+   Shared navigation, dropdown and accessibility rules.
+   Lives here rather than inline in layouts/aethryna so the guest layout
+   (login, register, password reset) gets them too, since both layouts load
+   this file.
+   ========================================================================== */
+
+/* Active-page nav indicator (site-wide) */
+.nav-links a.is-active { color: #ee9d1d; position: relative; }
+.nav-links a.is-active::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    bottom: -6px;
+    height: 2px;
+    background: #ee9d1d;
+    border-radius: 2px;
+}
+#navbar.scrolled .nav-links a.is-active { color: #ee9d1d; }
+.mobile-nav-links a.is-active {
+    color: #ee9d1d;
+    border-left: 3px solid #ee9d1d;
+    padding-left: 12px;
+}
+
+/* "Get involved" dropdown. Groups the three ways to help under one nav
+   item, which keeps the bar at 7 items while adding two destinations. */
+.nav-dropdown { position: relative; display: inline-block; }
+
+.nav-dropdown-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    padding: 10px 2px;
+    margin: 0;
+    font: inherit;
+    font-weight: 500;
+    color: var(--light, #F8FBFB);
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+#navbar.scrolled .nav-dropdown-toggle { color: inherit; }
+
+.nav-dropdown-caret { transition: transform 0.25s ease; }
+.nav-dropdown.is-open .nav-dropdown-caret { transform: rotate(180deg); }
+
+.nav-dropdown-toggle.is-active { color: #ee9d1d; }
+.nav-dropdown-toggle.is-active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 14px;
+    bottom: 2px;
+    height: 2px;
+    background: #ee9d1d;
+    border-radius: 2px;
+}
+
+.nav-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    min-width: 280px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 18px 50px rgba(5, 88, 96, 0.18);
+    border: 1px solid rgba(3, 139, 137, 0.12);
+    padding: 8px;
+    z-index: 1200;
+}
+
+/* Bridges the gap between toggle and panel so hover does not break. */
+.nav-dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 0;
+    right: 0;
+    height: 12px;
+}
+
+.nav-dropdown-menu a {
+    display: block;
+    padding: 11px 14px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.nav-dropdown-menu a strong {
+    display: block;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #055860;
+    margin-bottom: 2px;
+}
+
+.nav-dropdown-menu a span {
+    display: block;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: #57616a;
+}
+
+.nav-dropdown-menu a:hover,
+.nav-dropdown-menu a:focus-visible {
+    background: rgba(3, 139, 137, 0.08);
+}
+
+.nav-dropdown-menu a.is-active { background: rgba(238, 157, 29, 0.12); }
+.nav-dropdown-menu a.is-active strong { color: #9a6510; }
+
+/* Grouping label in the mobile menu, where the panel is shown inline. */
+.mobile-nav-heading {
+    display: block;
+    margin-top: 14px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #ee9d1d;
+    opacity: 0.85;
+}
+
+/* Visually hidden, still read by screen readers. Used for form labels
+   where the design relies on a placeholder. */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Keyboard focus. The site had no focus styles at all, so anyone
+   navigating by keyboard could not tell where they were. Only shows
+   for keyboard users, not on mouse click. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+    outline: 3px solid #ee9d1d;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* On the dark teal nav, gold on teal is too low contrast for a focus
+   ring, so use white there. */
+#navbar a:focus-visible,
+#navbar button:focus-visible {
+    outline-color: #ffffff;
+}
+
+/* Respect reduced-motion preferences across the whole site. */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

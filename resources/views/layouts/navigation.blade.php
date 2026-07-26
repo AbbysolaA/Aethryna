@@ -15,7 +15,37 @@
             <a href="{{ route('impact') }}" @class(['is-active' => request()->routeIs('impact')])>Impact</a>
             <a href="{{ route('stories') }}" @class(['is-active' => request()->routeIs('stories')])>Stories</a>
             <a href="{{ route('sessions') }}" @class(['is-active' => request()->routeIs('sessions')])>Sessions</a>
-            <a href="{{ route('partners') }}" @class(['is-active' => request()->routeIs('partners')])>Partner with us</a>
+
+            @php
+                $involvedActive = request()->routeIs('partners')
+                    || request()->routeIs('mentors')
+                    || request()->routeIs('referral.*');
+            @endphp
+            <div class="nav-dropdown" data-nav-dropdown>
+                <button type="button"
+                        class="nav-dropdown-toggle @if($involvedActive) is-active @endif"
+                        aria-expanded="false"
+                        aria-controls="nav-get-involved">
+                    Get involved
+                    <svg class="nav-dropdown-caret" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true" focusable="false">
+                        <path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="nav-dropdown-menu" id="nav-get-involved" hidden>
+                    <a href="{{ route('partners') }}" @class(['is-active' => request()->routeIs('partners')])>
+                        <strong>Partner with us</strong>
+                        <span>Share a brief or fund a place</span>
+                    </a>
+                    <a href="{{ route('mentors') }}" @class(['is-active' => request()->routeIs('mentors')])>
+                        <strong>Become a mentor</strong>
+                        <span>Two hours a month, real impact</span>
+                    </a>
+                    <a href="{{ route('referral.create') }}" @class(['is-active' => request()->routeIs('referral.*')])>
+                        <strong>Refer someone</strong>
+                        <span>Point us to someone who would benefit</span>
+                    </a>
+                </div>
+            </div>
         </div>
 
         <div class="nav-buttons">
@@ -59,7 +89,13 @@
             <a href="{{ route('impact') }}" @class(['is-active' => request()->routeIs('impact')])>Impact</a>
             <a href="{{ route('stories') }}" @class(['is-active' => request()->routeIs('stories')])>Stories</a>
             <a href="{{ route('sessions') }}" @class(['is-active' => request()->routeIs('sessions')])>Sessions</a>
+
+            {{-- On mobile there is vertical room, so show the group inline
+                 rather than hiding it behind another tap. --}}
+            <span class="mobile-nav-heading">Get involved</span>
             <a href="{{ route('partners') }}" @class(['is-active' => request()->routeIs('partners')])>Partner with us</a>
+            <a href="{{ route('mentors') }}" @class(['is-active' => request()->routeIs('mentors')])>Become a mentor</a>
+            <a href="{{ route('referral.create') }}" @class(['is-active' => request()->routeIs('referral.*')])>Refer someone</a>
         </div>
         <div class="mobile-nav-buttons">
             @auth
@@ -97,6 +133,70 @@
             } else {
                 navbar.classList.remove('scrolled');
             }
+        });
+
+        // Desktop "Get involved" dropdown.
+        // Opens on click and on hover for mouse users, but click and keyboard
+        // are the source of truth so it works without a pointer.
+        document.querySelectorAll('[data-nav-dropdown]').forEach(function (dropdown) {
+            const toggle = dropdown.querySelector('.nav-dropdown-toggle');
+            const menu = dropdown.querySelector('.nav-dropdown-menu');
+            if (!toggle || !menu) return;
+
+            let hoverTimer = null;
+
+            function open() {
+                menu.hidden = false;
+                toggle.setAttribute('aria-expanded', 'true');
+                dropdown.classList.add('is-open');
+            }
+
+            function close() {
+                menu.hidden = true;
+                toggle.setAttribute('aria-expanded', 'false');
+                dropdown.classList.remove('is-open');
+            }
+
+            function isOpen() {
+                return toggle.getAttribute('aria-expanded') === 'true';
+            }
+
+            toggle.addEventListener('click', function (e) {
+                e.preventDefault();
+                isOpen() ? close() : open();
+            });
+
+            // Hover, with a small close delay so the pointer can cross the gap
+            // between the toggle and the panel without it snapping shut.
+            dropdown.addEventListener('mouseenter', function () {
+                if (window.matchMedia('(hover: hover)').matches) {
+                    clearTimeout(hoverTimer);
+                    open();
+                }
+            });
+            dropdown.addEventListener('mouseleave', function () {
+                if (window.matchMedia('(hover: hover)').matches) {
+                    hoverTimer = setTimeout(close, 180);
+                }
+            });
+
+            // Escape closes and returns focus to the toggle.
+            dropdown.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && isOpen()) {
+                    close();
+                    toggle.focus();
+                }
+            });
+
+            // Close when focus leaves the dropdown entirely (tabbing past it).
+            dropdown.addEventListener('focusout', function (e) {
+                if (!dropdown.contains(e.relatedTarget)) close();
+            });
+
+            // Close on any click outside.
+            document.addEventListener('click', function (e) {
+                if (!dropdown.contains(e.target) && isOpen()) close();
+            });
         });
 
         // Mobile Menu Toggle
