@@ -72,7 +72,7 @@
                 </form>
             @else
                 <a href="{{ route('login') }}" class="text-white btn btn-outline">Login</a>
-                <a href="{{ route('register') }}" class="text-white btn btn-primary">Get Started</a>
+                <a href="{{ route('register') }}" class="text-white btn btn-primary">Join the cohort</a>
             @endauth
         </div>
 
@@ -124,7 +124,7 @@
                 </form>
             @else
                 <a href="{{ route('login') }}" class="btn btn-outline">Login</a>
-                <a href="{{ route('register') }}" class="btn btn-primary">Get Started</a>
+                <a href="{{ route('register') }}" class="btn btn-primary">Join the cohort</a>
             @endauth
         </div>
     </div>

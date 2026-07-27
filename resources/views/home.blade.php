@@ -366,7 +366,7 @@
             <div class="ath-cta-card reveal-zoom">
                 <h2>Ready to get started?</h2>
                 <p>Join learners who have discovered their potential and built successful careers in tech through SkillsCo-op.</p>
-                <a href="{{ route('register') }}" class="ath-btn ath-btn-gold">Get Started Today</a>
+                <a href="{{ route('register') }}" class="ath-btn ath-btn-gold">Join the cohort</a>
             </div>
         </div>
     </section>

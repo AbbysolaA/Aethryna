@@ -526,7 +526,7 @@
             <h2>Join a movement built on <span class="ath-gradient-text">Real Belief.</span></h2>
             <p>Support our mission or be part of the community that defines the next decade.</p>
             <div class="cta-btns">
-                <a href="{{ route('register') }}" class="btn btn-primary">Get Started</a>
+                <a href="{{ route('register') }}" class="btn btn-primary">Join the cohort</a>
                 <a href="{{ route('about') }}" class="btn btn-outline-white">Our Story</a>
             </div>
         </div>
