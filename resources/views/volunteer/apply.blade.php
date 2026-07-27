@@ -146,8 +146,11 @@
         .vl-section-title { font-family: 'Outfit', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--ath-deep); margin: 0 0 20px; }
         .vl-role-list { list-style: none; margin: -60px 0 44px; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; position: relative; z-index: 2; }
         .vl-role-card { background: #fff; border: 1px solid rgba(3,139,137,0.1); border-radius: 18px; padding: 26px 28px; box-shadow: 0 12px 40px rgba(0,0,0,0.05); }
-        .vl-role-card h3 { font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--ath-navy); margin: 0 0 8px; }
-        .vl-role-card-summary { font-size: 0.94rem; line-height: 1.6; color: var(--ath-deep); font-weight: 600; margin: 0 0 10px; }
+        /* Teal, matching every other card heading on the site. The summary
+           below drops to body colour so the hierarchy runs heading, summary,
+           detail rather than the summary out-colouring its own title. */
+        .vl-role-card h3 { font-family: 'Outfit', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--ath-deep); margin: 0 0 8px; }
+        .vl-role-card-summary { font-size: 0.94rem; line-height: 1.6; color: var(--ath-text); font-weight: 600; margin: 0 0 10px; }
         .vl-role-card-desc { font-size: 0.89rem; line-height: 1.65; color: var(--ath-muted); margin: 0; }
         .vl-apply-panel { max-width: 760px; }
         .vl-field-row-even { grid-template-columns: 1fr 1fr; }

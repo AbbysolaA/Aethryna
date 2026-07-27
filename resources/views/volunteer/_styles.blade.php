@@ -148,7 +148,7 @@
 .vl-engagement-item a { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; background: #fff; border: 1px solid rgba(3,139,137,0.1); border-radius: 18px; padding: 24px 28px; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; }
 .vl-engagement-item a:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(0,0,0,0.07); }
 .vl-item-main { flex: 1 1 260px; }
-.vl-item-title { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.08rem; color: var(--ath-navy); margin: 0 0 5px; }
+.vl-item-title { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.08rem; color: var(--ath-deep); margin: 0 0 5px; }
 .vl-item-summary { font-size: 0.9rem; color: var(--ath-muted); line-height: 1.6; margin: 0; }
 .vl-item-side { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
 .vl-item-hours { font-size: 0.83rem; color: var(--ath-muted); font-variant-numeric: tabular-nums; }
