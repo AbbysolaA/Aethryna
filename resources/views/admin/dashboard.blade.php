@@ -117,6 +117,38 @@
                     </div>
                     <span class="text-sm font-semibold text-amber-700 text-center">Risk Register</span>
                 </a>
+
+                @php
+                    // Applications waiting on a decision. Mentors come through
+                    // this same pipeline, so this covers both.
+                    $openApplications = \App\Models\VolunteerEngagement::where('status', 'applied')->count();
+                @endphp
+                <a href="{{ route('admin.volunteers.index') }}"
+                    class="relative flex flex-col items-center p-4 bg-teal-50 rounded-lg hover:bg-teal-100 transition-colors">
+                    @if ($openApplications > 0)
+                        <span class="absolute top-2 right-2 min-w-6 h-6 px-2 bg-teal-600 text-white text-xs font-bold rounded-full flex items-center justify-center">{{ $openApplications }}</span>
+                    @endif
+                    <div class="w-12 h-12 bg-teal-500 rounded-full flex items-center justify-center text-white mb-3">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <span class="text-sm font-semibold text-teal-700 text-center">Volunteers</span>
+                </a>
+
+                <a href="{{ route('admin.volunteer-roles.index') }}"
+                    class="relative flex flex-col items-center p-4 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
+                    <div class="w-12 h-12 bg-slate-500 rounded-full flex items-center justify-center text-white mb-3">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <span class="text-sm font-semibold text-slate-700 text-center">Positions</span>
+                </a>
+
+                <a href="{{ route('admin.volunteer-documents.index') }}"
+                    class="relative flex flex-col items-center p-4 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
+                    <div class="w-12 h-12 bg-slate-500 rounded-full flex items-center justify-center text-white mb-3">
+                        <i class="fas fa-folder-open"></i>
+                    </div>
+                    <span class="text-sm font-semibold text-slate-700 text-center">Onboarding Pack</span>
+                </a>
             </div>
         </div>
     </section>

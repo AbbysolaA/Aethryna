@@ -44,14 +44,11 @@
                         @if ($role->description)
                             <p class="vl-role-card-desc">{{ $role->description }}</p>
                         @endif
-                        <div class="vl-role-tags">
-                            @if ($role->requiresDbs())
-                                <span class="vl-tag">DBS check required</span>
-                            @endif
-                            @if ($role->requires_nda)
-                                <span class="vl-tag vl-tag-quiet">NDA required</span>
-                            @endif
-                        </div>
+                        {{-- No DBS or NDA badges here. They read as hurdles on a
+                             page whose job is to get someone to put themselves
+                             forward, and the checks are explained properly at
+                             offer stage. The flags still drive the admin roster
+                             and the onboarding checklist. --}}
                     </li>
                 @endforeach
             </ul>
@@ -151,10 +148,7 @@
         .vl-role-card { background: #fff; border: 1px solid rgba(3,139,137,0.1); border-radius: 18px; padding: 26px 28px; box-shadow: 0 12px 40px rgba(0,0,0,0.05); }
         .vl-role-card h3 { font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--ath-navy); margin: 0 0 8px; }
         .vl-role-card-summary { font-size: 0.94rem; line-height: 1.6; color: var(--ath-deep); font-weight: 600; margin: 0 0 10px; }
-        .vl-role-card-desc { font-size: 0.89rem; line-height: 1.65; color: var(--ath-muted); margin: 0 0 14px; }
-        .vl-role-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-        .vl-tag { display: inline-block; padding: 4px 12px; border-radius: 100px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; background: rgba(238,157,29,0.16); color: #8a5a06; }
-        .vl-tag-quiet { background: rgba(0,0,0,0.06); color: var(--ath-muted); }
+        .vl-role-card-desc { font-size: 0.89rem; line-height: 1.65; color: var(--ath-muted); margin: 0; }
         .vl-apply-panel { max-width: 760px; }
         .vl-field-row-even { grid-template-columns: 1fr 1fr; }
         .vl-field select, .vl-field textarea {

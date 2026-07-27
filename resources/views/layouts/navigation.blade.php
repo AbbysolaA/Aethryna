@@ -19,6 +19,7 @@
             @php
                 $involvedActive = request()->routeIs('partners')
                     || request()->routeIs('mentors')
+                    || request()->routeIs('volunteer.apply*')
                     || request()->routeIs('referral.*');
             @endphp
             <div class="nav-dropdown" data-nav-dropdown>
