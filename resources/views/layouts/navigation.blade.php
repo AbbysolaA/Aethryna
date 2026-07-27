@@ -40,6 +40,10 @@
                         <strong>Become a mentor</strong>
                         <span>Two hours a month, real impact</span>
                     </a>
+                    <a href="{{ route('volunteer.apply') }}" @class(['is-active' => request()->routeIs('volunteer.apply*')])>
+                        <strong>Volunteer with us</strong>
+                        <span>Delivery, outreach and more</span>
+                    </a>
                     <a href="{{ route('referral.create') }}" @class(['is-active' => request()->routeIs('referral.*')])>
                         <strong>Refer someone</strong>
                         <span>Point us to someone who would benefit</span>
@@ -56,6 +60,8 @@
                     <a href="{{ route('coach.dashboard') }}" class="btn btn-outline">Coach Dashboard</a>
                 @elseif(auth()->user()->isMentor())
                     <a href="{{ route('mentor.dashboard') }}" class="btn btn-outline">Mentor Dashboard</a>
+                @elseif(auth()->user()->isVolunteer())
+                    <a href="{{ route('volunteer.index') }}" class="btn btn-outline">My Volunteering</a>
                 @else
                     <a href="{{ route('dashboard') }}" class="btn btn-outline">Dashboard</a>
                 @endif
@@ -95,6 +101,7 @@
             <span class="mobile-nav-heading">Get involved</span>
             <a href="{{ route('partners') }}" @class(['is-active' => request()->routeIs('partners')])>Partner with us</a>
             <a href="{{ route('mentors') }}" @class(['is-active' => request()->routeIs('mentors')])>Become a mentor</a>
+            <a href="{{ route('volunteer.apply') }}" @class(['is-active' => request()->routeIs('volunteer.apply*')])>Volunteer with us</a>
             <a href="{{ route('referral.create') }}" @class(['is-active' => request()->routeIs('referral.*')])>Refer someone</a>
         </div>
         <div class="mobile-nav-buttons">
@@ -105,6 +112,8 @@
                     <a href="{{ route('coach.dashboard') }}" class="btn btn-outline">Coach Dashboard</a>
                 @elseif(auth()->user()->isMentor())
                     <a href="{{ route('mentor.dashboard') }}" class="btn btn-outline">Mentor Dashboard</a>
+                @elseif(auth()->user()->isVolunteer())
+                    <a href="{{ route('volunteer.index') }}" class="btn btn-outline">My Volunteering</a>
                 @else
                     <a href="{{ route('dashboard') }}" class="btn btn-outline">Dashboard</a>
                 @endif

@@ -46,9 +46,18 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        // Send welcome email notification
-        $user->notify(new WelcomeEmail());
+        // Someone registering purely to answer a volunteer offer gets the
+        // volunteer welcome on acceptance instead. Sending the learner welcome
+        // as well would tell a new mentor to go and take the pathway
+        // assessment, which is not their journey.
+        if (! $request->session()->pull('claiming_volunteer_offer', false)) {
+            $user->notify(new WelcomeEmail());
+        }
 
-        return redirect(route('dashboard', absolute: false));
+        // intended() rather than a bare redirect so a user who arrived from a
+        // gated page (a volunteer offer link, say) lands back where they were
+        // headed. Falls through to the dashboard when nothing was intended,
+        // which is the previous behaviour.
+        return redirect()->intended(route('dashboard', absolute: false));
     }
 }

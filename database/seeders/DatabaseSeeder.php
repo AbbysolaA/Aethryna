@@ -32,5 +32,11 @@ class DatabaseSeeder extends Seeder
             Panel2Seeder::class,
             Panel3Seeder::class,
         ]);
+
+        // Seed the volunteer roles offers are extended against. Mentor is one
+        // of these, so mentor and volunteer recruitment share a single flow.
+        $this->call([
+            VolunteerRolesSeeder::class,
+        ]);
     }
 }

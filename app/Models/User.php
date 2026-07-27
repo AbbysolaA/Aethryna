@@ -69,11 +69,23 @@ class User extends Authenticatable
     }
 
     /**
-     * Check if user is a mentor/volunteer
+     * Check if user is a mentor.
+     *
+     * Mentors are volunteers, but they hold their own role value because it
+     * gates the learner-facing /mentor area. isVolunteer() below is true for
+     * both, so anything that should apply to every contributor asks that.
      */
     public function isMentor(): bool
     {
         return $this->role === 'mentor';
+    }
+
+    /**
+     * Check if user contributes in any volunteer capacity, mentors included.
+     */
+    public function isVolunteer(): bool
+    {
+        return $this->role === 'volunteer' || $this->role === 'mentor';
     }
 
     /**
@@ -136,5 +148,15 @@ class User extends Authenticatable
     public function learningSessions()
     {
         return $this->hasMany(MentoringSession::class, 'learner_id');
+    }
+
+    /**
+     * Every volunteer stint this person has held, newest first. A person can
+     * hold more than one at a time (mentor and panel facilitator, say), and
+     * keeps the record of past ones after they finish.
+     */
+    public function volunteerEngagements()
+    {
+        return $this->hasMany(VolunteerEngagement::class)->latest('offer_extended_at');
     }
 }

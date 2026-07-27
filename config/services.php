@@ -64,6 +64,7 @@ return [
             '/stories',
             '/sessions',
             '/partners',
+            '/volunteer/apply',
             '/ai-labs',
             '/privacy',
             '/terms',

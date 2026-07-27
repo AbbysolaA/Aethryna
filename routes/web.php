@@ -5,6 +5,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ReferralController;
+use App\Http\Controllers\VolunteerApplicationController;
+use App\Http\Controllers\VolunteerController;
 use App\Http\Controllers\WaitlistController;
 use Illuminate\Support\Facades\Route;
 
@@ -47,6 +49,49 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
         ->name('safeguarding.show');
     Route::patch('/safeguarding/{concern}', [\App\Http\Controllers\SafeguardingController::class, 'update'])
         ->name('safeguarding.update');
+
+    // Volunteering roster: extend offers, track onboarding returns, close out
+    // finished engagements. Mentor recruitment runs through here too.
+    Route::get('/volunteers', [\App\Http\Controllers\Admin\VolunteerAdminController::class, 'index'])
+        ->name('volunteers.index');
+    Route::get('/volunteers/offer', [\App\Http\Controllers\Admin\VolunteerAdminController::class, 'create'])
+        ->name('volunteers.create');
+    Route::post('/volunteers/offer', [\App\Http\Controllers\Admin\VolunteerAdminController::class, 'store'])
+        ->name('volunteers.store');
+    Route::patch('/volunteers/{engagement}', [\App\Http\Controllers\Admin\VolunteerAdminController::class, 'update'])
+        ->name('volunteers.update');
+    // Turn an application into an offer. Separate from store() because the
+    // engagement already exists; this only mints the token and sends the email.
+    Route::get('/volunteers/{engagement}/extend', [\App\Http\Controllers\Admin\VolunteerAdminController::class, 'extendForm'])
+        ->name('volunteers.extend.form');
+    Route::post('/volunteers/{engagement}/extend', [\App\Http\Controllers\Admin\VolunteerAdminController::class, 'extend'])
+        ->name('volunteers.extend');
+
+    // Volunteer positions. Roles are database rows so a new position can be
+    // posted without a deploy. Bound by slug.
+    Route::get('/volunteer-roles', [\App\Http\Controllers\Admin\VolunteerRoleAdminController::class, 'index'])
+        ->name('volunteer-roles.index');
+    Route::get('/volunteer-roles/create', [\App\Http\Controllers\Admin\VolunteerRoleAdminController::class, 'create'])
+        ->name('volunteer-roles.create');
+    Route::post('/volunteer-roles', [\App\Http\Controllers\Admin\VolunteerRoleAdminController::class, 'store'])
+        ->name('volunteer-roles.store');
+    Route::get('/volunteer-roles/{role}/edit', [\App\Http\Controllers\Admin\VolunteerRoleAdminController::class, 'edit'])
+        ->name('volunteer-roles.edit');
+    Route::patch('/volunteer-roles/{role}', [\App\Http\Controllers\Admin\VolunteerRoleAdminController::class, 'update'])
+        ->name('volunteer-roles.update');
+    Route::delete('/volunteer-roles/{role}', [\App\Http\Controllers\Admin\VolunteerRoleAdminController::class, 'destroy'])
+        ->name('volunteer-roles.destroy');
+
+    // Onboarding pack. Uploads land on a private disk; the welcome email lists
+    // whatever is active here, in sort order.
+    Route::get('/volunteer-documents', [\App\Http\Controllers\Admin\VolunteerDocumentAdminController::class, 'index'])
+        ->name('volunteer-documents.index');
+    Route::post('/volunteer-documents', [\App\Http\Controllers\Admin\VolunteerDocumentAdminController::class, 'store'])
+        ->name('volunteer-documents.store');
+    Route::patch('/volunteer-documents/{document}', [\App\Http\Controllers\Admin\VolunteerDocumentAdminController::class, 'update'])
+        ->name('volunteer-documents.update');
+    Route::delete('/volunteer-documents/{document}', [\App\Http\Controllers\Admin\VolunteerDocumentAdminController::class, 'destroy'])
+        ->name('volunteer-documents.destroy');
 
     // Organisational risk register. Separate from safeguarding concerns: a
     // concern is an incident about a named person, a risk is an organisational
@@ -97,6 +142,39 @@ Route::middleware(['auth', 'verified', 'mentor'])->prefix('mentor')->name('mento
     Route::get('/dashboard', [\App\Http\Controllers\MentorController::class, 'dashboard'])->name('dashboard');
     Route::get('/learners', [\App\Http\Controllers\MentorController::class, 'learners'])->name('learners');
     Route::post('/log-session', [\App\Http\Controllers\MentorController::class, 'logSession'])->name('log-session');
+});
+
+// ── Volunteering ─────────────────────────────────────────────────────────────
+// Mentors come through this pipeline too. A mentor is a volunteer role that
+// additionally grants the /mentor area above on acceptance, so there is one
+// offer-and-onboarding flow rather than two that drift apart.
+//
+// The claim link is deliberately public and unauthenticated. Volunteers reach
+// us through partner organisations and panels as well as the website, so the
+// page has to offer registration alongside sign-in. Throttled because the URL
+// carries the offer token.
+// Public front door. Anyone can put themselves forward against an open role;
+// applying grants nothing, it creates a record an admin reads before deciding
+// whether to extend an offer. Throttled like the referral form.
+Route::get('/volunteer/apply', [VolunteerApplicationController::class, 'create'])->name('volunteer.apply');
+Route::post('/volunteer/apply', [VolunteerApplicationController::class, 'store'])
+    ->middleware('throttle:5,60')
+    ->name('volunteer.apply.store');
+Route::get('/volunteer/apply/thanks', [VolunteerApplicationController::class, 'thanks'])->name('volunteer.apply.thanks');
+
+Route::get('/volunteer/offer/{token}', [VolunteerController::class, 'claim'])
+    ->middleware('throttle:20,60')
+    ->name('volunteer.claim');
+
+Route::middleware(['auth', 'verified'])->prefix('volunteer')->name('volunteer.')->group(function () {
+    Route::get('/', [VolunteerController::class, 'index'])->name('index');
+    // Onboarding pack files. They sit on a disk the web server does not serve,
+    // so this route is the only way to reach one, and it checks the caller.
+    Route::get('/documents/{document}', [VolunteerController::class, 'downloadDocument'])
+        ->name('documents.download');
+    Route::get('/engagement/{engagement}', [VolunteerController::class, 'show'])->name('show');
+    Route::post('/engagement/{engagement}/respond', [VolunteerController::class, 'respond'])->name('respond');
+    Route::post('/engagement/{engagement}/hours', [VolunteerController::class, 'storeHours'])->name('hours.store');
 });
 
 
@@ -190,6 +268,11 @@ Route::get('/robots.txt', function () {
     $body .= "Disallow: /dashboard\n";
     $body .= "Disallow: /admin/\n";
     $body .= "Disallow: /profile\n";
+    $body .= "\n";
+    $body .= "# Volunteer offer links carry a single-use token, and the\n";
+    $body .= "# engagement pages are private. /volunteer/apply stays crawlable.\n";
+    $body .= "Disallow: /volunteer/offer/\n";
+    $body .= "Disallow: /volunteer/engagement/\n";
     $body .= "\n";
     $body .= "Sitemap: https://{$host}/sitemap.xml\n";
     return response($body, 200, ['Content-Type' => 'text/plain; charset=utf-8']);
