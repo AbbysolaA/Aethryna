@@ -67,19 +67,34 @@
                     </div>
                     <div class="ml-4">
                         <h3 class="text-lg font-bold text-gray-800 mb-2">Why am I seeing this?</h3>
+                        {{-- Signed in and signed out are different problems. Telling
+                             someone who is already signed in that they are not logged
+                             in sends them to re-enter a password that was never the
+                             issue. --}}
                         <ul class="text-sm text-gray-600 space-y-1">
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-[#055860] mr-2 mt-1"></i>
-                                <span>You're not logged in with the required permissions</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-[#055860] mr-2 mt-1"></i>
-                                <span>This page requires a specific user role (Admin, Coach, or Mentor)</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-[#055860] mr-2 mt-1"></i>
-                                <span>Your account may not have been activated yet</span>
-                            </li>
+                            @auth
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-[#055860] mr-2 mt-1"></i>
+                                    <span>You are signed in as <strong>{{ auth()->user()->email }}</strong>, but this area needs a different level of access.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-[#055860] mr-2 mt-1"></i>
+                                    <span>Admin, coach, mentor and volunteer areas are each restricted to those roles.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-[#055860] mr-2 mt-1"></i>
+                                    <span>If you should have access, ask an admin rather than creating a second account.</span>
+                                </li>
+                            @else
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-[#055860] mr-2 mt-1"></i>
+                                    <span>You are not signed in, and this area is not public.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-[#055860] mr-2 mt-1"></i>
+                                    <span>Sign in with the account that holds the right role and you will be brought back here.</span>
+                                </li>
+                            @endauth
                         </ul>
                     </div>
                 </div>
@@ -88,9 +103,13 @@
             <!-- Action Buttons -->
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
                 @auth
-                    <a href="{{ route('dashboard') }}" class="group relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-[#055860] to-[#E8B647] text-white font-bold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                    {{-- homeRoute() rather than the learner dashboard. A volunteer
+                         bounced from /admin was being sent to a learner profile,
+                         which is neither where they came from nor anywhere useful
+                         to them. --}}
+                    <a href="{{ route(auth()->user()->homeRoute()) }}" class="group relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-[#055860] to-[#E8B647] text-white font-bold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                         <i class="fas fa-tachometer-alt mr-2"></i>
-                        Go to Dashboard
+                        Go to my area
                         <div class="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity"></div>
                     </a>
                 @else
@@ -113,18 +132,24 @@
                     <i class="fas fa-question-circle text-[#055860] mr-2"></i>
                     Need Access?
                 </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
-                    <div class="p-4 bg-gray-50 rounded-xl">
-                        <div class="w-12 h-12 bg-teal-50 rounded-full flex items-center justify-center mb-3">
-                            <i class="fas fa-user-plus text-[#055860] text-xl"></i>
+                <div class="grid grid-cols-1 @guest md:grid-cols-2 @endguest gap-6 text-left">
+                    {{-- Only for people who have no account. Offering "create an
+                         account" to someone already signed in invites a duplicate
+                         account, which is exactly what you do not want when the
+                         real fix is an admin granting a role. --}}
+                    @guest
+                        <div class="p-4 bg-gray-50 rounded-xl">
+                            <div class="w-12 h-12 bg-teal-50 rounded-full flex items-center justify-center mb-3">
+                                <i class="fas fa-user-plus text-[#055860] text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-gray-800 mb-2">New User?</h3>
+                            <p class="text-sm text-gray-600 mb-3">Create an account to get started with your learning journey.</p>
+                            <a href="{{ route('register') }}" class="text-[#055860] hover:text-[#E8B647] font-semibold text-sm">
+                                Register Now →
+                            </a>
                         </div>
-                        <h3 class="font-bold text-gray-800 mb-2">New User?</h3>
-                        <p class="text-sm text-gray-600 mb-3">Create an account to get started with your learning journey.</p>
-                        <a href="{{ route('register') }}" class="text-[#055860] hover:text-[#E8B647] font-semibold text-sm">
-                            Register Now →
-                        </a>
-                    </div>
-                    
+                    @endguest
+
                     <div class="p-4 bg-gray-50 rounded-xl">
                         <div class="w-12 h-12 bg-orange-50 rounded-full flex items-center justify-center mb-3">
                             <i class="fas fa-user-shield text-[#E8B647] text-xl"></i>
