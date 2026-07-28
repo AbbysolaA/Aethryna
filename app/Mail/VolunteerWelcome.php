@@ -40,6 +40,7 @@ class VolunteerWelcome extends Mailable implements MailableContract
         protected ?string $firstCommitments = null,
         protected ?array $actions = null,
         protected ?array $documents = null,
+        protected ?string $engagementUrl = null,
     ) {
     }
 
@@ -70,6 +71,8 @@ class VolunteerWelcome extends Mailable implements MailableContract
             'firstCommitments' => $this->firstCommitments,
             'actions'          => $this->actions ?? $this->defaultActions(),
             'documents'        => $this->resolveDocuments(),
+            'engagementUrl'    => $this->engagementUrl,
+            'returnsEmail'     => $this->returnsInbox(),
         ];
     }
 
@@ -78,10 +81,18 @@ class VolunteerWelcome extends Mailable implements MailableContract
      */
     protected function defaultActions(): array
     {
+        $returns = e($this->returnsInbox());
+
         return [
-            'Read and sign the <strong>Volunteer Agreement</strong> and the <strong>Non-Disclosure Agreement</strong>, and return both to me.',
+            'Read and sign the <strong>Volunteer Agreement</strong> and the <strong>Non-Disclosure Agreement</strong>.',
+            'Send both back to <strong>' . $returns . '</strong>. A photo or a scan is fine, it does not need to be a formal e-signature.',
             'Complete your <strong>Basic DBS check</strong> using the link I will send separately.',
         ];
+    }
+
+    protected function returnsInbox(): string
+    {
+        return (string) config('volunteering.returns_inbox', 'hr@skillscoop.org');
     }
 
     /**

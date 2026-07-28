@@ -17,4 +17,13 @@ return [
     // Overridable per offer when it is extended.
     'offer_response_days' => 14,
 
+    // Where signed agreements come back to. Separate from the general
+    // hello@ contact address in the email footer, because these carry
+    // signatures and personal details and belong with whoever handles
+    // volunteer records rather than in the general inbox.
+    //
+    // This must be a real, monitored mailbox. An address that does not
+    // exist will drop returns silently.
+    'returns_inbox' => env('VOLUNTEER_RETURNS_INBOX', 'hr@skillscoop.org'),
+
 ];

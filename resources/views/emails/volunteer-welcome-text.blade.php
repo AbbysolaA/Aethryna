@@ -33,6 +33,20 @@ Everything you need is here. Please take some time to read through it.
 {{ $doc['url'] }}
 @endforeach
 
+SENDING THINGS BACK
+Only the documents marked "sign and return" need to come back. Everything
+else is for reading.
+
+Send them to {{ $returnsEmail }}. A clear photo or a scan is fine.
+It does not need to be a formal e-signature.
+@isset($engagementUrl)
+
+See what is outstanding:
+{{ $engagementUrl }}
+
+Your volunteering page tracks what we have received and what is still to come.
+@endisset
+
 If anything in the pack is unclear, or you spot something that looks wrong,
 tell me. You are coming in with fresh eyes and that is genuinely useful to me
 right now.

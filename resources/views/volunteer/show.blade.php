@@ -85,7 +85,10 @@
                                     <li>{{ $item }}</li>
                                 @endforeach
                             </ul>
-                            <p class="vl-side-note">Send these to <a href="mailto:hello@skillscoop.org">hello@skillscoop.org</a>. We will mark them off.</p>
+                            @php $returnsInbox = config('volunteering.returns_inbox', 'hr@skillscoop.org'); @endphp
+                            <p class="vl-side-note">
+                                Send these to <a href="mailto:{{ $returnsInbox }}">{{ $returnsInbox }}</a>. A photo or a scan is fine. We will mark them off.
+                            </p>
                         </div>
                     @endif
                 @endif

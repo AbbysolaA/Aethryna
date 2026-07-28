@@ -339,6 +339,7 @@ class VolunteerController extends Controller
                 ->send(new VolunteerWelcome(
                     firstName: str($engagement->user?->name ?? $engagement->offer_name)->before(' ')->toString(),
                     role: $engagement->role->title,
+                    engagementUrl: route('volunteer.show', $engagement),
                 ));
         } catch (\Throwable $e) {
             Log::error('Volunteer welcome email failed to send.', [

@@ -102,6 +102,57 @@
         </td>
     </tr>
 
+    {{-- How to send things back. The pack asks for signed documents, so the
+         email has to say where they go rather than leaving it to be guessed. --}}
+    <tr>
+        <td class="sc-pad" style="padding:28px 32px 0 32px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#fdf6e9; border-left:4px solid #ee9d1d; border-radius:6px;">
+                <tr>
+                    <td style="padding:20px 22px;">
+                        <p style="margin:0 0 8px 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:11px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:#8a5a06;">
+                            Sending things back
+                        </p>
+                        <p style="margin:0 0 10px 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:15px; line-height:24px; color:#2b333a;">
+                            Only the documents marked <strong>sign and return</strong> need to come back. Everything else is for reading.
+                        </p>
+                        <p style="margin:0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:15px; line-height:24px; color:#2b333a;">
+                            Send them to
+                            <a href="mailto:{{ $returnsEmail }}" class="sc-link" style="color:#055860; text-decoration:underline; font-weight:700;">{{ $returnsEmail }}</a>.
+                            A clear photo or a scan is fine. It does not need to be a formal e-signature.
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    @isset($engagementUrl)
+        <tr>
+            <td class="sc-pad" style="padding:24px 32px 0 32px;">
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="sc-btn">
+                    <tr>
+                        <td align="center" bgcolor="#055860" style="border-radius:6px;">
+                            <!--[if mso]>
+                            <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{ $engagementUrl }}" style="height:46px;v-text-anchor:middle;width:250px;" arcsize="13%" stroke="f" fillcolor="#055860">
+                                <w:anchorlock/>
+                                <center style="color:#ffffff;font-family:Arial,sans-serif;font-size:15px;font-weight:bold;">See what is outstanding</center>
+                            </v:roundrect>
+                            <![endif]-->
+                            <!--[if !mso]><!-- -->
+                            <a href="{{ $engagementUrl }}" style="display:inline-block; padding:14px 30px; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:15px; font-weight:700; color:#ffffff; text-decoration:none; border-radius:6px; background-color:#055860;">
+                                See what is outstanding
+                            </a>
+                            <!--<![endif]-->
+                        </td>
+                    </tr>
+                </table>
+                <p style="margin:12px 0 0 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:13px; line-height:20px; color:#8a8f86;">
+                    Your volunteering page tracks what we have received and what is still to come.
+                </p>
+            </td>
+        </tr>
+    @endisset
+
     {{-- Sign-off --}}
     <tr>
         <td class="sc-pad" style="padding:26px 32px 34px 32px;">
