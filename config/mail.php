@@ -130,4 +130,13 @@ return [
 
     'safeguarding_inbox' => env('MAIL_SAFEGUARDING_INBOX', 'hello@skillscoop.org'),
 
+    // Volunteer and mentor applications. VolunteerApplicationController already
+    // read this key, but it was never defined here, so it could only ever fall
+    // back to its own hardcoded default and there was no way to point it
+    // anywhere per environment.
+    //
+    // Defaults to the same HR address signed agreements come back to, since
+    // both are volunteer records rather than general enquiries.
+    'volunteer_inbox' => env('MAIL_VOLUNTEER_INBOX', 'hr@skillscoop.org'),
+
 ];
