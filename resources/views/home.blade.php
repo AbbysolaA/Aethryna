@@ -1,9 +1,9 @@
 @extends('layouts.aethryna')
 
-@section('title', 'SkillsCo-op | Digital Skills, AI Literacy, and Real Career Pathways')
+@section('title', 'Skills Co-op | Digital Skills, AI Literacy, and Real Career Pathways')
 
-@section('meta_description', 'SkillsCo-op builds free, AI-integrated digital skills pathways for NEET young people, justice-involved adults, and women re-entering the workforce. Four pathways, real mentorship, and routes into real work.')
-@section('og_description', 'SkillsCo-op builds free, AI-integrated digital skills pathways for NEET young people, justice-involved adults, and women re-entering the workforce. Four pathways, real mentorship, and routes into real work.')
+@section('meta_description', 'Skills Co-op builds free, AI-integrated digital skills pathways for NEET young people, justice-involved adults, and women re-entering the workforce. Four pathways, real mentorship, and routes into real work.')
+@section('og_description', 'Skills Co-op builds free, AI-integrated digital skills pathways for NEET young people, justice-involved adults, and women re-entering the workforce. Four pathways, real mentorship, and routes into real work.')
 
 @section('content')
 
@@ -68,14 +68,14 @@
         <div class="ath-container">
             <div class="ath-section-header reveal-fade-up">
                 <span class="ath-sub">Our Vision</span>
-                <h2>About SkillsCo-op</h2>
+                <h2>About Skills Co-op</h2>
                 <p>We exist to close the gap between ambition and opportunity.</p>
             </div>
             <div class="ath-about-grid">
                 <div class="ath-about-card reveal-fade-right">
                     <div class="ath-feature-body">
                             <h4>Building Futures Together</h4>
-                            <p>SkillsCo-op is a community-led digital skills programme. We work with people who face real barriers to employment: NEET young people, career changers, migrants, refugees, and justice-involved individuals. Every place is fully funded.</p>
+                            <p>Skills Co-op is a community-led digital skills programme. We work with people who face real barriers to employment: NEET young people, career changers, migrants, refugees, and justice-involved individuals. Every place is fully funded.</p>
                             <p>Our approach combines personalised mentorship with practical, project-based learning and community support designed around dignity and belonging.</p>
                             <p>Every Skills Co-op learner becomes confident with AI tools, regardless of their pathway. We teach AI as a working tool, with the discipline to check what it produces and the judgement to override it when needed. This is what modern digital work looks like, and it is what employers are now looking for. Read about our AI Method and where we are taking it at <a href="{{ route('ai-labs') }}" style="color: var(--ath-teal); font-weight: 700;">AI Labs</a>.</p>
                     </div>
@@ -320,7 +320,7 @@
             </div>
             <div class="ath-testimonial reveal-zoom">
                 <div class="ath-testi-box">
-                    <p class="ath-quote">"This is where the first success stories will be written, and one of them could be yours. We are opening places now for our founding cohort of learners and mentors. Step in early and help shape what SkillsCo-op becomes."</p>
+                    <p class="ath-quote">"This is where the first success stories will be written, and one of them could be yours. We are opening places now for our founding cohort of learners and mentors. Step in early and help shape what Skills Co-op becomes."</p>
                     <div class="ath-testi-user" style="justify-content:center; gap:16px;">
                         <a href="{{ route('register') }}" class="ath-btn ath-btn-primary">Claim Your Place</a>
                         <a href="{{ route('mentors') }}" class="ath-btn" style="background:transparent;color:var(--ath-deep);border:2px solid var(--ath-deep);">Become a Mentor</a>
@@ -349,7 +349,7 @@
             <div class="ath-assessment-box reveal-zoom" style="background: linear-gradient(135deg, var(--ath-gold), #d48806);">
                 <div class="ath-assessment-content">
                     <h3 class="reveal-fade-up" style="color: #fff;">Monthly Panel Sessions</h3>
-                    <p class="reveal-fade-up" style="--delay: 1; color: rgba(255,255,255,0.9);">Join our monthly panel discussions with industry experts, mentors, and learners. Network, learn, and grow with the SkillsCo-op community.</p>
+                    <p class="reveal-fade-up" style="--delay: 1; color: rgba(255,255,255,0.9);">Join our monthly panel discussions with industry experts, mentors, and learners. Network, learn, and grow with the Skills Co-op community.</p>
                     <a href="{{ route('sessions') }}" class="ath-btn" style="background: #fff; color: var(--ath-deep); font-weight: 800;" class="reveal-fade-up" style="--delay: 2">View Upcoming Sessions</a>
                 </div>
                 <div class="ath-assessment-shapes">
@@ -365,7 +365,7 @@
         <div class="ath-container">
             <div class="ath-cta-card reveal-zoom">
                 <h2>Ready to get started?</h2>
-                <p>Join learners who have discovered their potential and built successful careers in tech through SkillsCo-op.</p>
+                <p>Join learners who have discovered their potential and built successful careers in tech through Skills Co-op.</p>
                 <a href="{{ route('register') }}" class="ath-btn ath-btn-gold">Join the cohort</a>
             </div>
         </div>

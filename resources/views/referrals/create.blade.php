@@ -1,9 +1,9 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Refer someone | SkillsCo-op')
+@section('title', 'Refer someone | Skills Co-op')
 
-@section('meta_description', 'If you support someone who could benefit from free digital skills training, refer them to SkillsCo-op. Consent-first, gentle follow-up, no pressure on them or on you.')
-@section('og_description', 'If you support someone who could benefit from free digital skills training, refer them to SkillsCo-op. Consent-first, gentle follow-up, no pressure on them or on you.')
+@section('meta_description', 'If you support someone who could benefit from free digital skills training, refer them to Skills Co-op. Consent-first, gentle follow-up, no pressure on them or on you.')
+@section('og_description', 'If you support someone who could benefit from free digital skills training, refer them to Skills Co-op. Consent-first, gentle follow-up, no pressure on them or on you.')
 
 @section('content')
 
@@ -80,7 +80,7 @@
                 </div>
                 <label class="rf-consent-check">
                     <input type="checkbox" name="consent_confirmed" value="1" {{ old('consent_confirmed') ? 'checked' : '' }}>
-                    <span>I confirm this person knows I am referring them and has agreed to SkillsCo-op contacting them.</span>
+                    <span>I confirm this person knows I am referring them and has agreed to Skills Co-op contacting them.</span>
                 </label>
             </div>
 

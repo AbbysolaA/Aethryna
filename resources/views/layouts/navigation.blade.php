@@ -3,8 +3,8 @@
     <div class="nav-container">
         <div class="logo" id="siteLogo">
             <a href="{{ route('home') }}">
-                <img src="{{ asset('images/logo_white.png') }}" alt="SkillsCo-op" class="default-logo">
-                <img src="{{ asset('images/logo_black.png') }}" alt="SkillsCo-op" class="scrolled-logo" style="display: none;">
+                <img src="{{ asset('images/logo_white.png') }}" alt="Skills Co-op" class="default-logo">
+                <img src="{{ asset('images/logo_black.png') }}" alt="Skills Co-op" class="scrolled-logo" style="display: none;">
             </a>
         </div>
 

@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Primary Meta Tags -->
-    <title>@yield('title', 'SkillsCo-op | Empowering Youth Through Digital Skills & Mentorship')</title>
-    <meta name="title" content="@yield('meta_title', 'SkillsCo-op | Empowering Youth Through Digital Skills & Mentorship')">
-    <meta name="description" content="@yield('meta_description', 'SkillsCo-op is a funded 25-week digital skills programme for people facing barriers to employment. Four pilot tracks, three certificates, and a founding cohort of thirty places from January 2027.')">
+    <title>@yield('title', 'Skills Co-op | Empowering Youth Through Digital Skills & Mentorship')</title>
+    <meta name="title" content="@yield('meta_title', 'Skills Co-op | Empowering Youth Through Digital Skills & Mentorship')">
+    <meta name="description" content="@yield('meta_description', 'Skills Co-op is a funded 25-week digital skills programme for people facing barriers to employment. Four pilot tracks, three certificates, and a founding cohort of thirty places from January 2027.')">
     <meta name="keywords" content="@yield('meta_keywords', 'youth empowerment, digital skills training, tech mentorship, career development, nonprofit organization, coding bootcamp, web development, IT support, digital design')">
-    <meta name="author" content="SkillsCo-op">
+    <meta name="author" content="Skills Co-op">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 
     <!-- Canonical URL -->
@@ -89,7 +89,7 @@
                     <div class="auth-caption-section flex justify-center items-center py-8 lg:order-2">
                         <div class="auth-caption text-center text-light max-w-md">
                             <h2 class="text-5xl font-extrabold mb-6 text-gradient">@yield('caption-title', 'Your Place in the Founding Cohort')</h2>
-                            <p class="text-xl leading-relaxed text-white mb-8">@yield('caption-text', 'SkillsCo-op is a fully funded 25-week programme for people the traditional pipeline was never designed for. Cohort 1 launches January 2027 with thirty founding places.')</p>
+                            <p class="text-xl leading-relaxed text-white mb-8">@yield('caption-text', 'Skills Co-op is a fully funded 25-week programme for people the traditional pipeline was never designed for. Cohort 1 launches January 2027 with thirty founding places.')</p>
                             <div class="caption-stats flex justify-around gap-8 mt-8">
                                 <div class="stat-item text-center">
                                     <span class="stat-number block text-4xl font-extrabold text-gold mb-2" style="text-shadow: 0 0 20px rgba(238, 157, 29, 0.3);">25</span>

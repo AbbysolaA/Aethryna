@@ -1,6 +1,6 @@
 @extends('layouts.aethryna')
 
-@section('title', 'AI Labs | SkillsCo-op')
+@section('title', 'AI Labs | Skills Co-op')
 
 @section('meta_description', 'How Skills Co-op teaches AI: a verification-first method embedded in every pathway, a community practice space, and a flight path to the AI Labs Fellowship.')
 @section('og_description', 'How Skills Co-op teaches AI: a verification-first method embedded in every pathway, a community practice space, and a flight path to the AI Labs Fellowship.')

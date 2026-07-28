@@ -2,7 +2,7 @@
 
 @php $isEdit = (bool) $risk->exists; @endphp
 
-@section('title', ($isEdit ? 'Edit R-' . $risk->id : 'Add a risk') . ' | SkillsCo-op')
+@section('title', ($isEdit ? 'Edit R-' . $risk->id : 'Add a risk') . ' | Skills Co-op')
 
 @section('content')
 <section class="rkf-wrap">

@@ -1,6 +1,6 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Extend a volunteer offer | SkillsCo-op')
+@section('title', 'Extend a volunteer offer | Skills Co-op')
 
 @section('content')
 <section class="vl-engagement">

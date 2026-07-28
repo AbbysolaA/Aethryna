@@ -1,7 +1,7 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Your volunteer offer | SkillsCo-op')
-@section('meta_description', 'Sign in or create an account to accept or decline your SkillsCo-op volunteer offer.')
+@section('title', 'Your volunteer offer | Skills Co-op')
+@section('meta_description', 'Sign in or create an account to accept or decline your Skills Co-op volunteer offer.')
 
 @section('content')
 
@@ -10,7 +10,7 @@
         <div class="vl-claim-inner">
 
             <span class="vl-eyebrow">Volunteering</span>
-            <h1 class="vl-title">Your offer from <span class="vl-gradient">SkillsCo-op</span></h1>
+            <h1 class="vl-title">Your offer from <span class="vl-gradient">Skills Co-op</span></h1>
             <p class="vl-lede">Hi {{ str($engagement->offer_name)->before(' ') }}, we would like you on the team. Sign in or create an account to accept or decline.</p>
 
             {{-- Offer summary --}}

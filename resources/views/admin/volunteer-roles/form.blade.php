@@ -2,7 +2,7 @@
 
 @php $editing = $role->exists; @endphp
 
-@section('title', ($editing ? 'Edit position' : 'Post a position') . ' | SkillsCo-op')
+@section('title', ($editing ? 'Edit position' : 'Post a position') . ' | Skills Co-op')
 
 @section('content')
 <section class="vl-engagement">

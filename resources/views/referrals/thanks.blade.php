@@ -1,7 +1,7 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Referral received | SkillsCo-op')
-@section('meta_description', 'Thank you for your referral to SkillsCo-op. We will be in touch within a few days, gently and without pressure.')
+@section('title', 'Referral received | Skills Co-op')
+@section('meta_description', 'Thank you for your referral to Skills Co-op. We will be in touch within a few days, gently and without pressure.')
 
 @section('content')
 <section class="rf-thanks">

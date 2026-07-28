@@ -4,7 +4,7 @@
 @section('auth-subtitle', 'Enter your new password below')
 
 @section('caption-title', 'Secure Your Account')
-@section('caption-text', 'Create a strong new password to keep your SkillsCo-op account secure. Your digital transformation journey continues with enhanced security.')
+@section('caption-text', 'Create a strong new password to keep your Skills Co-op account secure. Your digital transformation journey continues with enhanced security.')
 
 @section('auth-content')
 <!-- Session Status -->

@@ -1,9 +1,9 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Impact | SkillsCo-op\'s Approach to Outcomes That Matter')
+@section('title', 'Impact | Skills Co-op\'s Approach to Outcomes That Matter')
 
-@section('meta_description', 'How SkillsCo-op measures what matters: completion, confidence, and real routes into work. Building the evidence base for AI-era digital skills training that actually works.')
-@section('og_description', 'How SkillsCo-op measures what matters: completion, confidence, and real routes into work. Building the evidence base for AI-era digital skills training that actually works.')
+@section('meta_description', 'How Skills Co-op measures what matters: completion, confidence, and real routes into work. Building the evidence base for AI-era digital skills training that actually works.')
+@section('og_description', 'How Skills Co-op measures what matters: completion, confidence, and real routes into work. Building the evidence base for AI-era digital skills training that actually works.')
 
 @push('styles')
 <style>
@@ -486,7 +486,7 @@
             <div class="board-text">
                 <span class="ath-sub">Outcome Driven</span>
                 <h2>The Foundation of Growth</h2>
-                <p>SkillsCo-op is built to be a precision-designed career accelerator from day one. Every learner represents a real investment in the digital economy of the Northwest, and in their own future.</p>
+                <p>Skills Co-op is built to be a precision-designed career accelerator from day one. Every learner represents a real investment in the digital economy of the Northwest, and in their own future.</p>
                 <div class="impact-checklist">
                     <div class="i-check">
                         <i class="fas fa-check-circle"></i>

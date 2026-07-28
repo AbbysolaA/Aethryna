@@ -1,6 +1,6 @@
 @extends('layouts.aethryna')
 
-@section('title', 'SC-' . $concern->id . ' | Safeguarding | SkillsCo-op')
+@section('title', 'SC-' . $concern->id . ' | Safeguarding | Skills Co-op')
 
 @section('content')
 <section class="sgd-wrap">

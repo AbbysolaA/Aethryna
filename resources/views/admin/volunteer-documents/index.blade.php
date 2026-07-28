@@ -1,6 +1,6 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Onboarding pack | SkillsCo-op')
+@section('title', 'Onboarding pack | Skills Co-op')
 
 @section('content')
 <section class="vl-engagement">

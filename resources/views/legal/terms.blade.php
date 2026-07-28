@@ -1,8 +1,8 @@
 @extends('layouts.aethryna')
 
-@section('title', 'SkillsCo-op | Terms of Service')
-@section('meta_description', 'SkillsCo-op terms of service. The agreement between you and Aethryna Digital Skills Co-op CIC governing use of the SkillsCo-op platform.')
-@section('og_title', 'Terms of Service | SkillsCo-op')
+@section('title', 'Skills Co-op | Terms of Service')
+@section('meta_description', 'Skills Co-op terms of service. The agreement between you and Aethryna Digital Skills Co-op CIC governing use of the Skills Co-op platform.')
+@section('og_title', 'Terms of Service | Skills Co-op')
 
 @section('content')
 
@@ -11,7 +11,7 @@
         <div class="legal-container">
             <nav class="legal-breadcrumb"><a href="/">Home</a><span>/</span><span>Legal</span><span>/</span><span class="current">Terms of Service</span></nav>
             <h1>Terms of Service</h1>
-            <p class="legal-subtitle">The agreement governing your use of the SkillsCo-op platform and services.</p>
+            <p class="legal-subtitle">The agreement governing your use of the Skills Co-op platform and services.</p>
             <div class="legal-meta">
                 <span><i class="fas fa-calendar"></i> Last reviewed: June 2026</span>
                 <span><i class="fas fa-tag"></i> Version 1.0</span>
@@ -89,20 +89,20 @@
         {-- Table of contents --}
         <div class="legal-nav" style="margin-top: 40px;">
             <p>Contents</p>
-            <ul><li><a href="#about">1. About These Terms</a></li><li><a href="#eligibility">2. Who Can Use SkillsCo-op</a></li><li><a href="#account">3. Your Account</a></li><li><a href="#services">4. Our Services</a></li><li><a href="#responsibilities">5. Your Responsibilities</a></li><li><a href="#ip">6. Intellectual Property</a></li><li><a href="#liability">7. Limitation of Liability</a></li><li><a href="#safeguarding">8. Safeguarding</a></li><li><a href="#governing-law">9. Governing Law</a></li></ul>
+            <ul><li><a href="#about">1. About These Terms</a></li><li><a href="#eligibility">2. Who Can Use Skills Co-op</a></li><li><a href="#account">3. Your Account</a></li><li><a href="#services">4. Our Services</a></li><li><a href="#responsibilities">5. Your Responsibilities</a></li><li><a href="#ip">6. Intellectual Property</a></li><li><a href="#liability">7. Limitation of Liability</a></li><li><a href="#safeguarding">8. Safeguarding</a></li><li><a href="#governing-law">9. Governing Law</a></li></ul>
         </div>
 
 
     <section class="legal-section" id="about"><div class="legal-container">
         <span class="legal-badge">Introduction</span><h2>1. About These Terms</h2>
-        <p>These Terms of Service govern your use of the SkillsCo-op website (skillscoop.org) and any services accessible through it. They form a legally binding agreement between you and <strong>Aethryna Digital Skills Co-op CIC</strong>, a Community Interest Company registered in England and Wales (referred to as 'SkillsCo-op', 'we', 'us', or 'our').</p>
+        <p>These Terms of Service govern your use of the Skills Co-op website (skillscoop.org) and any services accessible through it. They form a legally binding agreement between you and <strong>Aethryna Digital Skills Co-op CIC</strong>, a Community Interest Company registered in England and Wales (referred to as 'Skills Co-op', 'we', 'us', or 'our').</p>
         <p>By creating an account, registering for a session, or using the platform in any way, you confirm that you have read, understood, and agree to be bound by these Terms. If you do not agree, you must not use our services.</p>
         <p>We may update these Terms from time to time. We will notify registered users by email at least 14 days before a material change takes effect. Continued use after that date constitutes acceptance of the updated Terms.</p>
     </div></section>
 
     <section class="legal-section" id="eligibility"><div class="legal-container">
-        <span class="legal-badge">Eligibility</span><h2>2. Who Can Use SkillsCo-op</h2>
-        <p>You may use SkillsCo-op if:</p>
+        <span class="legal-badge">Eligibility</span><h2>2. Who Can Use Skills Co-op</h2>
+        <p>You may use Skills Co-op if:</p>
         <ul>
             <li>you are aged 16 or over (or have parental or guardian consent if aged 13 to 15),</li>
             <li>you provide accurate and truthful information when registering, and</li>
@@ -121,18 +121,18 @@
     <section class="legal-section" id="services"><div class="legal-container">
         <span class="legal-badge">Our Services</span><h2>4. Our Services</h2>
         <h3>4.1 What We Offer</h3>
-        <p>SkillsCo-op provides free, funded digital skills programmes, a career assessment tool, panel sessions, and a mentoring platform. All learner places are provided at no cost to participants.</p>
+        <p>Skills Co-op provides free, funded digital skills programmes, a career assessment tool, panel sessions, and a mentoring platform. All learner places are provided at no cost to participants.</p>
         <h3>4.2 Service Availability</h3>
         <p>We aim to keep the platform available at all times but cannot guarantee uninterrupted access. We may take the site down for maintenance or security reasons and will provide advance notice where possible.</p>
         <h3>4.3 No Guarantee of Outcomes</h3>
-        <p>SkillsCo-op provides educational support and skills development. We do not guarantee employment, earnings, certification, or any specific outcome. Progress depends on individual effort and external factors beyond our control.</p>
+        <p>Skills Co-op provides educational support and skills development. We do not guarantee employment, earnings, certification, or any specific outcome. Progress depends on individual effort and external factors beyond our control.</p>
         <h3>4.4 Programme Changes</h3>
         <p>We may modify, pause, or discontinue a programme at any time. Where a programme you are enrolled in is discontinued, we will give you as much notice as reasonably possible and signpost you to alternative opportunities where we can.</p>
     </div></section>
 
     <section class="legal-section" id="responsibilities"><div class="legal-container">
         <span class="legal-badge">Conduct</span><h2>5. Your Responsibilities</h2>
-        <p>You agree to use SkillsCo-op honestly and respectfully. You must:</p>
+        <p>You agree to use Skills Co-op honestly and respectfully. You must:</p>
         <ul>
             <li>provide accurate information when registering or completing the assessment,</li>
             <li>treat other learners, mentors, coaches, and staff with dignity and respect,</li>
@@ -153,8 +153,8 @@
         <span class="legal-badge">Liability</span><h2>7. Limitation of Liability</h2>
         <p>To the fullest extent permitted by law:</p>
         <ul>
-            <li>SkillsCo-op is provided on an 'as is' basis. We make no warranties about the accuracy or reliability of our platform or content.</li>
-            <li>We are not liable for any indirect or consequential loss arising from your use of SkillsCo-op.</li>
+            <li>Skills Co-op is provided on an 'as is' basis. We make no warranties about the accuracy or reliability of our platform or content.</li>
+            <li>We are not liable for any indirect or consequential loss arising from your use of Skills Co-op.</li>
             <li>Our total liability for any direct loss is limited to £100.</li>
         </ul>
         <div class="legal-alert">Nothing in these Terms limits our liability for death or personal injury caused by our negligence, or any liability that cannot be excluded under English law.</div>

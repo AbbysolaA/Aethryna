@@ -156,7 +156,7 @@
             <div class="core-header">
                 <span class="ath-sub">The Operator Core</span>
                 <h2>What every learner gets, whatever the track</h2>
-                <p>Specialist tracks make you employable in a field. The operator core makes you independent in any of them. Every SkillsCo-op learner, in every cohort, is trained in three things, all wrapped in AI and automations.</p>
+                <p>Specialist tracks make you employable in a field. The operator core makes you independent in any of them. Every Skills Co-op learner, in every cohort, is trained in three things, all wrapped in AI and automations.</p>
             </div>
             <div class="core-grid">
                 <div class="core-card">
@@ -452,7 +452,7 @@
                 <div class="story-card" style="text-align: center; padding: 40px 32px;">
                     <div class="story-content">
                         <h3>Your story starts here.</h3>
-                        <p>"This is where our first success stories will be written. We are opening places now for our founding cohort of learners and mentors. Step in early and help shape what SkillsCo-op becomes."</p>
+                        <p>"This is where our first success stories will be written. We are opening places now for our founding cohort of learners and mentors. Step in early and help shape what Skills Co-op becomes."</p>
                         <div class="story-author" style="justify-content: center; margin-top: 24px; gap: 16px; display: flex; flex-wrap: wrap;">
                             <a href="{{ route('register') }}" class="btn btn-primary">Claim Your Place</a>
                             <a href="{{ route('mentors') }}" class="btn btn-outline">Become a Mentor</a>

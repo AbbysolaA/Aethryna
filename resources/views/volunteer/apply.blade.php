@@ -1,9 +1,9 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Volunteer with us | SkillsCo-op')
+@section('title', 'Volunteer with us | Skills Co-op')
 
-@section('meta_description', 'Volunteer with SkillsCo-op. Mentoring, delivery, outreach and more, supporting people the traditional pipeline was never built for.')
-@section('og_description', 'Volunteer with SkillsCo-op. Mentoring, delivery, outreach and more, supporting people the traditional pipeline was never built for.')
+@section('meta_description', 'Volunteer with Skills Co-op. Mentoring, delivery, outreach and more, supporting people the traditional pipeline was never built for.')
+@section('og_description', 'Volunteer with Skills Co-op. Mentoring, delivery, outreach and more, supporting people the traditional pipeline was never built for.')
 
 @section('content')
 
@@ -121,7 +121,7 @@
                     <div class="vl-consent">
                         <label class="vl-check">
                             <input type="checkbox" name="consent" value="1" required @checked(old('consent'))>
-                            <span>I am happy for SkillsCo-op to hold these details while my application is considered. See our <a href="{{ route('privacy') }}">privacy notice</a>.</span>
+                            <span>I am happy for Skills Co-op to hold these details while my application is considered. See our <a href="{{ route('privacy') }}">privacy notice</a>.</span>
                         </label>
                         @error('consent')<p class="vl-error">{{ $message }}</p>@enderror
                     </div>

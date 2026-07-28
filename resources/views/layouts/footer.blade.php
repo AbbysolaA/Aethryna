@@ -5,7 +5,7 @@
                 <!-- Brand Info -->
                 <div class="footer-brand">
                     <div class="footer-logo">
-                        <img src="{{ asset('images/logo_white.png') }}" alt="SkillsCo-op">
+                        <img src="{{ asset('images/logo_white.png') }}" alt="Skills Co-op">
                     </div>
                     <p class="brand-desc">
                         Widening access to digital skills and meaningful career progression for underserved communities.
@@ -96,10 +96,10 @@
     <div class="footer-bottom">
         <div class="footer-container">
             <p class="company-details">
-                SkillsCo-op is the trading name of <strong>Aethryna Digital Skills Co-op CIC</strong>, a Community Interest Company registered in England and Wales. Company No. <strong>17007317</strong>. Registered office: Unit A 82 James Carter Road, Mildenhall, United Kingdom IP28 7DE.
+                Skills Co-op is the trading name of <strong>Aethryna Digital Skills Co-op CIC</strong>, a Community Interest Company registered in England and Wales. Company No. <strong>17007317</strong>. Registered office: Unit A 82 James Carter Road, Mildenhall, United Kingdom IP28 7DE.
             </p>
             <div class="bottom-content">
-                <p>&copy; {{ date('Y') }} SkillsCo-op. All Rights Reserved.</p>
+                <p>&copy; {{ date('Y') }} Skills Co-op. All Rights Reserved.</p>
                 <div class="legal-links">
                     <a href="{{ route('privacy') }}">Privacy Policy</a>
                     <a href="{{ route('terms') }}">Terms of Service</a>

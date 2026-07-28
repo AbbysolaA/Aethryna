@@ -4,7 +4,7 @@
 @section('auth-subtitle', 'Enter your email address and we\'ll send you a link to reset your password')
 
 @section('caption-title', 'Get Back on Track')
-@section('caption-text', 'Don\'t worry, it happens to the best of us. Reset your password and continue your digital transformation journey with SkillsCo-op.')
+@section('caption-text', 'Don\'t worry, it happens to the best of us. Reset your password and continue your digital transformation journey with Skills Co-op.')
 
 @section('auth-content')
 <!-- Session Status -->

@@ -1,6 +1,6 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Risk register | SkillsCo-op')
+@section('title', 'Risk register | Skills Co-op')
 
 @section('content')
 <section class="rk-wrap">

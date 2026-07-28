@@ -1,6 +1,6 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Offer not available | SkillsCo-op')
+@section('title', 'Offer not available | Skills Co-op')
 @section('meta_description', 'This volunteer offer link is no longer active.')
 
 @section('content')

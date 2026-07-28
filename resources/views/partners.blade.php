@@ -1,9 +1,9 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Partner With Us | SkillsCo-op')
+@section('title', 'Partner With Us | Skills Co-op')
 
-@section('meta_description', 'Partner with SkillsCo-op to help build AI-era digital skills pathways for NEET young people, justice-involved adults, and women re-entering the workforce. Funders, employers, and mentors welcome.')
-@section('og_description', 'Partner with SkillsCo-op to help build AI-era digital skills pathways for NEET young people, justice-involved adults, and women re-entering the workforce. Funders, employers, and mentors welcome.')
+@section('meta_description', 'Partner with Skills Co-op to help build AI-era digital skills pathways for NEET young people, justice-involved adults, and women re-entering the workforce. Funders, employers, and mentors welcome.')
+@section('og_description', 'Partner with Skills Co-op to help build AI-era digital skills pathways for NEET young people, justice-involved adults, and women re-entering the workforce. Funders, employers, and mentors welcome.')
 
 @section('content')
 
@@ -18,7 +18,7 @@
     <div class="ath-container">
         <div class="ph-inner reveal-fade-up">
             <span class="ath-sub">Employer and Organisation Partnerships</span>
-            <h1 class="ath-title">Partner with <span class="ath-gradient-text">SkillsCo-op.</span></h1>
+            <h1 class="ath-title">Partner with <span class="ath-gradient-text">Skills Co-op.</span></h1>
             <p class="ph-lead">Our learners need real briefs to build real skills. You get a motivated cohort, a community of practice, and the opportunity to recruit from a pool of talent that the traditional pipeline misses entirely.</p>
             <a href="#get-in-touch" class="ath-btn ath-btn-primary">Send us a brief</a>
         </div>
@@ -72,7 +72,7 @@
                 <div class="ac-inner">
                     <i class="fas fa-handshake"></i>
                     <h3>Zero cost. Real impact.</h3>
-                    <p>Partnering with SkillsCo-op is entirely free. Our programme is funded, and we ask only for your time and a genuine brief.</p>
+                    <p>Partnering with Skills Co-op is entirely free. Our programme is funded, and we ask only for your time and a genuine brief.</p>
                 </div>
             </div>
         </div>

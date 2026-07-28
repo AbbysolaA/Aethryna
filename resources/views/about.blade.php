@@ -1,9 +1,9 @@
 @extends('layouts.aethryna')
 
-@section('title', 'About SkillsCo-op | Aethryna Digital Skills Co-Op CIC')
+@section('title', 'About Skills Co-op | Aethryna Digital Skills Co-Op CIC')
 
-@section('meta_description', 'SkillsCo-op is the public-facing brand of Aethryna Digital Skills Co-Op CIC, a UK Community Interest Company closing the digital skills gap for the people the labour market overlooks.')
-@section('og_description', 'SkillsCo-op is the public-facing brand of Aethryna Digital Skills Co-Op CIC, a UK Community Interest Company closing the digital skills gap for the people the labour market overlooks.')
+@section('meta_description', 'Skills Co-op is the public-facing brand of Aethryna Digital Skills Co-Op CIC, a UK Community Interest Company closing the digital skills gap for the people the labour market overlooks.')
+@section('og_description', 'Skills Co-op is the public-facing brand of Aethryna Digital Skills Co-Op CIC, a UK Community Interest Company closing the digital skills gap for the people the labour market overlooks.')
 
 @section('content')
 
@@ -11,9 +11,9 @@
 <section class="ab-hero">
     <div class="ath-container">
         <div class="ab-hero-inner">
-            <span class="ab-eyebrow">About SkillsCo-op</span>
+            <span class="ab-eyebrow">About Skills Co-op</span>
             <h1 class="ab-title">Digital skills for the people the system <span class="ab-gradient">misses.</span></h1>
-            <p class="ab-lede">SkillsCo-op is a funded 25-week digital skills programme built for people the traditional pipeline was never designed for. Career changers. Refugees. Young people out of work. People returning after prison, illness, or caring responsibilities. We teach them their craft, we embed AI as a working tool, and we teach them to sell, support, and run their own work. Graduates leave as whole economic units, not just specialists.</p>
+            <p class="ab-lede">Skills Co-op is a funded 25-week digital skills programme built for people the traditional pipeline was never designed for. Career changers. Refugees. Young people out of work. People returning after prison, illness, or caring responsibilities. We teach them their craft, we embed AI as a working tool, and we teach them to sell, support, and run their own work. Graduates leave as whole economic units, not just specialists.</p>
             <div class="ab-hero-actions">
                 <a href="{{ route('pathway') }}" class="ab-btn ab-btn-primary">See the pathway</a>
                 <a href="{{ route('partners') }}" class="ab-btn ab-btn-ghost">Partner with us</a>
@@ -29,7 +29,7 @@
             <div class="ab-why-copy">
                 <span class="ath-sub">Why we exist</span>
                 <h2>The old pipeline was not built for everyone.</h2>
-                <p>Digital skills programmes in the UK reach the people already closest to the market. The bootcamp graduate who could pay the fee. The Russell Group student on a placement. The apprentice already inside a supportive employer. SkillsCo-op exists for everyone else.</p>
+                <p>Digital skills programmes in the UK reach the people already closest to the market. The bootcamp graduate who could pay the fee. The Russell Group student on a placement. The apprentice already inside a supportive employer. Skills Co-op exists for everyone else.</p>
                 <p>We work with NEET young people, career changers, migrants and refugees, and justice-involved learners. We teach them the digital work employers now need, and we give them the operator basics so they never depend on a single employer to earn a living.</p>
             </div>
             <div class="ab-why-stats">
@@ -96,7 +96,7 @@
         <div class="ab-team-header">
             <span class="ath-sub">The Team</span>
             <h2>Practitioners across data, learning, and community</h2>
-            <p>SkillsCo-op is designed and delivered by people who have themselves navigated non-traditional routes into digital work. The founding team brings expertise across data science, project delivery, behavioural design, and enterprise technology.</p>
+            <p>Skills Co-op is designed and delivered by people who have themselves navigated non-traditional routes into digital work. The founding team brings expertise across data science, project delivery, behavioural design, and enterprise technology.</p>
         </div>
         <div class="ab-team-grid">
             <article class="ab-member">
@@ -107,7 +107,7 @@
                     <div class="ab-member-role">Founder &amp; Executive Director</div>
                     <h3>Abisola Areola</h3>
                     <p class="ab-member-cred">Project Manager · Data Analyst · AI &amp; Digital Transformation</p>
-                    <p class="ab-member-bio">Data analytics and project management professional who designed the entire SkillsCo-op model: the curriculum, pathways, and delivery architecture that widens access to digital skills and meaningful progression for underserved communities.</p>
+                    <p class="ab-member-bio">Data analytics and project management professional who designed the entire Skills Co-op model: the curriculum, pathways, and delivery architecture that widens access to digital skills and meaningful progression for underserved communities.</p>
                 </div>
             </article>
             <article class="ab-member">
@@ -118,7 +118,7 @@
                     <div class="ab-member-role">Director of Learner Wellbeing, Safeguarding &amp; Behavioural Design</div>
                     <h3>Saheed Bello</h3>
                     <p class="ab-member-cred">MSc Social Psychology · PhD Researcher</p>
-                    <p class="ab-member-bio">Leads the design of trauma-informed, psychologically safe learning experiences across every SkillsCo-op programme, ensuring every learner journey is built on evidence, dignity, and belonging.</p>
+                    <p class="ab-member-bio">Leads the design of trauma-informed, psychologically safe learning experiences across every Skills Co-op programme, ensuring every learner journey is built on evidence, dignity, and belonging.</p>
                 </div>
             </article>
             <article class="ab-member">
@@ -129,7 +129,7 @@
                     <div class="ab-member-role">Adviser · Enterprise Technology &amp; Go-To-Market</div>
                     <h3>Seun Adetule</h3>
                     <p class="ab-member-cred">UK Global Tech Talent Awardee · AI &amp; B2B SaaS Sales</p>
-                    <p class="ab-member-bio">Over a decade of experience in enterprise technology, go-to-market strategy, and AI-driven business growth. Brings expertise in scaling technology ventures to the SkillsCo-op mission.</p>
+                    <p class="ab-member-bio">Over a decade of experience in enterprise technology, go-to-market strategy, and AI-driven business growth. Brings expertise in scaling technology ventures to the Skills Co-op mission.</p>
                 </div>
             </article>
             <article class="ab-member">
@@ -200,7 +200,7 @@
             <li>
                 <span class="ab-time-tag">The Question</span>
                 <h3>What would a different pipeline look like?</h3>
-                <p>SkillsCo-op began with a recognition: talented people in underserved communities were being routinely passed over by digital skills programmes designed around learners who already had a way in.</p>
+                <p>Skills Co-op began with a recognition: talented people in underserved communities were being routinely passed over by digital skills programmes designed around learners who already had a way in.</p>
             </li>
             <li>
                 <span class="ab-time-tag">The Model</span>

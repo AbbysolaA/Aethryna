@@ -27,12 +27,12 @@
 
 @section('caption-title', match (true) {
     (bool) $claimingOffer => 'One step from joining the team',
-    $staffBound           => 'Running SkillsCo-op',
-    default               => 'Welcome back to SkillsCo-op',
+    $staffBound           => 'Running Skills Co-op',
+    default               => 'Welcome back to Skills Co-op',
 })
 
 @section('caption-text', match (true) {
-    (bool) $claimingOffer => 'You have been offered a volunteer role with SkillsCo-op. Sign in and we will take you back to the offer, where you can read the detail and accept or decline.',
+    (bool) $claimingOffer => 'You have been offered a volunteer role with Skills Co-op. Sign in and we will take you back to the offer, where you can read the detail and accept or decline.',
     $staffBound           => 'Cohort records, safeguarding, the risk register and the volunteer roster. Sign in and we will take you straight there.',
     default               => 'Learners pick up their pathway and track progress. Mentors and volunteers manage their commitments, hours and the people they support.',
 })

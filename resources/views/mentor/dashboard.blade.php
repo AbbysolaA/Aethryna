@@ -1,6 +1,6 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Mentor Dashboard | SkillsCo-op')
+@section('title', 'Mentor Dashboard | Skills Co-op')
 
 @section('content')
     <!-- Dashboard Header -->

@@ -1,8 +1,8 @@
 @extends('layouts.aethryna')
 
-@section('title', 'SkillsCo-op | Acceptable Use Policy')
-@section('meta_description', 'SkillsCo-op acceptable use policy. The conduct expected of all learners, mentors, partners and visitors on the platform.')
-@section('og_title', 'Acceptable Use Policy | SkillsCo-op')
+@section('title', 'Skills Co-op | Acceptable Use Policy')
+@section('meta_description', 'Skills Co-op acceptable use policy. The conduct expected of all learners, mentors, partners and visitors on the platform.')
+@section('og_title', 'Acceptable Use Policy | Skills Co-op')
 
 @section('content')
 
@@ -11,7 +11,7 @@
         <div class="legal-container">
             <nav class="legal-breadcrumb"><a href="/">Home</a><span>/</span><span>Legal</span><span>/</span><span class="current">Acceptable Use Policy</span></nav>
             <h1>Acceptable Use Policy</h1>
-            <p class="legal-subtitle">The conduct expected of all learners, mentors, partners, and visitors on the SkillsCo-op platform.</p>
+            <p class="legal-subtitle">The conduct expected of all learners, mentors, partners, and visitors on the Skills Co-op platform.</p>
             <div class="legal-meta">
                 <span><i class="fas fa-calendar"></i> Last reviewed: June 2026</span>
                 <span><i class="fas fa-tag"></i> Version 1.0</span>
@@ -95,29 +95,29 @@
 
     <section class="legal-section" id="purpose"><div class="legal-container">
         <span class="legal-badge">Purpose</span><h2>1. Purpose</h2>
-        <p>SkillsCo-op is a community built on respect, dignity, and belonging. This Acceptable Use Policy sets out the conduct expected of every person who uses the SkillsCo-op platform, attends our events, or participates in our programmes.</p>
+        <p>Skills Co-op is a community built on respect, dignity, and belonging. This Acceptable Use Policy sets out the conduct expected of every person who uses the Skills Co-op platform, attends our events, or participates in our programmes.</p>
         <p>This policy exists to protect our learners, many of whom have faced significant barriers and may be particularly vulnerable. It also protects mentors, coaches, staff, and the integrity of our community.</p>
         <div class="legal-alert">Breaches of this policy may result in removal from a session, suspension or termination of your account, and, where conduct is serious or unlawful, referral to the appropriate authorities.</div>
     </div></section>
 
     <section class="legal-section" id="who-it-covers"><div class="legal-container">
         <span class="legal-badge">Scope</span><h2>2. Who This Policy Covers</h2>
-        <p>This policy applies to all users of the SkillsCo-op platform and services, including:</p>
+        <p>This policy applies to all users of the Skills Co-op platform and services, including:</p>
         <ul>
             <li>Learners enrolled in a programme or track</li>
             <li>Mentors and coaches providing support</li>
             <li>Partners and organisational representatives</li>
             <li>Visitors to the public website</li>
-            <li>Any person attending a SkillsCo-op panel session or event</li>
+            <li>Any person attending a Skills Co-op panel session or event</li>
         </ul>
-        <p>It covers all interactions on the platform, in sessions (virtual or in-person), in email correspondence, and in any online space where you are representing or engaging with SkillsCo-op.</p>
+        <p>It covers all interactions on the platform, in sessions (virtual or in-person), in email correspondence, and in any online space where you are representing or engaging with Skills Co-op.</p>
     </div></section>
 
     <section class="legal-section" id="expected-conduct"><div class="legal-container">
         <span class="legal-badge">Standards</span><h2>3. Expected Conduct</h2>
         <p>All users are expected to:</p>
         <ul>
-            <li>treat every person they interact with through SkillsCo-op with dignity, courtesy, and respect,</li>
+            <li>treat every person they interact with through Skills Co-op with dignity, courtesy, and respect,</li>
             <li>be honest about their identity, qualifications, and experience,</li>
             <li>respect the confidentiality of information shared by other users in sessions or on the platform,</li>
             <li>engage constructively and in good faith with the learning process,</li>
@@ -128,7 +128,7 @@
 
     <section class="legal-section" id="prohibited-conduct"><div class="legal-container">
         <span class="legal-badge">Prohibited Conduct</span><h2>4. Prohibited Conduct</h2>
-        <p>The following conduct is not permitted on the SkillsCo-op platform or in connection with any of our programmes or events.</p>
+        <p>The following conduct is not permitted on the Skills Co-op platform or in connection with any of our programmes or events.</p>
 
         <h3>4.1 Harassment and Harm</h3>
         <ul>
@@ -147,7 +147,7 @@
 
         <h3>4.3 Inappropriate Relationships</h3>
         <ul>
-            <li>Attempting to form a personal, romantic, or financial relationship with a learner outside of the SkillsCo-op programme structure.</li>
+            <li>Attempting to form a personal, romantic, or financial relationship with a learner outside of the Skills Co-op programme structure.</li>
             <li>Sharing personal contact details with a learner (phone numbers, personal email, social media) to bypass the platform.</li>
             <li>Any conduct that could constitute grooming of a young person or vulnerable adult.</li>
         </ul>
@@ -163,19 +163,19 @@
         <h3>4.5 Spam and Commercial Solicitation</h3>
         <ul>
             <li>Sending unsolicited commercial messages or promotions to other users.</li>
-            <li>Using contact details obtained through SkillsCo-op to market products or services without our prior written consent.</li>
+            <li>Using contact details obtained through Skills Co-op to market products or services without our prior written consent.</li>
         </ul>
     </div></section>
 
     <section class="legal-section" id="safeguarding"><div class="legal-container">
         <span class="legal-badge">Safeguarding</span><h2>5. Safeguarding</h2>
-        <p>SkillsCo-op works with young people aged 16 and over and adults who may have experienced trauma, exclusion, or marginalisation. Safeguarding is central to how we operate, not an afterthought.</p>
+        <p>Skills Co-op works with young people aged 16 and over and adults who may have experienced trauma, exclusion, or marginalisation. Safeguarding is central to how we operate, not an afterthought.</p>
         <p>If you are a mentor or coach, you must:</p>
         <ul>
             <li>complete any safeguarding induction we require before working with learners,</li>
             <li>report any safeguarding concern to us immediately, without investigating it yourself,</li>
             <li>maintain appropriate professional boundaries at all times, and</li>
-            <li>never meet a learner outside an organised SkillsCo-op session without prior agreement from our team.</li>
+            <li>never meet a learner outside an organised Skills Co-op session without prior agreement from our team.</li>
         </ul>
         <div class="legal-alert">To report a safeguarding concern, contact <strong>hello@skillscoop.org</strong> with the subject line SAFEGUARDING. In an emergency, contact the emergency services (999).</div>
     </div></section>
@@ -198,14 +198,14 @@
             <li>issue a formal warning,</li>
             <li>remove the person from a session or event,</li>
             <li>suspend or permanently terminate their account,</li>
-            <li>ban them from future SkillsCo-op programmes and events, and/or</li>
+            <li>ban them from future Skills Co-op programmes and events, and/or</li>
             <li>refer the matter to the police or other statutory authorities if the conduct is unlawful or involves risk to a child or vulnerable adult.</li>
         </ul>
     </div></section>
 
     <section class="legal-section" id="updates"><div class="legal-container">
         <span class="legal-badge">Updates</span><h2>8. Updates to This Policy</h2>
-        <p>We review this policy at least annually or following any significant incident. The version number and effective date above will be updated when changes are made. Continued use of SkillsCo-op following an update constitutes acceptance of the revised policy.</p>
+        <p>We review this policy at least annually or following any significant incident. The version number and effective date above will be updated when changes are made. Continued use of Skills Co-op following an update constitutes acceptance of the revised policy.</p>
     </div></section>
 
     </div>

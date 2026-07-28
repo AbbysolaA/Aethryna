@@ -19,8 +19,8 @@
     : 'Your Place in the Founding Cohort')
 
 @section('caption-text', $claimingOffer
-    ? 'You have been offered a volunteer role with SkillsCo-op. Set up an account and we will take you back to the offer, where you can read the detail and accept or decline.'
-    : 'SkillsCo-op is a fully funded 25-week programme for people the traditional pipeline was never designed for. Cohort 1 launches January 2027 with thirty founding places.')
+    ? 'You have been offered a volunteer role with Skills Co-op. Set up an account and we will take you back to the offer, where you can read the detail and accept or decline.'
+    : 'Skills Co-op is a fully funded 25-week programme for people the traditional pipeline was never designed for. Cohort 1 launches January 2027 with thirty founding places.')
 
 @section('auth-content')
 <!-- Session Status -->

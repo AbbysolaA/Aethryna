@@ -1,9 +1,9 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Stories | Voices from the SkillsCo-op Community')
+@section('title', 'Stories | Voices from the Skills Co-op Community')
 
-@section('meta_description', 'Real stories from the SkillsCo-op community, learners, mentors, and partners building digital skills and AI literacy pathways together.')
-@section('og_description', 'Real stories from the SkillsCo-op community, learners, mentors, and partners building digital skills and AI literacy pathways together.')
+@section('meta_description', 'Real stories from the Skills Co-op community, learners, mentors, and partners building digital skills and AI literacy pathways together.')
+@section('og_description', 'Real stories from the Skills Co-op community, learners, mentors, and partners building digital skills and AI literacy pathways together.')
 
 @section('content')
 <!-- Hero -->
@@ -46,7 +46,7 @@
                 <h2>The panel series that started it all</h2>
                 <div class="story-text">
                     <p>Before we built a curriculum, we asked questions in public. Our panel series brought together practitioners, educators, and people with lived experience of barriers to employment to explore what a genuinely different kind of skills programme could look like.</p>
-                    <p>The insights from those sessions are baked into every part of the SkillsCo-op model: the 25-week structure, the AI-embedded curriculum, the decision to focus on people the traditional pipeline misses.</p>
+                    <p>The insights from those sessions are baked into every part of the Skills Co-op model: the 25-week structure, the AI-embedded curriculum, the decision to focus on people the traditional pipeline misses.</p>
                 </div>
                 <a href="{{ route('sessions') }}" class="story-link">Watch the panel recordings <i class="fas fa-arrow-right"></i></a>
             </div>
@@ -66,7 +66,7 @@
                     <p>We did not start with a product. We started with relationships. Our adviser network includes practitioners from across the four pilot tracks, people with experience of trauma-informed education, and employers who want to be part of a different kind of talent pipeline.</p>
                     <p>These are the people who will mentor, guest-teach, and eventually recruit from our founding cohort. We are building the ecosystem before we recruit a single learner.</p>
                 </div>
-                <a href="{{ route('about') }}" class="story-link">Meet the team behind SkillsCo-op <i class="fas fa-arrow-right"></i></a>
+                <a href="{{ route('about') }}" class="story-link">Meet the team behind Skills Co-op <i class="fas fa-arrow-right"></i></a>
             </div>
         </article>
 

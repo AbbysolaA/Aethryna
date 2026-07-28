@@ -1,8 +1,8 @@
 @extends('layouts.aethryna')
 
-@section('title', 'SkillsCo-op | Cookie Policy')
-@section('meta_description', 'SkillsCo-op cookie policy. We use only strictly necessary cookies and one optional functional cookie. No tracking or advertising cookies.')
-@section('og_title', 'Cookie Policy | SkillsCo-op')
+@section('title', 'Skills Co-op | Cookie Policy')
+@section('meta_description', 'Skills Co-op cookie policy. We use only strictly necessary cookies and one optional functional cookie. No tracking or advertising cookies.')
+@section('og_title', 'Cookie Policy | Skills Co-op')
 
 @section('content')
 
@@ -96,7 +96,7 @@
     <section class="legal-section" id="what-are-cookies"><div class="legal-container">
         <span class="legal-badge">Basics</span><h2>1. What Are Cookies?</h2>
         <p>Cookies are small text files stored on your device when you visit a website. They allow the site to remember information about your visit, such as whether you are logged in. Some cookies are essential for the site to work; others are optional.</p>
-        <p>We explain exactly which cookies SkillsCo-op uses below. We do not use advertising or tracking cookies.</p>
+        <p>We explain exactly which cookies Skills Co-op uses below. We do not use advertising or tracking cookies.</p>
     </div></section>
 
     <section class="legal-section" id="cookies-we-use"><div class="legal-container">
@@ -141,7 +141,7 @@
                 <tr><td>Safari (iOS)</td><td>Settings > Safari > Privacy &amp; Security</td></tr>
             </tbody>
         </table></div>
-        <div class="legal-alert">Blocking strictly necessary cookies will prevent you from logging in to SkillsCo-op.</div>
+        <div class="legal-alert">Blocking strictly necessary cookies will prevent you from logging in to Skills Co-op.</div>
     </div></section>
 
     <section class="legal-section" id="changes"><div class="legal-container">

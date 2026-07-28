@@ -1,6 +1,6 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Safeguarding concerns | SkillsCo-op')
+@section('title', 'Safeguarding concerns | Skills Co-op')
 
 @section('content')
 <section class="sgr-wrap">

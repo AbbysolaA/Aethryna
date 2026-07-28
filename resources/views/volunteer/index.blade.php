@@ -1,7 +1,7 @@
 @extends('layouts.aethryna')
 
-@section('title', 'My volunteering | SkillsCo-op')
-@section('meta_description', 'Your volunteer opportunities with SkillsCo-op.')
+@section('title', 'My volunteering | Skills Co-op')
+@section('meta_description', 'Your volunteer opportunities with Skills Co-op.')
 
 @section('content')
 

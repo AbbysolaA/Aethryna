@@ -13,7 +13,7 @@
 <section class="ss-hero">
     <div class="ath-container">
         <div class="ss-hero-inner">
-            <span class="ss-eyebrow">The SkillsCo-op Sessions</span>
+            <span class="ss-eyebrow">The Skills Co-op Sessions</span>
             <h1 class="ss-title">Real conversations about the future of <span class="ss-gradient">digital work.</span></h1>
             <p class="ss-lede">A monthly panel series with practitioners, researchers, and community leaders. Free. Online. Open to everyone.</p>
 

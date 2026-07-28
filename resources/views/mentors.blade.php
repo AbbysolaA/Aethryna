@@ -1,9 +1,9 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Become a Mentor | SkillsCo-op')
+@section('title', 'Become a Mentor | Skills Co-op')
 
-@section('meta_description', 'Mentor someone into digital work. SkillsCo-op mentors give a few hours a month to learners facing real barriers to employment. No teaching experience needed.')
-@section('og_description', 'Mentor someone into digital work. SkillsCo-op mentors give a few hours a month to learners facing real barriers to employment. No teaching experience needed.')
+@section('meta_description', 'Mentor someone into digital work. Skills Co-op mentors give a few hours a month to learners facing real barriers to employment. No teaching experience needed.')
+@section('og_description', 'Mentor someone into digital work. Skills Co-op mentors give a few hours a month to learners facing real barriers to employment. No teaching experience needed.')
 
 @section('content')
 
