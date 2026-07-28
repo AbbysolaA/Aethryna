@@ -35,6 +35,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    // /admin on its own 404'd. It now lands on the dashboard, and because it
+    // sits inside this group a signed-out visitor is sent to login first and
+    // returned here afterwards, which makes /admin a usable way in.
+    Route::get('/', fn () => redirect()->route('admin.dashboard'))->name('home');
+
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::get('/users', [AdminController::class, 'users'])->name('users');
     Route::delete('/users/{user}', [AdminController::class, 'destroyUser'])->name('users.destroy');

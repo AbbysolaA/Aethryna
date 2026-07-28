@@ -89,6 +89,28 @@ class User extends Authenticatable
     }
 
     /**
+     * The route this account should land on after signing in.
+     *
+     * Derived from the role we already hold rather than asked for at the door.
+     * A login form that lets someone declare which kind of user they are is
+     * asking for something the server knows better, and invites the idea that
+     * picking a different option grants different access.
+     *
+     * Order matters: isVolunteer() is true for mentors too, so mentors are
+     * matched first and keep their own area.
+     */
+    public function homeRoute(): string
+    {
+        return match (true) {
+            $this->isAdmin()     => 'admin.dashboard',
+            $this->isCoach()     => 'coach.dashboard',
+            $this->isMentor()    => 'mentor.dashboard',
+            $this->isVolunteer() => 'volunteer.index',
+            default              => 'dashboard',
+        };
+    }
+
+    /**
      * Check if user is a skills coach (internal staff)
      */
     public function isCoach(): bool

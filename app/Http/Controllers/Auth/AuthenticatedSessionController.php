@@ -28,7 +28,11 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        // Land on the area this account actually uses. intended() still wins,
+        // so someone bounced here from a gated page goes back to it.
+        return redirect()->intended(
+            route($request->user()->homeRoute(), absolute: false)
+        );
     }
 
     /**
