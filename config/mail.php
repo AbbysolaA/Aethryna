@@ -121,14 +121,18 @@ return [
     |--------------------------------------------------------------------------
     |
     | Where internal notifications are delivered. Override per environment in
-    | .env. Safeguarding concerns should go to the named safeguarding lead,
-    | not a shared inbox, once that address is confirmed.
+    | .env. These defaults are live mailboxes, so a deployment that sets no
+    | mail env vars still routes correctly rather than dropping everything
+    | into the general inbox.
     |
     */
 
+    // Partner referrals: general enquiries about someone who could benefit.
     'referral_inbox' => env('MAIL_REFERRAL_INBOX', 'hello@skillscoop.org'),
 
-    'safeguarding_inbox' => env('MAIL_SAFEGUARDING_INBOX', 'hello@skillscoop.org'),
+    // Concerns raised about a named learner. Monitored by the safeguarding
+    // lead. Never point this at a general inbox.
+    'safeguarding_inbox' => env('MAIL_SAFEGUARDING_INBOX', 'safeguarding@skillscoop.org'),
 
     // Volunteer and mentor applications. VolunteerApplicationController already
     // read this key, but it was never defined here, so it could only ever fall
