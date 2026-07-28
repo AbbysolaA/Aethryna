@@ -1,10 +1,26 @@
 @extends('layouts.guest')
 
-@section('auth-title', 'Apply to the founding cohort')
-@section('auth-subtitle', 'Create your account and start your application. Takes a couple of minutes.')
+{{-- Set by VolunteerController::claim when someone arrives from an offer link
+     without an account. Registration is otherwise the learner door, so the
+     default copy stays as it is; a mentor accepting an offer should not be
+     told they are applying to the cohort. --}}
+@php $claimingOffer = session('claiming_volunteer_offer'); @endphp
 
-@section('caption-title', 'Your Place in the Founding Cohort')
-@section('caption-text', 'SkillsCo-op is a fully funded 25-week programme for people the traditional pipeline was never designed for. Cohort 1 launches January 2027 with thirty founding places.')
+@section('auth-title', $claimingOffer
+    ? 'Create your account'
+    : 'Apply to the founding cohort')
+
+@section('auth-subtitle', $claimingOffer
+    ? 'You need an account to accept your offer. It takes a minute, and you will come straight back to it.'
+    : 'Create your account and start your application. Takes a couple of minutes.')
+
+@section('caption-title', $claimingOffer
+    ? 'One step from joining the team'
+    : 'Your Place in the Founding Cohort')
+
+@section('caption-text', $claimingOffer
+    ? 'You have been offered a volunteer role with SkillsCo-op. Set up an account and we will take you back to the offer, where you can read the detail and accept or decline.'
+    : 'SkillsCo-op is a fully funded 25-week programme for people the traditional pipeline was never designed for. Cohort 1 launches January 2027 with thirty founding places.')
 
 @section('auth-content')
 <!-- Session Status -->
@@ -102,6 +118,12 @@
         Create account and continue
     </button>
 
-    <p class="text-white/60 text-xs text-center mt-5 leading-relaxed">Creating an account starts your application. We will guide you through the assessment and next steps.</p>
+    <p class="text-white/60 text-xs text-center mt-5 leading-relaxed">
+        @if ($claimingOffer)
+            Creating an account does not accept the offer. You will get the chance to read it and decide.
+        @else
+            Creating an account starts your application. We will guide you through the assessment and next steps.
+        @endif
+    </p>
 </form>
 @endsection

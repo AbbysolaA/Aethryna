@@ -1,10 +1,21 @@
 @extends('layouts.guest')
 
-@section('auth-title', 'Welcome Back')
-@section('auth-subtitle', 'Sign in to your account to continue your journey')
+{{-- Login serves everyone: learners, mentors, volunteers, coaches and admins.
+     The copy used to address learners only, so a mentor bounced here from a
+     gated page was told to continue their digital transformation journey. --}}
+@php $claimingOffer = session('claiming_volunteer_offer'); @endphp
 
-@section('caption-title', 'Ready to Rise?')
-@section('caption-text', 'Continue your digital transformation journey. Access your personalized dashboard, track your progress, and connect with mentors who believe in your potential.')
+@section('auth-title', $claimingOffer ? 'Sign in to accept your offer' : 'Welcome Back')
+
+@section('auth-subtitle', $claimingOffer
+    ? 'Sign in and you will come straight back to your offer.'
+    : 'Sign in to your account to pick up where you left off')
+
+@section('caption-title', $claimingOffer ? 'One step from joining the team' : 'Welcome back to SkillsCo-op')
+
+@section('caption-text', $claimingOffer
+    ? 'You have been offered a volunteer role with SkillsCo-op. Sign in and we will take you back to the offer, where you can read the detail and accept or decline.'
+    : 'Learners pick up their pathway and track progress. Mentors and volunteers manage their commitments, hours and the people they support.')
 
 @section('auth-content')
 <!-- Session Status -->
