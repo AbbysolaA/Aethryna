@@ -15,7 +15,13 @@
         // "Registered users", which reads as the size of the learner base and
         // overstated it.
         $totalLearners = User::whereIn('role', ['user', 'learner'])->count();
-        $staffAndVolunteers = User::whereIn('role', ['admin', 'coach', 'mentor', 'volunteer'])->count();
+
+        // Everyone who is not a learner, rather than a list of the roles that
+        // existed when this was written. The previous version named admin,
+        // coach, mentor and volunteer explicitly, so adding the safeguarding
+        // role left the lead counted in neither figure and missing from the
+        // dashboard entirely. Defined as the complement, it cannot drift again.
+        $staffAndVolunteers = User::whereNotIn('role', ['user', 'learner'])->count();
 
         $totalAssessments = Assessment::count();
         $completedAssessments = Assessment::where('status', 'completed')->count();
