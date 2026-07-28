@@ -21,12 +21,16 @@ class VolunteerOffer extends Mailable implements MailableContract
     use Queueable, SerializesModels;
 
     public function __construct(
-        public string $firstName,
-        public string $role,
-        public Carbon $startsOn,
-        public Carbon $endsOn,
-        public string $respondUrl,
-        public ?Carbon $respondBy = null,
+        // Protected, not public. Mailable::buildViewData() reflects over public
+        // properties and merges them over the view data, so a public $startsOn
+        // would replace the formatted "28 July 2026" with a raw Carbon and the
+        // email would print a database timestamp.
+        protected string $firstName,
+        protected string $role,
+        protected Carbon $startsOn,
+        protected Carbon $endsOn,
+        protected string $respondUrl,
+        protected ?Carbon $respondBy = null,
     ) {
     }
 

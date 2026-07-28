@@ -9,6 +9,7 @@ use App\Models\VolunteerEngagement;
 use App\Models\VolunteerRole;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
@@ -90,11 +91,9 @@ class VolunteerAdminController extends Controller
         ]);
 
         $engagement->extendOffer($validated['response_days'] ?? null);
-        $this->sendOffer($engagement);
+        [$key, $message] = $this->offerFlash($engagement, $this->sendOffer($engagement));
 
-        return redirect()
-            ->route('admin.volunteers.index')
-            ->with('status', 'Offer sent to ' . $engagement->offer_email . '.');
+        return redirect()->route('admin.volunteers.index')->with($key, $message);
     }
 
     /**
@@ -139,27 +138,53 @@ class VolunteerAdminController extends Controller
         ])->save();
 
         $engagement->extendOffer($validated['response_days'] ?? null);
-        $this->sendOffer($engagement);
+        [$key, $message] = $this->offerFlash($engagement, $this->sendOffer($engagement));
 
-        return redirect()
-            ->route('admin.volunteers.index')
-            ->with('status', 'Offer sent to ' . $engagement->offer_email . '.');
+        return redirect()->route('admin.volunteers.index')->with($key, $message);
     }
 
     /**
      * Email the offer. Shared by the direct-offer and from-application paths
      * so the two cannot drift.
+     *
+     * The offer row is already saved by the time this runs, so a mail failure
+     * must not throw: that would show a 500 for an offer that exists. It is
+     * reported instead, because an admin needs to know to chase it by hand.
+     *
+     * @return bool Whether the message was handed to the mailer.
      */
-    private function sendOffer(VolunteerEngagement $engagement): void
+    private function sendOffer(VolunteerEngagement $engagement): bool
     {
-        Mail::to($engagement->offer_email)->send(new VolunteerOffer(
-            firstName:  str($engagement->offer_name)->before(' ')->toString(),
-            role:       $engagement->role->title,
-            startsOn:   $engagement->starts_on,
-            endsOn:     $engagement->ends_on ?? $engagement->starts_on->copy()->addYear(),
-            respondUrl: route('volunteer.claim', $engagement->offer_token),
-            respondBy:  $engagement->offer_expires_at,
-        ));
+        try {
+            Mail::to($engagement->offer_email)->send(new VolunteerOffer(
+                firstName:  str($engagement->offer_name)->before(' ')->toString(),
+                role:       $engagement->role->title,
+                startsOn:   $engagement->starts_on,
+                endsOn:     $engagement->ends_on ?? $engagement->starts_on->copy()->addYear(),
+                respondUrl: route('volunteer.claim', $engagement->offer_token),
+                respondBy:  $engagement->offer_expires_at,
+            ));
+
+            return true;
+        } catch (\Throwable $e) {
+            Log::error('Volunteer offer email failed to send.', [
+                'engagement_id' => $engagement->id,
+                'email'         => $engagement->offer_email,
+                'error'         => $e->getMessage(),
+            ]);
+
+            return false;
+        }
+    }
+
+    /**
+     * Flash wording that tells the truth about whether the email went out.
+     */
+    private function offerFlash(VolunteerEngagement $engagement, bool $sent): array
+    {
+        return $sent
+            ? ['status', 'Offer sent to ' . $engagement->offer_email . '.']
+            : ['error', 'The offer was created but the email could not be sent. Check the mail log and send the link by hand.'];
     }
 
     /**

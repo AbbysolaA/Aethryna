@@ -8,8 +8,15 @@
         use App\Models\Assessment;
         use App\Models\Pathway;
 
-        // Admin statistics
-        $totalUsers = User::count();
+        // Admin statistics.
+        //
+        // Learners only. User::count() also counted the seeded system accounts,
+        // every admin, coach, mentor and volunteer, and reported the total as
+        // "Registered users", which reads as the size of the learner base and
+        // overstated it.
+        $totalLearners = User::whereIn('role', ['user', 'learner'])->count();
+        $staffAndVolunteers = User::whereIn('role', ['admin', 'coach', 'mentor', 'volunteer'])->count();
+
         $totalAssessments = Assessment::count();
         $completedAssessments = Assessment::where('status', 'completed')->count();
         $popularPathways = Pathway::withCount(['assessmentResults'])->orderBy('assessment_results_count', 'desc')->take(5)->get();
@@ -161,18 +168,18 @@
                     <div class="w-12 h-12 bg-teal-500 rounded-full flex items-center justify-center text-white mb-3">
                         <i class="fas fa-users"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-teal-700 mb-2">Total Users</h3>
-                    <p class="text-2xl font-bold text-teal-600">{{ number_format($totalUsers) }}</p>
-                    <p class="text-sm text-gray-600">Registered users</p>
+                    <h3 class="text-lg font-semibold text-teal-700 mb-2">Learners</h3>
+                    <p class="text-2xl font-bold text-teal-600">{{ number_format($totalLearners) }}</p>
+                    <p class="text-sm text-gray-600">Plus {{ $staffAndVolunteers }} staff and volunteers</p>
                 </div>
 
                 <div class="bg-gray-50 p-6 rounded-2xl shadow-sm">
                     <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white mb-3">
                         <i class="fas fa-brain"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-teal-700 mb-2">Assessments Taken</h3>
+                    <h3 class="text-lg font-semibold text-teal-700 mb-2">Assessments Started</h3>
                     <p class="text-2xl font-bold text-teal-600">{{ number_format($totalAssessments) }}</p>
-                    <p class="text-sm text-gray-600">Total assessments</p>
+                    <p class="text-sm text-gray-600">Includes ones not finished</p>
                 </div>
 
                 <div class="bg-gray-50 p-6 rounded-2xl shadow-sm">
@@ -188,9 +195,11 @@
                     <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white mb-3">
                         <i class="fas fa-route"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-teal-700 mb-2">Pathways</h3>
+                    {{-- Distinct from the four pilot tracks Cohort 1 delivers.
+                         These are the career paths the assessment maps onto. --}}
+                    <h3 class="text-lg font-semibold text-teal-700 mb-2">Assessment Pathways</h3>
                     <p class="text-2xl font-bold text-teal-600">{{ Pathway::count() }}</p>
-                    <p class="text-sm text-gray-600">Available pathways</p>
+                    <p class="text-sm text-gray-600">Outcomes the quiz maps onto</p>
                 </div>
             </div>
         </div>

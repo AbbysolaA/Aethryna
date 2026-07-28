@@ -18,7 +18,9 @@ class VolunteerApplicationReceived extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public VolunteerEngagement $engagement)
+    // Protected so it cannot leak into the view data and shadow a payload key,
+    // the way a public $documents did on VolunteerWelcome.
+    public function __construct(protected VolunteerEngagement $engagement)
     {
     }
 

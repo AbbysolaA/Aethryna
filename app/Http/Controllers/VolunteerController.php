@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -234,12 +235,29 @@ class VolunteerController extends Controller
         $user->forceFill(['role' => $grants])->save();
     }
 
+    /**
+     * Send the onboarding pack.
+     *
+     * Failures are swallowed and logged on purpose. accept() has already
+     * committed by this point, so letting a mail problem bubble would show the
+     * volunteer a 500 on an acceptance that actually succeeded, and leave them
+     * unable to decline because the offer is no longer open. The email is
+     * recoverable by hand; a confused volunteer staring at an error is not.
+     */
     private function sendWelcome(VolunteerEngagement $engagement): void
     {
-        Mail::to($engagement->user?->email ?? $engagement->offer_email)
-            ->send(new VolunteerWelcome(
-                firstName: str($engagement->user?->name ?? $engagement->offer_name)->before(' ')->toString(),
-                role: $engagement->role->title,
-            ));
+        try {
+            Mail::to($engagement->user?->email ?? $engagement->offer_email)
+                ->send(new VolunteerWelcome(
+                    firstName: str($engagement->user?->name ?? $engagement->offer_name)->before(' ')->toString(),
+                    role: $engagement->role->title,
+                ));
+        } catch (\Throwable $e) {
+            Log::error('Volunteer welcome email failed to send.', [
+                'engagement_id' => $engagement->id,
+                'email'         => $engagement->user?->email ?? $engagement->offer_email,
+                'error'         => $e->getMessage(),
+            ]);
+        }
     }
 }

@@ -25,12 +25,21 @@ class VolunteerWelcome extends Mailable implements MailableContract
      *                                      input here.
      * @param  list<array{label:string,note:string,url:?string}>|null  $documents
      */
+    /**
+     * These are protected, not public, and that matters.
+     *
+     * Mailable::buildViewData() reflects over PUBLIC properties and merges them
+     * ON TOP of the view data passed to view(). A public $documents left null
+     * therefore overwrote the resolved pack with null, and the template died on
+     * foreach(null). Protected properties are invisible to that reflection, so
+     * messagePayload() stays the single source of what the view receives.
+     */
     public function __construct(
-        public string $firstName,
-        public string $role,
-        public ?string $firstCommitments = null,
-        public ?array $actions = null,
-        public ?array $documents = null,
+        protected string $firstName,
+        protected string $role,
+        protected ?string $firstCommitments = null,
+        protected ?array $actions = null,
+        protected ?array $documents = null,
     ) {
     }
 
