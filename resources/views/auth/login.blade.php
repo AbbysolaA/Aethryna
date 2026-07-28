@@ -6,11 +6,15 @@
 @php
     $claimingOffer = session('claiming_volunteer_offer');
 
-    // Where they were headed before being bounced here. Someone sent back from
-    // /admin cannot sign up their way in, so offering registration to them is
-    // a dead end dressed as a way forward.
-    $intendedPath = parse_url((string) session('url.intended'), PHP_URL_PATH) ?: '';
-    $staffBound   = str_starts_with($intendedPath, '/admin');
+    // Where they were headed before being bounced here. Nobody self-registers
+    // into either of these areas: admin accounts are made by an admin, and
+    // volunteer accounts are created when an offer is accepted. Offering
+    // registration to someone sent back from one is a dead end dressed as a
+    // way forward, so the link is dropped for both.
+    $intendedPath   = parse_url((string) session('url.intended'), PHP_URL_PATH) ?: '';
+    $staffBound     = str_starts_with($intendedPath, '/admin');
+    $volunteerBound = str_starts_with($intendedPath, '/volunteer/');
+    $noSelfSignup   = $staffBound || $volunteerBound;
 @endphp
 
 @section('auth-title', match (true) {
@@ -22,6 +26,7 @@
 @section('auth-subtitle', match (true) {
     (bool) $claimingOffer => 'Sign in and you will come straight back to your offer.',
     $staffBound           => 'The admin area needs a signed-in account with the right permissions.',
+    $volunteerBound       => 'Sign in with the address your offer was sent to and we will take you straight there.',
     default               => 'Sign in to your account to pick up where you left off',
 })
 
@@ -118,7 +123,7 @@
         {{-- Admin accounts are made by an admin, never self-served, so this
              link would send someone bounced from /admin to a cohort
              application that cannot give them what they came for. --}}
-        @unless ($staffBound)
+        @unless ($noSelfSignup)
             <a href="{{ route('register') }}" class="text-gold text-sm font-medium hover:text-light transition-colors duration-300">Don't have an account?</a>
         @endunless
     </div>

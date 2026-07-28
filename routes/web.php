@@ -171,6 +171,20 @@ Route::get('/volunteer/offer/{token}', [VolunteerController::class, 'claim'])
     ->middleware('throttle:20,60')
     ->name('volunteer.claim');
 
+// Sets a password and creates the account on the address the offer was sent
+// to, so a volunteer never passes through the cohort application. Refuses if
+// that address already has an account, which would be takeover by forwarded
+// link rather than onboarding.
+Route::post('/volunteer/offer/{token}', [VolunteerController::class, 'claimStore'])
+    ->middleware('throttle:10,60')
+    ->name('volunteer.claim.store');
+
+// Explicit confirmation when the signed-in address is not the one the offer
+// went to, rather than binding to whoever happens to be logged in.
+Route::post('/volunteer/offer/{token}/continue', [VolunteerController::class, 'claimAs'])
+    ->middleware(['auth', 'throttle:10,60'])
+    ->name('volunteer.claim.as');
+
 Route::middleware(['auth', 'verified'])->prefix('volunteer')->name('volunteer.')->group(function () {
     Route::get('/', [VolunteerController::class, 'index'])->name('index');
     // Onboarding pack files. They sit on a disk the web server does not serve,

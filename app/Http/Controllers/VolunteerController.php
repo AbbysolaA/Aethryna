@@ -3,15 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Mail\VolunteerWelcome;
+use App\Models\User;
 use App\Models\VolunteerDocument;
 use App\Models\VolunteerEngagement;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -45,16 +48,15 @@ class VolunteerController extends Controller
         }
 
         if (! Auth::check()) {
-            // Breeze's login already honours the intended URL; register is
-            // patched to do the same. Both therefore return here.
             session(['url.intended' => route('volunteer.claim', $token)]);
-
-            // Suppresses the learner welcome email for someone registering
-            // solely to answer a volunteer offer. Read in RegisteredUserController.
             session(['claiming_volunteer_offer' => true]);
 
+            // Whether the address the offer went to already has an account
+            // decides which door we show. Someone new sets a password here and
+            // never sees the cohort application; someone existing signs in.
             return view('volunteer.claim', [
-                'engagement' => $engagement,
+                'engagement'    => $engagement,
+                'accountExists' => User::where('email', $engagement->offer_email)->exists(),
             ]);
         }
 
@@ -65,6 +67,83 @@ class VolunteerController extends Controller
         if ($engagement->user_id !== null && $engagement->user_id !== Auth::id()) {
             return response()->view('volunteer.offer-unavailable', [], 403);
         }
+
+        // Signed in as somebody other than the addressee. Binding silently is
+        // how an offer to abby@skillscoop.org ended up attached to an admin
+        // account, with the onboarding pack emailed to the wrong inbox. Ask.
+        if ($engagement->user_id === null && ! $this->addressMatches($engagement, Auth::user())) {
+            return view('volunteer.claim-mismatch', [
+                'engagement'  => $engagement,
+                'signedInAs'  => Auth::user(),
+                'token'       => $token,
+            ]);
+        }
+
+        $engagement->claimFor(Auth::user());
+
+        session()->forget('claiming_volunteer_offer');
+
+        return redirect()->route('volunteer.show', $engagement);
+    }
+
+    /**
+     * Create the account for an offer and sign them straight in.
+     *
+     * The volunteer never sees the cohort application. They hold a token that
+     * proves they received the offer email, so the address is taken from the
+     * engagement rather than typed, and they only choose a password.
+     *
+     * Refuses outright if that address already has an account. Allowing a
+     * password to be set on an existing account would turn a forwarded offer
+     * link into account takeover. Those people sign in instead.
+     */
+    public function claimStore(Request $request, string $token): RedirectResponse
+    {
+        $engagement = VolunteerEngagement::claimable()
+            ->where('offer_token', $token)
+            ->with('role')
+            ->firstOr(fn () => abort(404));
+
+        if (User::where('email', $engagement->offer_email)->exists()) {
+            return redirect()
+                ->route('volunteer.claim', $token)
+                ->with('error', 'That address already has an account. Please sign in instead.');
+        }
+
+        $validated = $request->validate([
+            'name'     => ['required', 'string', 'max:255'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        $user = User::create([
+            'name'              => $validated['name'],
+            'email'             => $engagement->offer_email,
+            'password'          => Hash::make($validated['password']),
+            'role'              => 'learner',
+            'email_verified_at' => now(),
+        ]);
+
+        Auth::login($user);
+        $request->session()->regenerate();
+
+        $engagement->claimFor($user);
+
+        session()->forget('claiming_volunteer_offer');
+
+        return redirect()->route('volunteer.show', $engagement);
+    }
+
+    /**
+     * Confirm claiming an offer under an account whose address does not match
+     * the one it was sent to. Deliberate and explicit, never silent.
+     */
+    public function claimAs(string $token): RedirectResponse
+    {
+        $engagement = VolunteerEngagement::claimable()
+            ->where('offer_token', $token)
+            ->firstOr(fn () => abort(404));
+
+        abort_unless($engagement->user_id === null, 403);
 
         $engagement->claimFor(Auth::user());
 
@@ -197,6 +276,15 @@ class VolunteerController extends Controller
     }
 
     // --- Internals ---
+
+    /**
+     * Whether the signed-in account is the one the offer was addressed to.
+     * Compared case-insensitively; addresses are stored as typed.
+     */
+    private function addressMatches(VolunteerEngagement $engagement, User $user): bool
+    {
+        return strcasecmp($engagement->offer_email, $user->email) === 0;
+    }
 
     /**
      * An engagement is readable only by the account that claimed it. Admins
