@@ -156,6 +156,14 @@
                     </div>
                     <span class="text-sm font-semibold text-slate-700 text-center">Onboarding Pack</span>
                 </a>
+
+                <a href="{{ route('admin.staff.index') }}"
+                    class="relative flex flex-col items-center p-4 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition-colors">
+                    <div class="w-12 h-12 bg-indigo-500 rounded-full flex items-center justify-center text-white mb-3">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <span class="text-sm font-semibold text-indigo-700 text-center">Staff &amp; Access</span>
+                </a>
             </div>
         </div>
     </section>

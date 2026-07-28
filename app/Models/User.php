@@ -102,11 +102,12 @@ class User extends Authenticatable
     public function homeRoute(): string
     {
         return match (true) {
-            $this->isAdmin()     => 'admin.dashboard',
-            $this->isCoach()     => 'coach.dashboard',
-            $this->isMentor()    => 'mentor.dashboard',
-            $this->isVolunteer() => 'volunteer.index',
-            default              => 'dashboard',
+            $this->isAdmin()            => 'admin.dashboard',
+            $this->isSafeguardingLead() => 'admin.safeguarding.index',
+            $this->isCoach()            => 'coach.dashboard',
+            $this->isMentor()           => 'mentor.dashboard',
+            $this->isVolunteer()        => 'volunteer.index',
+            default                     => 'dashboard',
         };
     }
 
@@ -116,6 +117,34 @@ class User extends Authenticatable
     public function isCoach(): bool
     {
         return $this->role === 'coach';
+    }
+
+    /**
+     * Check if user is the safeguarding lead.
+     *
+     * Deliberately narrow. This role reaches the safeguarding review screens
+     * and nothing else, so the person handling concerns about named learners
+     * is not also given the user list and the risk register.
+     */
+    public function isSafeguardingLead(): bool
+    {
+        return $this->role === 'safeguarding';
+    }
+
+    /**
+     * Roles that are granted by an admin rather than self-served, and which
+     * therefore come through the staff invite flow.
+     *
+     * @return array<string, string>
+     */
+    public static function staffRoles(): array
+    {
+        return [
+            'safeguarding' => 'Safeguarding lead',
+            'coach'        => 'Skills coach',
+            'mentor'       => 'Mentor',
+            'admin'        => 'Administrator',
+        ];
     }
 
     // --- Relationships ---

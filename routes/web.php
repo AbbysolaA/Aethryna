@@ -46,14 +46,19 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::get('/reports', [AdminController::class, 'reports'])->name('reports');
     Route::get('/content', [AdminController::class, 'content'])->name('content');
 
-    // Safeguarding review: the lead works through open concerns and records
-    // decisions against each one.
-    Route::get('/safeguarding', [\App\Http\Controllers\SafeguardingController::class, 'index'])
-        ->name('safeguarding.index');
-    Route::get('/safeguarding/{concern}', [\App\Http\Controllers\SafeguardingController::class, 'show'])
-        ->name('safeguarding.show');
-    Route::patch('/safeguarding/{concern}', [\App\Http\Controllers\SafeguardingController::class, 'update'])
-        ->name('safeguarding.update');
+    // Staff and access. Admin, coach, mentor and safeguarding all reach other
+    // people's records, so none of them can be self-served. Invited here; the
+    // invitee sets their own password and no admin ever sees it.
+    Route::get('/staff', [\App\Http\Controllers\Admin\StaffInviteController::class, 'index'])
+        ->name('staff.index');
+    Route::get('/staff/invite', [\App\Http\Controllers\Admin\StaffInviteController::class, 'create'])
+        ->name('staff.create');
+    Route::post('/staff/invite', [\App\Http\Controllers\Admin\StaffInviteController::class, 'store'])
+        ->name('staff.store');
+    Route::post('/staff/{user}/resend', [\App\Http\Controllers\Admin\StaffInviteController::class, 'resend'])
+        ->name('staff.resend');
+    Route::patch('/staff/{user}', [\App\Http\Controllers\Admin\StaffInviteController::class, 'update'])
+        ->name('staff.update');
 
     // Volunteering roster: extend offers, track onboarding returns, close out
     // finished engagements. Mentor recruitment runs through here too.
@@ -124,6 +129,34 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::get('/content/question/{question}/edit', [AdminController::class, 'editQuestion'])->name('content.question.edit');
     Route::put('/content/question/{question}', [AdminController::class, 'updateQuestion'])->name('content.question.update');
     Route::delete('/content/question/{question}', [AdminController::class, 'destroyQuestion'])->name('content.question.destroy');
+});
+
+// ── Accepting a staff invitation ─────────────────────────────────────────────
+// Public and token-based, because the invitee has no way to sign in yet. The
+// token is Laravel's password broker on a seven-day window rather than the
+// sixty-minute reset one.
+Route::get('/staff/invite/{token}', [\App\Http\Controllers\Auth\AcceptInviteController::class, 'show'])
+    ->middleware('throttle:20,60')
+    ->name('staff.invite.show');
+Route::post('/staff/invite', [\App\Http\Controllers\Auth\AcceptInviteController::class, 'store'])
+    ->middleware('throttle:10,60')
+    ->name('staff.invite.store');
+
+// ── Safeguarding review ──────────────────────────────────────────────────────
+// The lead works through open concerns and records decisions against each one.
+//
+// Kept under the /admin prefix and the admin.safeguarding.* names it already
+// had, so existing links and redirects still resolve, but gated on
+// 'safeguarding' rather than 'admin'. Admins still pass. The point is that the
+// safeguarding lead no longer has to be made a full admin, inheriting the user
+// list and the risk register, in order to read concerns about named learners.
+Route::middleware(['auth', 'verified', 'safeguarding'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/safeguarding', [\App\Http\Controllers\SafeguardingController::class, 'index'])
+        ->name('safeguarding.index');
+    Route::get('/safeguarding/{concern}', [\App\Http\Controllers\SafeguardingController::class, 'show'])
+        ->name('safeguarding.show');
+    Route::patch('/safeguarding/{concern}', [\App\Http\Controllers\SafeguardingController::class, 'update'])
+        ->name('safeguarding.update');
 });
 
 // Coach Routes

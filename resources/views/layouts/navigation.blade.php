@@ -57,6 +57,8 @@
             @auth
                 @if(auth()->user()->isAdmin())
                     <a href="{{ route('admin.dashboard') }}" class="btn btn-outline">Admin Dashboard</a>
+                @elseif(auth()->user()->isSafeguardingLead())
+                    <a href="{{ route('admin.safeguarding.index') }}" class="btn btn-outline">Safeguarding</a>
                 @elseif(auth()->user()->isCoach())
                     <a href="{{ route('coach.dashboard') }}" class="btn btn-outline">Coach Dashboard</a>
                 @elseif(auth()->user()->isMentor())
@@ -109,6 +111,8 @@
             @auth
                 @if(auth()->user()->isAdmin())
                     <a href="{{ route('admin.dashboard') }}" class="btn btn-outline">Admin Dashboard</a>
+                @elseif(auth()->user()->isSafeguardingLead())
+                    <a href="{{ route('admin.safeguarding.index') }}" class="btn btn-outline">Safeguarding</a>
                 @elseif(auth()->user()->isCoach())
                     <a href="{{ route('coach.dashboard') }}" class="btn btn-outline">Coach Dashboard</a>
                 @elseif(auth()->user()->isMentor())
