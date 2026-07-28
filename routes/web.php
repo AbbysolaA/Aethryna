@@ -65,6 +65,9 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
         ->name('volunteers.store');
     Route::patch('/volunteers/{engagement}', [\App\Http\Controllers\Admin\VolunteerAdminController::class, 'update'])
         ->name('volunteers.update');
+    // Mis-sent offers, withdrawn ones and test data. Cascades logged hours.
+    Route::delete('/volunteers/{engagement}', [\App\Http\Controllers\Admin\VolunteerAdminController::class, 'destroy'])
+        ->name('volunteers.destroy');
     // Turn an application into an offer. Separate from store() because the
     // engagement already exists; this only mints the token and sends the email.
     Route::get('/volunteers/{engagement}/extend', [\App\Http\Controllers\Admin\VolunteerAdminController::class, 'extendForm'])

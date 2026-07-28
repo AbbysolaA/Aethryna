@@ -144,6 +144,54 @@ class VolunteerAdminController extends Controller
     }
 
     /**
+     * Remove an engagement entirely.
+     *
+     * For a mis-sent offer, a withdrawn one, or test data. Logged hours go
+     * with it through the foreign key cascade, which is why the confirmation
+     * says so rather than leaving it as a surprise.
+     *
+     * Access is revoked if this was the person's last live engagement, so
+     * deleting the only reason someone held volunteer access does not leave
+     * them holding it.
+     */
+    public function destroy(VolunteerEngagement $engagement): RedirectResponse
+    {
+        $user = $engagement->user;
+        $name = $engagement->user?->name ?? $engagement->offer_name;
+
+        $engagement->delete();
+
+        $this->revokeAccessIfLastEngagement($user);
+
+        return redirect()
+            ->route('admin.volunteers.index')
+            ->with('status', 'Removed the engagement for ' . $name . '.');
+    }
+
+    /**
+     * Drop a volunteer or mentor back to learner once they hold no accepted
+     * engagements at all.
+     *
+     * Coaches and admins are left alone: their access does not come from
+     * volunteering, and demoting an admin here would lock them out of the very
+     * screen they just used.
+     */
+    private function revokeAccessIfLastEngagement(?User $user): void
+    {
+        if (! $user || ! in_array($user->role, ['volunteer', 'mentor'], true)) {
+            return;
+        }
+
+        $stillEngaged = VolunteerEngagement::where('user_id', $user->id)
+            ->whereIn('status', ['offer_extended', 'offer_accepted'])
+            ->exists();
+
+        if (! $stillEngaged) {
+            $user->forceFill(['role' => 'learner'])->save();
+        }
+    }
+
+    /**
      * Email the offer. Shared by the direct-offer and from-application paths
      * so the two cannot drift.
      *

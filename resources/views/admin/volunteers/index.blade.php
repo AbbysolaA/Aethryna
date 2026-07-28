@@ -111,6 +111,16 @@
                                             <button type="submit" class="vl-mini-btn">Save</button>
                                         </form>
                                         @endif
+
+                                        {{-- Says what goes with it. Hours cascade on
+                                             the foreign key, so this is not recoverable. --}}
+                                        <form method="POST" action="{{ route('admin.volunteers.destroy', $engagement) }}"
+                                              class="vl-remove-form"
+                                              onsubmit="return confirm('Remove the {{ addslashes($engagement->role->title) }} engagement for {{ addslashes($engagement->user?->name ?? $engagement->offer_name) }}?\n\nAny logged hours go with it and this cannot be undone.');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="vl-mini-btn vl-mini-btn-danger">Remove</button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

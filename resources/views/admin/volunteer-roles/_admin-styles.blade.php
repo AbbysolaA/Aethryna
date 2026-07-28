@@ -31,6 +31,7 @@
     .vl-mini-btn-danger:hover { background: #b91c1c; border-color: #b91c1c; color: #fff; }
 
     .vl-pagination { margin-top: 26px; }
+    .vl-remove-form { margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(0,0,0,0.09); }
 
     /* Forms on admin screens */
     .vl-form-panel { max-width: 760px; }
