@@ -31,10 +31,13 @@ class SafeguardingController extends Controller
     {
         $user = auth()->user();
 
+        // The safeguarding lead is included because concerns reach them by
+        // phone, in person and second hand as well as through this form, and
+        // the person who runs the register has to be able to put those on it.
         abort_unless(
-            $user && ($user->isMentor() || $user->isCoach() || $user->isAdmin()),
+            $user && ($user->isMentor() || $user->isCoach() || $user->isAdmin() || $user->isSafeguardingLead()),
             403,
-            'Only mentors, coaches and administrators can raise a safeguarding concern.'
+            'Only mentors, coaches, the safeguarding lead and administrators can raise a safeguarding concern.'
         );
 
         return $user;

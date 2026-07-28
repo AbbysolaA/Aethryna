@@ -77,12 +77,23 @@
                                 {{ $cohortRecord->last_activity_date ? $cohortRecord->last_activity_date->diffForHumans() : 'No activity' }}
                             </td>
                             <td class="p-6 text-right">
-                                <form action="{{ route('coach.flag', $cohortRecord->learner->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Flag this learner for safeguarding concern? This will alert admins.');">
+                                {{-- Two different things, deliberately separate. Marking
+                                     at risk is the coach's own tracking and notifies
+                                     nobody. Raising a concern writes to the register and
+                                     alerts the safeguarding lead. The flag used to claim
+                                     it did both, and did neither. --}}
+                                <form action="{{ route('coach.flag', $cohortRecord->learner->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Mark this learner as at risk on your cohort list?\n\nThis is for your own tracking. It does NOT raise a safeguarding concern and nobody is notified.');">
                                     @csrf
-                                    <button type="submit" class="text-gray-400 hover:text-red-500 transition-colors mx-2" title="Flag Concern">
+                                    <button type="submit" class="text-gray-400 hover:text-orange-500 transition-colors mx-2" title="Mark at risk (your tracking only)">
                                         <i class="fas fa-flag"></i>
                                     </button>
                                 </form>
+
+                                <a href="{{ route('safeguarding.create', $cohortRecord->learner->id) }}"
+                                   class="text-gray-400 hover:text-red-600 transition-colors mx-2 inline-block"
+                                   title="Raise a safeguarding concern">
+                                    <i class="fas fa-shield-halved"></i>
+                                </a>
                                 <button class="text-gray-400 hover:text-blue-500 transition-colors mx-2" title="Assign Team">
                                     <i class="fas fa-users-cog"></i>
                                 </button>

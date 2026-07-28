@@ -59,7 +59,17 @@ class CoachController extends Controller
                 'risk_notes' => $request->input('notes', 'Flagged by coach on ' . now()->format('Y-m-d'))
             ]);
         }
-        
-        return back()->with('success', 'Concern flagged and admin notified.');
+
+        // This marks the learner on the coach's own cohort list. It is NOT a
+        // safeguarding concern: it writes no SafeguardingConcern record, sends
+        // no notification, and never reaches the concerns register. It used to
+        // claim "admin notified", which was untrue and meant a coach could
+        // believe they had escalated something when nobody had been told.
+        //
+        // Engagement risk and safeguarding are deliberately separate. A learner
+        // falling behind is not the same as a welfare concern, and conflating
+        // them buries the second in the first. Use the safeguarding form to
+        // escalate.
+        return back()->with('success', 'Marked as at risk on your cohort list. This is not a safeguarding concern; use "Raise concern" to escalate one.');
     }
 }
