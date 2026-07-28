@@ -3,19 +3,39 @@
 {{-- Login serves everyone: learners, mentors, volunteers, coaches and admins.
      The copy used to address learners only, so a mentor bounced here from a
      gated page was told to continue their digital transformation journey. --}}
-@php $claimingOffer = session('claiming_volunteer_offer'); @endphp
+@php
+    $claimingOffer = session('claiming_volunteer_offer');
 
-@section('auth-title', $claimingOffer ? 'Sign in to accept your offer' : 'Welcome Back')
+    // Where they were headed before being bounced here. Someone sent back from
+    // /admin cannot sign up their way in, so offering registration to them is
+    // a dead end dressed as a way forward.
+    $intendedPath = parse_url((string) session('url.intended'), PHP_URL_PATH) ?: '';
+    $staffBound   = str_starts_with($intendedPath, '/admin');
+@endphp
 
-@section('auth-subtitle', $claimingOffer
-    ? 'Sign in and you will come straight back to your offer.'
-    : 'Sign in to your account to pick up where you left off')
+@section('auth-title', match (true) {
+    (bool) $claimingOffer => 'Sign in to accept your offer',
+    $staffBound           => 'Sign in to continue',
+    default               => 'Welcome Back',
+})
 
-@section('caption-title', $claimingOffer ? 'One step from joining the team' : 'Welcome back to SkillsCo-op')
+@section('auth-subtitle', match (true) {
+    (bool) $claimingOffer => 'Sign in and you will come straight back to your offer.',
+    $staffBound           => 'The admin area needs a signed-in account with the right permissions.',
+    default               => 'Sign in to your account to pick up where you left off',
+})
 
-@section('caption-text', $claimingOffer
-    ? 'You have been offered a volunteer role with SkillsCo-op. Sign in and we will take you back to the offer, where you can read the detail and accept or decline.'
-    : 'Learners pick up their pathway and track progress. Mentors and volunteers manage their commitments, hours and the people they support.')
+@section('caption-title', match (true) {
+    (bool) $claimingOffer => 'One step from joining the team',
+    $staffBound           => 'Running SkillsCo-op',
+    default               => 'Welcome back to SkillsCo-op',
+})
+
+@section('caption-text', match (true) {
+    (bool) $claimingOffer => 'You have been offered a volunteer role with SkillsCo-op. Sign in and we will take you back to the offer, where you can read the detail and accept or decline.',
+    $staffBound           => 'Cohort records, safeguarding, the risk register and the volunteer roster. Sign in and we will take you straight there.',
+    default               => 'Learners pick up their pathway and track progress. Mentors and volunteers manage their commitments, hours and the people they support.',
+})
 
 @section('auth-content')
 <!-- Session Status -->
@@ -95,7 +115,12 @@
         @if (Route::has('password.request'))
             <a href="{{ route('password.request') }}" class="text-gold text-sm font-medium hover:text-light transition-colors duration-300">Forgot your password?</a>
         @endif
-        <a href="{{ route('register') }}" class="text-gold text-sm font-medium hover:text-light transition-colors duration-300">Don't have an account?</a>
+        {{-- Admin accounts are made by an admin, never self-served, so this
+             link would send someone bounced from /admin to a cohort
+             application that cannot give them what they came for. --}}
+        @unless ($staffBound)
+            <a href="{{ route('register') }}" class="text-gold text-sm font-medium hover:text-light transition-colors duration-300">Don't have an account?</a>
+        @endunless
     </div>
 
     <button type="submit" class="btn-primary w-full py-3 px-6 bg-gradient-teal-gold text-dark-gray font-semibold rounded-full transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
