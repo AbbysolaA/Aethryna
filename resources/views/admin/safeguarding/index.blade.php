@@ -12,7 +12,14 @@
                 <h1>Concerns register</h1>
                 <p>Urgent concerns appear first, then oldest first, so nothing ages out of sight.</p>
             </div>
-            <a href="{{ route('admin.dashboard') }}" class="sgr-back">&larr; Admin dashboard</a>
+            <div class="sgr-head-actions">
+                {{-- Admins and the safeguarding lead have no learners list or
+                     cohort screen to start from, so the register is where they
+                     begin. Matters most for the lead, who takes concerns by
+                     phone and has to put them on here themselves. --}}
+                <a href="{{ route('admin.safeguarding.picker') }}" class="sgr-record">Record a concern</a>
+                <a href="{{ route('admin.dashboard') }}" class="sgr-back">&larr; Admin dashboard</a>
+            </div>
         </div>
 
         @if (session('success'))
@@ -109,6 +116,9 @@
 .sgr-head p { color: var(--ath-muted); margin: 0; font-size: 0.99rem; }
 .sgr-back { font-family: var(--font-mono); font-size: 0.82rem; color: var(--ath-muted); text-decoration: none; white-space: nowrap; }
 .sgr-back:hover { color: var(--ath-teal); }
+.sgr-head-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.sgr-record { display: inline-flex; align-items: center; padding: 11px 22px; background: var(--ath-deep); color: #fff; border-radius: 100px; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 0.9rem; text-decoration: none; white-space: nowrap; transition: background .2s; }
+.sgr-record:hover { background: var(--ath-gold); color: #fff; }
 
 .sgr-alert {
     display: flex; gap: 12px; align-items: flex-start;

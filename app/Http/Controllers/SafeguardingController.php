@@ -50,6 +50,34 @@ class SafeguardingController extends Controller
         return view('safeguarding.create', compact('learner'));
     }
 
+    /**
+     * Pick who a concern is about.
+     *
+     * Mentors reach the concern form from their learners list and coaches from
+     * their cohort, but admins and the safeguarding lead have neither of those
+     * screens. They were authorised to raise a concern with nowhere to start
+     * from, which matters most for the lead, who takes concerns by phone and
+     * second hand and has to put them on the register themselves.
+     */
+    public function picker(Request $request)
+    {
+        $search = trim((string) $request->query('q', ''));
+
+        $learners = User::whereIn('role', ['user', 'learner'])
+            ->when($search !== '', function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%')
+                      ->orWhere('email', 'like', '%' . $search . '%');
+                });
+            })
+            ->withCount('safeguardingConcerns')
+            ->orderBy('name')
+            ->paginate(15)
+            ->withQueryString();
+
+        return view('admin.safeguarding.picker', compact('learners', 'search'));
+    }
+
     public function store(Request $request, User $learner)
     {
         $raiser = $this->authoriseRaiser();

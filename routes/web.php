@@ -153,6 +153,10 @@ Route::post('/staff/invite', [\App\Http\Controllers\Auth\AcceptInviteController:
 Route::middleware(['auth', 'verified', 'safeguarding'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/safeguarding', [\App\Http\Controllers\SafeguardingController::class, 'index'])
         ->name('safeguarding.index');
+    // Choose who a concern is about. Declared before the {concern} route so
+    // "record" is not swallowed as a concern id.
+    Route::get('/safeguarding/record', [\App\Http\Controllers\SafeguardingController::class, 'picker'])
+        ->name('safeguarding.picker');
     Route::get('/safeguarding/{concern}', [\App\Http\Controllers\SafeguardingController::class, 'show'])
         ->name('safeguarding.show');
     Route::patch('/safeguarding/{concern}', [\App\Http\Controllers\SafeguardingController::class, 'update'])

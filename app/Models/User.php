@@ -202,6 +202,15 @@ class User extends Authenticatable
     }
 
     /**
+     * Safeguarding concerns raised about this person. Used to show an admin
+     * choosing who to record a concern about whether there is already history.
+     */
+    public function safeguardingConcerns()
+    {
+        return $this->hasMany(SafeguardingConcern::class, 'learner_id');
+    }
+
+    /**
      * Every volunteer stint this person has held, newest first. A person can
      * hold more than one at a time (mentor and panel facilitator, say), and
      * keeps the record of past ones after they finish.
