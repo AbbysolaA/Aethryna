@@ -7,7 +7,6 @@ use App\Models\Referral;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Validation\Rule;
 
 class ReferralController extends Controller
 {
@@ -34,9 +33,13 @@ class ReferralController extends Controller
             'referrer_email'        => ['required', 'email', 'max:160'],
             'referrer_organisation' => ['nullable', 'string', 'max:160'],
             'referrer_role'         => ['nullable', 'string', 'max:120'],
-            // Not asked for when someone is referring themselves; their own
-            // name already answers it.
-            'referred_first_name'   => [Rule::requiredIf(! $isSelf), 'nullable', 'string', 'max:80'],
+            // Built as a plain array rather than Rule::requiredIf, which
+            // stringifies to an empty rule when the condition is false and can
+            // fail to parse. Not asked for when someone is referring
+            // themselves; their own name already answers it.
+            'referred_first_name'   => $isSelf
+                ? ['nullable', 'string', 'max:80']
+                : ['required', 'string', 'max:80'],
             'referred_contact'      => ['nullable', 'string', 'max:160'],
             'cohort'                => ['nullable', 'in:neet,justice,returner,unsure'],
             'context'               => ['nullable', 'string', 'max:1000'],
