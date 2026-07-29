@@ -8,6 +8,7 @@ use App\Models\VolunteerEngagement;
 use App\Models\VolunteerRole;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
@@ -34,7 +35,18 @@ class VolunteerApplicationController extends Controller
         // Honeypot. Real users never see this field, so anything in it is a bot.
         // Answer as though it succeeded rather than showing an error, which
         // tells a scripted submitter nothing.
-        if ($request->filled('company_website')) {
+        //
+        // Logged because this branch is indistinguishable from success to
+        // whoever submitted: they are shown the thanks page and their
+        // application is discarded. The field was named company_website, which
+        // Chrome autofill populates, so genuine applicants could be silently
+        // dropped while being told it had worked.
+        if ($request->filled('vl_reference')) {
+            Log::info('Volunteer application honeypot triggered', [
+                'ip'         => $request->ip(),
+                'user_agent' => substr((string) $request->userAgent(), 0, 120),
+            ]);
+
             return redirect()->route('volunteer.apply.thanks');
         }
 

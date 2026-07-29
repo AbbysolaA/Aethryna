@@ -17,9 +17,20 @@ class ReferralController extends Controller
 
     public function store(Request $request)
     {
-        // Honeypot: hidden field real users never fill.
-        // Silent fail (redirect back) rather than a 4xx to avoid tipping bots off.
-        if ($request->filled('company_website')) {
+        // Honeypot: hidden field real users never fill. Silent redirect rather
+        // than a 4xx so a bot learns nothing from the response.
+        //
+        // Logged because when this misfires it is invisible: the person is sent
+        // back to an empty form with no error and no explanation, and there is
+        // no way to tell that from the page simply not working. The old field
+        // was named company_website, which Chrome autofill populates from a
+        // saved profile, so real submissions were being dropped.
+        if ($request->filled('rf_reference')) {
+            Log::info('Referral honeypot triggered', [
+                'ip'         => $request->ip(),
+                'user_agent' => substr((string) $request->userAgent(), 0, 120),
+            ]);
+
             return redirect()->route('referral.create');
         }
 

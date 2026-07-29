@@ -21,8 +21,16 @@
     <div class="ath-container">
         <form method="POST" action="{{ route('referral.store') }}" class="rf-form" novalidate>
             @csrf
-            {{-- Honeypot: hidden from real users; only bots fill this. --}}
-            <input type="text" name="company_website" style="position:absolute;left:-9999px;top:-9999px" tabindex="-1" autocomplete="off" aria-hidden="true">
+            {{-- Honeypot: hidden from real users; only bots fill this.
+                 Deliberately NOT named after anything a browser recognises.
+                 It used to be "company_website", which Chrome autofill treats
+                 as an organisation/URL field and populates from a saved
+                 profile, so real people were silently bounced back here as
+                 suspected bots with no message and no submission. --}}
+            <div style="position:absolute;left:-9999px;top:-9999px" aria-hidden="true">
+                <label for="rf_reference">Leave this field empty</label>
+                <input type="text" id="rf_reference" name="rf_reference" tabindex="-1" autocomplete="off" value="">
+            </div>
 
             {{-- Someone who lands here and realises the page is about them
                  should not have to go and find a different form. Server side

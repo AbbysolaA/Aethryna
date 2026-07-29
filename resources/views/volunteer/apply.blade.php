@@ -60,8 +60,16 @@
                 <form method="POST" action="{{ route('volunteer.apply.store') }}" novalidate>
                     @csrf
 
-                    {{-- Honeypot: hidden from real users; only bots fill this. --}}
-                    <input type="text" name="company_website" style="position:absolute;left:-9999px;top:-9999px" tabindex="-1" autocomplete="off" aria-hidden="true">
+                    {{-- Honeypot: hidden from real users; only bots fill this.
+                         Not named after anything a browser recognises. As
+                         "company_website" Chrome autofill would populate it
+                         from a saved profile, and because this one answers with
+                         the thanks page, a real applicant would have been told
+                         it worked while their application was thrown away. --}}
+                    <div style="position:absolute;left:-9999px;top:-9999px" aria-hidden="true">
+                        <label for="vl_reference">Leave this field empty</label>
+                        <input type="text" id="vl_reference" name="vl_reference" tabindex="-1" autocomplete="off" value="">
+                    </div>
 
                     <div class="vl-field">
                         <label for="volunteer_role_id">Which role?</label>
