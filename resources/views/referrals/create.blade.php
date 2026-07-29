@@ -24,8 +24,19 @@
             {{-- Honeypot: hidden from real users; only bots fill this. --}}
             <input type="text" name="company_website" style="position:absolute;left:-9999px;top:-9999px" tabindex="-1" autocomplete="off" aria-hidden="true">
 
+            {{-- Someone who lands here and realises the page is about them
+                 should not have to go and find a different form. Server side
+                 decides what this means, so the page still works with no JS:
+                 unticked is the ordinary third-party referral. --}}
+            <div class="rf-self-toggle">
+                <label class="rf-consent-check">
+                    <input type="checkbox" name="self_referral" value="1" id="rfSelf" {{ old('self_referral') ? 'checked' : '' }}>
+                    <span><strong>I am signing up for myself.</strong> Tick this if you are the person who would be joining, rather than referring someone else.</span>
+                </label>
+            </div>
+
             <div class="rf-block">
-                <h2>About you</h2>
+                <h2 data-rf-swap data-rf-other="About you" data-rf-self="About you">About you</h2>
                 <div class="rf-group">
                     <label for="referrer_name">Your name</label>
                     <input id="referrer_name" name="referrer_name" required value="{{ old('referrer_name') }}">
@@ -49,14 +60,16 @@
             </div>
 
             <div class="rf-block">
-                <h2>About who you are referring</h2>
-                <div class="rf-group">
+                <h2 data-rf-swap data-rf-other="About who you are referring" data-rf-self="A bit more about you">About who you are referring</h2>
+                {{-- Hidden, not removed, when it is about the caller: their own
+                     name already answers it and the controller copies it over. --}}
+                <div class="rf-group" id="rfReferredName">
                     <label for="referred_first_name">Their first name</label>
-                    <input id="referred_first_name" name="referred_first_name" required value="{{ old('referred_first_name') }}">
+                    <input id="referred_first_name" name="referred_first_name" value="{{ old('referred_first_name') }}">
                     @error('referred_first_name')<p class="rf-error">{{ $message }}</p>@enderror
                 </div>
                 <div class="rf-group">
-                    <label for="cohort">Which of these best describes them?</label>
+                    <label for="cohort" data-rf-swap data-rf-other="Which of these best describes them?" data-rf-self="Which of these best describes you?">Which of these best describes them?</label>
                     <select id="cohort" name="cohort">
                         <option value="unsure" {{ old('cohort') === 'unsure' ? 'selected' : '' }}>Not sure yet</option>
                         <option value="neet" {{ old('cohort') === 'neet' ? 'selected' : '' }}>Young person not in education, employment or training</option>
@@ -70,7 +83,12 @@
                 </div>
             </div>
 
-            <div class="rf-block rf-consent-block">
+            {{-- Two different consents, not one with the nouns changed.
+                 Confirming that somebody else agreed to be contacted is an
+                 assertion about a third party; agreeing to be contacted
+                 yourself is your own consent about your own details. Only one
+                 is ever shown, and the controller decides which was given. --}}
+            <div class="rf-block rf-consent-block" id="rfConsentOther">
                 <h2>Contacting them directly</h2>
                 <p class="rf-consent-lede">Only complete this section if you have their consent. Otherwise leave it blank and we will reach them through you.</p>
                 <div class="rf-group">
@@ -84,8 +102,14 @@
                 </label>
             </div>
 
+            <div class="rf-block rf-consent-block" id="rfConsentSelf" hidden>
+                <h2>Getting back to you</h2>
+                <p class="rf-consent-lede">We will reply to the email address you gave above. Nothing else is needed.</p>
+            </div>
+
             <button type="submit" class="rf-submit">
-                <i class="fas fa-paper-plane"></i> Send referral
+                <i class="fas fa-paper-plane"></i>
+                <span data-rf-swap data-rf-other="Send referral" data-rf-self="Send my details">Send referral</span>
             </button>
 
             <p class="rf-privacy-note">
@@ -179,12 +203,54 @@
 .rf-privacy-note a { color: var(--ath-teal); font-weight: 700; text-decoration: none; }
 .rf-privacy-note a:hover { color: var(--ath-gold); text-decoration: underline; }
 
+.rf-self-toggle { background: rgba(3,139,137,0.06); border: 1px solid rgba(3,139,137,0.18); border-radius: 14px; padding: 18px 22px; margin-bottom: 30px; }
+.rf-self-toggle .rf-consent-check { margin-top: 0; }
+.rf-self-toggle strong { color: var(--ath-deep); }
+
 @media (max-width: 640px) {
     .rf-hero { padding: 130px 0 80px; }
     .rf-form { padding: 30px 22px; margin-top: -40px; }
     .rf-row { grid-template-columns: 1fr; gap: 0; }
 }
 </style>
+@endpush
+
+@push('scripts')
+<script>
+    // Progressive enhancement only. With no JS the toggle is still submitted
+    // and the controller does the right thing; all this does is stop asking
+    // for a name we are about to copy, and swap wording that would otherwise
+    // read as though it were about somebody else.
+    (function () {
+        var toggle = document.getElementById('rfSelf');
+        if (!toggle) return;
+
+        var nameGroup    = document.getElementById('rfReferredName');
+        var nameInput    = document.getElementById('referred_first_name');
+        var consentOther = document.getElementById('rfConsentOther');
+        var consentSelf  = document.getElementById('rfConsentSelf');
+        var swaps        = document.querySelectorAll('[data-rf-swap]');
+
+        function apply() {
+            var self = toggle.checked;
+
+            if (nameGroup) nameGroup.hidden = self;
+            // Cleared rather than left populated, so a name typed before
+            // ticking cannot be submitted as somebody else's.
+            if (self && nameInput) nameInput.value = '';
+
+            if (consentOther) consentOther.hidden = self;
+            if (consentSelf) consentSelf.hidden = !self;
+
+            swaps.forEach(function (el) {
+                el.textContent = self ? el.dataset.rfSelf : el.dataset.rfOther;
+            });
+        }
+
+        toggle.addEventListener('change', apply);
+        apply();
+    })();
+</script>
 @endpush
 
 @endsection

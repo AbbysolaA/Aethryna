@@ -20,13 +20,17 @@
                 Referral
             </p>
             <h1 class="sc-h1" style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:30px; line-height:38px; font-weight:400; color:#055860;">
-                New referral received
+                {{ ($isSelfReferral ?? false) ? 'Someone signed themselves up' : 'New referral received' }}
             </h1>
             <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:18px 0 0 0;">
                 <tr><td width="64" height="4" style="width:64px; height:4px; background-color:#ee9d1d; font-size:0; line-height:0;">&nbsp;</td></tr>
             </table>
             <p style="margin:20px 0 0 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:16px; line-height:26px; color:#2b333a;">
-                Someone has been referred to Skills Co-op. Details are below.
+                @if ($isSelfReferral ?? false)
+                    Somebody has put themselves forward through the referral form. They gave their own consent to be contacted, so reply to them directly.
+                @else
+                    Someone has been referred to Skills Co-op. Details are below.
+                @endif
             </p>
         </td>
     </tr>
@@ -82,14 +86,19 @@
     <tr>
         <td class="sc-pad" style="padding:26px 32px 0 32px;">
             <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                <tr>
-                    <td style="padding-bottom:12px; border-bottom:1px solid #ece5d8;">
-                        <p style="margin:0 0 3px 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:11px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:#8a8f86;">Referrer</p>
-                        <p style="margin:0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:16px; line-height:24px; color:#2b333a;">
-                            {{ $referrerName }} &nbsp;&middot;&nbsp; <a href="mailto:{{ $referrerEmail }}" class="sc-link" style="color:#055860; text-decoration:underline;">{{ $referrerEmail }}</a>
-                        </p>
-                    </td>
-                </tr>
+                {{-- Omitted on a self-referral: the referrer and the referred
+                     person are the same, and their contact is already in the
+                     panel above. Repeating it reads as two people. --}}
+                @unless ($isSelfReferral ?? false)
+                    <tr>
+                        <td style="padding-bottom:12px; border-bottom:1px solid #ece5d8;">
+                            <p style="margin:0 0 3px 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:11px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:#8a8f86;">Referrer</p>
+                            <p style="margin:0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:16px; line-height:24px; color:#2b333a;">
+                                {{ $referrerName }} &nbsp;&middot;&nbsp; <a href="mailto:{{ $referrerEmail }}" class="sc-link" style="color:#055860; text-decoration:underline;">{{ $referrerEmail }}</a>
+                            </p>
+                        </td>
+                    </tr>
+                @endunless
                 <tr>
                     <td style="padding:12px 0; border-bottom:1px solid #ece5d8;">
                         <p style="margin:0 0 3px 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:11px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:#8a8f86;">Organisation</p>

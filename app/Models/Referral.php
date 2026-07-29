@@ -11,6 +11,7 @@ class Referral extends Model
         'referrer_email',
         'referrer_organisation',
         'referrer_role',
+        'is_self_referral',
         'referred_first_name',
         'referred_contact',
         'cohort',
@@ -21,6 +22,7 @@ class Referral extends Model
     ];
 
     protected $casts = [
+        'is_self_referral' => 'boolean',
         'consent_confirmed' => 'boolean',
     ];
 }

@@ -49,12 +49,14 @@ class ReferralReceived extends Mailable
             ?->timezone('Europe/London')
             ->format('j F Y, H:i') . ' UK time';
 
+        $isSelf = (bool) $r->is_self_referral;
+
         return [
             // Layout variables
-            'subject'      => 'New referral received — ' . $r->referred_first_name,
+            'subject'      => ($isSelf ? 'Someone signed themselves up, ' : 'New referral received, ') . $r->referred_first_name,
             'preheader'    => trim($r->referred_first_name
                 . ' · ' . ($cohortTitle ?? 'cohort unsure')
-                . ' · referred by ' . $r->referrer_name),
+                . ' · ' . ($isSelf ? 'signed up directly' : 'referred by ' . $r->referrer_name)),
             'logoUrl'      => 'https://skillscoop.org/email/skills-coop-mark.png',
             'supportEmail' => 'hello@skillscoop.org',
             'footerNote'   => 'You are receiving this because you are listed as a referral contact for Skills Co-op. Contact details are only shared with the referred person\'s consent.',
@@ -67,6 +69,7 @@ class ReferralReceived extends Mailable
             'contactHref'      => $contactHref,
             'contactIsEmail'   => $contactIsEmail,
             'contactConsented' => $consented,
+            'isSelfReferral'   => $isSelf,
             'referrerName'     => $r->referrer_name,
             'referrerEmail'    => $r->referrer_email,
             'organisation'     => $r->referrer_organisation,
