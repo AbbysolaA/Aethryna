@@ -57,7 +57,7 @@ return [
             'image'          => 'https://skillscoop.org/images/team/abisola.jpg',
             'description'    => 'Data analytics and project management professional who designed the Skills Co-op model: the curriculum, pathways, and delivery architecture that widens access to digital skills and meaningful progression for underserved communities.',
             'same_as'        => [
-                // Add the personal LinkedIn profile URL here.
+                'https://www.linkedin.com/in/abisolaareola',
             ],
         ],
     ],

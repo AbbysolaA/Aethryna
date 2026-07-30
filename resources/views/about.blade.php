@@ -111,6 +111,17 @@
                     <h3 id="abisola-areola">Abisola Areola</h3>
                     <p class="ab-member-cred">Project Manager · Data Analyst · AI &amp; Digital Transformation</p>
                     <p class="ab-member-bio">Data analytics and project management professional who designed the entire Skills Co-op model: the curriculum, pathways, and delivery architecture that widens access to digital skills and meaningful progression for underserved communities.</p>
+                    {{-- rel="me" is the bit doing the identity work: it states
+                         that the person named here and the profile linked are
+                         the same person, rather than merely a page being cited.
+                         It only counts for much if the profile links back, so
+                         the LinkedIn website field should point at skillscoop.org. --}}
+                    <a href="https://www.linkedin.com/in/abisolaareola"
+                       class="ab-member-link"
+                       rel="me noopener"
+                       target="_blank">
+                        <i class="fab fa-linkedin"></i> LinkedIn
+                    </a>
                 </div>
             </article>
             <article class="ab-member">
@@ -566,6 +577,19 @@
         font-size: 0.92rem;
         line-height: 1.7;
     }
+    .ab-member-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 16px;
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: var(--ath-gold, #ee9d1d);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+    .ab-member-link:hover { color: #fff; }
+    .ab-member-link:focus-visible { outline: 2px solid var(--ath-gold, #ee9d1d); outline-offset: 3px; border-radius: 4px; }
 
     /* ── Values ──────────────────────────────────────────────────────── */
     .ab-values { padding: 110px 0; background: var(--ath-light); }
