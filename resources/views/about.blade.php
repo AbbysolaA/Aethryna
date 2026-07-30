@@ -105,7 +105,10 @@
                 </div>
                 <div class="ab-member-body">
                     <div class="ab-member-role">Founder &amp; Executive Director</div>
-                    <h3>Abisola Areola</h3>
+                    {{-- The id gives the Person schema below something to point
+                         at, so the description is anchored to this content
+                         rather than floating free on the page. --}}
+                    <h3 id="abisola-areola">Abisola Areola</h3>
                     <p class="ab-member-cred">Project Manager · Data Analyst · AI &amp; Digital Transformation</p>
                     <p class="ab-member-bio">Data analytics and project management professional who designed the entire Skills Co-op model: the curriculum, pathways, and delivery architecture that widens access to digital skills and meaningful progression for underserved communities.</p>
                 </div>
@@ -245,6 +248,42 @@
         </div>
     </div>
 </section>
+
+{{--
+    Person schema for the people named above.
+
+    Placed here rather than site-wide because this is the page with actual
+    content about them. A claim on a page that says nothing about the person
+    is the kind of assertion search engines discount.
+
+    worksFor points at the same @id the layout declares for the organisation,
+    so the two are one entity rather than two that happen to share a name.
+--}}
+@php
+    $org = config('organisation');
+@endphp
+@foreach ($org['people'] ?? [] as $person)
+    <script type="application/ld+json">
+    {!! json_encode(array_filter([
+        '@context'      => 'https://schema.org',
+        '@type'         => 'Person',
+        '@id'           => $org['url'] . '/about#' . \Illuminate\Support\Str::slug($person['name']),
+        'name'          => $person['name'],
+        'alternateName' => $person['alternate_name'] ?? null,
+        'jobTitle'      => $person['job_title'] ?? null,
+        'description'   => $person['description'] ?? null,
+        'image'         => $person['image'] ?? null,
+        'url'           => $org['url'] . '/about#' . \Illuminate\Support\Str::slug($person['name']),
+        'sameAs'        => $person['same_as'] ?? [],
+        'worksFor'      => [
+            '@id'  => $org['url'] . '/#organisation',
+            '@type' => 'Organization',
+            'name' => $org['name'],
+            'legalName' => $org['legal_name'],
+        ],
+    ]), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+    </script>
+@endforeach
 
 @push('styles')
 <link href="https://fonts.bunny.net/css?family=ibm-plex-mono:500,600&display=swap" rel="stylesheet">
