@@ -1,9 +1,9 @@
 @extends('layouts.aethryna')
 
-@section('title', 'About Skills Co-op | Aethryna Digital Skills Co-Op CIC')
+@section('title', 'About Skills Co-op | Aethryna Digital Skills Co-op CIC')
 
-@section('meta_description', 'Skills Co-op is the public-facing brand of Aethryna Digital Skills Co-Op CIC, a UK Community Interest Company closing the digital skills gap for the people the labour market overlooks.')
-@section('og_description', 'Skills Co-op is the public-facing brand of Aethryna Digital Skills Co-Op CIC, a UK Community Interest Company closing the digital skills gap for the people the labour market overlooks.')
+@section('meta_description', 'Skills Co-op is the public-facing brand of Aethryna Digital Skills Co-op CIC, a UK Community Interest Company closing the digital skills gap for the people the labour market overlooks.')
+@section('og_description', 'Skills Co-op is the public-facing brand of Aethryna Digital Skills Co-op CIC, a UK Community Interest Company closing the digital skills gap for the people the labour market overlooks.')
 
 @section('content')
 

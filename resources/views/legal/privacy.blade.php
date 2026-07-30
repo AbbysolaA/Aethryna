@@ -17,7 +17,7 @@
             <div class="legal-meta">
                 <span><i class="fas fa-calendar"></i> Last reviewed: June 2026</span>
                 <span><i class="fas fa-tag"></i> Version 1.0</span>
-                <span><i class="fas fa-building"></i> Aethryna Digital Skills Co-Op CIC</span>
+                <span><i class="fas fa-building"></i> Aethryna Digital Skills Co-op CIC</span>
             </div>
         </div>
     </section>
