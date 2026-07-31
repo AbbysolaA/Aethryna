@@ -95,6 +95,24 @@
 
     <div class="footer-bottom">
         <div class="footer-container">
+
+            {{-- Social Enterprise UK certification.
+                 Renders nothing until the file is in place, so the footer
+                 never shows a broken image while the asset is pending.
+                 The white plate is because the mark is black artwork and the
+                 footer is near-black; it works for the reversed variant too. --}}
+            @if (file_exists(public_path('images/certified-social-enterprise.png')))
+                <div class="footer-accreditation">
+                    <a href="https://www.socialenterprise.org.uk/" target="_blank" rel="noopener"
+                       aria-label="Certified Social Enterprise, awarded by Social Enterprise UK">
+                        <img src="{{ asset('images/certified-social-enterprise.png') }}"
+                             alt="Certified Social Enterprise, Business for Good"
+                             width="96" height="96" loading="lazy">
+                    </a>
+                    <p>Certified Social Enterprise</p>
+                </div>
+            @endif
+
             <p class="company-details">
                 Skills Co-op is the trading name of <strong>Aethryna Digital Skills Co-op CIC</strong>, a Community Interest Company registered in England and Wales. Company No. <strong>17007317</strong>. Registered office: Unit A 82 James Carter Road, Mildenhall, United Kingdom IP28 7DE.
             </p>
@@ -333,6 +351,51 @@
         background: rgba(0, 0, 0, 0.2);
         padding: 2rem 0;
         border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .footer-accreditation {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.65rem;
+        margin: 0 auto 1.75rem;
+    }
+
+    .footer-accreditation a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 104px;
+        height: 104px;
+        background: #ffffff;
+        border-radius: 50%;
+        padding: 4px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .footer-accreditation a:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    .footer-accreditation a:focus-visible {
+        outline: 2px solid var(--gold, #E8B647);
+        outline-offset: 4px;
+    }
+
+    .footer-accreditation img {
+        width: 96px;
+        height: 96px;
+        border-radius: 50%;
+        display: block;
+    }
+
+    .footer-accreditation p {
+        margin: 0;
+        font-size: 0.78rem;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        color: rgba(245, 245, 245, 0.55);
     }
 
     .company-details {
