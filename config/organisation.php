@@ -22,11 +22,20 @@ return [
     'logo'       => 'https://skillscoop.org/email/skills-coop-mark.png',
     'email'      => 'hello@skillscoop.org',
 
-    'description' => 'Skills Co-op is a funded 25-week digital skills and employability programme for people the traditional pipeline was never designed for: young people not in education, employment or training, adults with lived experience of the justice system, and women returning to work after time away.',
+    // There are unrelated organisations trading on variations of this name.
+    // The legal name is unique where the trading name is not, so it carries
+    // the disambiguation and is declared everywhere the brand name appears.
+    'alternate_name' => 'Aethryna Digital Skills Co-op',
 
-    // Where the organisation operates. Helps disambiguate from similarly
-    // named organisations elsewhere.
-    'area_served' => 'United Kingdom',
+    // The organisation predates the CIC registration.
+    'founding_date' => '2025',
+
+    'description' => 'Skills Co-op, operated by Aethryna Digital Skills Co-op CIC, is a UK Certified Social Enterprise running a funded 25-week AI-native digital skills and employability programme for people the traditional pipeline was never designed for: young people not in education, employment or training, adults with lived experience of the justice system, migrants and refugees, and women returning to work after time away.',
+
+    // ISO code rather than prose: this is a field machines read, and it is one
+    // of the signals separating this organisation from same-name sites
+    // operating in other countries.
+    'area_served' => 'GB',
     'locality'    => 'Liverpool',
     'country'     => 'GB',
 
@@ -54,10 +63,22 @@ return [
             'alternate_name' => 'Abby Areola',
             'job_title'      => 'Founder & Executive Director',
             'founder'        => true,
+            // Personal site. Declared as the canonical URL for the person, so
+            // the two domains describe one entity rather than two.
+            'url'            => 'https://abisolaareola.com',
             'image'          => 'https://skillscoop.org/images/team/abisola.jpg',
             'description'    => 'Data analytics and project management professional who designed the Skills Co-op model: the curriculum, pathways, and delivery architecture that widens access to digital skills and meaningful progression for underserved communities.',
+            'knows_about'    => [
+                'AI transformation',
+                'Digital skills',
+                'Workforce development',
+                'Data analytics',
+                'Social enterprise',
+            ],
             'same_as'        => [
                 'https://www.linkedin.com/in/abisolaareola',
+                'https://abisolaareola.com',
+                'https://buildsnotes.substack.com',
             ],
         ],
     ],

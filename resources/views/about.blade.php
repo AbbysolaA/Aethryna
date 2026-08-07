@@ -284,7 +284,10 @@
         'jobTitle'      => $person['job_title'] ?? null,
         'description'   => $person['description'] ?? null,
         'image'         => $person['image'] ?? null,
-        'url'           => $org['url'] . '/about#' . \Illuminate\Support\Str::slug($person['name']),
+        // Their own site where they have one, so the canonical URL for the
+        // person is not a section of somebody else's about page.
+        'url'           => $person['url'] ?? $org['url'] . '/about#' . \Illuminate\Support\Str::slug($person['name']),
+        'knowsAbout'    => $person['knows_about'] ?? [],
         'sameAs'        => $person['same_as'] ?? [],
         'worksFor'      => [
             '@id'  => $org['url'] . '/#organisation',

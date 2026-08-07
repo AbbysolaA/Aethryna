@@ -115,6 +115,11 @@
 
             <p class="company-details">
                 Skills Co-op is the trading name of <strong>Aethryna Digital Skills Co-op CIC</strong>, a Community Interest Company registered in England and Wales. Company No. <strong>17007317</strong>. Registered office: Unit A 82 James Carter Road, Mildenhall, United Kingdom IP28 7DE.
+                {{-- Crawlable link to the founder's own site. Paired with the
+                     link back from there, it associates the person entity with
+                     the organisation entity, which is what a search for her
+                     name needs in order to surface this organisation. --}}
+                Founded by <a href="https://abisolaareola.com" rel="noopener" class="company-founder-link">Abisola Areola</a>.
             </p>
             <div class="bottom-content">
                 <p>&copy; {{ date('Y') }} Skills Co-op. All Rights Reserved.</p>
@@ -412,6 +417,17 @@
     .company-details strong {
         color: rgba(245, 245, 245, 0.8);
         font-weight: 700;
+    }
+
+    .company-founder-link {
+        color: rgba(245, 245, 245, 0.8);
+        font-weight: 700;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+    }
+
+    .company-founder-link:hover {
+        color: var(--gold, #E8B647);
     }
 
     .bottom-content {
