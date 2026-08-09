@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
+    @include('partials.gtm-head')
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -56,6 +58,7 @@
 
 </head>
 <body class="font-sans antialiased bg-dark-gray text-light">
+    @include('partials.gtm-body')
     <!-- Navigation -->
     @include('layouts.navigation')
     <div class="pt-20"></div>

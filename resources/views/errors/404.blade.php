@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    @include('partials.gtm-head')
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 - Page Not Found | Skills Co-op</title>
@@ -39,6 +41,7 @@
     </style>
 </head>
 <body class="bg-gradient-to-br py-20 from-gray-50 to-gray-100 min-h-screen flex items-center justify-center p-4">
+    @include('partials.gtm-body')
     
     <!-- Background Decorations -->
     <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">

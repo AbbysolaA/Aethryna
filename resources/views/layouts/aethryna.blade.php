@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
+    @include('partials.gtm-head')
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -75,6 +77,7 @@
     @stack('styles')
 </head>
 <body class="font-sans antialiased">
+    @include('partials.gtm-body')
     {{-- The nav carries its own <nav>; the banner landmark around it is what
          tells a parser where the page masthead ends and the content begins. --}}
     <header role="banner">
