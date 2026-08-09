@@ -31,7 +31,7 @@
                 <!-- Slide 2 -->
                 <div class="ath-hero-content" data-index="1">
                     <div class="ath-hero-badge">Bridging the Tech Gap</div>
-                    <h1 class="ath-title">Tech. Future. <span class="ath-gradient-text">Mastery.</span></h1>
+                    <h2 class="ath-title">Tech. Future. <span class="ath-gradient-text">Mastery.</span></h2>
                     <p>Practical, funded digital skills programmes for people who have been locked out of the tech industry. Four pilot tracks, AI tools embedded throughout.</p>
                     <div class="ath-hero-btns">
                         <a href="{{ route('pathway') }}" class="ath-btn ath-btn-primary">Explore our pathway</a>
@@ -42,7 +42,7 @@
                 <!-- Slide 3 -->
                 <div class="ath-hero-content" data-index="2">
                     <div class="ath-hero-badge">Mentorship & Community</div>
-                    <h1 class="ath-title">Connect. Lead. <span class="ath-gradient-text">Impact.</span></h1>
+                    <h2 class="ath-title">Connect. Lead. <span class="ath-gradient-text">Impact.</span></h2>
                     <p>One-to-one guidance from people already working in the industry, in a community built around belonging and mutual support.</p>
                     <div class="ath-hero-btns">
                         <a href="{{ route('mentors') }}" class="ath-btn ath-btn-primary">Become a mentor</a>
@@ -476,7 +476,7 @@
             width: 100%;
         }
 
-        .ath-hero-content h1, 
+        .ath-hero-content .ath-title, 
         .ath-hero-content p, 
         .ath-hero-content .ath-hero-badge, 
         .ath-hero-content .ath-hero-btns {
@@ -485,7 +485,7 @@
             transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .ath-hero-content.active h1, 
+        .ath-hero-content.active .ath-title, 
         .ath-hero-content.active p, 
         .ath-hero-content.active .ath-hero-badge, 
         .ath-hero-content.active .ath-hero-btns {
@@ -494,7 +494,7 @@
         }
 
         .ath-hero-content.active .ath-hero-badge { transition-delay: 0.1s; }
-        .ath-hero-content.active h1 { transition-delay: 0.2s; }
+        .ath-hero-content.active .ath-title { transition-delay: 0.2s; }
         .ath-hero-content.active p { transition-delay: 0.3s; }
         .ath-hero-content.active .ath-hero-btns { transition-delay: 0.4s; }
 

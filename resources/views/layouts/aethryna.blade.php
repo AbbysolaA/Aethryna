@@ -75,9 +75,13 @@
     @stack('styles')
 </head>
 <body class="font-sans antialiased">
-    @include('layouts.navigation')
+    {{-- The nav carries its own <nav>; the banner landmark around it is what
+         tells a parser where the page masthead ends and the content begins. --}}
+    <header role="banner">
+        @include('layouts.navigation')
+    </header>
 
-    <main class="py-20">
+    <main id="main-content" class="py-20">
         @yield('content')
     </main>
 
@@ -85,4 +89,5 @@
 
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     @stack('scripts')
+</body>
 </html>
