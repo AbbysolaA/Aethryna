@@ -74,4 +74,18 @@ return [
             '/acceptable-use',
         ],
     ],
+
+    /*
+     * Google Tag Manager.
+     *
+     * The container ID is not a secret — it ships in the page source — so it
+     * is defaulted here rather than required in .env, and production works
+     * straight off a deploy. Set GOOGLE_TAG_MANAGER_ID to an empty value in
+     * local or staging .env files to load no container at all and keep
+     * development traffic out of the reporting.
+     */
+    'gtm' => [
+        'id' => env('GOOGLE_TAG_MANAGER_ID', 'GTM-KD4HX7VQ'),
+    ],
+
 ];
