@@ -20,7 +20,11 @@
                 <!-- Slide 1 -->
                 <div class="ath-hero-content active" data-index="0">
                     <div class="ath-hero-badge">Building Digital Careers</div>
-                    <h1 class="ath-title">Rise. Learn. <span class="ath-gradient-text">Become.</span></h1>
+                    <h1 class="ath-title ath-title-lead">Digital and AI skills for people the labour market overlooks</h1>
+                    {{-- Tagline, not a heading: it is the brand line, and putting it
+                         in the outline would make "Rise. Learn. Become." read as the
+                         page's first section to anything parsing the structure. --}}
+                    <p class="ath-hero-tagline">Rise. Learn. <span class="ath-gradient-text">Become.</span></p>
                     <p>Widening access to digital skills and meaningful progression for underserved communities. Your next chapter starts here.</p>
                     <div class="ath-hero-btns">
                         <a href="{{ route('register') }}" class="ath-btn ath-btn-primary">Join the founding cohort</a>
@@ -544,6 +548,24 @@
             letter-spacing: -2px;
         }
 
+        /* The h1 is a sentence, not a three-word slogan like the other slides,
+           so it needs a smaller size and looser tracking to stay readable and
+           to leave room for the tagline underneath. */
+        .ath-title-lead {
+            font-size: clamp(2rem, 4.4vw, 3.4rem);
+            letter-spacing: -1px;
+            line-height: 1.15;
+            margin-bottom: 14px;
+        }
+
+        .ath-hero-tagline {
+            font-size: clamp(1.05rem, 1.8vw, 1.4rem);
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
         .ath-gradient-text {
             background: linear-gradient(135deg, var(--ath-gold), #fff);
             -webkit-background-clip: text;
@@ -961,6 +983,10 @@
             .ath-hero-btns { justify-content: center; }
             .ath-section { padding: 80px 0; }
             .ath-hero { height: auto; min-height: 600px; padding: 120px 0 80px; }
+            /* Slides are absolutely positioned, so the slider cannot size to
+               its content — it needs an explicit height, and the sentence-length
+               h1 wraps to three or four lines on a phone. */
+            .ath-hero-slider { height: 540px; }
             .ath-stats-grid { grid-template-columns: 1fr; }
         }
     </style>
