@@ -2,8 +2,8 @@
 
 @section('title', 'Skills Co-op | Digital Skills, AI Literacy, and Real Career Pathways')
 
-@section('meta_description', 'Skills Co-op builds free, AI-integrated digital skills pathways for NEET young people, justice-involved adults, and women re-entering the workforce. Four pathways, real mentorship, and routes into real work.')
-@section('og_description', 'Skills Co-op builds free, AI-integrated digital skills pathways for NEET young people, justice-involved adults, and women re-entering the workforce. Four pathways, real mentorship, and routes into real work.')
+@section('meta_description', 'Free AI-integrated digital skills and career pathways for NEET young people, justice-involved adults and women returning to work.')
+@section('og_description', 'Free AI-integrated digital skills and career pathways for NEET young people, justice-involved adults and women returning to work.')
 
 @section('content')
 
