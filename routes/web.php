@@ -313,28 +313,128 @@ Route::get('/sitemap.xml', function () {
 // have HTML/txt extensions and no meta or h1, which trips SEO scanners.
 Route::get('/robots.txt', function () {
     $host = config('services.indexnow.host', 'skillscoop.org');
+
+    // Paths excluded from every group. Declared once so the AI crawler group
+    // below cannot drift from the wildcard group.
+    $private = [
+        '# Verification files — required for Search Console but not content.',
+        'Disallow: /googlec84eff80aae46a44.html',
+        '',
+        '# Auth and account pages — not content, do not index.',
+        'Disallow: /login',
+        'Disallow: /register',
+        'Disallow: /password/',
+        'Disallow: /email/',
+        'Disallow: /dashboard',
+        'Disallow: /admin/',
+        'Disallow: /profile',
+        '',
+        '# Volunteer offer links carry a single-use token, and the',
+        '# engagement pages are private. /volunteer/apply stays crawlable.',
+        'Disallow: /volunteer/offer/',
+        'Disallow: /volunteer/engagement/',
+    ];
+
     $body  = "User-agent: *\n";
     $body .= "Allow: /\n";
     $body .= "\n";
-    $body .= "# Verification files — required for Search Console but not content.\n";
-    $body .= "Disallow: /googlec84eff80aae46a44.html\n";
+    $body .= implode("\n", $private) . "\n";
     $body .= "\n";
-    $body .= "# Auth and account pages — not content, do not index.\n";
-    $body .= "Disallow: /login\n";
-    $body .= "Disallow: /register\n";
-    $body .= "Disallow: /password/\n";
-    $body .= "Disallow: /email/\n";
-    $body .= "Disallow: /dashboard\n";
-    $body .= "Disallow: /admin/\n";
-    $body .= "Disallow: /profile\n";
-    $body .= "\n";
-    $body .= "# Volunteer offer links carry a single-use token, and the\n";
-    $body .= "# engagement pages are private. /volunteer/apply stays crawlable.\n";
-    $body .= "Disallow: /volunteer/offer/\n";
-    $body .= "Disallow: /volunteer/engagement/\n";
-    $body .= "\n";
+
+    // AI assistants and answer engines, named individually. The wildcard
+    // group above already allows them, but readiness scanners and several
+    // operators check for the agent by name and read its absence as
+    // ambiguous. See config/agents.php to add or remove one.
+    $crawlers = config('agents.crawlers', []);
+    if ($crawlers) {
+        $body .= "# AI assistants, answer engines and training crawlers are welcome\n";
+        $body .= "# on public pages. Removing a name here does not block it — add an\n";
+        $body .= "# explicit Disallow group for that agent instead.\n";
+        foreach ($crawlers as $crawler) {
+            $body .= "User-agent: {$crawler}\n";
+        }
+        $body .= "Allow: /\n";
+        $body .= "\n";
+        $body .= implode("\n", $private) . "\n";
+        $body .= "\n";
+    }
+
     $body .= "Sitemap: https://{$host}/sitemap.xml\n";
     return response($body, 200, ['Content-Type' => 'text/plain; charset=utf-8']);
+});
+
+// ── llms.txt ────────────────────────────────────────────────────────────────
+// The AI-assistant equivalent of sitemap.xml: a plain-text brief a model can
+// read in one fetch instead of crawling and guessing. Page list comes from the
+// same IndexNow config the sitemap uses; descriptions live in config/agents.php.
+Route::get('/llms.txt', function () {
+    $org   = config('organisation');
+    $host  = config('services.indexnow.host', 'skillscoop.org');
+    $base  = 'https://' . $host;
+    $pages = config('agents.pages', []);
+
+    $body  = "# {$org['name']}\n\n";
+    $body .= "> " . config('agents.summary') . "\n\n";
+
+    foreach (config('agents.facts', []) as $fact) {
+        $body .= "- {$fact}\n";
+    }
+    $body .= "\n## Pages\n\n";
+
+    foreach (config('services.indexnow.urls', []) as $path) {
+        $page  = $pages[$path] ?? [];
+        $title = $page['title'] ?? trim($path, '/') ?: 'Home';
+        $url   = $path === '/' ? $base . '/' : $base . '/' . ltrim($path, '/');
+
+        $body .= "- [{$title}]({$url})";
+        if (! empty($page['description'])) {
+            $body .= ": {$page['description']}";
+        }
+        $body .= "\n";
+    }
+
+    $body .= "\n## Contact\n\n";
+    $body .= "- Email: {$org['email']}\n";
+    $body .= "- Location: {$org['locality']}, United Kingdom\n";
+    foreach ($org['same_as'] ?? [] as $profile) {
+        $body .= "- {$profile}\n";
+    }
+
+    return response($body, 200, ['Content-Type' => 'text/plain; charset=utf-8']);
+});
+
+// ── .well-known/agents.json ─────────────────────────────────────────────────
+// Machine-readable card describing the organisation and how an agent reaches
+// a human. Served from a route rather than a file because several hosts
+// refuse to serve dot-directories out of the public root.
+Route::get('/.well-known/agents.json', function () {
+    $org  = config('organisation');
+    $host = config('services.indexnow.host', 'skillscoop.org');
+    $base = 'https://' . $host;
+
+    return response()->json([
+        'schema_version' => '1.0',
+        'name'           => $org['name'],
+        'description'    => config('agents.summary'),
+        'url'            => $base,
+        'capabilities'   => config('agents.capabilities', []),
+        'contact'        => $org['email'],
+        'documentation'  => $base . '/llms.txt',
+        'endpoints'      => [
+            'sitemap'  => $base . '/sitemap.xml',
+            'llms_txt' => $base . '/llms.txt',
+        ],
+        'organization'   => [
+            'legal_name' => $org['legal_name'],
+            'location'   => $org['locality'] . ', United Kingdom',
+            'same_as'    => $org['same_as'] ?? [],
+        ],
+        'policies'       => [
+            'privacy'        => $base . '/privacy',
+            'terms'          => $base . '/terms',
+            'acceptable_use' => $base . '/acceptable-use',
+        ],
+    ], 200, [], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 });
 
 // ── Legal pages ──────────────────────────────────────────────────────────────

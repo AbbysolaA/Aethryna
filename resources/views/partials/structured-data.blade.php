@@ -56,6 +56,33 @@
     '@id'      => $org['url'] . '/#website',
     'url'      => $org['url'],
     'name'     => $org['name'],
+    'inLanguage' => 'en-GB',
     'publisher' => ['@id' => $org['url'] . '/#organisation'],
 ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
 </script>
+
+{{--
+    The page itself.
+
+    Organization and WebSite say who publishes this site; neither says what
+    the page in front of the reader is about. An assistant summarising a
+    single page has the title and meta description in the head already, but
+    nothing tying them to the site entity — this node is that link, and it
+    reuses the same @yield values rather than restating them, so the schema
+    cannot contradict the meta tags.
+--}}
+<script type="application/ld+json">
+{!! json_encode(array_filter([
+    '@context'    => 'https://schema.org',
+    '@type'       => 'WebPage',
+    '@id'         => url()->current() . '#webpage',
+    'url'         => url()->current(),
+    'name'        => trim($__env->yieldContent('title', $org['name'])) ?: $org['name'],
+    'description' => trim($__env->yieldContent('meta_description', $org['description'])) ?: $org['description'],
+    'inLanguage'  => 'en-GB',
+    'isPartOf'    => ['@id' => $org['url'] . '/#website'],
+    'about'       => ['@id' => $org['url'] . '/#organisation'],
+]), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+</script>
+
+@stack('structured-data')
