@@ -3,6 +3,9 @@
 @section('title', 'Admin Dashboard | Skills Co-op')
 
 @section('content')
+
+@include('admin._nav')
+@include('admin._flash')
     @php
         use App\Models\User;
         use App\Models\Assessment;

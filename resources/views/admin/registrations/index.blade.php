@@ -3,6 +3,9 @@
 @section('title', 'Session registrations | Skills Co-op')
 
 @section('content')
+
+@include('admin._nav')
+@include('admin._flash')
 <section class="vl-engagement">
     <div class="ath-container">
 

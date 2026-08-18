@@ -3,6 +3,9 @@
 @section('title', 'Content Management | Skills Co-op')
 
 @section('content')
+
+@include('admin._nav')
+@include('admin._flash')
     <!-- Header -->
     <section class="bg-gradient-to-r from-teal-700 to-teal-900 text-white py-16 px-8 relative overflow-hidden">
         <div class="absolute top-0 right-0 w-96 h-96 bg-yellow-400 opacity-10 rounded-full -mr-48 -mt-48"></div>

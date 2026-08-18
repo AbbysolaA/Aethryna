@@ -3,6 +3,8 @@
 @section('title', 'Assessments | Skills Co-op')
 
 @section('content')
+
+@include('admin._nav')
 <section class="vl-engagement">
     <div class="ath-container">
 
@@ -29,6 +31,10 @@
         <div class="vl-panel vl-filter-panel">
             <form method="GET" action="{{ route('admin.assessments.index') }}" class="vl-filters">
                 <div class="vl-field">
+                    <label for="q">Search</label>
+                    <input type="search" id="q" name="q" value="{{ $search }}" placeholder="Name or email">
+                </div>
+                <div class="vl-field">
                     <label for="status">Status</label>
                     <select id="status" name="status" onchange="this.form.submit()">
                         <option value="">All</option>
@@ -36,7 +42,10 @@
                         <option value="in_progress" @selected($status === 'in_progress')>In progress</option>
                     </select>
                 </div>
-                <noscript><button type="submit" class="vl-btn vl-btn-small">Apply</button></noscript>
+                <button type="submit" class="vl-btn vl-btn-small">Search</button>
+                @if ($search !== '' || $status)
+                    <a href="{{ route('admin.assessments.index') }}" class="vl-back">Clear</a>
+                @endif
             </form>
         </div>
 

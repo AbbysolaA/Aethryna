@@ -3,6 +3,9 @@
 @section('title', 'Create Pathway | Skills Co-op')
 
 @section('content')
+
+@include('admin._nav')
+@include('admin._flash')
     <!-- Header -->
     <section class="bg-gradient-to-r from-teal-700 to-teal-900 text-white py-12 px-8">
         <div class="max-w-4xl mx-auto flex justify-between items-center">
@@ -110,6 +113,7 @@
                     <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white px-6 py-3 rounded-lg font-bold shadow-md transition-transform transform hover:-translate-y-1">
                         Create Pathway
                     </button>
+                    <a href="{{ route('admin.content') }}" class="text-gray-500 hover:text-teal-700 font-semibold px-4 py-3">Cancel</a>
                 </div>
             </form>
         </div>

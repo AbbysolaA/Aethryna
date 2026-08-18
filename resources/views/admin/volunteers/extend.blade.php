@@ -3,6 +3,9 @@
 @section('title', 'Extend an offer | Skills Co-op')
 
 @section('content')
+
+@include('admin._nav')
+@include('admin._flash')
 <section class="vl-engagement">
     <div class="ath-container">
 
@@ -79,6 +82,7 @@
                         @endif
 
                         <button type="submit" class="vl-btn vl-btn-primary vl-btn-block">Send the offer</button>
+                <a href="{{ route('admin.volunteers.index') }}" class="vl-back">Cancel</a>
                     </form>
                 </div>
             </div>

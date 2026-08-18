@@ -3,6 +3,8 @@
 @section('title', 'Onboarding pack | Skills Co-op')
 
 @section('content')
+
+@include('admin._nav')
 <section class="vl-engagement">
     <div class="ath-container">
 

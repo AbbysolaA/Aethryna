@@ -18,10 +18,21 @@ class AdminController extends Controller
     /**
      * Display the users management page.
      */
-    public function users()
+    public function users(Request $request)
     {
-        $users = \App\Models\User::latest()->paginate(10);
-        return view('admin.users.index', compact('users'));
+        // Paginated at 10 with no search, so finding one person meant paging
+        // through everyone. Matches on name or email.
+        $q = trim((string) $request->query('q'));
+
+        $users = \App\Models\User::query()
+            ->when($q !== '', fn ($query) => $query->where(fn ($w) =>
+                $w->where('name', 'like', "%{$q}%")->orWhere('email', 'like', "%{$q}%")
+            ))
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('admin.users.index', compact('users', 'q'));
     }
 
     /**
