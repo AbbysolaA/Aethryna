@@ -22,8 +22,12 @@
                 <div class="ss-next-strip">
                     <span class="ss-next-label">Next panel</span>
                     <span class="ss-next-topic">{{ $nextSession->tagline }}</span>
-                    <span class="ss-next-date"><i class="far fa-calendar"></i> {{ $nextSession->event_date->format('j F Y') }}</span>
-                    <span class="ss-next-time"><i class="far fa-clock"></i> {{ $nextSession->event_date->format('g:ia') }} UK</span>
+                    @if($nextSession->event_date)
+                        <span class="ss-next-date"><i class="far fa-calendar"></i> {{ $nextSession->event_date->format('j F Y') }}</span>
+                        <span class="ss-next-time"><i class="far fa-clock"></i> {{ $nextSession->event_date->format('g:ia') }} UK</span>
+                    @else
+                        <span class="ss-next-date"><i class="far fa-calendar"></i> Date to be announced</span>
+                    @endif
                 </div>
                 <div class="ss-hero-actions">
                     @if($nextSession->eventbrite_url)
@@ -58,12 +62,14 @@
             <div class="ss-panel-meta">
                 <div class="ss-meta-cell">
                     <span class="ss-meta-lbl">Date</span>
-                    <span class="ss-meta-val">{{ $nextSession->event_date->format('j F Y') }}</span>
+                    <span class="ss-meta-val">{{ $nextSession->event_date?->format('j F Y') ?? 'To be announced' }}</span>
                 </div>
+                @if($nextSession->event_date)
                 <div class="ss-meta-cell">
                     <span class="ss-meta-lbl">Time</span>
                     <span class="ss-meta-val">{{ $nextSession->event_date->format('g:ia') }} UK</span>
                 </div>
+                @endif
                 <div class="ss-meta-cell">
                     <span class="ss-meta-lbl">Format</span>
                     <span class="ss-meta-val">{{ $nextSession->format ?: 'Online' }}</span>
@@ -254,7 +260,7 @@
             <article class="ss-past-card">
                 <header class="ss-past-head">
                     <div>
-                        <span class="ss-past-badge">{{ $pastSession->event_date->format('F Y') }}</span>
+                        <span class="ss-past-badge">{{ $pastSession->event_date?->format('F Y') ?? 'Date not recorded' }}</span>
                         <h3>{{ $pastSession->tagline ?? $pastSession->title }}</h3>
                         <p class="ss-past-desc">{{ $pastSession->description }}</p>
                     </div>

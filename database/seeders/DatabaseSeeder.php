@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             Panel1Seeder::class,
             Panel2Seeder::class,
             Panel3Seeder::class,
+            Panel4Seeder::class,
         ]);
 
         // Seed the volunteer roles offers are extended against. Mentor is one

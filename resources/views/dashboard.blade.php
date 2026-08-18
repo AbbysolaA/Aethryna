@@ -138,7 +138,7 @@
                     <div class="db-stat-icon db-icon-teal"><i class="fas fa-microphone-alt"></i></div>
                     <h3>Next panel</h3>
                     @if ($nextPanel)
-                        <p class="db-stat-value">{{ $nextPanel->event_date->format('j M') }}</p>
+                        <p class="db-stat-value">{{ $nextPanel->event_date?->format('j M') ?? 'TBC' }}</p>
                         <p class="db-stat-note">{{ Str::limit($nextPanel->tagline, 38) }}</p>
                     @else
                         <p class="db-stat-value">TBC</p>
