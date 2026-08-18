@@ -224,9 +224,32 @@ class AssessmentIdentityTest extends TestCase
             'responses' => [1 => ['question_id' => 1, 'answer_id' => 1, 'clusters' => ['T']]],
         ]);
 
-        $this->artisan('assessments:remind', ['--dry-run' => true])->assertSuccessful();
+        // The wording matters as much as the behaviour: this is a command whose
+        // whole purpose is to be read before anything is sent, so it must not
+        // report in the past tense about things it did not do.
+        // One assertion, not two: each expectsOutputToContain consumes a line,
+        // and both phrases live on the same one.
+        $this->artisan('assessments:remind', ['--dry-run' => true])
+            ->expectsOutputToContain('Would send 1 reminder and mark 0 assessments abandoned. Nothing was sent or saved.')
+            ->assertSuccessful();
 
         Mail::assertNothingSent();
         $this->assertNull($assessment->fresh()->reminder_sent_at);
+    }
+
+    public function test_a_real_run_reports_what_it_actually_did(): void
+    {
+        Mail::fake();
+
+        Assessment::create([
+            'status' => 'in_progress', 'scores' => [],
+            'started_at' => now()->subDays(2),
+            'contact_email' => 'due@example.test',
+            'responses' => [1 => ['question_id' => 1, 'answer_id' => 1, 'clusters' => ['T']]],
+        ]);
+
+        $this->artisan('assessments:remind')
+            ->expectsOutputToContain('1 reminder sent')
+            ->assertSuccessful();
     }
 }

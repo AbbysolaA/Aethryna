@@ -69,7 +69,7 @@ class AssessmentRemindCommand extends Command
             $this->info('No unfinished assessments are due a reminder.');
         }
 
-        $sent = 0;
+        $count = 0;
         $failed = 0;
 
         foreach ($due as $assessment) {
@@ -79,7 +79,7 @@ class AssessmentRemindCommand extends Command
 
             if ($dryRun) {
                 $this->line('  would remind ' . $label);
-                $sent++;
+                $count++;
                 continue;
             }
 
@@ -92,7 +92,7 @@ class AssessmentRemindCommand extends Command
                     ->send(new AssessmentResume($assessment, 'reminder'));
 
                 $assessment->forceFill(['reminder_sent_at' => now()])->save();
-                $sent++;
+                $count++;
                 $this->line('  reminded ' . $label);
             } catch (\Throwable $e) {
                 // Left unstamped so a later run retries. A permanently bad
@@ -110,16 +110,39 @@ class AssessmentRemindCommand extends Command
         $stale = $this->markStale($dryRun);
 
         $this->newLine();
-        $this->info(sprintf(
-            '%s%d reminder%s sent, %d failed, %d marked abandoned.',
-            $dryRun ? '[dry run] ' : '',
-            $sent,
-            $sent === 1 ? '' : 's',
-            $failed,
-            $stale
-        ));
+        $this->info($this->summary($dryRun, $count, $failed, $stale));
 
         return self::SUCCESS;
+    }
+
+    /**
+     * The closing line.
+     *
+     * Kept in the past tense for a real run and the conditional for a dry one,
+     * rather than one sentence covering both. "0 reminders sent, 0 failed" after
+     * a dry run is a report of something that did not happen, and reads as
+     * though the run did nothing when in fact it was told not to do anything.
+     * A dry run also has no failure count worth printing: nothing was attempted.
+     */
+    private function summary(bool $dryRun, int $count, int $failed, int $stale): string
+    {
+        $reminders = $count . ' ' . ($count === 1 ? 'reminder' : 'reminders');
+        $abandoned = $stale . ' ' . ($stale === 1 ? 'assessment' : 'assessments');
+
+        if ($dryRun) {
+            return sprintf(
+                '[dry run] Would send %s and mark %s abandoned. Nothing was sent or saved.',
+                $reminders,
+                $abandoned
+            );
+        }
+
+        return sprintf(
+            '%s sent, %d failed, %s marked abandoned.',
+            $reminders,
+            $failed,
+            $abandoned
+        );
     }
 
     /**
