@@ -42,7 +42,7 @@ class Panel2Seeder extends Seeder
         $speakers = [
             [
                 'name'         => 'Dr Bola John FRSA',
-                'title'        => 'Founder, New Roots Strong Wings CIC',
+                'title'        => 'Founder',
                 'company'      => 'New Roots Strong Wings CIC',
                 'bio'          => 'Dr Bola John FRSA is a Medical Doctor and Social Impact Advocate, and Founder of New Roots Strong Wings CIC. Her work focuses on the human impact of algorithmic decision-making in health and social services, and on the community-level responses that keep people visible when automated systems overlook them.',
                 'photo_path'   => 'images/speakers/bola-john.jpg',
@@ -62,7 +62,7 @@ class Panel2Seeder extends Seeder
             ],
             [
                 'name'         => 'Dr Yinka Laosebikan',
-                'title'        => 'MD and CEO, Medihealth International',
+                'title'        => 'MD and CEO',
                 'company'      => 'Medihealth International',
                 'bio'          => 'Dr Yinka Laosebikan is a Healthcare Entrepreneur and Digital Health Pioneer, and MD and CEO of Medihealth International. His work sits where clinical care meets digital transformation, and he brings a practitioner view on where AI is genuinely helping patients and where it is quietly leaving them behind.',
                 'photo_path'   => 'images/speakers/yinka-laosebikan.jpg',
