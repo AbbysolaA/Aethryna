@@ -23,9 +23,20 @@ class WelcomeEmail extends Notification
         return ['mail'];
     }
 
+    /**
+     * The recipient has to be set here, on the Mailable itself.
+     *
+     * When toMail() returns a Mailable rather than a MailMessage, Laravel's
+     * mail channel calls $mailable->send() directly and never applies the
+     * notifiable's address (Illuminate\Notifications\Channels\MailChannel).
+     * Without the ->to() below the message goes out with no recipient at all,
+     * and Symfony throws "An email must have a To, Cc, or Bcc header" —
+     * uncaught, part way through registration, so the new account is created
+     * and then the request 500s in the user's face.
+     */
     public function toMail(object $notifiable): \App\Mail\WelcomeEmail
     {
-        return new \App\Mail\WelcomeEmail($notifiable);
+        return (new \App\Mail\WelcomeEmail($notifiable))->to($notifiable->email);
     }
 
     public function toArray(object $notifiable): array
