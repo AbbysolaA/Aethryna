@@ -55,7 +55,7 @@ class SessionRegisteredMail extends Mailable
             'panelTitle'       => $s->tagline,
             'panelDescription' => $s->description,
             'panelDate'        => $eventDate?->format('l, j F Y'),
-            'panelTime'        => $eventDate?->format('g:ia') . ' UK time',
+            'panelTime'        => $eventDate ? $eventDate->format('g:ia') . ' UK time' : 'To be confirmed',
             'shortDate'        => $eventDate?->format('j F'),
             'panelDuration'    => $s->duration ?: '60 minutes',
             'panelFormat'      => $s->format ?: 'Online',
