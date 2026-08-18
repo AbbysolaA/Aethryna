@@ -350,9 +350,15 @@
     .ss-register { padding: 100px 0; background: var(--ath-light); }
     .ss-register-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 0.85fr 1.15fr;
         gap: 60px;
         align-items: start;
+    }
+    /* The form runs taller than the intro beside it. Letting the intro travel
+       with it on desktop keeps the two sides reading as a pair instead of
+       leaving a column of empty space. */
+    @media (min-width: 993px) {
+        .ss-register-info { position: sticky; top: 110px; }
     }
     .ss-register-info h2 {
         font-family: 'Outfit', sans-serif;
@@ -371,17 +377,88 @@
     .ss-register-alt a { color: var(--ath-teal); font-weight: 700; text-decoration: none; }
     .ss-register-alt a:hover { color: var(--ath-gold); }
 
-    /* Registering for a panel is not applying to the programme. Readers were
-       conflating the two, so the distinction is stated rather than inferred. */
-    .ss-register-note {
-        font-size: 0.95rem;
-        color: var(--ath-muted);
-        margin-top: 14px;
-        padding-left: 14px;
-        border-left: 3px solid rgba(3, 139, 137, 0.25);
+    /* The left column was three paragraphs of prose against a tall form, which
+       left a column of dead space beside it. It now carries the same badge and
+       white-card language as the archive below, which balances the two sides
+       and keeps one visual vocabulary across the page. */
+    .ss-register-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+    .ss-register-pill {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--ath-teal);
+        background: rgba(3, 139, 137, 0.08);
+        border: 1px solid rgba(3, 139, 137, 0.15);
+        border-radius: 100px;
+        padding: 7px 16px;
     }
-    .ss-register-note a { color: var(--ath-teal); font-weight: 700; text-decoration: none; }
-    .ss-register-note a:hover { color: var(--ath-gold); }
+
+    .ss-register-cards { display: grid; gap: 14px; }
+    .ss-register-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        background: #fff;
+        border: 1px solid rgba(3, 139, 137, 0.1);
+        border-radius: 18px;
+        padding: 20px 22px;
+    }
+    .ss-register-card-icon {
+        flex-shrink: 0;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(3, 139, 137, 0.1);
+        color: var(--ath-teal);
+    }
+    .ss-register-card strong {
+        display: block;
+        color: var(--ath-deep);
+        font-size: 0.98rem;
+        margin-bottom: 4px;
+    }
+    .ss-register-card p { font-size: 0.92rem; color: var(--ath-muted); line-height: 1.6; }
+    .ss-register-card a { color: var(--ath-teal); font-weight: 700; text-decoration: none; }
+    .ss-register-card a:hover { color: var(--ath-gold); }
+    .ss-register-card-speak .ss-register-card-icon { background: rgba(238, 157, 29, 0.14); color: var(--ath-gold); }
+
+    /* Speaking is optional and separate from attending, so the checkbox and its
+       topic field sit in their own tinted block rather than loose in the field
+       stack. The label needs to out-specify `.ss-form-group label`, which sets
+       display:block and would otherwise stack the box above its own text. */
+    .ss-speaker-block {
+        background: rgba(3, 139, 137, 0.05);
+        border: 1px solid rgba(3, 139, 137, 0.12);
+        border-radius: 16px;
+        padding: 18px 20px;
+        margin-bottom: 24px;
+    }
+    .ss-form label.ss-check {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 0;
+        font-size: 0.92rem;
+        font-weight: 600;
+        line-height: 1.45;
+        cursor: pointer;
+    }
+    /* Aligned to the first line, not the centre of the block: the label wraps
+       to two lines in the narrower column and a centred box floats between
+       them. */
+    .ss-form label.ss-check input {
+        flex: 0 0 auto;
+        width: 18px;
+        height: 18px;
+        margin: 2px 0 0;
+        accent-color: var(--ath-teal);
+    }
+    .ss-speaker-topic { margin-top: 16px; margin-bottom: 0; }
 
     .ss-form {
         background: #fff;
@@ -400,9 +477,6 @@
     }
     .ss-form-opt { font-weight: 500; color: var(--ath-muted); font-size: 0.85rem; }
 
-    .ss-check { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-weight: 500 !important; }
-    .ss-check input { width: 18px; height: 18px; margin-top: 2px; flex-shrink: 0; accent-color: var(--ath-teal); }
-    .ss-check span { line-height: 1.5; }
     #speaker-topic-group textarea {
         width: 100%;
         padding: 14px 16px;
