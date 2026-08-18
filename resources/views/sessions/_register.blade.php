@@ -9,8 +9,29 @@
                 <span class="ath-sub">The Sessions</span>
                 <h2>{{ $namedPanel ?? false ? 'Register for this panel' : 'Register for the next panel' }}</h2>
                 <p>The Skills Co-op Sessions are free, online, and open to everyone. Register here and we will email you the details for the next panel.</p>
-                <p class="ss-register-note">This registers you for the panel, not for the training programme. If you are looking for the programme, <a href="{{ route('pathway') }}">start with the pathways</a>.</p>
-                <p class="ss-register-alt">Want to speak on a future panel? <a href="#wants_to_speak" data-speaker-cta>Tell us what you would cover &rarr;</a></p>
+                <div class="ss-register-pills">
+                    <span class="ss-register-pill">Free</span>
+                    <span class="ss-register-pill">Online</span>
+                    <span class="ss-register-pill">Open to everyone</span>
+                </div>
+
+                <div class="ss-register-cards">
+                    <div class="ss-register-card">
+                        <span class="ss-register-card-icon"><i class="fas fa-info-circle"></i></span>
+                        <div>
+                            <strong>This is the panel, not the programme</strong>
+                            <p>Registering here books you a seat at the session. If you came for the training, <a href="{{ route('pathway') }}">start with the pathways</a>.</p>
+                        </div>
+                    </div>
+
+                    <div class="ss-register-card ss-register-card-speak">
+                        <span class="ss-register-card-icon"><i class="fas fa-microphone-alt"></i></span>
+                        <div>
+                            <strong>Want to speak on a future panel?</strong>
+                            <p><a href="#wants_to_speak" data-speaker-cta>Tell us what you would cover &rarr;</a></p>
+                        </div>
+                    </div>
+                </div>
                 @if($session && $session->eventbrite_url)
                     <p class="ss-register-alt">Prefer Eventbrite? <a href="{{ $session->eventbrite_url }}" target="_blank" rel="noopener">Register there instead &rarr;</a></p>
                 @endif
@@ -63,16 +84,16 @@
                                 <option value="other" {{ old('referral_source') == 'other' ? 'selected' : '' }}>Other</option>
                             </select>
                         </div>
-                        <div class="ss-form-group">
+                        <div class="ss-speaker-block">
                             <label class="ss-check" for="wants_to_speak">
                                 <input type="checkbox" id="wants_to_speak" name="wants_to_speak" value="1" {{ old('wants_to_speak') ? 'checked' : '' }}>
                                 <span>I would be interested in speaking on a future panel</span>
                             </label>
-                        </div>
-                        <div class="ss-form-group" id="speaker-topic-group" @unless(old('wants_to_speak')) hidden @endunless>
-                            <label for="speaker_topic">What would you speak about? <span class="ss-form-opt">(optional)</span></label>
-                            <textarea id="speaker_topic" name="speaker_topic" rows="3" placeholder="A sentence is plenty. What do you work on, and what would you want to say?">{{ old('speaker_topic') }}</textarea>
-                            @error('speaker_topic')<span class="ss-form-error">{{ $message }}</span>@enderror
+                            <div class="ss-form-group ss-speaker-topic" id="speaker-topic-group" @unless(old('wants_to_speak')) hidden @endunless>
+                                <label for="speaker_topic">What would you speak about? <span class="ss-form-opt">(optional)</span></label>
+                                <textarea id="speaker_topic" name="speaker_topic" rows="3" placeholder="A sentence is plenty. What do you work on, and what would you want to say?">{{ old('speaker_topic') }}</textarea>
+                                @error('speaker_topic')<span class="ss-form-error">{{ $message }}</span>@enderror
+                            </div>
                         </div>
                         <button type="submit" class="ss-btn ss-btn-primary ss-btn-full">
                             <i class="fas fa-paper-plane"></i> Register for this panel
