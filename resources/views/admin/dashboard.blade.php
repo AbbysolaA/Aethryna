@@ -163,6 +163,22 @@
                     <span class="text-sm font-semibold text-slate-700 text-center">Onboarding Pack</span>
                 </a>
 
+                <a href="{{ route('admin.panels.index') }}"
+                    class="relative flex flex-col items-center p-4 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
+                    <div class="w-12 h-12 bg-teal-500 rounded-full flex items-center justify-center text-white mb-3">
+                        <i class="fas fa-microphone-alt"></i>
+                    </div>
+                    <span class="text-sm font-semibold text-teal-700 text-center">Panels</span>
+                </a>
+
+                <a href="{{ route('admin.registrations.index') }}"
+                    class="relative flex flex-col items-center p-4 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
+                    <div class="w-12 h-12 bg-teal-500 rounded-full flex items-center justify-center text-white mb-3">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <span class="text-sm font-semibold text-teal-700 text-center">Registrations</span>
+                </a>
+
                 <a href="{{ route('admin.staff.index') }}"
                     class="relative flex flex-col items-center p-4 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition-colors">
                     <div class="w-12 h-12 bg-indigo-500 rounded-full flex items-center justify-center text-white mb-3">
