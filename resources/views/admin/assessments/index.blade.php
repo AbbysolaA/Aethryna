@@ -137,7 +137,9 @@
                                         @elseif ($a->status === 'abandoned')
                                             Abandoned
                                             <span class="vl-cell-sub">
-                                                @if ($a->reminder_sent_at)
+                                                @if ($a->hasOptedOutOfReminders())
+                                                    asked us to stop
+                                                @elseif ($a->reminder_sent_at)
                                                     reminded {{ $a->reminder_sent_at->diffForHumans() }}
                                                 @else
                                                     no reminder sent
@@ -146,7 +148,9 @@
                                         @else
                                             In progress
                                             <span class="vl-cell-sub">
-                                                @if ($a->reminder_sent_at)
+                                                @if ($a->hasOptedOutOfReminders())
+                                                    asked us to stop
+                                                @elseif ($a->reminder_sent_at)
                                                     reminded {{ $a->reminder_sent_at->diffForHumans() }}
                                                 @else
                                                     not finished

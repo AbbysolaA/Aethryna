@@ -16,6 +16,7 @@ class Assessment extends Model
         'contact_name',
         'contact_email',
         'resume_token',
+        'unsubscribe_token',
         'status',
         'responses',
         'scores',
@@ -23,6 +24,7 @@ class Assessment extends Model
         'completed_at',
         'results_emailed_at',
         'reminder_sent_at',
+        'reminders_opted_out_at',
     ];
 
     protected $casts = [
@@ -32,6 +34,7 @@ class Assessment extends Model
         'completed_at' => 'datetime',
         'results_emailed_at' => 'datetime',
         'reminder_sent_at' => 'datetime',
+        'reminders_opted_out_at' => 'datetime',
     ];
 
     public function user()
@@ -126,5 +129,28 @@ class Assessment extends Model
     public function resumeUrl(): string
     {
         return route('assessment.resume', ['token' => $this->ensureResumeToken()]);
+    }
+
+    /**
+     * The opt-out secret. Distinct from the resume token on purpose — see the
+     * migration that adds it.
+     */
+    public function ensureUnsubscribeToken(): string
+    {
+        if (! $this->unsubscribe_token) {
+            $this->forceFill(['unsubscribe_token' => Str::random(48)])->save();
+        }
+
+        return $this->unsubscribe_token;
+    }
+
+    public function unsubscribeUrl(): string
+    {
+        return route('assessment.unsubscribe', ['token' => $this->ensureUnsubscribeToken()]);
+    }
+
+    public function hasOptedOutOfReminders(): bool
+    {
+        return $this->reminders_opted_out_at !== null;
     }
 }

@@ -307,6 +307,20 @@ Route::prefix('assessment')->name('assessment.')->group(function () {
     Route::get('/resume/{token}', [AssessmentController::class, 'resume'])
         ->middleware('throttle:assessment-resume')
         ->name('resume');
+
+    // Opting out of the reminder.
+    //
+    // GET only shows a page with a button; POST is what acts. That split is
+    // deliberate: mail scanners and link-preview bots follow URLs in messages,
+    // and acting on a GET would opt people out because their employer's
+    // security filter looked at the email. RFC 8058 one-click uses POST, which
+    // is the same reason.
+    Route::get('/unsubscribe/{token}', [AssessmentController::class, 'showUnsubscribe'])
+        ->middleware('throttle:assessment-resume')
+        ->name('unsubscribe');
+    Route::post('/unsubscribe/{token}', [AssessmentController::class, 'unsubscribe'])
+        ->middleware('throttle:assessment-resume')
+        ->name('unsubscribe.confirm');
 });
 
 // ── Partners ──────────────────────────────────────────────────────────────────

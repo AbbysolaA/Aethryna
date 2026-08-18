@@ -327,9 +327,11 @@ class AssessmentController extends Controller
         ]);
 
         // Minted here rather than left to the mailable to create while it
-        // renders: if the send is queued or fails, the token still has to
-        // exist, or the reminder later has no link to offer.
+        // renders: if the send is queued or fails, the tokens still have to
+        // exist, or the reminder later has no link to offer and the
+        // unsubscribe header points nowhere.
         $assessment->ensureResumeToken();
+        $assessment->ensureUnsubscribeToken();
 
         try {
             Mail::to($data['contact_email'])
@@ -399,6 +401,83 @@ class AssessmentController extends Controller
         return redirect()
             ->route('assessment.question', ['question' => $next])
             ->with('status', 'Welcome back. Your answers are where you left them.');
+    }
+
+    /**
+     * The page behind the unsubscribe link.
+     *
+     * Shows what will happen and a button that posts. Nothing is changed by
+     * looking, so a scanner that follows the link has no effect.
+     */
+    public function showUnsubscribe(string $token)
+    {
+        $assessment = Assessment::where('unsubscribe_token', $token)->first();
+
+        if (! $assessment) {
+            return redirect()
+                ->route('assessment.index')
+                ->with('error', 'That link has expired or was never valid. If you are still getting emails from us, write to hello@skillscoop.org and we will stop them.');
+        }
+
+        return view('assessment.unsubscribe', [
+            'assessment'  => $assessment,
+            'token'       => $token,
+            'alreadyDone' => $assessment->hasOptedOutOfReminders(),
+        ]);
+    }
+
+    /**
+     * Stop the reminder, and delete the unfinished assessment behind it.
+     *
+     * Deletion is the default rather than an extra step. Somebody who has just
+     * said "stop emailing me" is not asking us to keep hold of their half
+     * answers, and a stored record whose only remaining purpose is our own
+     * reporting is not a fair thing to keep on the strength of an email address
+     * they now regret giving.
+     *
+     * A completed assessment is kept — the person has their results, deleting
+     * it would take those away, and nothing is scheduled to email them anyway.
+     *
+     * Answers to both POST forms: a browser, and a provider's one-click.
+     * Providers want a 2xx and ignore the body, so the response has to work
+     * either way.
+     */
+    public function unsubscribe(Request $request, string $token)
+    {
+        $assessment = Assessment::where('unsubscribe_token', $token)->first();
+
+        if (! $assessment) {
+            // Deliberately not a 404. A provider retrying a one-click that
+            // already succeeded should not be told something went wrong, and a
+            // person clicking twice should not be alarmed.
+            return $this->unsubscribeResponse($request, 'You will not get any more emails about the assessment.');
+        }
+
+        $assessment->forceFill(['reminders_opted_out_at' => now()])->save();
+
+        if ($assessment->status !== 'completed') {
+            $assessment->results()->delete();
+            $assessment->delete();
+
+            return $this->unsubscribeResponse($request, 'Done. We have stopped the reminder and deleted the assessment you started.');
+        }
+
+        return $this->unsubscribeResponse($request, 'Done. We will not email you about this assessment again.');
+    }
+
+    private function unsubscribeResponse(Request $request, string $message)
+    {
+        // RFC 8058 has the provider post exactly "List-Unsubscribe=One-Click",
+        // which is a far better signal than content negotiation: providers send
+        // Accept: */*, and acceptsHtml() answers true to that, so a machine
+        // would otherwise be handed a full rendered page it has no use for.
+        $isOneClick = $request->input('List-Unsubscribe') === 'One-Click';
+
+        if ($isOneClick || $request->expectsJson() || ! $request->acceptsHtml()) {
+            return response($message, 200)->header('Content-Type', 'text/plain; charset=UTF-8');
+        }
+
+        return view('assessment.unsubscribed', ['message' => $message]);
     }
 
     /**
