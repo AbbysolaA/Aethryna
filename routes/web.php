@@ -109,6 +109,18 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::delete('/volunteer-documents/{document}', [\App\Http\Controllers\Admin\VolunteerDocumentAdminController::class, 'destroy'])
         ->name('volunteer-documents.destroy');
 
+    // Completed assessments: the list, one assessment in full, CSV, and a real
+    // delete. The reports table linked to href="#" and its delete button was a
+    // confirm() dialog that told you to contact support.
+    Route::get('/assessments', [\App\Http\Controllers\Admin\AssessmentAdminController::class, 'index'])
+        ->name('assessments.index');
+    Route::get('/assessments/export', [\App\Http\Controllers\Admin\AssessmentAdminController::class, 'export'])
+        ->name('assessments.export');
+    Route::get('/assessments/{assessment}', [\App\Http\Controllers\Admin\AssessmentAdminController::class, 'show'])
+        ->name('assessments.show');
+    Route::delete('/assessments/{assessment}', [\App\Http\Controllers\Admin\AssessmentAdminController::class, 'destroy'])
+        ->name('assessments.destroy');
+
     // The Sessions. Panels are database rows, so a new one goes up without a
     // deploy; before this they were seeder files. Bound by slug to match the
     // public URL.

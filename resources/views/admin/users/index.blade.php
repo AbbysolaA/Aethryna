@@ -58,9 +58,6 @@
                                     <td class="p-4 text-sm text-gray-500">{{ $user->created_at->format('M d, Y') }}</td>
                                     <td class="p-4 text-right">
                                         <div class="flex items-center justify-end">
-                                            <a href="#" class="text-gray-400 hover:text-teal-600 transition-colors mx-1" title="Edit">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
                                             <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this user?');" class="inline">
                                                 @csrf
                                                 @method('DELETE')

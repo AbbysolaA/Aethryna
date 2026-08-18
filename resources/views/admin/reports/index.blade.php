@@ -59,12 +59,17 @@
                                     <td class="p-4 text-sm text-gray-500">{{ $assessment->created_at->format('M d, Y') }}</td>
                                     <td class="p-4 text-right">
                                         <div class="flex items-center justify-end">
-                                            <a href="#" class="text-gray-400 hover:text-teal-600 transition-colors mx-1" title="View Details">
+                                            <a href="{{ route('admin.assessments.show', $assessment) }}" class="text-gray-400 hover:text-teal-600 transition-colors mx-1" title="View details">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            <button class="text-gray-400 hover:text-red-500 transition-colors mx-1" title="Delete" onclick="return confirm('To delete an assessment, please use the database management tools or contact support.');">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
+                                            <form action="{{ route('admin.assessments.destroy', $assessment) }}" method="POST" class="inline"
+                                                  onsubmit="return confirm('Delete this assessment and its results? This cannot be undone.');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-gray-400 hover:text-red-500 transition-colors mx-1" title="Delete">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
