@@ -338,14 +338,14 @@
 
                         <div class="pt-4 border-t border-gray-200">
                             <div class="grid grid-cols-2 gap-4">
-                                <a href="{{ route('assessment.index') }}"
+                                <a href="{{ route('admin.assessments.index') }}"
                                     class="bg-teal-500 text-white px-4 py-3 rounded-lg font-semibold hover:bg-teal-600 transition-colors text-center">
-                                    View Assessment
+                                    View Assessments
                                 </a>
-                                <button
-                                    class="border border-gray-300 text-gray-600 px-4 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors">
+                                <a href="{{ route('admin.assessments.export') }}"
+                                    class="border border-gray-300 text-gray-600 px-4 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors text-center">
                                     Export Data
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -409,6 +409,7 @@
                         @endphp
 
                         @forelse($recentAssessments as $assessment)
+                            <a href="{{ route('admin.assessments.show', $assessment) }}" class="block hover:bg-gray-100 rounded-lg transition-colors">
                             <div class="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
                                 <div
                                     class="w-10 h-10 bg-teal-500 rounded-full flex items-center justify-center text-white flex-shrink-0">
@@ -440,6 +441,7 @@
                                     @endif
                                 </div>
                             </div>
+                            </a>
                         @empty
                             <div class="text-center py-8">
                                 <div
