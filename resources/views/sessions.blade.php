@@ -256,7 +256,7 @@
                     <div>
                         <span class="ss-past-badge">{{ $pastSession->event_date->format('F Y') }}</span>
                         <h3>{{ $pastSession->tagline ?? $pastSession->title }}</h3>
-                        <p>{{ $pastSession->description }}</p>
+                        <p class="ss-past-desc">{{ $pastSession->description }}</p>
                     </div>
                     @if($pastSession->recording_url)
                         <a href="{{ $pastSession->recording_url }}" target="_blank" rel="noopener" class="ss-btn ss-btn-ghost ss-btn-sm">
@@ -463,6 +463,12 @@
         color: #fff;
         border-left: 4px solid var(--ath-gold);
         padding-left: 20px;
+    }
+    /* Descriptions are stored as plain text and can run to more than one
+       paragraph. pre-line keeps the blank lines the copy was written with,
+       without having to render the field as unescaped HTML. */
+    .ss-panel-desc, .ss-past-desc {
+        white-space: pre-line;
     }
     .ss-panel-desc {
         font-size: 1.1rem;
