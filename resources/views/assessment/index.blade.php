@@ -6,6 +6,16 @@
 @section('og_description', 'A two-minute assessment to match you with the Skills Co-op pilot track that fits you best: Project and Product Delivery, Data and AI Analytics, Product Design and Marketing, or Software Development.')
 
 @section('content')
+    {{-- A dead resume link lands here, so say why rather than dropping them on
+         the start page with no explanation. --}}
+    @if (session('error'))
+        <div class="ath-container" style="padding-top: 24px;">
+            <div role="alert" style="border-left: 4px solid #c0392b; background: #fdf1ef; color: #9b2c1c; padding: 14px 18px; border-radius: 12px; font-size: 0.95rem;">
+                {{ session('error') }}
+            </div>
+        </div>
+    @endif
+
     <!-- Assessment Start Hero -->
     <section class="assessment-intro">
         <div class="ath-container">

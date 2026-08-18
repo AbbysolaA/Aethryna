@@ -28,6 +28,44 @@
             <div class="vl-flash vl-flash-ok" role="status">{{ session('status') }}</div>
         @endif
 
+        {{--
+            Where people stop.
+
+            "3 completed out of 40 started" says there is a problem but not what
+            it is. Split by how far people got, it usually says which: a pile in
+            the first band is a landing page that oversells, a pile in the last
+            is a question set that outstays its welcome.
+        --}}
+        @if ($dropOff['unfinished'] > 0)
+            <div class="vl-panel as-dropoff">
+                <div class="as-dropoff-head">
+                    <h2 class="vl-sub-heading">Where people stop</h2>
+                    <p class="vl-side-note">
+                        {{-- Written as an expression rather than @if/@endif: Blade only
+                             compiles a directive at a non-word boundary, so
+                             "started@if(...)" would render verbatim on the page. --}}
+                        {{ number_format($dropOff['unfinished']) }} unfinished
+                        of {{ number_format($totalCount) }} started{{ $dropOff['totalQuestions'] ? ' · '.$dropOff['totalQuestions'].' questions in the set' : '' }}.
+                        <strong>{{ number_format($dropOff['reachable']) }}</strong> of them left an email address, so
+                        they can be reminded ({{ number_format($dropOff['reminded']) }} reminded so far).
+                    </p>
+                </div>
+
+                <div class="as-bands">
+                    @foreach ($dropOff['bands'] as $band)
+                        <div class="as-band">
+                            <div class="as-band-head">
+                                <span>{{ $band['label'] }}</span>
+                                <strong>{{ number_format($band['count']) }}</strong>
+                            </div>
+                            <div class="as-bar"><span style="width: {{ $band['percent'] }}%"></span></div>
+                            <p class="vl-cell-sub">{{ $band['percent'] }}% of unfinished · {{ $band['hint'] }}</p>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+
         <div class="vl-panel vl-filter-panel">
             <form method="GET" action="{{ route('admin.assessments.index') }}" class="vl-filters">
                 <div class="vl-field">
@@ -40,6 +78,7 @@
                         <option value="">All</option>
                         <option value="completed" @selected($status === 'completed')>Completed</option>
                         <option value="in_progress" @selected($status === 'in_progress')>In progress</option>
+                        <option value="abandoned" @selected($status === 'abandoned')>Abandoned</option>
                     </select>
                 </div>
                 <button type="submit" class="vl-btn vl-btn-small">Search</button>
@@ -77,20 +116,47 @@
                                         <span class="vl-cell-sub">{{ $a->started_at?->format('g:ia') }}</span>
                                     </td>
                                     <td>
-                                        <strong>{{ $a->user?->name ?? 'Anonymous' }}</strong>
-                                        @if ($a->user?->email)
-                                            <span class="vl-cell-sub">{{ $a->user->email }}</span>
+                                        <strong>{{ $a->recipientName() ?? 'Anonymous' }}</strong>
+                                        @if ($a->recipientEmail())
+                                            <span class="vl-cell-sub">
+                                                {{ $a->recipientEmail() }}
+                                                @unless ($a->user_id)
+                                                    · no account
+                                                @endunless
+                                            </span>
+                                        @else
+                                            <span class="vl-cell-sub">no way to contact</span>
                                         @endif
                                     </td>
                                     <td>
-                                        {{ $a->status === 'completed' ? 'Completed' : 'In progress' }}
-                                        @if ($a->status !== 'completed')
-                                            <span class="vl-cell-sub">not finished</span>
+                                        @if ($a->status === 'completed')
+                                            Completed
+                                            @if ($a->results_emailed_at)
+                                                <span class="vl-cell-sub">results emailed</span>
+                                            @endif
+                                        @elseif ($a->status === 'abandoned')
+                                            Abandoned
+                                            <span class="vl-cell-sub">
+                                                @if ($a->reminder_sent_at)
+                                                    reminded {{ $a->reminder_sent_at->diffForHumans() }}
+                                                @else
+                                                    no reminder sent
+                                                @endif
+                                            </span>
+                                        @else
+                                            In progress
+                                            <span class="vl-cell-sub">
+                                                @if ($a->reminder_sent_at)
+                                                    reminded {{ $a->reminder_sent_at->diffForHumans() }}
+                                                @else
+                                                    not finished
+                                                @endif
+                                            </span>
                                         @endif
                                     </td>
                                     <td>{{ $primary?->pathway?->name ?? '—' }}</td>
                                     <td class="vl-cell-num">{{ $primary?->score ?? '—' }}</td>
-                                    <td class="vl-cell-num">{{ is_array($a->responses) ? count($a->responses) : 0 }}</td>
+                                    <td class="vl-cell-num">{{ $a->answeredCount() }}</td>
                                     <td class="vl-cell-actions">
                                         <a href="{{ route('admin.assessments.show', $a) }}" class="vl-btn vl-btn-small">View</a>
                                         <form method="POST" action="{{ route('admin.assessments.destroy', $a) }}"
@@ -121,6 +187,16 @@
         .vl-filters { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-end; }
         .vl-filters .vl-field { margin-bottom: 0; flex: 0 1 260px; }
         .vl-pagination { margin-top: 24px; }
+
+        .as-dropoff { margin-bottom: 20px; }
+        .as-dropoff-head { margin-bottom: 22px; }
+        .vl-sub-heading { font-size: 1.1rem; font-weight: 800; color: var(--ath-deep); margin-bottom: 6px; }
+
+        .as-bands { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 22px; }
+        .as-band-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: 0.9rem; margin-bottom: 8px; }
+        .as-band-head strong { color: var(--ath-deep); font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+        .as-bar { background: rgba(3,139,137,0.1); border-radius: 100px; height: 8px; overflow: hidden; margin-bottom: 8px; }
+        .as-bar span { display: block; height: 100%; background: var(--ath-teal); border-radius: 100px; }
     </style>
 @endpush
 

@@ -1,6 +1,6 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Assessment · ' . ($assessment->user?->name ?? 'Anonymous') . ' | Skills Co-op')
+@section('title', 'Assessment · ' . ($assessment->recipientName() ?? 'Anonymous') . ' | Skills Co-op')
 
 @section('content')
 
@@ -12,18 +12,35 @@
         <header class="vl-engagement-head vl-admin-head">
             <div>
                 <span class="vl-eyebrow">Assessment</span>
-                <h1 class="vl-engagement-title">{{ $assessment->user?->name ?? 'Anonymous' }}</h1>
+                <h1 class="vl-engagement-title">{{ $assessment->recipientName() ?? 'Anonymous' }}</h1>
                 <p class="vl-side-note">
-                    @if ($assessment->user?->email)
-                        {{ $assessment->user->email }} ·
+                    @if ($assessment->recipientEmail())
+                        {{ $assessment->recipientEmail() }}
+                        @unless ($assessment->user_id)
+                            <span class="vl-cell-sub" style="display:inline;">(given on the assessment, no account)</span>
+                        @endunless
+                        ·
                     @endif
-                    {{ $assessment->status === 'completed' ? 'Completed' : 'In progress' }}
+                    {{ ['completed' => 'Completed', 'abandoned' => 'Abandoned'][$assessment->status] ?? 'In progress' }}
                     @if ($assessment->completed_at)
                         {{ $assessment->completed_at->format('j F Y, g:ia') }}
                     @elseif ($assessment->started_at)
                         started {{ $assessment->started_at->format('j F Y, g:ia') }}
                     @endif
                 </p>
+                {{-- What has already gone out, so nobody chases someone twice by hand. --}}
+                @if ($assessment->results_emailed_at || $assessment->reminder_sent_at)
+                    <p class="vl-cell-sub">
+                        @if ($assessment->results_emailed_at)
+                            Results emailed {{ $assessment->results_emailed_at->format('j M Y, g:ia') }}.
+                        @endif
+                        @if ($assessment->reminder_sent_at)
+                            Reminder sent {{ $assessment->reminder_sent_at->format('j M Y, g:ia') }}.
+                        @endif
+                    </p>
+                @elseif ($assessment->status !== 'completed' && $assessment->recipientEmail())
+                    <p class="vl-cell-sub">No reminder sent yet.</p>
+                @endif
             </div>
             <div class="vl-head-actions">
                 <a href="{{ route('admin.assessments.index') }}" class="vl-back">All assessments</a>

@@ -16,6 +16,12 @@
 
     <section class="py-16 px-8 bg-gray-50">
         <div class="max-w-4xl mx-auto">
+            @if (session('status'))
+                <div class="mb-8 rounded-xl border-l-4 border-teal-500 bg-white p-4 text-teal-800 shadow-sm" role="status">
+                    {{ session('status') }}
+                </div>
+            @endif
+
             @if ($results->count() > 0)
                 @foreach ($results as $result)
                     @php
@@ -131,6 +137,78 @@
                         </div>
                     </div>
                 @endforeach
+
+                {{--
+                    Where to send it.
+
+                    The ask sits here, after the result, rather than before the
+                    first question. At this point the person is holding
+                    something they want and the address buys them a copy of it;
+                    before question one the same field is a toll gate in front
+                    of a promise they have no reason to believe yet.
+                --}}
+                @if ($savedEmail)
+                    <div class="bg-white rounded-2xl shadow-lg p-6 mb-8 flex items-start gap-4">
+                        <div class="w-10 h-10 flex-shrink-0 bg-teal-50 text-teal-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-paper-plane"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-teal-700 mb-1">Sent to your inbox</h3>
+                            <p class="text-gray-600 text-sm">
+                                A copy of these results is on its way to <strong>{{ $savedEmail }}</strong>. If it has not
+                                turned up in a few minutes, check your spam folder or email
+                                <a href="mailto:hello@skillscoop.org" class="text-teal-600 underline">hello@skillscoop.org</a>.
+                            </p>
+                        </div>
+                    </div>
+                @else
+                    <div class="bg-white rounded-2xl shadow-lg p-8 mb-8 border-t-4 border-gold">
+                        <h3 class="text-xl font-bold text-teal-700 mb-2">Want this in writing?</h3>
+                        <p class="text-gray-600 mb-6">
+                            Tell us where to send it and we will email you this result, what the 25 weeks actually cover, and
+                            when applications open. It also means you can find your way back to this page later.
+                        </p>
+
+                        @if ($errors->any())
+                            <div class="mb-4 rounded-lg bg-red-50 border border-red-200 p-3 text-sm text-red-700">
+                                {{ $errors->first() }}
+                            </div>
+                        @endif
+
+                        <form action="{{ route('assessment.contact') }}" method="POST" class="space-y-4">
+                            @csrf
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="contact_name" class="block text-sm font-semibold text-gray-700 mb-1">
+                                        First name <span class="font-normal text-gray-400">(optional)</span>
+                                    </label>
+                                    <input type="text" id="contact_name" name="contact_name" value="{{ old('contact_name') }}"
+                                           autocomplete="given-name" maxlength="120"
+                                           class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:border-teal-500 focus:ring-teal-500">
+                                </div>
+                                <div>
+                                    <label for="contact_email" class="block text-sm font-semibold text-gray-700 mb-1">
+                                        Email address
+                                    </label>
+                                    <input type="email" id="contact_email" name="contact_email" value="{{ old('contact_email') }}"
+                                           autocomplete="email" required maxlength="255"
+                                           class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:border-teal-500 focus:ring-teal-500">
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap items-center gap-4">
+                                <button type="submit"
+                                        class="bg-teal-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-teal-600 transition-colors">
+                                    Email me my results
+                                </button>
+                                <p class="text-sm text-gray-500">
+                                    One email about your result. No marketing list.
+                                    <a href="{{ route('privacy') }}" class="underline hover:text-teal-600">How we handle your data</a>.
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                @endif
             @else
                 <div class="bg-white rounded-2xl shadow-lg p-8 text-center">
                     <div

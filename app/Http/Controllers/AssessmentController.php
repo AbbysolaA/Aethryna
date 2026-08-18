@@ -9,6 +9,8 @@ use App\Models\Question;
 use App\Models\Answer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class AssessmentController extends Controller
@@ -39,6 +41,8 @@ class AssessmentController extends Controller
         })->where('status', 'in_progress')->first();
 
         if ($existingAssessment) {
+            $this->rememberAssessment($existingAssessment);
+
             return redirect()->route('assessment.question', ['question' => 1]);
         }
 
@@ -58,7 +62,23 @@ class AssessmentController extends Controller
             ]
         ]);
 
+        $this->rememberAssessment($assessment);
+
         return redirect()->route('assessment.question', ['question' => 1]);
+    }
+
+    /**
+     * Note which assessment this visitor is holding, in the session payload.
+     *
+     * Not the same thing as assessments.session_id. Signing in regenerates the
+     * session ID, so that column stops matching at exactly the moment we want
+     * to attach the assessment to the new account — but session *data* is
+     * carried across the migration, so this key survives and the login listener
+     * can still find it.
+     */
+    private function rememberAssessment(Assessment $assessment): void
+    {
+        Session::put('assessment_id', $assessment->id);
     }
 
     /**
@@ -91,7 +111,14 @@ class AssessmentController extends Controller
         $totalQuestions = Question::active()->count();
         $progress = ($questionNumber / $totalQuestions) * 100;
 
-        return view('assessment.question', compact('question', 'questionNumber', 'totalQuestions', 'progress'));
+        // The view offers to email a link back in, so it needs to know whether
+        // we already hold an address — asking someone for it twice reads as if
+        // the first time did not register.
+        $savedEmail = $assessment->recipientEmail();
+
+        return view('assessment.question', compact(
+            'question', 'questionNumber', 'totalQuestions', 'progress', 'savedEmail'
+        ));
     }
 
     /**
@@ -147,7 +174,10 @@ class AssessmentController extends Controller
 
         $assessment->update([
             'responses' => $responses,
-            'scores' => $scores
+            'scores' => $scores,
+            // Someone answering a question is not abandoned, whatever the tidy
+            // in assessments:remind decided while they were away.
+            'status' => 'in_progress',
         ]);
 
         // Move to next question or complete assessment
@@ -189,22 +219,211 @@ class AssessmentController extends Controller
             'completed_at' => now()
         ]);
 
-        // Email the results so the learner has them outside the session.
-        // Fail-soft: a mail problem must never block seeing the results page.
-        $recipient = $assessment->user?->email ?? auth()->user()?->email;
-        if ($recipient) {
-            try {
-                \Illuminate\Support\Facades\Mail::to($recipient)
-                    ->send(new \App\Mail\AssessmentCompleted($assessment));
-            } catch (\Throwable $e) {
-                \Illuminate\Support\Facades\Log::warning('Assessment results email failed', [
-                    'assessment_id' => $assessment->id,
-                    'error'         => $e->getMessage(),
-                ]);
+        $this->emailResults($assessment);
+
+        return redirect()->route('assessment.results');
+    }
+
+    /**
+     * Send the results, if we have anywhere to send them.
+     *
+     * Called both at completion and again if an address is given afterwards on
+     * the results page, so results_emailed_at is what stops the same person
+     * being sent the same results twice.
+     *
+     * Fail-soft throughout: a mail problem must never block seeing the results.
+     */
+    private function emailResults(Assessment $assessment): bool
+    {
+        $recipient = $assessment->recipientEmail();
+
+        if (! $recipient || $assessment->results_emailed_at) {
+            return false;
+        }
+
+        try {
+            Mail::to($recipient)->send(new \App\Mail\AssessmentCompleted($assessment));
+            $assessment->forceFill(['results_emailed_at' => now()])->save();
+
+            return true;
+        } catch (\Throwable $e) {
+            Log::warning('Assessment results email failed', [
+                'assessment_id' => $assessment->id,
+                'error'         => $e->getMessage(),
+            ]);
+
+            return false;
+        }
+    }
+
+    /**
+     * Take an address on the results page and send the results there.
+     *
+     * The assessment is deliberately not gated behind an email at the start:
+     * the landing page promises it is not a school-style test, and a sign-up
+     * wall before question one turns away exactly the people this exists for.
+     * Asking here instead means the ask lands when the person already has
+     * something they want — their result — rather than before they know
+     * whether it is worth anything.
+     */
+    public function storeContact(Request $request)
+    {
+        $assessment = $this->getCurrentAssessment();
+
+        if (! $assessment || $assessment->status !== 'completed') {
+            return redirect()->route('assessment.index');
+        }
+
+        $data = $request->validate([
+            'contact_name'  => ['nullable', 'string', 'max:120'],
+            'contact_email' => ['required', 'email:rfc', 'max:255'],
+        ], [], [
+            'contact_email' => 'email address',
+        ]);
+
+        $assessment->update([
+            'contact_name'  => ($data['contact_name'] ?? null) ?: $assessment->contact_name,
+            'contact_email' => $data['contact_email'],
+        ]);
+
+        $sent = $this->emailResults($assessment);
+
+        return redirect()
+            ->route('assessment.results')
+            ->with('status', $sent
+                ? 'Sent. Your results are on their way to ' . $data['contact_email'] . '.'
+                : 'Saved. We could not send the email just now, but your results stay on this page.');
+    }
+
+    /**
+     * Save an address part way through and email a link back in.
+     *
+     * The whole point is that people stop: they are on a phone, on a bus, on
+     * someone else's laptop. Without this the only way back is the same browser
+     * before the session expires, which is why so many starts never finish.
+     */
+    public function saveProgress(Request $request)
+    {
+        $assessment = $this->getCurrentAssessment();
+
+        if (! $assessment) {
+            return redirect()->route('assessment.index');
+        }
+
+        if ($assessment->status === 'completed') {
+            return redirect()->route('assessment.results');
+        }
+
+        $data = $request->validate([
+            'contact_name'  => ['nullable', 'string', 'max:120'],
+            'contact_email' => ['required', 'email:rfc', 'max:255'],
+        ], [], [
+            'contact_email' => 'email address',
+        ]);
+
+        $assessment->update([
+            'contact_name'  => ($data['contact_name'] ?? null) ?: $assessment->contact_name,
+            'contact_email' => $data['contact_email'],
+        ]);
+
+        // Minted here rather than left to the mailable to create while it
+        // renders: if the send is queued or fails, the token still has to
+        // exist, or the reminder later has no link to offer.
+        $assessment->ensureResumeToken();
+
+        try {
+            Mail::to($data['contact_email'])
+                ->send(new \App\Mail\AssessmentResume($assessment, 'saved'));
+
+            $message = 'Sent. Check ' . $data['contact_email'] . ' for the link back in.';
+        } catch (\Throwable $e) {
+            Log::warning('Assessment resume email failed', [
+                'assessment_id' => $assessment->id,
+                'error'         => $e->getMessage(),
+            ]);
+
+            // The address is saved either way, so the reminder run can still
+            // reach them. Say what is true rather than claiming a send.
+            $message = 'Saved your place. The email did not go out just now — we will try again shortly.';
+        }
+
+        return back()->with('status', $message);
+    }
+
+    /**
+     * Open an assessment from a link in an email.
+     *
+     * The token is the only credential, so it is treated as one: unguessable,
+     * scoped to a single assessment, and it grants nothing beyond continuing
+     * that assessment. A finished one sends you to its results instead.
+     */
+    public function resume(string $token)
+    {
+        $assessment = Assessment::where('resume_token', $token)->first();
+
+        if (! $assessment) {
+            return redirect()
+                ->route('assessment.index')
+                ->with('error', 'That link has expired or was never valid. You can start again below — it takes about two minutes.');
+        }
+
+        // Bind this browser to the assessment. Any other unfinished assessment
+        // sitting on this session is detached first, otherwise getCurrentAssessment()
+        // could pick the wrong one and the link would silently do nothing. A
+        // detached row is still reachable by its own resume link.
+        Assessment::where('session_id', Session::getId())
+            ->where('id', '!=', $assessment->id)
+            ->unfinished()
+            ->update(['session_id' => null]);
+
+        $assessment->forceFill([
+            'session_id' => Session::getId(),
+            'status'     => $assessment->status === 'completed' ? 'completed' : 'in_progress',
+        ])->save();
+
+        $this->rememberAssessment($assessment);
+
+        if ($assessment->status === 'completed') {
+            return redirect()->route('assessment.results');
+        }
+
+        $next = $this->nextQuestionNumber($assessment);
+
+        // Every active question already answered but never scored — the browser
+        // died between the last answer and the redirect. Finish it rather than
+        // sending them back into a question they have already done.
+        if ($next === null) {
+            return $this->completeAssessment($assessment);
+        }
+
+        return redirect()
+            ->route('assessment.question', ['question' => $next])
+            ->with('status', 'Welcome back. Your answers are where you left them.');
+    }
+
+    /**
+     * The first active question this assessment has no answer for, or null if
+     * there is none left.
+     *
+     * Not simply count($responses) + 1: questions can be deactivated or
+     * renumbered after someone starts, and resuming onto a question they have
+     * already answered would score its clusters a second time.
+     */
+    private function nextQuestionNumber(Assessment $assessment): ?int
+    {
+        $answered = array_map('intval', array_keys($assessment->responses ?? []));
+
+        $numbers = Question::active()
+            ->orderBy('question_number')
+            ->pluck('question_number');
+
+        foreach ($numbers as $number) {
+            if (! in_array((int) $number, $answered, true)) {
+                return (int) $number;
             }
         }
 
-        return redirect()->route('assessment.results');
+        return null;
     }
 
     /**
@@ -315,7 +534,11 @@ class AssessmentController extends Controller
         $results = $assessment->results()->with('pathway')->get();
         $scores = $assessment->scores;
 
-        return view('assessment.results', compact('results', 'scores'));
+        // Drives the "where should we send this?" card: shown only when we have
+        // no address, and replaced by a confirmation once we do.
+        $savedEmail = $assessment->recipientEmail();
+
+        return view('assessment.results', compact('results', 'scores', 'savedEmail'));
     }
 
     /**
@@ -325,6 +548,23 @@ class AssessmentController extends Controller
     {
         $userId = Auth::id();
         $sessionId = Session::getId();
+
+        // The assessment this browser is actually working on, noted in the
+        // session payload when it was started or resumed.
+        //
+        // Checked before the session_id column because the two part company:
+        // signing in regenerates the session ID, so somebody who logs in half
+        // way through would otherwise look like a stranger and lose their
+        // answers. Session data survives that regeneration; the ID does not.
+        if ($assessmentId = Session::get('assessment_id')) {
+            $assessment = Assessment::find($assessmentId);
+
+            // Not if it belongs to somebody else. On a shared machine the
+            // session key can outlive the person who set it.
+            if ($assessment && (! $assessment->user_id || $assessment->user_id === $userId)) {
+                return $assessment;
+            }
+        }
 
         return Assessment::where(function($query) use ($userId, $sessionId) {
             if ($userId) {
@@ -350,6 +590,8 @@ class AssessmentController extends Controller
                 $query->where('session_id', $sessionId);
             }
         })->delete();
+
+        Session::forget('assessment_id');
 
         return redirect()->route('assessment.index');
     }

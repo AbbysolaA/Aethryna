@@ -2,6 +2,13 @@
 
 namespace App\Providers;
 
+use App\Listeners\ClaimAnonymousAssessments;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +26,38 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Registered by hand rather than left to discovery: bootstrap/app.php
+        // does not call withEvents(), so Laravel never scans app/Listeners and
+        // a listener dropped in there would silently never fire.
+        Event::listen(Login::class, ClaimAnonymousAssessments::class);
+        Event::listen(Registered::class, ClaimAnonymousAssessments::class);
+
+        $this->registerRateLimiters();
+    }
+
+    /**
+     * Named limiters for the assessment's identity endpoints.
+     *
+     * Named rather than the bare throttle:n,m form, because that form keys only
+     * on the IP and so shares one counter with every other route using the same
+     * numbers — somebody mistyping their email could find themselves blocked by
+     * a limit they hit on an unrelated page.
+     *
+     * The numbers are set to stop scripted abuse, not to punish a typo: three
+     * goes at an email address is normal, thirty is not.
+     */
+    private function registerRateLimiters(): void
+    {
+        RateLimiter::for('assessment-contact', fn (Request $request) => [
+            Limit::perMinute(10)->by($request->ip()),
+            Limit::perHour(40)->by($request->ip()),
+        ]);
+
+        // The resume token is a secret in a URL. Nobody legitimately opens more
+        // than a handful of these, so guessing should stay expensive.
+        RateLimiter::for('assessment-resume', fn (Request $request) => [
+            Limit::perMinute(20)->by($request->ip()),
+            Limit::perHour(60)->by($request->ip()),
+        ]);
     }
 }
