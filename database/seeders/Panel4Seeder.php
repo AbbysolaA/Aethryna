@@ -35,7 +35,7 @@ class Panel4Seeder extends Seeder
         $panel4Attributes = [
             'title'           => 'The Skills Co-op Sessions: Panel 4',
             'tagline'         => 'Panel 4 · Coming soon',
-            'description'     => 'The next Skills Co-op Sessions panel is being planned. Topic, date and speakers announced soon. Reserve your spot below and you will be first to hear when the details land.',
+            'description'     => 'The next Skills Co-op Sessions panel is being planned. Topic, date and speakers announced soon. Register below and we will email you as soon as the details land.',
             'event_date'      => null,   // set once the date is confirmed
             'duration'        => '60 minutes',
             'format'          => 'Online',
