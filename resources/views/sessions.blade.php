@@ -30,12 +30,10 @@
                     @endif
                 </div>
                 <div class="ss-hero-actions">
-                    @if($nextSession->eventbrite_url)
-                        <a href="{{ $nextSession->eventbrite_url }}" target="_blank" rel="noopener" class="ss-btn ss-btn-primary">
-                            <i class="fas fa-ticket-alt"></i> Register on Eventbrite
-                        </a>
+                    @if($nextSession->event_date)
+                        <a href="#register-section" class="ss-btn ss-btn-primary"><i class="fas fa-user-plus"></i> Register for this panel</a>
                     @else
-                        <a href="#register-section" class="ss-btn ss-btn-primary"><i class="fas fa-user-plus"></i> Reserve your spot</a>
+                        <a href="#register-section" class="ss-btn ss-btn-primary"><i class="fas fa-envelope"></i> Tell me when it is announced</a>
                     @endif
                     @if($hasSpeakers)
                         <a href="#speakers" class="ss-btn ss-btn-ghost">Meet the speakers</a>
@@ -157,9 +155,10 @@
     <div class="ath-container">
         <div class="ss-register-grid">
             <div class="ss-register-info">
-                <span class="ath-sub">Get Involved</span>
-                <h2>Reserve your spot</h2>
-                <p>Our sessions are free and open to everyone. Whether you are a learner, mentor, partner, or just curious, you are welcome.</p>
+                <span class="ath-sub">The Sessions</span>
+                <h2>Register for the next panel</h2>
+                <p>The Skills Co-op Sessions are free, online, and open to everyone. Register here and we will email you the details for the next panel.</p>
+                <p class="ss-register-note">This registers you for the panel, not for the training programme. If you are looking for the programme, <a href="{{ route('pathway') }}">start with the pathways</a>.</p>
                 @if($nextSession && $nextSession->eventbrite_url)
                     <p class="ss-register-alt">Prefer Eventbrite? <a href="{{ $nextSession->eventbrite_url }}" target="_blank" rel="noopener">Register there instead &rarr;</a></p>
                 @endif
@@ -190,10 +189,10 @@
                             <label for="interest_type">I am joining as a</label>
                             <select id="interest_type" name="interest_type" required>
                                 <option value="">Select one</option>
-                                <option value="learner" {{ old('interest_type') == 'learner' ? 'selected' : '' }}>Learner: I want to develop digital skills</option>
-                                <option value="mentor" {{ old('interest_type') == 'mentor' ? 'selected' : '' }}>Mentor: I want to guide others</option>
-                                <option value="partner" {{ old('interest_type') == 'partner' ? 'selected' : '' }}>Partner: I represent an organisation</option>
-                                <option value="curious" {{ old('interest_type') == 'curious' ? 'selected' : '' }}>Curious: I want to learn more</option>
+                                <option value="learner" {{ old('interest_type') == 'learner' ? 'selected' : '' }}>A learner or career changer</option>
+                                <option value="mentor" {{ old('interest_type') == 'mentor' ? 'selected' : '' }}>A mentor or industry professional</option>
+                                <option value="partner" {{ old('interest_type') == 'partner' ? 'selected' : '' }}>A partner or employer</option>
+                                <option value="curious" {{ old('interest_type') == 'curious' ? 'selected' : '' }}>Just curious</option>
                             </select>
                             @error('interest_type')<span class="ss-form-error">{{ $message }}</span>@enderror
                         </div>
@@ -210,7 +209,7 @@
                             </select>
                         </div>
                         <button type="submit" class="ss-btn ss-btn-primary ss-btn-full">
-                            <i class="fas fa-paper-plane"></i> Reserve my spot
+                            <i class="fas fa-paper-plane"></i> Register for this panel
                         </button>
                     </form>
                 @endif
@@ -688,6 +687,18 @@
     .ss-register-alt { font-size: 0.95rem; color: var(--ath-muted); }
     .ss-register-alt a { color: var(--ath-teal); font-weight: 700; text-decoration: none; }
     .ss-register-alt a:hover { color: var(--ath-gold); }
+
+    /* Registering for a panel is not applying to the programme. Readers were
+       conflating the two, so the distinction is stated rather than inferred. */
+    .ss-register-note {
+        font-size: 0.95rem;
+        color: var(--ath-muted);
+        margin-top: 14px;
+        padding-left: 14px;
+        border-left: 3px solid rgba(3, 139, 137, 0.25);
+    }
+    .ss-register-note a { color: var(--ath-teal); font-weight: 700; text-decoration: none; }
+    .ss-register-note a:hover { color: var(--ath-gold); }
 
     .ss-form {
         background: #fff;
