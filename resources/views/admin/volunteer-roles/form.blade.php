@@ -5,6 +5,9 @@
 @section('title', ($editing ? 'Edit position' : 'Post a position') . ' | Skills Co-op')
 
 @section('content')
+
+@include('admin._nav')
+@include('admin._flash')
 <section class="vl-engagement">
     <div class="ath-container">
 
@@ -83,6 +86,7 @@
                 </div>
 
                 <button type="submit" class="vl-btn vl-btn-primary">{{ $editing ? 'Save changes' : 'Post the position' }}</button>
+                <a href="{{ route('admin.volunteer-roles.index') }}" class="vl-back">Cancel</a>
             </form>
         </div>
 

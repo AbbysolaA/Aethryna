@@ -5,6 +5,9 @@
 @section('title', ($isEdit ? 'Edit R-' . $risk->id : 'Add a risk') . ' | Skills Co-op')
 
 @section('content')
+
+@include('admin._nav')
+@include('admin._flash')
 <section class="rkf-wrap">
     <div class="rkf-container">
 

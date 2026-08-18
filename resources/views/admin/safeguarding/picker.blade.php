@@ -3,6 +3,9 @@
 @section('title', 'Record a concern | Skills Co-op')
 
 @section('content')
+
+@include('admin._nav')
+@include('admin._flash')
 <section class="sgr-wrap">
     <div class="sgr-container">
 

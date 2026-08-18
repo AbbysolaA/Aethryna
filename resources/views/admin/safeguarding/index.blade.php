@@ -3,6 +3,8 @@
 @section('title', 'Safeguarding concerns | Skills Co-op')
 
 @section('content')
+
+@include('admin._nav')
 <section class="sgr-wrap">
     <div class="sgr-container">
 

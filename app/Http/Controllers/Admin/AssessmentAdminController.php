@@ -25,14 +25,19 @@ class AssessmentAdminController extends Controller
     public function index(Request $request): View
     {
         $status = $request->query('status');
+        $search = trim((string) $request->query('q'));
 
         return view('admin.assessments.index', [
             'assessments' => Assessment::with(['user', 'results.pathway'])
                 ->when($status, fn ($q) => $q->where('status', $status))
+                ->when($search !== '', fn ($q) => $q->whereHas('user', fn ($u) =>
+                    $u->where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%")
+                ))
                 ->latest()
                 ->paginate(20)
                 ->withQueryString(),
             'status'          => $status,
+            'search'          => $search,
             'totalCount'      => Assessment::count(),
             'completedCount'  => Assessment::where('status', 'completed')->count(),
         ]);
@@ -58,9 +63,15 @@ class AssessmentAdminController extends Controller
     public function export(Request $request): StreamedResponse
     {
         $status = $request->query('status');
+        $search = trim((string) $request->query('q'));
 
+        // Same filters as the screen: a download that quietly ignored the
+        // search would not match what the person was looking at.
         $query = Assessment::with(['user', 'results.pathway'])
             ->when($status, fn ($q) => $q->where('status', $status))
+            ->when($search !== '', fn ($q) => $q->whereHas('user', fn ($u) =>
+                $u->where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%")
+            ))
             ->oldest();
 
         $filename = 'skillscoop-assessments-' . ($status ?: 'all') . '.csv';

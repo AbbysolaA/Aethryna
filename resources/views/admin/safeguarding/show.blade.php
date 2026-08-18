@@ -3,6 +3,8 @@
 @section('title', 'SC-' . $concern->id . ' | Safeguarding | Skills Co-op')
 
 @section('content')
+
+@include('admin._nav')
 <section class="sgd-wrap">
     <div class="sgd-container">
 

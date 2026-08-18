@@ -3,6 +3,8 @@
 @section('title', 'Risk register | Skills Co-op')
 
 @section('content')
+
+@include('admin._nav')
 <section class="rk-wrap">
     <div class="rk-container">
 

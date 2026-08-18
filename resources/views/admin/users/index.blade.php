@@ -3,6 +3,9 @@
 @section('title', 'User Management | Skills Co-op')
 
 @section('content')
+
+@include('admin._nav')
+@include('admin._flash')
     <!-- Header -->
     <section class="bg-gradient-to-r from-teal-700 to-teal-900 text-white py-16 px-8 relative overflow-hidden">
         <div class="absolute top-0 right-0 w-96 h-96 bg-yellow-400 opacity-10 rounded-full -mr-48 -mt-48"></div>
@@ -21,9 +24,22 @@
     <section class="bg-gray-50 py-12 px-8">
         <div class="max-w-6xl mx-auto">
             <div class="bg-white rounded-2xl shadow-md overflow-hidden">
-                <div class="p-6 border-b border-gray-100 flex justify-between items-center">
+                <div class="p-6 border-b border-gray-100 flex flex-wrap justify-between items-center gap-4">
                     <h3 class="text-xl font-bold text-teal-700">Registered Users</h3>
-                    <span class="bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1 rounded-full">Total: {{ $users->total() }}</span>
+                    <div class="flex items-center gap-3">
+                        <form method="GET" action="{{ route('admin.users') }}" class="flex items-center gap-2">
+                            <label for="q" class="sr-only">Search users</label>
+                            <input type="search" id="q" name="q" value="{{ $q }}" placeholder="Name or email"
+                                   class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                            <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-lg text-sm font-semibold">Search</button>
+                            @if ($q !== '')
+                                <a href="{{ route('admin.users') }}" class="text-sm text-gray-500 hover:text-teal-700">Clear</a>
+                            @endif
+                        </form>
+                        <span class="bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">
+                            {{ $q !== '' ? 'Found' : 'Total' }}: {{ $users->total() }}
+                        </span>
+                    </div>
                 </div>
                 
                 <div class="overflow-x-auto">
