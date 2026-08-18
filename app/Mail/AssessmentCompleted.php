@@ -29,8 +29,10 @@ class AssessmentCompleted extends Mailable
     {
         $assessment = $this->assessment->loadMissing('results.pathway', 'user');
 
-        $name      = $assessment->user?->name ?? '';
-        $firstName = trim(explode(' ', trim($name))[0]) ?: 'there';
+        // recipientFirstName() falls back to the name given on the assessment
+        // itself, so anonymous completers are greeted by name rather than as
+        // "there" — most people who take this have no account.
+        $firstName = $assessment->recipientFirstName();
 
         $primary   = $assessment->results->firstWhere('result_type', 'primary');
         $secondary = $assessment->results->firstWhere('result_type', 'secondary');

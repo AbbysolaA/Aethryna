@@ -19,6 +19,12 @@
             </div>
         </div>
 
+        @if (session('status'))
+            <div class="mb-6 rounded-xl border-l-4 border-teal-500 bg-white p-4 text-teal-800 shadow-sm" role="status">
+                {{ session('status') }}
+            </div>
+        @endif
+
         <!-- Question Card -->
         <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
             <div class="mb-6">
@@ -58,6 +64,81 @@
                     </button>
                 </div>
             </form>
+        </div>
+
+        {{--
+            Finish later.
+
+            Deliberately a closed disclosure rather than a form on the page: the
+            job in front of someone here is answering the question, and an email
+            field sitting open next to it reads as a wall. It opens only for the
+            people who need it — the ones on a phone, on a bus, on a borrowed
+            laptop, who would otherwise lose the lot when the session expires.
+        --}}
+        <div class="mb-8">
+            @if ($savedEmail)
+                <div class="bg-white border border-teal-100 rounded-xl p-4 text-sm text-gray-600 flex items-start gap-3">
+                    <i class="fas fa-check-circle text-teal-500 mt-0.5"></i>
+                    <span>
+                        Your place is saved. We sent a link back into this assessment to
+                        <strong class="text-teal-700">{{ $savedEmail }}</strong>, so you can stop here and pick it up whenever.
+                    </span>
+                </div>
+            @else
+                <details class="bg-white border border-gray-200 rounded-xl overflow-hidden group" {{ $errors->any() ? 'open' : '' }}>
+                    <summary class="cursor-pointer list-none p-4 text-sm font-semibold text-teal-700 hover:bg-teal-50 transition-colors flex items-center gap-2">
+                        <i class="fas fa-bookmark text-teal-500"></i>
+                        Need to stop? Email me a link to finish later
+                    </summary>
+                    <div class="border-t border-gray-100 p-4">
+                        <p class="text-sm text-gray-600 mb-4">
+                            Your answers are saved as you go. Give us an address and we will send you a link straight back to
+                            this question, so nothing is lost if you close the tab.
+                        </p>
+
+                        @if ($errors->any())
+                            <div class="mb-4 rounded-lg bg-red-50 border border-red-200 p-3 text-sm text-red-700">
+                                {{ $errors->first() }}
+                            </div>
+                        @endif
+
+                        <form action="{{ route('assessment.save-progress') }}" method="POST" class="space-y-3">
+                            @csrf
+                            <div class="grid sm:grid-cols-2 gap-3">
+                                <div>
+                                    <label for="contact_name" class="block text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1">
+                                        First name <span class="normal-case font-normal tracking-normal text-gray-400">(optional)</span>
+                                    </label>
+                                    <input type="text" id="contact_name" name="contact_name" value="{{ old('contact_name') }}"
+                                           autocomplete="given-name" maxlength="120"
+                                           class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:border-teal-500 focus:ring-teal-500">
+                                </div>
+                                <div>
+                                    <label for="contact_email" class="block text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1">
+                                        Email address
+                                    </label>
+                                    <input type="email" id="contact_email" name="contact_email" value="{{ old('contact_email') }}"
+                                           autocomplete="email" required maxlength="255"
+                                           class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:border-teal-500 focus:ring-teal-500">
+                                </div>
+                            </div>
+
+                            <button type="submit"
+                                    class="bg-teal-500 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-teal-600 transition-colors">
+                                Send me the link
+                            </button>
+
+                            {{-- Said at the point of collection, because the reminder is
+                                 only foreseeable if we say so before we take the address. --}}
+                            <p class="text-xs text-gray-500 leading-relaxed">
+                                We use this to send you the link back in, your results when you finish, and one reminder if you
+                                do not. Nothing else, and no marketing list. See our
+                                <a href="{{ route('privacy') }}" class="underline hover:text-teal-600">privacy policy</a>.
+                            </p>
+                        </form>
+                    </div>
+                </details>
+            @endif
         </div>
 
         <!-- Instructions -->

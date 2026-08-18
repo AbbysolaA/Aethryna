@@ -290,6 +290,23 @@ Route::prefix('assessment')->name('assessment.')->group(function () {
     Route::post('/question/{question}/answer', [AssessmentController::class, 'answer'])->name('answer');
     Route::get('/results', [AssessmentController::class, 'results'])->name('results');
     Route::post('/reset', [AssessmentController::class, 'reset'])->name('reset');
+
+    // Identity, captured from the assessment rather than demanded before it.
+    // save-progress emails a way back in part way through; contact takes an
+    // address at the end so the results can be sent somewhere.
+    Route::post('/save-progress', [AssessmentController::class, 'saveProgress'])
+        ->middleware('throttle:assessment-contact')
+        ->name('save-progress');
+    Route::post('/contact', [AssessmentController::class, 'storeContact'])
+        ->middleware('throttle:assessment-contact')
+        ->name('contact');
+
+    // The token is the credential. Throttled because it is guessable only by
+    // brute force, and brute force should not be cheap. Limiters are defined in
+    // AppServiceProvider.
+    Route::get('/resume/{token}', [AssessmentController::class, 'resume'])
+        ->middleware('throttle:assessment-resume')
+        ->name('resume');
 });
 
 // ── Partners ──────────────────────────────────────────────────────────────────

@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
@@ -51,7 +52,17 @@ class RegisteredUserController extends Controller
         // as well would tell a new mentor to go and take the pathway
         // assessment, which is not their journey.
         if (! $request->session()->pull('claiming_volunteer_offer', false)) {
-            $user->notify(new WelcomeEmail());
+            // Fail-soft. The account already exists by this point, so a mail
+            // problem must not take the request down with it and leave someone
+            // staring at a 500 after successfully signing up.
+            try {
+                $user->notify(new WelcomeEmail());
+            } catch (\Throwable $e) {
+                Log::warning('Welcome email failed', [
+                    'user_id' => $user->id,
+                    'error'   => $e->getMessage(),
+                ]);
+            }
         }
 
         // intended() rather than a bare redirect so a user who arrived from a

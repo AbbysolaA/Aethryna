@@ -17,6 +17,12 @@ return new class extends Migration
 {
     public function up(): void
     {
+        if (! $this->usesMysqlEnum()) {
+            // Off MySQL the column is already a plain string — see
+            // 2026_01_27_132525 — so there is no enum to widen.
+            return;
+        }
+
         DB::statement("ALTER TABLE users MODIFY COLUMN role ENUM('user', 'learner', 'volunteer', 'mentor', 'coach', 'safeguarding', 'admin') DEFAULT 'learner'");
     }
 
@@ -26,6 +32,15 @@ return new class extends Migration
         // coerces them to an empty string and they lose all access.
         DB::table('users')->where('role', 'safeguarding')->update(['role' => 'admin']);
 
+        if (! $this->usesMysqlEnum()) {
+            return;
+        }
+
         DB::statement("ALTER TABLE users MODIFY COLUMN role ENUM('user', 'learner', 'volunteer', 'mentor', 'coach', 'admin') DEFAULT 'learner'");
+    }
+
+    private function usesMysqlEnum(): bool
+    {
+        return in_array(DB::connection()->getDriverName(), ['mysql', 'mariadb'], true);
     }
 };
