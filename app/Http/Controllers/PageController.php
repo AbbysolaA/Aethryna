@@ -59,6 +59,21 @@ class PageController extends Controller
         return view('sessions', compact('upcoming', 'past'));
     }
 
+    /**
+     * A single panel, at its own shareable URL.
+     *
+     * The sessions index only ever shows whichever panel is next, so a link
+     * to it stops describing the event the moment the next one is scheduled.
+     * This page keeps working: before the panel it takes registrations, after
+     * it, it is the archive page for that panel and its recording.
+     */
+    public function session(\App\Models\PanelSession $panelSession)
+    {
+        $panelSession->load(['speakers', 'images', 'videos']);
+
+        return view('sessions.show', ['session' => $panelSession]);
+    }
+
     public function registerSession(Request $request)
     {
         $validated = $request->validate([
@@ -66,15 +81,42 @@ class PageController extends Controller
             'email' => 'required|email|max:255',
             'interest_type' => 'required|in:learner,mentor,partner,curious',
             'referral_source' => 'nullable|string|max:255',
+            'wants_to_speak' => 'nullable|boolean',
+            'speaker_topic' => 'nullable|string|max:1000',
+            'panel_session_id' => 'nullable|exists:panel_sessions,id',
         ]);
 
         // Send the confirmation email if there is a real upcoming panel to
         // confirm against. Previously the eventbrite URL was hard-coded to
         // Panel 1's ticket page, which meant everyone who registered after
         // Panel 1 finished got a broken link.
-        $nextSession = \App\Models\PanelSession::upcoming()
-            ->with('speakers')
-            ->first();
+        //
+        // A per-panel page posts its own panel_session_id so the registration
+        // lands against the panel the person was actually looking at, not
+        // whatever happens to be next by the time they submit.
+        $nextSession = isset($validated['panel_session_id'])
+            ? \App\Models\PanelSession::with('speakers')->find($validated['panel_session_id'])
+            : \App\Models\PanelSession::upcoming()->with('speakers')->first();
+
+        // Record it. This table existed and had never been written to, so
+        // every registration before now survives only as an EmailOctopus
+        // contact. Keyed on panel + email so someone registering twice
+        // updates their entry instead of creating a duplicate.
+        $wantsToSpeak = (bool) ($validated['wants_to_speak'] ?? false);
+
+        SessionRegistration::updateOrCreate(
+            [
+                'panel_session_id' => $nextSession?->id,
+                'email'            => $validated['email'],
+            ],
+            [
+                'name'            => $validated['name'],
+                'interest_type'   => $validated['interest_type'],
+                'referral_source' => $validated['referral_source'] ?? null,
+                'wants_to_speak'  => $wantsToSpeak,
+                'speaker_topic'   => $wantsToSpeak ? ($validated['speaker_topic'] ?? null) : null,
+            ]
+        );
 
         if ($nextSession) {
             try {
@@ -99,15 +141,21 @@ class PageController extends Controller
                 'FirstName' => $nameParts[0] ?? '',
                 'LastName' => $nameParts[1] ?? '',
             ],
-            ['sessions', $validated['interest_type']]
+            array_filter(['sessions', $validated['interest_type'], $wantsToSpeak ? 'speaker-interest' : null])
         );
 
         // Fire event after successful registration
         event(new SessionRegistered());
 
         // Anchor the redirect at the registration block, otherwise the success
-        // message renders far below the fold and the user never sees it.
-        return redirect()->to(route('sessions') . '#register-section')
+        // message renders far below the fold and the user never sees it. A
+        // registration made from a panel's own page returns there rather than
+        // bouncing the person to the index.
+        $back = isset($validated['panel_session_id']) && $nextSession
+            ? route('sessions.show', $nextSession)
+            : route('sessions');
+
+        return redirect()->to($back . '#register-section')
             ->with('success', "Thank you for registering! We'll send you details about our next panel session to your email address.");
     }
 

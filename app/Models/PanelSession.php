@@ -18,6 +18,21 @@ class PanelSession extends Model
         'event_date' => 'datetime',
     ];
 
+    /**
+     * Panels are addressed by slug in URLs, not id: /sessions/{slug} is the
+     * link that gets shared, and it should stay readable and stable.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    public function registrations(): HasMany
+    {
+        return $this->hasMany(SessionRegistration::class);
+    }
+
+
     // ── Relationships ────────────────────────────────────────────────────────
 
     public function speakers(): BelongsToMany

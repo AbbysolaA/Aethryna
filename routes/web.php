@@ -20,6 +20,9 @@ Route::get('/stories', [PageController::class, 'stories'])->name('stories');
 // Sessions & Events
 Route::get('/sessions', [PageController::class, 'sessions'])->name('sessions');
 Route::post('/sessions/register', [PageController::class, 'registerSession'])->name('sessions.register');
+// Declared after /sessions/register so the literal path is matched first and
+// a panel can never be looked up by the slug "register".
+Route::get('/sessions/{panelSession}', [PageController::class, 'session'])->name('sessions.show');
 
 // Waitlist
 Route::post('/waitlist', [WaitlistController::class, 'store'])->name('waitlist.store');
@@ -105,6 +108,36 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
         ->name('volunteer-documents.update');
     Route::delete('/volunteer-documents/{document}', [\App\Http\Controllers\Admin\VolunteerDocumentAdminController::class, 'destroy'])
         ->name('volunteer-documents.destroy');
+
+    // The Sessions. Panels are database rows, so a new one goes up without a
+    // deploy; before this they were seeder files. Bound by slug to match the
+    // public URL.
+    Route::get('/panels', [\App\Http\Controllers\Admin\PanelAdminController::class, 'index'])
+        ->name('panels.index');
+    Route::get('/panels/create', [\App\Http\Controllers\Admin\PanelAdminController::class, 'create'])
+        ->name('panels.create');
+    Route::post('/panels', [\App\Http\Controllers\Admin\PanelAdminController::class, 'store'])
+        ->name('panels.store');
+    Route::get('/panels/{panel}/edit', [\App\Http\Controllers\Admin\PanelAdminController::class, 'edit'])
+        ->name('panels.edit');
+    Route::patch('/panels/{panel}', [\App\Http\Controllers\Admin\PanelAdminController::class, 'update'])
+        ->name('panels.update');
+    Route::delete('/panels/{panel}', [\App\Http\Controllers\Admin\PanelAdminController::class, 'destroy'])
+        ->name('panels.destroy');
+
+    // Speakers are their own table because people return across panels.
+    Route::get('/speakers', [\App\Http\Controllers\Admin\PanelAdminController::class, 'speakers'])
+        ->name('speakers.index');
+    Route::post('/speakers', [\App\Http\Controllers\Admin\PanelAdminController::class, 'storeSpeaker'])
+        ->name('speakers.store');
+    Route::delete('/speakers/{speaker}', [\App\Http\Controllers\Admin\PanelAdminController::class, 'destroySpeaker'])
+        ->name('speakers.destroy');
+
+    // Who registered for which panel, and who offered to speak.
+    Route::get('/registrations', [\App\Http\Controllers\Admin\SessionRegistrationAdminController::class, 'index'])
+        ->name('registrations.index');
+    Route::get('/registrations/export', [\App\Http\Controllers\Admin\SessionRegistrationAdminController::class, 'export'])
+        ->name('registrations.export');
 
     // Organisational risk register. Separate from safeguarding concerns: a
     // concern is an incident about a named person, a risk is an organisational
@@ -291,6 +324,14 @@ Route::get('/sitemap.xml', function () {
     // Deploy time as the sitemap-wide lastmod — good enough for a small site
     // and honest (changes every deploy, stable between deploys).
     $lastmod = date('c', @filemtime(base_path('routes/web.php')) ?: time());
+
+    // Each panel has its own page, and those are database rows rather than a
+    // fixed list, so they are appended here instead of being maintained by
+    // hand in config. A past panel keeps its URL: it is the archive page for
+    // that panel and its recording.
+    foreach (\App\Models\PanelSession::orderBy('sort_order')->pluck('slug') as $slug) {
+        $paths[] = '/sessions/' . $slug;
+    }
 
     $xml  = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
     $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
