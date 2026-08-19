@@ -1,0 +1,15 @@
+Speaker headshots.
+
+Filenames must match photo_path in the panel seeders exactly, because
+PanelSpeaker::photoUrl() checks the file exists and silently falls back to a
+generated initials avatar if it does not — a typo shows no error, just the
+wrong picture.
+
+Panel 3:
+    bola-soko.jpg
+    celestine-achi.jpg
+    grace-lawalson.jpg
+    joshua-adeleke.jpg
+
+Square, 400x400 or larger, ideally under 100KB. No deploy needed: the page
+picks up a new file on the next request.

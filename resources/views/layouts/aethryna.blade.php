@@ -115,5 +115,9 @@
          version range, which had to be resolved before the file could be
          fetched at all. --}}
     @stack('scripts')
+
+    {{-- Cookieless analytics, deferred and last: measurement should never be
+         ahead of the page in the queue. Renders nothing unless configured. --}}
+    @include('partials.analytics')
 </body>
 </html>

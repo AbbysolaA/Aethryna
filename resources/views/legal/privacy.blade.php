@@ -280,7 +280,19 @@
                 <li><strong>Remember‑me token</strong> – <code>remember_web</code> (optional) – If you select “remember me” at login, this cookie keeps you logged in for an extended period (up to 90 days).</li>
                 <li><strong>Cache</strong> – Server‑side application cache – Improves site performance. Does not leave your browser. Retention varies by content type.</li>
             </ul>
-            <p>We do not currently use third‑party tracking cookies, advertising cookies, or analytics platforms (such as Google Analytics). If this changes, we will update this policy and seek your consent where required.</p>
+            {{-- Conditional on the analytics config so the two policies and the site
+                 itself cannot say different things. See partials/analytics. --}}
+            @if (config('services.cloudflare_analytics.token'))
+                <p>We use <strong>Cloudflare Web Analytics</strong> to count page views. It sets no
+                   cookies and stores no identifier, so it cannot recognise you between visits or
+                   build any profile of you. We chose it over cookie-based analytics for exactly
+                   that reason: it needs no consent banner, because there is nothing to consent to.</p>
+                <p>We do not use third‑party tracking cookies, advertising cookies, session
+                   recording, or any analytics platform that identifies individuals. If this
+                   changes, we will update this policy and seek your consent where required.</p>
+            @else
+                <p>We do not currently use third‑party tracking cookies, advertising cookies, or analytics platforms (such as Google Analytics). If this changes, we will update this policy and seek your consent where required.</p>
+            @endif
         </div>
     </section>
 

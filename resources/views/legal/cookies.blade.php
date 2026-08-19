@@ -113,13 +113,32 @@
 
     <section class="legal-section" id="what-we-dont-use"><div class="legal-container">
         <span class="legal-badge">What We Avoid</span><h2>3. What We Do Not Use</h2>
+        {{-- Reads the analytics config so this page cannot claim something the
+             site is not doing, in either direction. See partials/analytics. --}}
         <p>We do not currently use any of the following:</p>
         <ul>
-            <li>Google Analytics or any other web analytics platform</li>
+            @unless (config('services.cloudflare_analytics.token'))
+                <li>Google Analytics or any other web analytics platform</li>
+            @endunless
+            <li>Cookie-based analytics of any kind</li>
             <li>Facebook Pixel or social media tracking cookies</li>
             <li>Advertising or retargeting cookies</li>
             <li>Third-party marketing cookies</li>
+            <li>Session recording, heatmaps, or replays of what you did on a page</li>
         </ul>
+
+        @if (config('services.cloudflare_analytics.token'))
+            <h3>The one thing we do measure</h3>
+            <p>We use <strong>Cloudflare Web Analytics</strong> to count page views. It was chosen
+               specifically because it sets <strong>no cookies and stores no identifier of any
+               kind</strong>, so there is nothing to consent to and nothing to opt out of.</p>
+            <p>It records the page visited, the site that linked to it, the country, and how quickly
+               the page loaded. It cannot tell that two visits came from the same person, which
+               means we genuinely do not know how many individual people visit &mdash; only how many
+               pages were opened. We accepted that limitation rather than ask every visitor to
+               dismiss a banner.</p>
+        @endif
+
         <p>If this changes in the future, we will update this policy and, where required, seek your consent before setting any new cookies.</p>
     </div></section>
 
