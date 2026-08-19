@@ -83,4 +83,33 @@ return [
         ],
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | The cohort people are applying to
+    |--------------------------------------------------------------------------
+    |
+    | Read by the learner dashboard to tell an applicant where they stand and
+    | what happens next. It lives here rather than in the Blade so the answer
+    | can change without a deploy, and so the site only ever makes one promise
+    | in one place.
+    |
+    | 'decision_note' is deliberately nullable. Until a real timetable exists,
+    | the dashboard says something true and vague rather than inventing a date
+    | nobody has committed to — and a learner reading a promise that is then
+    | missed is worse than a learner reading no promise at all.
+    |
+    */
+    'cohort' => [
+        'name'          => 'Cohort 1',
+        'starts'        => 'January 2027',
+        'places'        => 30,
+
+        // e.g. 'We review applications every month. You will hear from us by
+        // the end of the month after you apply.' Set it once you know.
+        'decision_note' => null,
+
+        // Set when applications actually close, e.g. '30 November 2026'.
+        'closes'        => null,
+    ],
+
 ];

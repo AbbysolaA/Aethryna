@@ -87,27 +87,32 @@
     transition: var(--transition);
     position: relative;
     opacity: 0;
-    animation: fadeInDown 0.8s ease forwards;
+    animation: fadeInDown 0.35s ease forwards;
 }
 
-.nav-links a:nth-child(1) {
-    animation-delay: 1s;
-}
+/* The navigation used to start at opacity 0 and wait a full second before
+   beginning an 0.8s fade, so it was invisible for the first second of every
+   visit and only completely readable after about 2.2s. On a slow phone that
+   is a person staring at a page they cannot navigate — and it undid the point
+   of making the page arrive quickly in the first place.
 
-.nav-links a:nth-child(2) {
-    animation-delay: 1.1s;
-}
+   Only five delays were defined for six links, so the sixth ignored the queue
+   and appeared on its own while the rest were still hidden.
 
-.nav-links a:nth-child(3) {
-    animation-delay: 1.2s;
-}
+   The entrance is kept, because it is part of how the page feels, but it now
+   runs immediately and finishes in under half a second. */
+.nav-links a:nth-child(1) { animation-delay: 0s; }
+.nav-links a:nth-child(2) { animation-delay: 0.04s; }
+.nav-links a:nth-child(3) { animation-delay: 0.08s; }
+.nav-links a:nth-child(4) { animation-delay: 0.12s; }
+.nav-links a:nth-child(5) { animation-delay: 0.16s; }
+.nav-links a:nth-child(6) { animation-delay: 0.2s; }
+.nav-links > *:nth-child(7) { animation-delay: 0.24s; }
 
-.nav-links a:nth-child(4) {
-    animation-delay: 1.3s;
-}
-
-.nav-links a:nth-child(5) {
-    animation-delay: 1.4s;
+/* Someone who has asked their system not to animate should not have to wait
+   for one to finish before the navigation is legible. */
+@media (prefers-reduced-motion: reduce) {
+    .nav-links a { opacity: 1; animation: none; }
 }
 
 .nav-links a::after {
@@ -127,6 +132,27 @@
 
 #navbar.scrolled .nav-links a::after {
     background: linear-gradient(90deg, var(--teal), var(--gold));
+}
+
+/* The one thing we want a visitor to do.
+   
+   "Find your track" is the assessment, and it sat in neither the navigation
+   nor the home page — reachable only from inside three other pages. It is a
+   verb among nouns, so it gets a little weight to match: enough to read as
+   the action in the row, not so much that it competes with the Join the
+   cohort button, which is the bigger commitment further along the journey. */
+.nav-links a.nav-link-action,
+.mobile-nav-links a.nav-link-action {
+    font-weight: 700;
+    color: var(--gold);
+}
+
+.nav-links a.nav-link-action::after {
+    background: var(--gold);
+}
+
+#navbar.scrolled .nav-links a.nav-link-action::after {
+    background: var(--gold);
 }
 
 .nav-links a:hover::after {
