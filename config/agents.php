@@ -71,12 +71,18 @@ return [
     ],
 
     /**
-     * AI crawlers and assistants allowed by name in robots.txt.
+     * AI crawlers and assistants. NOT CURRENTLY EMITTED ANYWHERE.
      *
-     * `User-agent: *` with `Allow: /` already permits these, but readiness
-     * scanners and several operators check for the agent by name and treat
-     * its absence as ambiguous. Naming them removes the ambiguity, and makes
-     * a future decision to exclude one a single-line edit here.
+     * This list used to become a named Allow group in robots.txt. It no longer
+     * does: Cloudflare prepends a managed block at the edge that disallows
+     * eight of these names, so the file contradicted itself and no crawler
+     * could be relied on to resolve it the way we intended. The robots.txt
+     * route carries the full reasoning.
+     *
+     * Kept rather than deleted because it is the curated list of who we would
+     * allow, and turning the Cloudflare setting off is the intended way back —
+     * at which point this becomes the record of what to restore. Anything
+     * added here today changes nothing until then.
      */
     'crawlers' => [
         // OpenAI

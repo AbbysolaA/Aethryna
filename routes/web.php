@@ -425,23 +425,33 @@ Route::get('/robots.txt', function () {
     $body .= implode("\n", $private) . "\n";
     $body .= "\n";
 
-    // AI assistants and answer engines, named individually. The wildcard
-    // group above already allows them, but readiness scanners and several
-    // operators check for the agent by name and read its absence as
-    // ambiguous. See config/agents.php to add or remove one.
-    $crawlers = config('agents.crawlers', []);
-    if ($crawlers) {
-        $body .= "# AI assistants, answer engines and training crawlers are welcome\n";
-        $body .= "# on public pages. Removing a name here does not block it — add an\n";
-        $body .= "# explicit Disallow group for that agent instead.\n";
-        foreach ($crawlers as $crawler) {
-            $body .= "User-agent: {$crawler}\n";
-        }
-        $body .= "Allow: /\n";
-        $body .= "\n";
-        $body .= implode("\n", $private) . "\n";
-        $body .= "\n";
-    }
+    /*
+     * There used to be a second group here naming nineteen AI crawlers and
+     * allowing them. It has been removed, because the file it produced
+     * contradicted itself.
+     *
+     * Cloudflare prepends a managed block to this response at the edge, and
+     * that block disallows GPTBot, ClaudeBot, CCBot, Google-Extended,
+     * Applebot-Extended, Amazonbot, Bytespider and meta-externalagent. Eight of
+     * the nineteen we named were therefore told both Disallow: / and Allow: /
+     * in the same file. Which one a given crawler honours depends on how it
+     * resolves duplicate groups, so the answer was not knowable — worse than
+     * either instruction alone, because nobody could reason about it.
+     *
+     * Removing our group does not block anything that was not already blocked:
+     *
+     *   - the eight Cloudflare names stay disallowed, now unambiguously;
+     *   - the other eleven — OAI-SearchBot, ChatGPT-User, Claude-User,
+     *     Claude-SearchBot, PerplexityBot, Perplexity-User, DuckAssistBot and
+     *     the rest — have no Cloudflare rule at all, so they fall through to
+     *     the wildcard group above and remain allowed. Those are the agents
+     *     that fetch a page because somebody asked a question about it, which
+     *     is the traffic worth keeping.
+     *
+     * To allow the training crawlers again, turn the setting off in Cloudflare
+     * rather than adding a group back here. Two sources of truth for one file
+     * is what caused this.
+     */
 
     $body .= "Sitemap: https://{$host}/sitemap.xml\n";
     return response($body, 200, ['Content-Type' => 'text/plain; charset=utf-8']);
