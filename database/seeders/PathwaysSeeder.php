@@ -21,7 +21,7 @@ class PathwaysSeeder extends Seeder
                 'category' => 'technical',
                 'description' => 'Build modern websites and web applications using HTML, CSS, JavaScript, and popular frameworks.',
                 'recommended_for' => 'You enjoy solving problems and figuring out how things work. You\'re motivated by building tools and systems people rely on.',
-                'skills' => json_encode([
+                'skills' => [
                     'HTML5 & CSS3',
                     'JavaScript (ES6+)',
                     'React/Vue.js Frameworks',
@@ -30,14 +30,14 @@ class PathwaysSeeder extends Seeder
                     'API Development',
                     'Version Control (Git)',
                     'Responsive Design'
-                ]),
-                'career_paths' => json_encode([
+                ],
+                'career_paths' => [
                     'Frontend Developer',
                     'Full-Stack Developer',
                     'Web Application Developer',
                     'UI/UX Developer',
                     'Technical Lead'
-                ]),
+                ],
                 'difficulty_level' => 'beginner',
                 'duration_months' => 6,
                 'image_path' => null,
@@ -49,7 +49,7 @@ class PathwaysSeeder extends Seeder
                 'category' => 'technical',
                 'description' => 'Learn core programming concepts, algorithms, and software development principles.',
                 'recommended_for' => 'You enjoy solving problems and figuring out how things work. You\'re motivated by building tools and systems people rely on.',
-                'skills' => json_encode([
+                'skills' => [
                     'Programming Fundamentals',
                     'Data Structures & Algorithms',
                     'Object-Oriented Programming',
@@ -58,14 +58,14 @@ class PathwaysSeeder extends Seeder
                     'Software Design Patterns',
                     'Testing & Debugging',
                     'Version Control'
-                ]),
-                'career_paths' => json_encode([
+                ],
+                'career_paths' => [
                     'Software Developer',
                     'Application Developer',
                     'Systems Analyst',
                     'Technical Consultant',
                     'Software Engineer'
-                ]),
+                ],
                 'difficulty_level' => 'beginner',
                 'duration_months' => 8,
                 'image_path' => null,
@@ -77,7 +77,7 @@ class PathwaysSeeder extends Seeder
                 'category' => 'technical',
                 'description' => 'Master data analysis, visualization, and business intelligence tools.',
                 'recommended_for' => 'You enjoy solving problems and figuring out how things work. You\'re motivated by building tools and systems people rely on.',
-                'skills' => json_encode([
+                'skills' => [
                     'SQL & Database Querying',
                     'Python/R for Data Analysis',
                     'Excel Advanced Functions',
@@ -86,14 +86,14 @@ class PathwaysSeeder extends Seeder
                     'Business Intelligence',
                     'Data Cleaning & Processing',
                     'Reporting & Dashboards'
-                ]),
-                'career_paths' => json_encode([
+                ],
+                'career_paths' => [
                     'Data Analyst',
                     'Business Intelligence Analyst',
                     'Data Scientist',
                     'Analytics Consultant',
                     'Business Analyst'
-                ]),
+                ],
                 'difficulty_level' => 'intermediate',
                 'duration_months' => 6,
                 'image_path' => null,
@@ -105,7 +105,7 @@ class PathwaysSeeder extends Seeder
                 'category' => 'technical',
                 'description' => 'Explore artificial intelligence, machine learning, and generative AI technologies.',
                 'recommended_for' => 'You enjoy solving problems and figuring out how things work. You\'re motivated by building tools and systems people rely on.',
-                'skills' => json_encode([
+                'skills' => [
                     'Python Programming',
                     'Machine Learning Fundamentals',
                     'Data Science Libraries',
@@ -114,14 +114,14 @@ class PathwaysSeeder extends Seeder
                     'AI Ethics & Bias',
                     'Model Training & Deployment',
                     'AI Tool Integration'
-                ]),
-                'career_paths' => json_encode([
+                ],
+                'career_paths' => [
                     'AI Developer',
                     'Machine Learning Engineer',
                     'AI Consultant',
                     'Data Scientist',
                     'AI Product Manager'
-                ]),
+                ],
                 'difficulty_level' => 'advanced',
                 'duration_months' => 9,
                 'image_path' => null,
@@ -135,7 +135,7 @@ class PathwaysSeeder extends Seeder
                 'category' => 'creative',
                 'description' => 'Create beautiful, user-centered digital experiences and interfaces.',
                 'recommended_for' => 'You care about how things look, feel, and connect with people. You\'re drawn to visuals, experiences, and stories.',
-                'skills' => json_encode([
+                'skills' => [
                     'User Research & Analysis',
                     'Wireframing & Prototyping',
                     'UI Design Principles',
@@ -144,14 +144,14 @@ class PathwaysSeeder extends Seeder
                     'Figma/Adobe XD',
                     'Usability Testing',
                     'Visual Design Theory'
-                ]),
-                'career_paths' => json_encode([
+                ],
+                'career_paths' => [
                     'UI/UX Designer',
                     'Product Designer',
                     'Interaction Designer',
                     'User Experience Researcher',
                     'Design System Lead'
-                ]),
+                ],
                 'difficulty_level' => 'beginner',
                 'duration_months' => 6,
                 'image_path' => null,
@@ -163,7 +163,7 @@ class PathwaysSeeder extends Seeder
                 'category' => 'creative',
                 'description' => 'Learn to design products from concept to launch with user-centered thinking.',
                 'recommended_for' => 'You care about how things look, feel, and connect with people. You\'re drawn to visuals, experiences, and stories.',
-                'skills' => json_encode([
+                'skills' => [
                     'Product Strategy',
                     'User Journey Mapping',
                     'Prototyping Techniques',
@@ -172,14 +172,14 @@ class PathwaysSeeder extends Seeder
                     'Iterative Design',
                     'Stakeholder Communication',
                     'Design Tools & Software'
-                ]),
-                'career_paths' => json_encode([
+                ],
+                'career_paths' => [
                     'Product Designer',
                     'Design Strategist',
                     'Product Manager',
                     'UX Strategist',
                     'Innovation Consultant'
-                ]),
+                ],
                 'difficulty_level' => 'intermediate',
                 'duration_months' => 7,
                 'image_path' => null,
@@ -191,7 +191,7 @@ class PathwaysSeeder extends Seeder
                 'category' => 'creative',
                 'description' => 'Master digital marketing strategies, content creation, and brand storytelling.',
                 'recommended_for' => 'You care about how things look, feel, and connect with people. You\'re drawn to visuals, experiences, and stories.',
-                'skills' => json_encode([
+                'skills' => [
                     'Content Strategy',
                     'Social Media Marketing',
                     'Brand Storytelling',
@@ -200,14 +200,14 @@ class PathwaysSeeder extends Seeder
                     'Analytics & Reporting',
                     'Content Creation',
                     'Marketing Automation'
-                ]),
-                'career_paths' => json_encode([
+                ],
+                'career_paths' => [
                     'Digital Marketing Specialist',
                     'Content Strategist',
                     'Social Media Manager',
                     'Brand Manager',
                     'Marketing Coordinator'
-                ]),
+                ],
                 'difficulty_level' => 'beginner',
                 'duration_months' => 5,
                 'image_path' => null,
@@ -221,7 +221,7 @@ class PathwaysSeeder extends Seeder
                 'category' => 'business',
                 'description' => 'Learn to plan, execute, and deliver successful projects on time and within budget.',
                 'recommended_for' => 'You\'re a natural organiser, planner, or communicator. You enjoy bringing order to chaos and helping people work better together.',
-                'skills' => json_encode([
+                'skills' => [
                     'Project Planning & Scheduling',
                     'Risk Management',
                     'Stakeholder Communication',
@@ -230,14 +230,14 @@ class PathwaysSeeder extends Seeder
                     'Team Leadership',
                     'Quality Assurance',
                     'Change Management'
-                ]),
-                'career_paths' => json_encode([
+                ],
+                'career_paths' => [
                     'Project Manager',
                     'Program Manager',
                     'Scrum Master',
                     'Project Coordinator',
                     'Operations Manager'
-                ]),
+                ],
                 'difficulty_level' => 'intermediate',
                 'duration_months' => 6,
                 'image_path' => null,
@@ -249,7 +249,7 @@ class PathwaysSeeder extends Seeder
                 'category' => 'business',
                 'description' => 'Master agile methodologies and become a certified Scrum Master.',
                 'recommended_for' => 'You\'re a natural organiser, planner, or communicator. You enjoy bringing order to chaos and helping people work better together.',
-                'skills' => json_encode([
+                'skills' => [
                     'Scrum Framework',
                     'Agile Principles',
                     'Sprint Planning & Execution',
@@ -258,14 +258,14 @@ class PathwaysSeeder extends Seeder
                     'Continuous Improvement',
                     'Metrics & Reporting',
                     'Coaching & Mentoring'
-                ]),
-                'career_paths' => json_encode([
+                ],
+                'career_paths' => [
                     'Scrum Master',
                     'Agile Coach',
                     'Team Lead',
                     'Process Improvement Specialist',
                     'Agile Consultant'
-                ]),
+                ],
                 'difficulty_level' => 'intermediate',
                 'duration_months' => 4,
                 'image_path' => null,
@@ -277,7 +277,7 @@ class PathwaysSeeder extends Seeder
                 'category' => 'business',
                 'description' => 'Bridge the gap between business needs and technical solutions.',
                 'recommended_for' => 'You\'re a natural organiser, planner, or communicator. You enjoy bringing order to chaos and helping people work better together.',
-                'skills' => json_encode([
+                'skills' => [
                     'Requirements Gathering',
                     'Business Process Modeling',
                     'Data Analysis',
@@ -286,14 +286,14 @@ class PathwaysSeeder extends Seeder
                     'Change Management',
                     'Documentation',
                     'Quality Assurance'
-                ]),
-                'career_paths' => json_encode([
+                ],
+                'career_paths' => [
                     'Business Analyst',
                     'Requirements Analyst',
                     'Systems Analyst',
                     'Process Analyst',
                     'Product Owner'
-                ]),
+                ],
                 'difficulty_level' => 'intermediate',
                 'duration_months' => 6,
                 'image_path' => null,
@@ -305,7 +305,7 @@ class PathwaysSeeder extends Seeder
                 'category' => 'business',
                 'description' => 'Learn to define, build, and launch successful digital products.',
                 'recommended_for' => 'You\'re a natural organiser, planner, or communicator. You enjoy bringing order to chaos and helping people work better together.',
-                'skills' => json_encode([
+                'skills' => [
                     'Product Strategy',
                     'Market Research',
                     'Roadmap Planning',
@@ -314,14 +314,14 @@ class PathwaysSeeder extends Seeder
                     'Metrics & KPIs',
                     'Cross-functional Leadership',
                     'Product Launch Management'
-                ]),
-                'career_paths' => json_encode([
+                ],
+                'career_paths' => [
                     'Product Manager',
                     'Associate Product Manager',
                     'Product Owner',
                     'Growth Manager',
                     'Product Marketing Manager'
-                ]),
+                ],
                 'difficulty_level' => 'advanced',
                 'duration_months' => 8,
                 'image_path' => null,
@@ -333,7 +333,7 @@ class PathwaysSeeder extends Seeder
                 'category' => 'business',
                 'description' => 'Understand IT service management and enterprise architecture principles.',
                 'recommended_for' => 'You\'re a natural organiser, planner, or communicator. You enjoy bringing order to chaos and helping people work better together.',
-                'skills' => json_encode([
+                'skills' => [
                     'IT Service Management',
                     'ITIL Framework',
                     'Enterprise Architecture',
@@ -342,14 +342,14 @@ class PathwaysSeeder extends Seeder
                     'IT Governance',
                     'Vendor Management',
                     'Change Management'
-                ]),
-                'career_paths' => json_encode([
+                ],
+                'career_paths' => [
                     'IT Service Manager',
                     'Enterprise Architect',
                     'IT Operations Manager',
                     'Service Delivery Manager',
                     'IT Consultant'
-                ]),
+                ],
                 'difficulty_level' => 'advanced',
                 'duration_months' => 7,
                 'image_path' => null,
@@ -361,7 +361,7 @@ class PathwaysSeeder extends Seeder
                 'category' => 'business',
                 'description' => 'Develop essential business and leadership skills for digital transformation.',
                 'recommended_for' => 'You\'re a natural organiser, planner, or communicator. You enjoy bringing order to chaos and helping people work better together.',
-                'skills' => json_encode([
+                'skills' => [
                     'Leadership & Team Management',
                     'Strategic Thinking',
                     'Communication Skills',
@@ -370,14 +370,14 @@ class PathwaysSeeder extends Seeder
                     'Business Acumen',
                     'Decision Making',
                     'Conflict Resolution'
-                ]),
-                'career_paths' => json_encode([
+                ],
+                'career_paths' => [
                     'Team Lead',
                     'Project Manager',
                     'Operations Manager',
                     'Business Consultant',
                     'Digital Transformation Lead'
-                ]),
+                ],
                 'difficulty_level' => 'intermediate',
                 'duration_months' => 5,
                 'image_path' => null,
@@ -391,7 +391,7 @@ class PathwaysSeeder extends Seeder
                 'category' => 'security',
                 'description' => 'Learn the fundamentals of cybersecurity and digital protection.',
                 'recommended_for' => 'You notice details, think in risks and what ifs, and like understanding how systems work under the surface.',
-                'skills' => json_encode([
+                'skills' => [
                     'Network Security',
                     'Cryptography Basics',
                     'Risk Assessment',
@@ -400,14 +400,14 @@ class PathwaysSeeder extends Seeder
                     'Ethical Hacking',
                     'Security Tools',
                     'Compliance & Regulations'
-                ]),
-                'career_paths' => json_encode([
+                ],
+                'career_paths' => [
                     'Security Analyst',
                     'Cybersecurity Specialist',
                     'Information Security Officer',
                     'Security Consultant',
                     'Compliance Officer'
-                ]),
+                ],
                 'difficulty_level' => 'intermediate',
                 'duration_months' => 7,
                 'image_path' => null,
@@ -419,7 +419,7 @@ class PathwaysSeeder extends Seeder
                 'category' => 'security',
                 'description' => 'Master cloud platforms and DevOps practices with a focus on security.',
                 'recommended_for' => 'You notice details, think in risks and what ifs, and like understanding how systems work under the surface.',
-                'skills' => json_encode([
+                'skills' => [
                     'Cloud Platforms (AWS/Azure/GCP)',
                     'Infrastructure as Code',
                     'CI/CD Pipelines',
@@ -428,14 +428,14 @@ class PathwaysSeeder extends Seeder
                     'Cloud Security',
                     'Automation',
                     'Performance Optimization'
-                ]),
-                'career_paths' => json_encode([
+                ],
+                'career_paths' => [
                     'DevOps Engineer',
                     'Cloud Architect',
                     'Site Reliability Engineer',
                     'Cloud Security Engineer',
                     'Infrastructure Engineer'
-                ]),
+                ],
                 'difficulty_level' => 'advanced',
                 'duration_months' => 8,
                 'image_path' => null,
@@ -447,7 +447,7 @@ class PathwaysSeeder extends Seeder
                 'category' => 'security',
                 'description' => 'Provide technical support and manage IT infrastructure and operations.',
                 'recommended_for' => 'You notice details, think in risks and what ifs, and like understanding how systems work under the surface.',
-                'skills' => json_encode([
+                'skills' => [
                     'Technical Support',
                     'System Administration',
                     'Network Troubleshooting',
@@ -456,14 +456,14 @@ class PathwaysSeeder extends Seeder
                     'Documentation',
                     'Help Desk Management',
                     'Problem Solving'
-                ]),
-                'career_paths' => json_encode([
+                ],
+                'career_paths' => [
                     'IT Support Specialist',
                     'System Administrator',
                     'Help Desk Manager',
                     'Technical Support Engineer',
                     'IT Operations Specialist'
-                ]),
+                ],
                 'difficulty_level' => 'beginner',
                 'duration_months' => 5,
                 'image_path' => null,
@@ -477,7 +477,7 @@ class PathwaysSeeder extends Seeder
                 'category' => 'foundation',
                 'description' => 'Build essential digital skills and computer literacy for beginners.',
                 'recommended_for' => 'You\'re developing your digital confidence. This is where your rise begins.',
-                'skills' => json_encode([
+                'skills' => [
                     'Computer Basics',
                     'Internet & Email',
                     'Microsoft Office/Google Workspace',
@@ -486,14 +486,14 @@ class PathwaysSeeder extends Seeder
                     'Basic Troubleshooting',
                     'Digital Communication',
                     'Productivity Tools'
-                ]),
-                'career_paths' => json_encode([
+                ],
+                'career_paths' => [
                     'Administrative Assistant',
                     'Data Entry Specialist',
                     'Office Support',
                     'Digital Assistant',
                     'Entry-level IT Support'
-                ]),
+                ],
                 'difficulty_level' => 'beginner',
                 'duration_months' => 3,
                 'image_path' => null,
@@ -501,8 +501,43 @@ class PathwaysSeeder extends Seeder
             ],
         ];
 
+        /*
+         * The four tracks Cohort 1 actually runs, against the four the site
+         * markets:
+         *
+         *   Project and Product Delivery  → project-management
+         *   Data and AI Analytics         → data-analytics
+         *   Product Design and Marketing  → ui-ux-design
+         *   Software Development          → software-development-foundations
+         *
+         * The other thirteen stay: the assessment scores against all of them
+         * and they are honest directions to point somebody in. They are just
+         * described as directions rather than as courses we teach, here and on
+         * their own pages.
+         *
+         * Change this list when the pilot set changes; nothing else needs to
+         * know which is which.
+         */
+        $pilotSlugs = [
+            'project-management',
+            'data-analytics',
+            'ui-ux-design',
+            'software-development-foundations',
+        ];
+
         foreach ($pathways as $pathway) {
-            Pathway::create($pathway);
+            $pathway['is_pilot'] = in_array($pathway['slug'], $pilotSlugs, true);
+
+            // updateOrCreate, not create: this used to insert unconditionally,
+            // so a second run either duplicated all seventeen or died on the
+            // unique slug. Keyed on the slug, which is also the public URL, so
+            // re-seeding refreshes copy in place rather than orphaning a page.
+            Pathway::updateOrCreate(['slug' => $pathway['slug']], $pathway);
         }
+
+        $this->command->info(
+            'Pathways seeded: ' . count($pathways) . ' total, '
+            . count($pilotSlugs) . ' marked as pilot tracks.'
+        );
     }
 }

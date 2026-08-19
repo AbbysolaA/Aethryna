@@ -128,10 +128,22 @@
                     </div>
                     <div class="track-footer">
                         <div class="track-cta-info">
-                            <span class="salary-label">Applications Open</span>
-                            <span class="salary">Cohort dates announced by email</span>
+                            @if ($pathway->is_pilot)
+                                <span class="salary-label">Running in {{ config('organisation.cohort.name') }}</span>
+                                <span class="salary">Starts {{ config('organisation.cohort.starts') }}</span>
+                            @else
+                                {{-- Said here as well as on the page itself. A card that
+                                     reads "Applications Open" for a track no cohort runs
+                                     is the kind of small untruth that costs trust later. --}}
+                                <span class="salary-label">Not in {{ config('organisation.cohort.name') }}</span>
+                                <span class="salary">A direction we can point you in</span>
+                            @endif
                         </div>
-                        <a href="{{ route('assessment.index') }}" class="btn btn-primary btn-sm">Join Track</a>
+                        {{-- Was "Join Track" pointing at the assessment, which is neither
+                             joining nor this track. Each card now opens its own page. --}}
+                        <a href="{{ route('programs.show', $pathway) }}" class="btn btn-primary btn-sm">
+                            Read more
+                        </a>
                     </div>
                 </div>
             @empty

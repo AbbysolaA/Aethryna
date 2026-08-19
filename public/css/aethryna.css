@@ -687,3 +687,45 @@ summary:focus-visible,
         scroll-behavior: auto !important;
     }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Shared layout primitives
+
+   .ath-container and .ath-btn were defined inside individual views — the
+   container in fourteen of them, the button in four — and nowhere globally.
+   Any new page therefore rendered flush to the viewport edge with unstyled
+   buttons, which is exactly what the first course page did.
+
+   Declared here as a baseline only. Page-level @push('styles') blocks are
+   emitted after this file, so every existing local definition still wins and
+   no current page changes. This just means a new page starts out laid out.
+   ───────────────────────────────────────────────────────────────────────── */
+.ath-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.ath-btn {
+    padding: 14px 35px;
+    border-radius: 100px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: var(--transition, all 0.3s ease);
+    display: inline-block;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+}
+
+.ath-btn-primary { background: var(--ath-teal, #038b89); color: #fff; }
+.ath-btn-primary:hover { background: var(--ath-gold, #ee9d1d); color: #fff; }
+
+.ath-btn-outline {
+    background: transparent;
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.55);
+}
+.ath-btn-outline:hover { background: rgba(255, 255, 255, 0.14); color: #fff; }

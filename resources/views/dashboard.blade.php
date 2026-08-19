@@ -345,7 +345,7 @@
 
                 <div class="db-pathway-grid">
                     @foreach ($popularPathways as $pathway)
-                        <a href="{{ route('programs') }}" class="db-pathway">
+                        <a href="{{ route('programs.show', $pathway) }}" class="db-pathway">
                             <div class="db-pathway-head">
                                 <div class="db-pathway-icon">
                                     @if ($pathway->category === 'technical')

@@ -125,9 +125,21 @@
                                     class="inline-flex items-center justify-center border-2 border-transparent bg-teal-500 text-white px-6 py-3 rounded-lg font-semibold leading-none hover:bg-teal-600 transition-colors">
                                     See the 25-week pathway
                                 </a>
-                                <a href="{{ route('programs') }}"
+                                {{--
+                                    The track this result actually named.
+
+                                    This used to say "Compare all tracks" and
+                                    go to /programs, which paginates four at a
+                                    time — so somebody matched to a track on
+                                    page four landed on page one, where it is
+                                    not mentioned. The one link most likely to
+                                    be clicked went almost anywhere except the
+                                    thing it had just recommended. Comparing all
+                                    of them is still offered further down.
+                                --}}
+                                <a href="{{ route('programs.show', $pathway) }}"
                                     class="inline-flex items-center justify-center border-2 border-teal-500 text-teal-500 px-6 py-3 rounded-lg font-semibold leading-none hover:bg-teal-500 hover:text-white transition-colors">
-                                    Compare all tracks
+                                    All about {{ $pathway->name }}
                                 </a>
                                 <a href="{{ route('sessions') }}"
                                     class="inline-flex items-center justify-center border-2 border-transparent text-gray-600 px-6 py-3 rounded-lg font-semibold leading-none hover:text-teal-600 transition-colors">
