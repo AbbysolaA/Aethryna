@@ -58,3 +58,39 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 # Aethryna
+
+## Front-end assets
+
+The site serves a compiled Tailwind bundle. `public/build/` is committed on
+purpose, because deployment is a manual `git pull` on the server with no build
+step — if those files are missing the site arrives with no stylesheet at all.
+
+**If you change a Blade file, rebuild and commit the result with it:**
+
+```bash
+npm install      # first time only
+npm run build    # writes public/build/
+git add public/build resources
+```
+
+Skipping the rebuild does not break the site, but any Tailwind utility class
+you just added will be missing from the stylesheet, because Tailwind only
+generates classes it can see in the files listed under `content` in
+`tailwind.config.js`.
+
+Most of the site's styling lives in `@push('styles')` blocks inside the views
+rather than in Tailwind utilities, so the blast radius is usually small — but
+it is the one thing to remember.
+
+### What not to add back
+
+The layout used to load Tailwind from `cdn.tailwindcss.com`. That is the Play
+CDN: it ships a compiler to the browser and generates the stylesheet on the
+visitor's device on every page load. Tailwind documents it as a development
+convenience and says not to use it in production. It was costing every visitor
+a render-blocking download and a compile before anything appeared on screen.
+
+Fonts and Font Awesome are loaded once, in `layouts/aethryna.blade.php`.
+Nineteen views used to load their own copies on top, including a second Font
+Awesome version. If a page needs a typeface, add it to the single request in
+the layout rather than a new `<link>` in the view.

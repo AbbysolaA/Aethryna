@@ -12,7 +12,12 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                // Karla, because that is what the stylesheets ask for 163 times
+                // over. Figtree was here and was loaded on every page from a
+                // second font host, but nothing in the design ever referenced
+                // it — the Play CDN ignored this config entirely, so font-sans
+                // silently resolved to the system stack.
+                sans: ['Karla', ...defaultTheme.fontFamily.sans],
             },
             colors: {
                 'teal': {

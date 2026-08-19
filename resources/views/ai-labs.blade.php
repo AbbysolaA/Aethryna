@@ -166,7 +166,6 @@
 </section>
 
 @push('styles')
-<link href="https://fonts.bunny.net/css?family=ibm-plex-mono:500,600&display=swap" rel="stylesheet">
 <style>
 /* Hallmark · redesign (section-scope) · pre-emit critique: P4 H4 E4 S4 R5 V4
  * scope: flight-path SVG infographic + hero blueprint texture + mono accents

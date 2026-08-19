@@ -75,7 +75,6 @@
 </section>
 
 @push('styles')
-<link href="https://fonts.bunny.net/css?family=ibm-plex-mono:500,600&display=swap" rel="stylesheet">
 <style>
 :root {
     --ath-teal: #038b89;
