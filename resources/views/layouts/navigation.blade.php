@@ -8,19 +8,40 @@
             </a>
         </div>
 
+        {{--
+            Ordered by the questions a learner actually asks, in the order they
+            ask them, rather than by how the organisation is structured.
+
+              Find your track  — the one action, first, where the eye lands.
+                                 The assessment used to be in neither the nav
+                                 nor the home page: reachable only if you
+                                 happened to open Pathway, Programs or Stories
+                                 and spotted a link inside.
+              Programs         — "what would I actually learn?"
+              Pathway          — "how does the 25 weeks work?"
+              Sessions         — "can I meet you before committing?"
+              Stories          — "has this worked for someone like me?"
+              About            — "who are you?"
+
+            Impact moved into Get involved. It is written for funders and
+            partners deciding whether to back the work, which is exactly who
+            that menu is for, and it kept a learner-facing nav to six items.
+        --}}
         <div class="nav-links">
-            <a href="{{ route('about') }}" @class(['is-active' => request()->routeIs('about')])>About</a>
-            <a href="{{ route('pathway') }}" @class(['is-active' => request()->routeIs('pathway')])>Pathway</a>
+            <a href="{{ route('assessment.index') }}"
+               @class(['nav-link-action', 'is-active' => request()->routeIs('assessment.*')])>Find your track</a>
             <a href="{{ route('programs') }}" @class(['is-active' => request()->routeIs('programs')])>Programs</a>
-            <a href="{{ route('impact') }}" @class(['is-active' => request()->routeIs('impact')])>Impact</a>
-            <a href="{{ route('stories') }}" @class(['is-active' => request()->routeIs('stories')])>Stories</a>
+            <a href="{{ route('pathway') }}" @class(['is-active' => request()->routeIs('pathway')])>Pathway</a>
             <a href="{{ route('sessions') }}" @class(['is-active' => request()->routeIs('sessions')])>Sessions</a>
+            <a href="{{ route('stories') }}" @class(['is-active' => request()->routeIs('stories')])>Stories</a>
+            <a href="{{ route('about') }}" @class(['is-active' => request()->routeIs('about')])>About</a>
 
             @php
                 $involvedActive = request()->routeIs('partners')
                     || request()->routeIs('mentors')
                     || request()->routeIs('volunteer.apply*')
-                    || request()->routeIs('referral.*');
+                    || request()->routeIs('referral.*')
+                    || request()->routeIs('impact');
             @endphp
             <div class="nav-dropdown" data-nav-dropdown>
                 <button type="button"
@@ -48,6 +69,10 @@
                     <a href="{{ route('referral.create') }}" @class(['is-active' => request()->routeIs('referral.*')])>
                         <strong>Refer someone</strong>
                         <span>Point us to someone who would benefit</span>
+                    </a>
+                    <a href="{{ route('impact') }}" @class(['is-active' => request()->routeIs('impact')])>
+                        <strong>Our impact</strong>
+                        <span>What the programme has changed so far</span>
                     </a>
                 </div>
             </div>
@@ -91,13 +116,15 @@
         </button>
 
         <div class="mobile-nav-links">
+            {{-- Same order as the desktop nav. See the note there. --}}
             <a href="{{ route('home') }}" @class(['is-active' => request()->routeIs('home')])>Home</a>
-            <a href="{{ route('about') }}" @class(['is-active' => request()->routeIs('about')])>About</a>
-            <a href="{{ route('pathway') }}" @class(['is-active' => request()->routeIs('pathway')])>Pathway</a>
+            <a href="{{ route('assessment.index') }}"
+               @class(['nav-link-action', 'is-active' => request()->routeIs('assessment.*')])>Find your track</a>
             <a href="{{ route('programs') }}" @class(['is-active' => request()->routeIs('programs')])>Programs</a>
-            <a href="{{ route('impact') }}" @class(['is-active' => request()->routeIs('impact')])>Impact</a>
-            <a href="{{ route('stories') }}" @class(['is-active' => request()->routeIs('stories')])>Stories</a>
+            <a href="{{ route('pathway') }}" @class(['is-active' => request()->routeIs('pathway')])>Pathway</a>
             <a href="{{ route('sessions') }}" @class(['is-active' => request()->routeIs('sessions')])>Sessions</a>
+            <a href="{{ route('stories') }}" @class(['is-active' => request()->routeIs('stories')])>Stories</a>
+            <a href="{{ route('about') }}" @class(['is-active' => request()->routeIs('about')])>About</a>
 
             {{-- On mobile there is vertical room, so show the group inline
                  rather than hiding it behind another tap. --}}
@@ -106,6 +133,7 @@
             <a href="{{ route('mentors') }}" @class(['is-active' => request()->routeIs('mentors')])>Become a mentor</a>
             <a href="{{ route('volunteer.apply') }}" @class(['is-active' => request()->routeIs('volunteer.apply*')])>Volunteer with us</a>
             <a href="{{ route('referral.create') }}" @class(['is-active' => request()->routeIs('referral.*')])>Refer someone</a>
+            <a href="{{ route('impact') }}" @class(['is-active' => request()->routeIs('impact')])>Our impact</a>
         </div>
         <div class="mobile-nav-buttons">
             @auth

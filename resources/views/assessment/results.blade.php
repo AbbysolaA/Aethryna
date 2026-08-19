@@ -243,12 +243,34 @@
                         class="w-16 h-16 bg-teal-500 rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
                         <i class="fas fa-graduation-cap"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-teal-700 mb-2">Join a Cohort</h3>
-                    <p class="text-gray-600 mb-4">Start learning with a structured program and community support.</p>
-                    <a href="{{ route('register') }}"
-                        class="bg-teal-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-teal-600 transition-colors">
-                        Apply Now
-                    </a>
+                    {{--
+                        Two different people read this card.
+
+                        A visitor with no account needs the way in. Somebody
+                        already signed in has an application open already, and
+                        sending them to /register was a loop: the guest
+                        middleware bounced them straight to the dashboard with
+                        no explanation. That happened to the single most engaged
+                        person on the site — someone who had just finished the
+                        assessment.
+                    --}}
+                    @auth
+                        <h3 class="text-xl font-semibold text-teal-700 mb-2">Your application</h3>
+                        <p class="text-gray-600 mb-4">
+                            This result is attached to it. Nothing else is needed from you today.
+                        </p>
+                        <a href="{{ route('dashboard') }}"
+                            class="bg-teal-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-teal-600 transition-colors">
+                            See where it stands
+                        </a>
+                    @else
+                        <h3 class="text-xl font-semibold text-teal-700 mb-2">Join a Cohort</h3>
+                        <p class="text-gray-600 mb-4">Start learning with a structured program and community support.</p>
+                        <a href="{{ route('register') }}"
+                            class="bg-teal-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-teal-600 transition-colors">
+                            Apply Now
+                        </a>
+                    @endauth
                 </div>
 
                 <div class="text-center p-6 bg-gray-50 rounded-2xl">

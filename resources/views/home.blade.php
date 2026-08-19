@@ -26,9 +26,27 @@
                          page's first section to anything parsing the structure. --}}
                     <p class="ath-hero-tagline">Rise. Learn. <span class="ath-gradient-text">Become.</span></p>
                     <p>Widening access to digital skills and meaningful progression for underserved communities. Your next chapter starts here.</p>
+                    {{--
+                        Two doors, not one.
+
+                        "Join the founding cohort" asks somebody to commit to a
+                        25-week programme within seconds of arriving, and for a
+                        visitor who is not yet sure this is for them that is the
+                        whole decision at once. The assessment is the smaller
+                        first step — two minutes, no account, and it answers the
+                        question they actually have, which is whether any of
+                        this fits them.
+
+                        It used to appear on neither the home page nor the
+                        navigation. "Partner with us" moves down the page: it is
+                        for a different visitor entirely and does not need to be
+                        one of the first two things a learner sees.
+                    --}}
                     <div class="ath-hero-btns">
                         <a href="{{ route('register') }}" class="ath-btn ath-btn-primary">Join the founding cohort</a>
-                        <a href="{{ route('partners') }}" class="ath-btn ath-btn-outline">Partner with us</a>
+                        <a href="{{ route('assessment.index') }}" class="ath-btn ath-btn-outline">
+                            Not sure? Find your track &middot; 2 min
+                        </a>
                     </div>
                 </div>
 

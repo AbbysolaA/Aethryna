@@ -148,9 +148,9 @@
 
                 <div class="db-stat">
                     <div class="db-stat-icon db-icon-gold"><i class="fas fa-flag-checkered"></i></div>
-                    <h3>Cohort 1</h3>
-                    <p class="db-stat-value">Jan 2027</p>
-                    <p class="db-stat-note">30 founding places</p>
+                    <h3>{{ config('organisation.cohort.name') }}</h3>
+                    <p class="db-stat-value">{{ config('organisation.cohort.starts') }}</p>
+                    <p class="db-stat-note">{{ config('organisation.cohort.places') }} founding places</p>
                 </div>
             </div>
         </div>
@@ -256,6 +256,81 @@
                         @endif
                     </div>
                 </div>
+            </div>
+
+            {{--
+                Where the application stands.
+
+                The register page tells people that creating an account starts
+                their application and that we will guide them through the
+                assessment and next steps. Then the trail stopped: a learner
+                could register, sit the assessment, read their result and still
+                have no idea whether they had applied, whether anyone had seen
+                it, or when they might hear. For an audience whose usual
+                experience of institutions is being ignored, that silence is the
+                worst possible note to end on.
+
+                Says only what is true. The dates come from config, and where
+                nothing is set the copy stays honest rather than inventing a
+                timetable — a missed promise here costs more than a vague one.
+            --}}
+            @php
+                $cohort   = config('organisation.cohort');
+                $applied  = (bool) $userAssessment;
+            @endphp
+            <div class="db-panel db-panel-wide db-application">
+                <div class="db-panel-head">
+                    <h3>Your application</h3>
+                    <p>{{ $cohort['name'] }} &middot; starts {{ $cohort['starts'] }}</p>
+                </div>
+
+                <div class="db-app-state {{ $applied ? 'is-complete' : 'is-progress' }}">
+                    <div class="db-app-icon">
+                        <i class="fas {{ $applied ? 'fa-circle-check' : 'fa-hourglass-half' }}"></i>
+                    </div>
+                    <div>
+                        <h4>{{ $applied ? 'Everything we need, for now' : 'Started, not finished' }}</h4>
+                        @if ($applied)
+                            <p>
+                                You have an account and a completed assessment, which is everything the
+                                application asks for at this stage. Nothing else is needed from you today.
+                            </p>
+                        @else
+                            <p>
+                                Your account is created, so your application is open. The pathway assessment
+                                is the one part still outstanding &mdash; it is how we know which track to
+                                consider you for.
+                            </p>
+                        @endif
+                    </div>
+                </div>
+
+                <ul class="db-app-facts">
+                    <li>
+                        <span>Places in {{ $cohort['name'] }}</span>
+                        <strong>{{ $cohort['places'] }}</strong>
+                    </li>
+                    <li>
+                        <span>Programme starts</span>
+                        <strong>{{ $cohort['starts'] }}</strong>
+                    </li>
+                    <li>
+                        <span>Applications close</span>
+                        <strong>{{ $cohort['closes'] ?? 'Not yet announced' }}</strong>
+                    </li>
+                </ul>
+
+                <p class="db-app-note">
+                    @if ($cohort['decision_note'])
+                        {{ $cohort['decision_note'] }}
+                    @else
+                        We are still setting the review timetable for {{ $cohort['name'] }}. When it is
+                        fixed we will email you at <strong>{{ auth()->user()->email }}</strong> &mdash; you
+                        do not need to check back or chase us.
+                    @endif
+                    Anything you want to ask in the meantime, write to
+                    <a href="mailto:hello@skillscoop.org">hello@skillscoop.org</a> and a person will reply.
+                </p>
             </div>
 
             <!-- Pathways -->
@@ -425,6 +500,61 @@
             }
             .db-status-done { background: rgba(3,139,137,0.05); border-left: 5px solid var(--ath-teal); }
             .db-status-todo { background: rgba(238,157,29,0.06); border-left: 5px solid var(--ath-gold); }
+
+            /* Application status. Same visual language as the assessment
+               status block above it, so the two read as one story rather than
+               two unrelated cards. */
+            .db-application { border-top: 3px solid var(--ath-teal); }
+            .db-app-state {
+                display: flex;
+                gap: 16px;
+                align-items: flex-start;
+                padding: 20px;
+                border-radius: 16px;
+                margin: 4px 0 22px;
+            }
+            .db-app-state.is-complete { background: rgba(3,139,137,0.06); }
+            .db-app-state.is-progress { background: rgba(238,157,29,0.07); }
+            .db-app-icon {
+                flex: 0 0 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+                font-size: 1rem;
+            }
+            .db-app-state.is-complete .db-app-icon { background: var(--ath-teal); }
+            .db-app-state.is-progress .db-app-icon { background: var(--ath-gold); }
+            .db-app-state h4 { margin: 0 0 6px; color: var(--ath-deep); font-size: 1.05rem; }
+            .db-app-state p { margin: 0; line-height: 1.6; }
+
+            .db-app-facts {
+                list-style: none;
+                margin: 0 0 20px;
+                padding: 0;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                gap: 14px;
+            }
+            .db-app-facts li {
+                padding: 14px 16px;
+                border: 1px solid rgba(3,139,137,0.14);
+                border-radius: 14px;
+            }
+            .db-app-facts span {
+                display: block;
+                font-size: 0.72rem;
+                letter-spacing: 1.2px;
+                text-transform: uppercase;
+                color: var(--ath-muted, #6b7480);
+                margin-bottom: 4px;
+            }
+            .db-app-facts strong { color: var(--ath-deep); font-size: 1.05rem; }
+
+            .db-app-note { margin: 0; line-height: 1.7; font-size: 0.95rem; }
+            .db-app-note a { color: var(--ath-teal); }
             .db-status-head { display: flex; align-items: center; gap: 16px; margin-bottom: 22px; }
             .db-status-head h3 {
                 font-family: 'Outfit', sans-serif;
