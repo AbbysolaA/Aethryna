@@ -365,26 +365,14 @@ Route::get('/{key}.txt', function (string $key) {
 // Add or remove pages in config/services.php > indexnow > urls, and both
 // this sitemap and the next IndexNow push pick up the change automatically.
 Route::get('/sitemap.xml', function () {
-    $paths = config('services.indexnow.urls', []);
+    // One list, shared with the IndexNow command. It used to be built here and
+    // separately in the command, and the two had drifted: every panel and every
+    // course was in the sitemap and in nothing the command ever submitted.
+    $paths = \App\Support\SiteUrls::all();
     $host  = config('services.indexnow.host', 'skillscoop.org');
     // Deploy time as the sitemap-wide lastmod — good enough for a small site
     // and honest (changes every deploy, stable between deploys).
     $lastmod = date('c', @filemtime(base_path('routes/web.php')) ?: time());
-
-    // Each panel has its own page, and those are database rows rather than a
-    // fixed list, so they are appended here instead of being maintained by
-    // hand in config. A past panel keeps its URL: it is the archive page for
-    // that panel and its recording.
-    foreach (\App\Models\PanelSession::orderBy('sort_order')->pluck('slug') as $slug) {
-        $paths[] = '/sessions/' . $slug;
-    }
-
-    // Same reasoning for courses. Each has its own page now, and they are rows
-    // rather than a fixed list. Pilot tracks first: a crawler with a budget
-    // should reach the four we actually run before the rest.
-    foreach (\App\Models\Pathway::active()->orderByDesc('is_pilot')->orderBy('name')->pluck('slug') as $slug) {
-        $paths[] = '/programs/' . $slug;
-    }
 
     $xml  = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
     $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";

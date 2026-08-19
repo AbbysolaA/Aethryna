@@ -36,7 +36,14 @@ class IndexNowPushCommand extends Command
 
         $paths = $this->argument('urls');
         if (empty($paths)) {
-            $paths = config('services.indexnow.urls', []);
+            // Every public URL, not just the fixed list in config.
+            //
+            // This used to read config('services.indexnow.urls') alone, which
+            // is sixteen static pages. The sitemap appended panels and courses
+            // from the database and this did not, so the twenty-one pages most
+            // in need of announcing — every panel, every course — were the only
+            // ones never submitted. Both now build from App\Support\SiteUrls.
+            $paths = \App\Support\SiteUrls::all();
         }
 
         if (empty($paths)) {
