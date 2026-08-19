@@ -14,6 +14,13 @@
  * person with the same name. Structured data alone asserts a relationship;
  * same_as is what corroborates it against sources already trusted.
  */
+
+/*
+ * Places in the founding cohort. Declared before the array so the number and
+ * the sentence about filling them cannot drift apart.
+ */
+$cohortPlaces = 30;
+
 return [
 
     'legal_name' => 'Aethryna Digital Skills Co-op CIC',
@@ -102,14 +109,23 @@ return [
     'cohort' => [
         'name'          => 'Cohort 1',
         'starts'        => 'January 2027',
-        'places'        => 30,
+        'places'        => $cohortPlaces,
 
-        // e.g. 'We review applications every month. You will hear from us by
-        // the end of the month after you apply.' Set it once you know.
+        // Still unset, deliberately. The dashboard falls back to saying the
+        // review timetable is being worked out and that we will email when it
+        // is fixed, which is true. A date invented here would be a promise to
+        // people who have little reason to trust promises, and a missed one
+        // costs more than an absent one.
+        //
+        // When there is a real answer, e.g. 'We review applications every
+        // month. You will hear from us by the end of the month after you
+        // apply.' It appears on the learner dashboard and nowhere else.
         'decision_note' => null,
 
-        // Set when applications actually close, e.g. '30 November 2026'.
-        'closes'        => null,
+        // Rolling: applications close when the cohort is full rather than on a
+        // date. Composed from $cohortPlaces above so the two cannot say
+        // different numbers.
+        'closes'        => 'When all ' . $cohortPlaces . ' places are filled',
     ],
 
 ];
