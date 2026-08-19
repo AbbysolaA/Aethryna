@@ -14,6 +14,9 @@ Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/pathway', [PageController::class, 'pathway'])->name('pathway');
 Route::get('/programs', [PageController::class, 'programs'])->name('programs');
+// One page per course. Declared after the literal /programs so the list keeps
+// the bare path, and bound on the slug the pathways already carry.
+Route::get('/programs/{pathway}', [PageController::class, 'program'])->name('programs.show');
 Route::get('/impact', [PageController::class, 'impact'])->name('impact');
 Route::get('/stories', [PageController::class, 'stories'])->name('stories');
 
@@ -374,6 +377,13 @@ Route::get('/sitemap.xml', function () {
     // that panel and its recording.
     foreach (\App\Models\PanelSession::orderBy('sort_order')->pluck('slug') as $slug) {
         $paths[] = '/sessions/' . $slug;
+    }
+
+    // Same reasoning for courses. Each has its own page now, and they are rows
+    // rather than a fixed list. Pilot tracks first: a crawler with a budget
+    // should reach the four we actually run before the rest.
+    foreach (\App\Models\Pathway::active()->orderByDesc('is_pilot')->orderBy('name')->pluck('slug') as $slug) {
+        $paths[] = '/programs/' . $slug;
     }
 
     $xml  = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";

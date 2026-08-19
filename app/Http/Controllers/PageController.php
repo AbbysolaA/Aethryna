@@ -41,6 +41,52 @@ class PageController extends Controller
         return view('programs', compact('pathways'));
     }
 
+    /**
+     * One course, on its own page.
+     *
+     * Every pathway had a name, a slug, a description, skills and career paths
+     * and no address of its own — all seventeen lived four-at-a-time inside a
+     * paginated list. So none could carry its own meta description, be shared,
+     * or be found by its own name, and the assessment could tell somebody their
+     * track was Cybersecurity Foundations while every link on offer took them
+     * to page one, which does not mention it.
+     *
+     * Pilot tracks and the rest use the same template. The difference is what
+     * it says: one is a course running in Cohort 1, the other a direction the
+     * assessment can point somebody in. Pretending otherwise on thirteen pages
+     * would be a promise the programme cannot keep.
+     */
+    public function program(Pathway $pathway)
+    {
+        abort_unless($pathway->is_active, 404);
+
+        // Shown as "other tracks you could look at". Pilot tracks first,
+        // because those are the ones somebody can actually start in January.
+        $related = Pathway::active()
+            ->where('id', '!=', $pathway->id)
+            ->where('category', $pathway->category)
+            ->orderByDesc('is_pilot')
+            ->take(3)
+            ->get();
+
+        if ($related->count() < 3) {
+            $related = $related->concat(
+                Pathway::active()
+                    ->where('id', '!=', $pathway->id)
+                    ->whereNotIn('id', $related->pluck('id'))
+                    ->orderByDesc('is_pilot')
+                    ->take(3 - $related->count())
+                    ->get()
+            );
+        }
+
+        return view('programs.show', [
+            'pathway'     => $pathway,
+            'related'     => $related,
+            'pilotTracks' => Pathway::active()->pilot()->get(),
+        ]);
+    }
+
     public function impact()
     {
         return view('impact');
