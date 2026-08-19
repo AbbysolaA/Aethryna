@@ -91,4 +91,27 @@ return [
         'id' => env('GOOGLE_TAG_MANAGER_ID', 'GTM-KD4HX7VQ'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Cloudflare Web Analytics
+    |--------------------------------------------------------------------------
+    |
+    | Cookieless page analytics. No cookie, no stored identifier, so no consent
+    | banner is required under PECR — which is why it was chosen over Microsoft
+    | Clarity, whose session recording and heatmaps do need one.
+    |
+    | Empty by default and empty is correct if Web Analytics is enabled from the
+    | Cloudflare dashboard instead: the site is proxied, so Cloudflare injects
+    | the beacon at the edge and setting this as well would count every page
+    | view twice. Only set it for manual injection.
+    |
+    | The cookie and privacy policies read this key and describe analytics as in
+    | use only when it is set, so the policies cannot claim something the site
+    | is not doing.
+    |
+    */
+    'cloudflare_analytics' => [
+        'token' => env('CLOUDFLARE_ANALYTICS_TOKEN'),
+    ],
+
 ];
