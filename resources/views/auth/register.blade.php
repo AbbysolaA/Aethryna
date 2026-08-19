@@ -6,6 +6,23 @@
      told they are applying to the cohort. --}}
 @php $claimingOffer = session('claiming_volunteer_offer'); @endphp
 
+{{--
+    This page is crawlable now, so it needs to say what it is.
+
+    It set neither a title nor a description, so it inherited the site-wide
+    defaults — meaning it would have entered the index carrying the same title
+    and description as the home page, competing with it for the same terms and
+    telling a searcher nothing about what they had found.
+
+    Cohort details come from config so the page cannot drift from the dashboard
+    and the course pages, which quote the same numbers.
+--}}
+@section('title', 'Apply to the Founding Cohort | Free Digital Skills Programme | Skills Co-op')
+
+@section('meta_description', 'Apply for one of ' . config('organisation.cohort.places')
+    . ' places on the free ' . config('organisation.cohort.starts')
+    . ' cohort. AI-integrated digital skills training for people the labour market overlooks.')
+
 @section('auth-title', $claimingOffer
     ? 'Create your account'
     : 'Apply to the founding cohort')
