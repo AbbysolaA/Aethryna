@@ -46,13 +46,27 @@ class SpeakerPhotoCommandTest extends TestCase
      * A tall, transparent PNG — the shape and format a phone or a designer
      * actually hands over.
      */
-    private function makeSource(string $name, int $w = 1200, int $h = 1600): string
+    private function makeSource(string $name, int $w = 1200, int $h = 1600, bool $noisy = false): string
     {
         $path  = $this->dir.'/'.$name;
         $image = imagecreatetruecolor($w, $h);
 
         imagesavealpha($image, true);
         imagefill($image, 0, 0, imagecolorallocatealpha($image, 0, 0, 0, 127));
+
+        // Flat colour compresses to almost nothing, so a fixture that has to
+        // start out over the size budget needs detail in it.
+        if ($noisy) {
+            mt_srand(1);
+            for ($i = 0; $i < $w * $h / 8; $i++) {
+                imagesetpixel(
+                    $image,
+                    mt_rand(0, $w - 1),
+                    mt_rand(0, $h - 1),
+                    imagecolorallocate($image, mt_rand(0, 255), mt_rand(0, 255), mt_rand(0, 255))
+                );
+            }
+        }
 
         // A marker band across the top, so the crop's gravity is observable.
         imagefilledrectangle($image, 0, 0, $w, (int) ($h * 0.1), imagecolorallocate($image, 255, 0, 0));
@@ -158,6 +172,98 @@ class SpeakerPhotoCommandTest extends TestCase
         ])->assertSuccessful();
 
         $this->assertSame(300, getimagesize($this->dir.'/__test-small-out.jpg')[0]);
+    }
+
+    /**
+     * A big photo raises the memory limit rather than dying on it.
+     *
+     * GD holds a decoded image as raw pixels — four bytes each, however well
+     * compressed the file was. A 13MB PNG of a 4000x6000 headshot needs close
+     * to 100MB to open, which killed the command outright on the server's
+     * 128MB limit. It is a fatal error, not a catchable one, so it has to be
+     * headed off before the decode.
+     */
+    public function test_it_raises_the_memory_limit_for_a_large_source(): void
+    {
+        $original = ini_get('memory_limit');
+
+        // Comfortably above what PHPUnit is already using, and far below what
+        // a 3000x3000 decode needs (~36MB of pixels alone).
+        $floor = memory_get_usage(true) + (24 * 1024 * 1024);
+        ini_set('memory_limit', (int) ceil($floor / 1048576).'M');
+        $before = $this->limitInBytes();
+
+        try {
+            $this->makeSource('__test-huge.png', 3000, 3000);
+
+            $this->artisan('speakers:photo', [
+                'source' => '__test-huge.png',
+                'target' => '__test-huge-out.jpg',
+            ])->assertSuccessful();
+
+            $this->assertGreaterThan(
+                $before,
+                $this->limitInBytes(),
+                'The limit should have been raised to fit the decode.'
+            );
+            $this->assertSame(800, getimagesize($this->dir.'/__test-huge-out.jpg')[0]);
+        } finally {
+            ini_set('memory_limit', $original);
+        }
+    }
+
+    private function limitInBytes(): int
+    {
+        $limit = trim((string) ini_get('memory_limit'));
+
+        if ($limit === '-1') {
+            return PHP_INT_MAX;
+        }
+
+        return match (strtolower(substr($limit, -1))) {
+            'g'     => (int) $limit * 1073741824,
+            'm'     => (int) $limit * 1048576,
+            'k'     => (int) $limit * 1024,
+            default => (int) $limit,
+        };
+    }
+
+    /**
+     * --heavy re-encodes in place, so the file it measures as "before" is the
+     * same one it is about to overwrite.
+     */
+    public function test_heavy_reencodes_oversized_photos_in_place(): void
+    {
+        // A .jpg path, because that is what every speaker photo actually uses
+        // and what --heavy will act on. The bytes start as PNG; the extension
+        // is what the command keys off.
+        $this->makeSource('__test-heavy.jpg', 1600, 1600, noisy: true);
+        $path = $this->dir.'/__test-heavy.jpg';
+
+        PanelSpeaker::create([
+            'name'       => 'Heavy Photo',
+            'title'      => 'Speaker',
+            'company'    => 'Test Co',
+            'bio'        => 'A speaker whose photo is far too large.',
+            'photo_path' => 'images/speakers/__test-heavy.jpg',
+        ]);
+
+        $before = filesize($path);
+        $this->assertGreaterThan(150 * 1024, $before, 'The fixture needs to start over budget.');
+
+        Artisan::call('speakers:photo', ['--heavy' => true]);
+        clearstatcache(true, $path);
+
+        // Not an absolute budget: the fixture is pure noise, which is the worst
+        // case JPEG can be handed. What --heavy promises is a large reduction
+        // in place, and the absolute budget is covered above with a realistic
+        // source.
+        $after = filesize($path);
+
+        $this->assertLessThan($before / 2, $after, 'Re-encoding should at least halve an oversized photo.');
+        $this->assertSame(800, getimagesize($path)[0], 'It should have been resized down, not merely recompressed.');
+        $this->assertSame(IMAGETYPE_JPEG, getimagesize($path)[2], 'Re-encoded in place, so the path is unchanged even though the format is not.');
+        $this->assertStringContainsString('saved across 1 photo', Artisan::output());
     }
 
     public function test_the_audit_names_speakers_whose_photo_is_absent(): void
