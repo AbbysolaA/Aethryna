@@ -15,8 +15,8 @@
             <h1>Privacy Policy</h1>
             <p class="legal-subtitle">How we collect, use, and protect your personal data. Operated under UK GDPR and the Data Protection Act 2018.</p>
             <div class="legal-meta">
-                <span><i class="fas fa-calendar"></i> Last reviewed: June 2026</span>
-                <span><i class="fas fa-tag"></i> Version 1.0</span>
+                <span><i class="fas fa-calendar"></i> Last reviewed: August 2026</span>
+                <span><i class="fas fa-tag"></i> Version 1.1</span>
                 <span><i class="fas fa-building"></i> Aethryna Digital Skills Co-op CIC</span>
             </div>
         </div>
@@ -123,7 +123,7 @@
             <ul>
                 <li>the <code>skillscoop.org</code> website and any sub‑domain</li>
                 <li>account registration and the learner dashboard</li>
-                <li>the career assessment tool</li>
+                <li>the career assessment tool, including any contact details you give it</li>
                 <li>session registration and the panel series wait‑list</li>
                 <li>the newsletter and footer sign‑up form</li>
                 <li>any email correspondence with us</li>
@@ -146,7 +146,8 @@
                         <tr><td><strong>Account registration</strong></td><td>Name, email address, hashed password, role (learner, mentor, coach or admin)</td><td>Provided by you</td><td>To create and manage your account and personalise your experience</td></tr>
                         <tr><td><strong>Session registration</strong></td><td>Name, email address, interest type, referral source</td><td>Provided by you</td><td>To confirm your place at a panel session and add you to our mailing list with your consent</td></tr>
                         <tr><td><strong>Newsletter / wait‑list</strong></td><td>Email address</td><td>Provided via the footer sign‑up form</td><td>To send programme updates, panel announcements and learning resources</td></tr>
-                        <tr><td><strong>Career assessment</strong></td><td>Your responses to the pathway assessment questions, linked to your account</td><td>Provided by you</td><td>To recommend the most suitable learning track for your goals</td></tr>
+                        <tr><td><strong>Career assessment</strong></td><td>Your responses to the pathway assessment questions. If you are signed in these are linked to your account; if you are not, they are held against your browser session only</td><td>Provided by you</td><td>To recommend the most suitable learning track for your goals</td></tr>
+                        <tr><td><strong>Assessment contact details</strong></td><td>The name and email address you give the assessment itself, if you ask us to email your results or send you a link to finish later. Optional — the assessment works without them</td><td>Provided by you</td><td>To email you your result, to send you a link back into an unfinished assessment, and to send one reminder if you do not come back to it</td></tr>
                         <tr><td><strong>Mentoring records</strong></td><td>Session date and duration, topics covered, action items, mentor notes, learner engagement rating</td><td>Entered by mentors or coaches (internal staff)</td><td>To track learning progress and provide consistent support across sessions</td></tr>
                         <tr><td><strong>Partner referrals</strong></td><td>Referrer name, email, organisation and role. First name and (only if consent is confirmed) contact details of the person being referred, plus optional context</td><td>Provided by the referring partner via the /refer form</td><td>To follow up with prospective learners referred by community partners. Contact details of the referred person are only stored when the referrer explicitly confirms they have consent</td></tr>
                         <tr><td><strong>Technical and security data</strong></td><td>Session tokens, password reset tokens, application cache data, server logs</td><td>Generated automatically</td><td>To keep your account secure and the site functioning correctly</td></tr>
@@ -171,10 +172,28 @@
                         <tr><td>Sending verification and password reset emails</td><td>Contract (Article 6(1)(b))</td></tr>
                         <tr><td>Adding you to the mailing list</td><td>Consent (Article 6(1)(a))</td></tr>
                         <tr><td>Career assessment and pathway recommendation</td><td>Contract (Article 6(1)(b))</td></tr>
+                        <tr><td>Emailing your assessment result, or a link back into an unfinished assessment, when you ask us to</td><td>Consent (Article 6(1)(a))</td></tr>
+                        <tr><td>Sending one reminder if you leave the assessment unfinished</td><td>Legitimate interests (Article 6(1)(f)) &mdash; see section 4.1</td></tr>
                         <tr><td>Mentoring session notes</td><td>Legitimate interests (Article 6(1)(f))</td></tr>
                         <tr><td>Security and fraud prevention</td><td>Legitimate interests (Article 6(1)(f))</td></tr>
                     </tbody>
                 </table>
+            </div>
+
+            <h3>4.1 The assessment reminder</h3>
+            <p>The pathway assessment does not ask who you are. You can take it, finish it and read your result without giving us a name or an email address, and we would rather you did that than not take it at all.</p>
+            <p>Two points in it offer to email you. Part way through, you can ask us to send a link so you can finish later on another device. At the end, you can ask us to send your result. Both are optional, and both only happen because you asked.</p>
+            <p>If you give us an address and then do not come back, we send <strong>one</strong> reminder with the link to carry on. That one email is the only thing here we send without you asking for it, so these are the limits we hold ourselves to:</p>
+            <ul>
+                <li><strong>One, ever.</strong> Not a sequence, and there is no second attempt if you ignore it.</li>
+                <li><strong>Only if you started.</strong> If you gave an address but answered nothing, we do not email you.</li>
+                <li><strong>Only within a fortnight.</strong> Nothing older than that is chased. We are not going to write to you about something you half-did months ago.</li>
+                <li><strong>Never for marketing.</strong> An address given to the assessment is not added to the mailing list and is not used to sell you anything.</li>
+                <li><strong>Said upfront.</strong> The form that takes your address tells you the reminder may follow, before you give it.</li>
+            </ul>
+            <p><strong>Stopping it.</strong> The reminder and the finish-later link both carry an unsubscribe link, and your mail app may also show its own unsubscribe button at the top of the message. Either works in one click, with nothing to log in to and no form to fill in. If you use it on an assessment you never finished, we delete that assessment and the answers in it as well as stopping the email. You can also just reply to the email, or write to <strong>hello@skillscoop.org</strong>.</p>
+            <div class="legal-alert">
+                <strong>Why legitimate interests and not consent?</strong> Because the reminder is the ordinary completion of something you started and asked us to help you return to, rather than a separate thing we want to send you. We have weighed it against the intrusion of one email and think the balance holds &mdash; but if you disagree, you have an absolute right to object, and the unsubscribe link is that right exercised in one click.
             </div>
         </div>
     </section>
@@ -219,7 +238,9 @@
                     </thead>
                     <tbody>
                         <tr><td>Account data (name, email, role)</td><td>Duration of account + 12 months after deletion request</td><td>Compliance with contractual obligations and reasonable account recovery period</td></tr>
-                        <tr><td>Career assessment responses and results</td><td>Duration of account (deleted when account is deleted)</td><td>Needed for personalised experience</td></tr>
+                        <tr><td>Career assessment responses and results (signed in)</td><td>Duration of account (deleted when the account is deleted)</td><td>Needed for personalised experience</td></tr>
+                        <tr><td>Career assessment responses (not signed in, no contact details given)</td><td>Held against a browser session identifier only, with no name or email attached. Marked abandoned after 30 days if never finished</td><td>The answers show us where the assessment loses people, which is how we improve it. They carry no contact details</td></tr>
+                        <tr><td>Assessment contact details (name and email given to the assessment)</td><td>Until you unsubscribe, or until the assessment is deleted. Unsubscribing from an unfinished assessment deletes it and the answers in it immediately</td><td>We only hold them for as long as they have a purpose: emailing your result, or the one reminder</td></tr>
                         <tr><td>Session registration records</td><td>3 years from the date of the session</td><td>Evidence programme activity and community impact reporting</td></tr>
                         <tr><td>Newsletter / wait‑list email</td><td>Until you unsubscribe or withdraw consent</td><td>We only send communications while you have consented</td></tr>
                         <tr><td>Mentoring session notes</td><td>Duration of the mentoring relationship + 2 years</td><td>Provide continuity of support and evidence programme outcomes</td></tr>
@@ -274,8 +295,8 @@
                 <li><strong>Erasure (right to be forgotten)</strong> – Ask us to delete your personal data, unless we are required to retain it for legal or contractual reasons.</li>
                 <li><strong>Restriction</strong> – Request a pause on processing of your data in certain circumstances.</li>
                 <li><strong>Portability</strong> – Receive a copy of your data in a structured, machine‑readable format.</li>
-                <li><strong>Object</strong> – Object to processing based on legitimate interests.</li>
-                <li><strong>Withdraw consent</strong> – Where processing is based on consent (e.g., marketing emails), you can withdraw it at any time. Every marketing email includes an unsubscribe link.</li>
+                <li><strong>Object</strong> – Object to processing based on legitimate interests. For the assessment reminder you do not need to write to us: the unsubscribe link in the email stops it in one click (see <a href="#lawful-basis">section 4.1</a>).</li>
+                <li><strong>Withdraw consent</strong> – Where processing is based on consent (e.g., marketing emails), you can withdraw it at any time. Every marketing email includes an unsubscribe link, as does every assessment email we send.</li>
                 <li><strong>Lodge a complaint</strong> – If you are not satisfied with how we handle your data, you can complain to the Information Commissioner’s Office (ICO) at <a href="https://ico.org.uk" target="_blank">ico.org.uk</a> or call 0303 123 1113.</li>
             </ul>
         </div>
