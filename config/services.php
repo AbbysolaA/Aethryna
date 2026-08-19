@@ -57,6 +57,9 @@ return [
         // Add new pages here when you create them.
         'urls' => [
             '/',
+            // The application page. Crawlable since it is where somebody
+            // searching for how to apply should land.
+            '/register',
             '/about',
             '/pathway',
             '/programs',
