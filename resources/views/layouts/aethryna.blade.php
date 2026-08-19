@@ -12,7 +12,10 @@
     <meta name="description" content="@yield('meta_description', 'Skills Co-op is a funded 25-week digital skills programme for people facing barriers to employment. Four pilot tracks: Project and Product Delivery, Data and AI Analytics, Product Design and Marketing, and Software Development. Based in Liverpool, open across the UK.')">
     <meta name="keywords" content="@yield('meta_keywords', 'digital skills training, funded programme, Liverpool, career change, NEET, IT support, digital design, data analytics, project management, AI skills, underserved communities')">
     <meta name="author" content="Skills Co-op">
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    {{-- Overridable so pages reached only from a link in an email — an
+         unsubscribe confirmation, say — can keep themselves out of the index
+         rather than inviting search traffic to a one-person URL. --}}
+    <meta name="robots" content="@yield('meta_robots', 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1')">
 
     <!-- Canonical URL -->
     <link rel="canonical" href="{{ url()->current() }}">

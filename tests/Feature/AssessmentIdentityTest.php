@@ -237,6 +237,104 @@ class AssessmentIdentityTest extends TestCase
         $this->assertNull($assessment->fresh()->reminder_sent_at);
     }
 
+    public function test_the_reminder_carries_a_one_click_unsubscribe_header(): void
+    {
+        $assessment = Assessment::create([
+            'status' => 'in_progress', 'scores' => [],
+            'started_at' => now()->subDays(2),
+            'contact_email' => 'due@example.test',
+            'responses' => [1 => ['question_id' => 1, 'answer_id' => 1, 'clusters' => ['T']]],
+        ]);
+
+        $headers = (new AssessmentResume($assessment, 'reminder'))->headers();
+        $token   = $assessment->fresh()->unsubscribe_token;
+
+        $this->assertNotNull($token, 'The header would point nowhere without a token.');
+
+        // The pairing is what makes Gmail and Apple Mail show a real
+        // unsubscribe control; List-Unsubscribe alone is widely ignored.
+        $this->assertStringContainsString($token, $headers->text['List-Unsubscribe']);
+        $this->assertStringContainsString('mailto:', $headers->text['List-Unsubscribe']);
+        $this->assertSame('List-Unsubscribe=One-Click', $headers->text['List-Unsubscribe-Post']);
+
+        // And in the body too, for the clients that surface neither.
+        $this->assertStringContainsString(
+            '/assessment/unsubscribe/' . $token,
+            (new AssessmentResume($assessment, 'reminder'))->render()
+        );
+    }
+
+    public function test_looking_at_the_unsubscribe_page_changes_nothing(): void
+    {
+        $assessment = Assessment::create([
+            'status' => 'in_progress', 'scores' => [], 'started_at' => now(),
+            'contact_email' => 'scan@example.test', 'responses' => [],
+        ]);
+        $token = $assessment->ensureUnsubscribeToken();
+
+        // A mail scanner or link preview bot follows the URL with a GET. It
+        // must not opt anybody out on their behalf.
+        $this->get("/assessment/unsubscribe/{$token}")->assertOk();
+
+        $this->assertNotNull($assessment->fresh(), 'A GET must not delete anything.');
+        $this->assertNull($assessment->fresh()->reminders_opted_out_at);
+    }
+
+    public function test_one_click_unsubscribe_stops_the_reminder_and_removes_the_unfinished_assessment(): void
+    {
+        $assessment = Assessment::create([
+            'status' => 'in_progress', 'scores' => [], 'started_at' => now()->subDays(2),
+            'contact_email' => 'stop@example.test',
+            'responses' => [1 => ['question_id' => 1, 'answer_id' => 1, 'clusters' => ['T']]],
+        ]);
+        $token = $assessment->ensureUnsubscribeToken();
+
+        // No CSRF token: the provider posts from outside any browser session.
+        $this->post("/assessment/unsubscribe/{$token}", ['List-Unsubscribe' => 'One-Click'])
+            ->assertOk()
+            ->assertHeader('Content-Type', 'text/plain; charset=UTF-8');
+
+        $this->assertNull($assessment->fresh(), 'Someone who said stop should not be kept on file.');
+    }
+
+    public function test_unsubscribing_keeps_a_completed_assessment(): void
+    {
+        $assessment = Assessment::create([
+            'status' => 'completed', 'scores' => [], 'started_at' => now()->subDay(),
+            'completed_at' => now(), 'contact_email' => 'done@example.test', 'responses' => [],
+        ]);
+        $token = $assessment->ensureUnsubscribeToken();
+
+        $this->post("/assessment/unsubscribe/{$token}", ['List-Unsubscribe' => 'One-Click'])->assertOk();
+
+        // Deleting would take away results they already have and may want.
+        $this->assertNotNull($assessment->fresh());
+        $this->assertNotNull($assessment->fresh()->reminders_opted_out_at);
+    }
+
+    public function test_a_second_unsubscribe_is_not_an_error(): void
+    {
+        // Providers retry, and people click twice. Neither should see a failure.
+        $this->post('/assessment/unsubscribe/never-existed', ['List-Unsubscribe' => 'One-Click'])
+            ->assertOk();
+    }
+
+    public function test_nobody_who_opted_out_is_reminded(): void
+    {
+        Mail::fake();
+
+        Assessment::create([
+            'status' => 'in_progress', 'scores' => [], 'started_at' => now()->subDays(2),
+            'contact_email' => 'optedout@example.test',
+            'reminders_opted_out_at' => now(),
+            'responses' => [1 => ['question_id' => 1, 'answer_id' => 1, 'clusters' => ['T']]],
+        ]);
+
+        $this->artisan('assessments:remind')->assertSuccessful();
+
+        Mail::assertNothingSent();
+    }
+
     public function test_a_real_run_reports_what_it_actually_did(): void
     {
         Mail::fake();

@@ -50,6 +50,11 @@ class AssessmentRemindCommand extends Command
         $due = Assessment::query()
             ->unfinished()
             ->whereNull('reminder_sent_at')
+            // Someone who used the unsubscribe link is normally deleted
+            // outright, so this rarely matches — it is the backstop for a
+            // completed assessment that opted out, and for any future path
+            // that records the opt-out without removing the row.
+            ->whereNull('reminders_opted_out_at')
             ->whereNotNull('contact_email')
             ->where('started_at', '<=', now()->subHours($hours))
             // Bounded at both ends. Chasing someone about something they
@@ -84,9 +89,12 @@ class AssessmentRemindCommand extends Command
             }
 
             try {
-                // Same reason as in the controller: the link has to exist
+                // Same reason as in the controller: both links have to exist
                 // whether or not the mailable ever gets as far as rendering.
+                // The unsubscribe one especially — it goes in a header the
+                // provider reads, so a null there is a broken opt-out.
                 $assessment->ensureResumeToken();
+                $assessment->ensureUnsubscribeToken();
 
                 Mail::to($assessment->contact_email)
                     ->send(new AssessmentResume($assessment, 'reminder'));

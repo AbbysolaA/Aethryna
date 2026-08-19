@@ -41,6 +41,12 @@
                 @elseif ($assessment->status !== 'completed' && $assessment->recipientEmail())
                     <p class="vl-cell-sub">No reminder sent yet.</p>
                 @endif
+                @if ($assessment->hasOptedOutOfReminders())
+                    <p class="vl-cell-sub">
+                        Asked us to stop emailing on {{ $assessment->reminders_opted_out_at->format('j M Y') }}.
+                        Do not contact about this assessment.
+                    </p>
+                @endif
             </div>
             <div class="vl-head-actions">
                 <a href="{{ route('admin.assessments.index') }}" class="vl-back">All assessments</a>

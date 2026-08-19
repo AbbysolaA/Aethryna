@@ -94,7 +94,15 @@
             </p>
             @if ($isNudge)
                 <p style="margin:14px 0 0 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:15px; line-height:24px; color:#2b333a;">
-                    Not for you after all? Ignore this and you will not hear from us again about it. If you would rather we deleted what you started, reply to this email and we will.
+                    Not for you after all? Ignore this and you will not hear from us again about it, or
+                    <a href="{{ $unsubscribeUrl }}" class="sc-link" style="color:#055860; text-decoration:underline;">tell us to stop</a>
+                    and we will delete what you started.
+                </p>
+            @else
+                <p style="margin:14px 0 0 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:15px; line-height:24px; color:#2b333a;">
+                    If you do not come back to it, we will send one reminder and nothing after that. You can
+                    <a href="{{ $unsubscribeUrl }}" class="sc-link" style="color:#055860; text-decoration:underline;">turn that off now</a>
+                    if you would rather we did not.
                 </p>
             @endif
             <p style="margin:20px 0 0 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:16px; line-height:26px; color:#2b333a;">

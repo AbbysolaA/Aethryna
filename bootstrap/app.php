@@ -11,6 +11,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        // One-click unsubscribe is posted by the mail provider (Gmail, Apple
+        // Mail), not by a browser holding a session, so there is no CSRF token
+        // to send and RFC 8058 does not allow for one. Safe to exempt: the URL
+        // carries its own unguessable token, and the only thing it can do is
+        // stop us emailing that one assessment.
+        $middleware->validateCsrfTokens(except: [
+            'assessment/unsubscribe/*',
+        ]);
+
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
             'coach' => \App\Http\Middleware\CoachMiddleware::class,

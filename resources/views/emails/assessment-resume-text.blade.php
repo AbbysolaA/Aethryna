@@ -27,7 +27,12 @@ Carry on here:
 There are no right answers and nothing to revise for. It exists to point you at a starting track, and you can change track later.
 @if ($isNudge)
 
-Not for you after all? Ignore this and you will not hear from us again about it. If you would rather we deleted what you started, reply to this email and we will.
+Not for you after all? Ignore this and you will not hear from us again about it. To have us delete what you started:
+{{ $unsubscribeUrl }}
+@else
+
+If you do not come back to it, we will send one reminder and nothing after that. To turn that off now:
+{{ $unsubscribeUrl }}
 @endif
 
 Abby

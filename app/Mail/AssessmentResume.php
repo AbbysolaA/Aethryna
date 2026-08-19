@@ -6,6 +6,7 @@ use App\Models\Assessment;
 use App\Models\Question;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Headers;
 use Illuminate\Queue\SerializesModels;
 
 /**
@@ -36,6 +37,31 @@ class AssessmentResume extends Mailable
             ->subject($data['subject'])
             ->view('emails.assessment-resume', $data)
             ->text('emails.assessment-resume-text', $data);
+    }
+
+    /**
+     * One-click unsubscribe, per RFC 8058.
+     *
+     * List-Unsubscribe on its own is old and widely ignored by senders; the
+     * pairing with List-Unsubscribe-Post is what makes Gmail and Apple Mail
+     * render a real unsubscribe control at the top of the message, so somebody
+     * who does not want this can stop it in one tap without reading the footer
+     * or composing a reply.
+     *
+     * The mailto: fallback is second on purpose — clients prefer the first
+     * usable option, and the URL resolves without a human reading an inbox.
+     *
+     * Laravel hydrates this after build(), so the two coexist
+     * (Mailable::prepareMailableForDelivery).
+     */
+    public function headers(): Headers
+    {
+        $url = $this->assessment->unsubscribeUrl();
+
+        return new Headers(text: [
+            'List-Unsubscribe' => '<' . $url . '>, <mailto:hello@skillscoop.org?subject=unsubscribe>',
+            'List-Unsubscribe-Post' => 'List-Unsubscribe=One-Click',
+        ]);
     }
 
     protected function messagePayload(): array
@@ -69,6 +95,11 @@ class AssessmentResume extends Mailable
             'total'     => $total,
             'left'      => $left,
             'resumeUrl' => $assessment->resumeUrl(),
+
+            // Also printed in the body. The header is invisible in plenty of
+            // clients, and "unsubscribe" is not a thing people should have to
+            // know to look for in their mail client's chrome.
+            'unsubscribeUrl' => $assessment->unsubscribeUrl(),
         ];
     }
 }
