@@ -1,7 +1,6 @@
 {{-- Styles for the sessions index and the per-panel pages. Extracted so
      /sessions and /sessions/{slug} render from one copy rather than two
      that drift apart. --}}
-<link href="https://fonts.bunny.net/css?family=ibm-plex-mono:500,600&display=swap" rel="stylesheet">
 <style>
     :root {
         --ath-teal: #038b89;

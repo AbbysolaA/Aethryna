@@ -23,3 +23,48 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+# ── Compression ──────────────────────────────────────────────────────────────
+# Cloudflare compresses what it serves from its own edge, but it can only do
+# that for responses it has cached. Anything it passes through, and any request
+# that reaches the origin directly, is served raw without this.
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+    AddOutputFilterByType DEFLATE application/javascript application/x-javascript
+    AddOutputFilterByType DEFLATE application/json application/xml
+    AddOutputFilterByType DEFLATE image/svg+xml application/rss+xml
+</IfModule>
+
+# ── Cache headers ────────────────────────────────────────────────────────────
+# Vite fingerprints its output (app-CdR1kR8F.css), so those files can be cached
+# hard and effectively forever: a change produces a new filename rather than a
+# new version of the same one. Everything else gets a modest window, because
+# those names do not change when the content does.
+<IfModule mod_expires.c>
+    ExpiresActive On
+
+    <FilesMatch "\.(css|js|woff2?|ttf|eot|svg|png|jpe?g|gif|webp|avif|ico)$">
+        ExpiresDefault "access plus 1 year"
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+
+    # Not fingerprinted, so it must never be cached as though it were.
+    <FilesMatch "^(manifest\.json|site\.webmanifest)$">
+        ExpiresDefault "access plus 1 day"
+        Header set Cache-Control "public, max-age=86400"
+    </FilesMatch>
+
+    ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+# The immutable directive above is only honest for fingerprinted files. Files
+# served straight from /images keep their own name across edits, so a year-long
+# cache would strand a replaced photo in browsers that had already seen it.
+<IfModule mod_headers.c>
+    <FilesMatch "\.(png|jpe?g|gif|webp|avif|svg|ico)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+    <FilesMatch "^(app|aethryna|alpine|module\.esm)-[A-Za-z0-9_-]+\.(css|js)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+</IfModule>

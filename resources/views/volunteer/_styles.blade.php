@@ -1,7 +1,6 @@
 {{-- Shared styles for the volunteer area. Included inside @push('styles') by
      claim, offer-unavailable, index and show, so the vocabulary stays in one
      place. Mirrors the tokens and shapes used on the referral page. --}}
-<link href="https://fonts.bunny.net/css?family=ibm-plex-mono:500,600&display=swap" rel="stylesheet">
 <style>
 :root {
     --ath-teal: #038b89;

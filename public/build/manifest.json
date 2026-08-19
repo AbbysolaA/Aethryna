@@ -1,0 +1,42 @@
+{
+  "_module.esm-Bq2KT4vH.js": {
+    "file": "assets/module.esm-Bq2KT4vH.js",
+    "name": "module.esm"
+  },
+  "resources/css/aethryna.css": {
+    "file": "assets/aethryna-D2lrIcER.css",
+    "src": "resources/css/aethryna.css",
+    "isEntry": true,
+    "name": "aethryna",
+    "names": [
+      "aethryna.css"
+    ]
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-CdR1kR8F.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "name": "app",
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/js/alpine.js": {
+    "file": "assets/alpine-Bbf5T6ka.js",
+    "name": "alpine",
+    "src": "resources/js/alpine.js",
+    "isEntry": true,
+    "imports": [
+      "_module.esm-Bq2KT4vH.js"
+    ]
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-D2KaJRo5.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "_module.esm-Bq2KT4vH.js"
+    ]
+  }
+}

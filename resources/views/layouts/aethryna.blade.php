@@ -49,32 +49,50 @@
     {{-- Structured data: who the organisation is, and who founded it. --}}
     @include('partials.structured-data')
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    {{--
+        Everything below is on the critical path, so it is kept deliberately
+        short. Each separate host costs a DNS lookup, a TCP connection and a
+        TLS handshake before a single byte of CSS arrives — on a phone that is
+        a few hundred milliseconds each, paid before anything can be painted.
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        This used to reach five hosts: fonts.bunny.net, fonts.googleapis.com,
+        cdnjs, unpkg and cdn.tailwindcss.com. It is now two.
+    --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'ath-teal': '#038b89',
-                        'ath-gold': '#ee9d1d',
-                        'ath-deep': '#055860',
-                    }
-                }
-            }
-        }
-    </script>
+    {{--
+        One request for every family the site uses.
 
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ @filemtime(public_path('css/app.css')) ?: '1' }}">
+        Karla is the body typeface — the stylesheets ask for it 163 times — and
+        it was never actually being fetched by any page. Only the email layout
+        loaded it, so the whole site had been rendering in whatever the browser
+        fell back to. Outfit is the display face, IBM Plex Mono the label face;
+        both were loaded per-page by seventeen views between them.
+    --}}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@300;400;600;700;800&display=swap">
+
+    {{-- One Font Awesome, not two. Four pages loaded 6.5.1 on top of the
+         6.0.0 loaded here, so those pages fetched two complete icon sets. --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    {{--
+        Compiled Tailwind, not the Play CDN.
+
+        This used to be <script src="https://cdn.tailwindcss.com"></script>:
+        a render-blocking script that ships a compiler to the browser and
+        generates the stylesheet on the visitor's device, every visit. Tailwind
+        documents it as a development convenience and says not to ship it.
+
+        The project has always built the real thing with Vite and never served
+        it. The compiled file is a fraction of the size and needs no work from
+        the phone that downloads it.
+    --}}
+    @vite(['resources/css/app.css', 'resources/js/alpine.js'])
+
+    {{-- The site's own stylesheet. Not the Vite copy of the same name, which is
+         a different and older file — this is the one in use. --}}
     <link rel="stylesheet" href="{{ asset('css/aethryna.css') }}?v={{ @filemtime(public_path('css/aethryna.css')) ?: '1' }}">
 
     @stack('styles')
@@ -93,7 +111,9 @@
 
     @include('layouts.footer')
 
-    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    {{-- Alpine is bundled by Vite above. It used to come from unpkg at a
+         version range, which had to be resolved before the file could be
+         fetched at all. --}}
     @stack('scripts')
 </body>
 </html>
