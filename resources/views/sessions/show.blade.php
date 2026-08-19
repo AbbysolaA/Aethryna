@@ -7,6 +7,22 @@
 
 @push('structured-data')
 @php
+    /*
+     * event_date holds UK wall-clock time. Every screen that prints it appends
+     * "UK" and none of them convert, so 18:30 in the column means 18:30 to the
+     * person attending.
+     *
+     * The application timezone is UTC, though, so toIso8601String() stamped it
+     * +00:00 — which is only correct in winter. Every panel so far has fallen in
+     * British Summer Time, so search results and any calendar built from this
+     * markup were putting the event an hour late. Nobody would have noticed
+     * until somebody turned up at 19:30 to an event that started at 18:30.
+     *
+     * shiftTimezone, not setTimezone: the wall-clock reading is what is correct
+     * and the offset is what was missing. setTimezone would move the time.
+     */
+    $startsAt = $session->event_date?->copy()->shiftTimezone('Europe/London');
+
     $eventSchema = array_filter([
         '@context'             => 'https://schema.org',
         '@type'                => 'Event',
@@ -15,7 +31,10 @@
         'url'                  => route('sessions.show', $session),
         'eventStatus'          => 'https://schema.org/EventScheduled',
         'eventAttendanceMode'  => 'https://schema.org/OnlineEventAttendanceMode',
-        'startDate'            => $session->event_date?->toIso8601String(),
+        'startDate'            => $startsAt?->toIso8601String(),
+        // Panels run 60 minutes. Google wants an end time and will otherwise
+        // guess, usually badly.
+        'endDate'              => $startsAt?->copy()->addHour()->toIso8601String(),
         'organizer'            => ['@id' => rtrim(url('/'), '/') . '/#organisation'],
         'inLanguage'           => 'en-GB',
         'isAccessibleForFree'  => true,
