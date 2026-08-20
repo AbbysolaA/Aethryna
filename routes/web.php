@@ -4,6 +4,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DiscoverySessionController;
 use App\Http\Controllers\ReferralController;
 use App\Http\Controllers\VolunteerApplicationController;
 use App\Http\Controllers\VolunteerController;
@@ -26,6 +27,14 @@ Route::post('/sessions/register', [PageController::class, 'registerSession'])->n
 // Declared after /sessions/register so the literal path is matched first and
 // a panel can never be looked up by the slug "register".
 Route::get('/sessions/{panelSession}', [PageController::class, 'session'])->name('sessions.show');
+
+// The Community Discovery Session has its own page rather than living under
+// /sessions/{slug}, because this URL goes on printed flyers and gets read out
+// loud. It needs to survive being typed from memory.
+Route::get('/discovery-session', [DiscoverySessionController::class, 'show'])->name('discovery-session');
+Route::post('/discovery-session', [DiscoverySessionController::class, 'register'])
+    ->middleware('throttle:discovery-register')
+    ->name('discovery-session.register');
 
 // Waitlist
 Route::post('/waitlist', [WaitlistController::class, 'store'])->name('waitlist.store');

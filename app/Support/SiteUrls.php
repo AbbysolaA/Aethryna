@@ -43,9 +43,12 @@ class SiteUrls
     /** @return array<int, string> */
     public static function panels(): array
     {
+        // landing_path wins where an event has a page of its own, because
+        // /sessions/{slug} redirects to it. Submitting the redirect would ask
+        // search engines to index a URL that only points somewhere else.
         return PanelSession::orderBy('sort_order')
-            ->pluck('slug')
-            ->map(fn ($slug) => '/sessions/' . $slug)
+            ->get(['slug', 'landing_path'])
+            ->map(fn ($panel) => $panel->landing_path ?: '/sessions/'.$panel->slug)
             ->all();
     }
 

@@ -38,7 +38,16 @@ class SessionRegisteredMail extends Mailable
 
         $firstName = trim(explode(' ', trim($this->name))[0]) ?: $this->name;
 
-        $eventDate = $s->event_date?->timezone('Europe/London');
+        // Formatted straight, not converted. event_date holds UK wall-clock
+        // time — the seeders write '18:30' meaning half six in the evening, and
+        // every panel page formats it directly.
+        //
+        // This used to call ->timezone('Europe/London'), which read that 18:30
+        // as UTC and moved it forward an hour under BST. The page said 6:30pm
+        // and the confirmation email said 7:30pm, for the same panel. Every
+        // panel so far has fallen between March and October, so every
+        // confirmation sent has been an hour late.
+        $eventDate = $s->event_date;
 
         return [
             // Layout
