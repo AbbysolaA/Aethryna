@@ -1203,8 +1203,24 @@
                 goToSlide(currentSlide + 1);
             }
 
+            /*
+             * Eleven seconds, not six.
+             *
+             * The entrance transition alone runs about 1.4s of each turn, so at
+             * six the slowest slide gave roughly four and a half seconds to read
+             * a heading, a date line and two sentences. That is not enough, and
+             * the event slide is the one people most need to finish reading.
+             */
+            const SLIDE_DURATION = 11000;
+
+            // Someone who has asked their system to reduce motion should not be
+            // handed a carousel that moves on its own. They keep the dots.
+            const stillness = window.matchMedia('(prefers-reduced-motion: reduce)');
+
             function startSlideShow() {
-                slideInterval = setInterval(nextSlide, 6000); // 6 seconds per slide
+                stopSlideShow();
+                if (stillness.matches) return;
+                slideInterval = setInterval(nextSlide, SLIDE_DURATION);
             }
 
             function stopSlideShow() {
@@ -1217,6 +1233,27 @@
                     goToSlide(parseInt(dot.dataset.slide));
                     startSlideShow();
                 });
+            });
+
+            /*
+             * Hold while somebody is actually engaging with it.
+             *
+             * Pulling the slide out from under a reader mid-sentence is the
+             * thing that makes carousels infuriating, and focusin matters as
+             * much as hover: tabbing to "Register free" must not move it out of
+             * reach before the key is pressed.
+             */
+            const hero = document.getElementById('hero');
+
+            hero?.addEventListener('mouseenter', stopSlideShow);
+            hero?.addEventListener('mouseleave', startSlideShow);
+            hero?.addEventListener('focusin', stopSlideShow);
+            hero?.addEventListener('focusout', startSlideShow);
+
+            // A carousel left running in a hidden tab burns through the deck and
+            // lands wherever it happens to be when the visitor comes back.
+            document.addEventListener('visibilitychange', () => {
+                document.hidden ? stopSlideShow() : startSlideShow();
             });
 
             // Start the slider

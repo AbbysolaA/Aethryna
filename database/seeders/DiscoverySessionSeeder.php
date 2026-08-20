@@ -39,6 +39,22 @@ class DiscoverySessionSeeder extends Seeder
                 'venue_name'    => 'Wirral Multicultural Organisation',
                 'venue_address' => '111 Conway Street, Birkenhead, CH41 4AF',
 
+                /*
+                 * Both channels run in parallel. The site's own form is the
+                 * primary route, because it needs no account and no third-party
+                 * redirect, but plenty of people would rather use the thing they
+                 * already have a login for, and refusing them that costs a
+                 * registration.
+                 *
+                 * The aff code is ours rather than the oddtdtcreator one
+                 * Eventbrite attaches when you copy the link out of the
+                 * dashboard. That default means nothing; this one makes
+                 * Eventbrite's traffic sources report say how many people came
+                 * from this website, which is a question worth being able to
+                 * answer.
+                 */
+                'eventbrite_url' => 'https://www.eventbrite.co.uk/e/1996441615615?aff=skillscooporg',
+
                 // Confirmed with the venue directly rather than assumed from a
                 // listing. Someone deciding whether they can physically get in
                 // needs this to be true, not likely.
