@@ -12,6 +12,21 @@
         // back to its original three slides the day after. Nothing here needs
         // editing when the event passes.
         $heroEvent = \App\Models\PanelSession::promotable();
+
+        /*
+         * One list drives the deck's length and the name of every control.
+         *
+         * The dots used to be three hard-coded, unlabelled spans. A screen
+         * reader announced "button" four times over with nothing to choose
+         * between them, which is no more useful than no controls at all, and
+         * the count had to be remembered separately from the slides.
+         */
+        $heroSlides = array_values(array_filter([
+            $heroEvent ? 'Community Discovery Session, 29 August' : null,
+            'Digital and AI skills for people the labour market overlooks',
+            'Funded programmes and pilot tracks',
+            'Mentorship and community',
+        ]));
     @endphp
 
     <!-- Hero Section -->
@@ -121,10 +136,34 @@
                      Generated rather than written out: the deck is three slides
                      or four depending on whether an event is running, and a
                      hard-coded dot that outlives its slide throws on click. --}}
-                <div class="ath-slider-dots">
-                    @for ($i = 0; $i < ($heroEvent ? 4 : 3); $i++)
-                        <span class="ath-dot @if ($i === 0) active @endif" data-slide="{{ $i }}"></span>
-                    @endfor
+                <div class="ath-slider-controls">
+                    {{-- Buttons, not spans. These are the only way to move the
+                         deck for anyone who has asked for reduced motion, so
+                         they have to be reachable by keyboard and have to say
+                         what they do. Left and right arrows work across the
+                         group, as they would in any other set of controls. --}}
+                    <div class="ath-slider-dots" role="group" aria-label="Choose a slide">
+                        @foreach ($heroSlides as $i => $slideLabel)
+                            <button type="button"
+                                    class="ath-dot @if ($i === 0) active @endif"
+                                    data-slide="{{ $i }}"
+                                    @if ($i === 0) aria-current="true" @endif
+                                    aria-label="{{ $slideLabel }}"></button>
+                        @endforeach
+                    </div>
+
+                    {{-- Hovering and tabbing already hold the deck, but neither
+                         is a control you can find on purpose, and neither is
+                         available to someone reading with a screen reader who
+                         is not tabbing. WCAG 2.2.2 wants an actual mechanism to
+                         stop moving content, so here is one. --}}
+                    <button type="button" class="ath-slider-toggle" data-playing="true"
+                            aria-label="Pause the slideshow">
+                        <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                            <g class="ath-icon-pause"><rect x="4" y="3" width="3" height="10" rx="1"/><rect x="9" y="3" width="3" height="10" rx="1"/></g>
+                            <path class="ath-icon-play" d="M5 3.5v9l8-4.5z"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
 
@@ -573,26 +612,72 @@
         .ath-hero-content.active p { transition-delay: 0.3s; }
         .ath-hero-content.active .ath-hero-btns { transition-delay: 0.4s; }
 
+        /* Positioning now lives on .ath-slider-controls, which carries the dots
+           and the play control together. Was -50px, which put them at the
+           hero's own bottom edge, where overflow: hidden clipped them to a
+           two-pixel sliver, so nothing indicated the deck had more slides. */
         .ath-slider-dots {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ath-slider-controls {
             position: absolute;
-            /* Was -50px, which put them at the hero's own bottom edge, where
-               overflow: hidden clipped them to a two-pixel sliver. Nothing
-               indicated the deck had more slides in it. */
             bottom: -34px;
             left: 20px;
             display: flex;
-            gap: 12px;
+            align-items: center;
+            gap: 18px;
             z-index: 20;
         }
 
         .ath-dot {
             width: 12px;
             height: 12px;
+            padding: 0;
             background: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             cursor: pointer;
             transition: var(--ath-trans);
+        }
+
+        /* The hero is dark and the browser's default focus ring is dark too, so
+           left alone these would be focusable but invisibly so, which is its
+           own kind of unusable. */
+        .ath-dot:focus-visible,
+        .ath-slider-toggle:focus-visible {
+            outline: 3px solid var(--ath-gold);
+            outline-offset: 3px;
+        }
+
+        .ath-slider-toggle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            padding: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 50%;
+            color: rgba(255, 255, 255, 0.75);
+            cursor: pointer;
+            transition: var(--ath-trans);
+        }
+        .ath-slider-toggle:hover { background: rgba(255,255,255,0.2); color: #fff; }
+        .ath-slider-toggle svg { width: 13px; height: 13px; fill: currentColor; }
+
+        /* One icon or the other, never both. */
+        .ath-slider-toggle .ath-icon-play { display: none; }
+        .ath-slider-toggle[data-playing="false"] .ath-icon-pause { display: none; }
+        .ath-slider-toggle[data-playing="false"] .ath-icon-play { display: inline; }
+
+        /* Nothing is auto-advancing under reduced motion, so a control offering
+           to stop it would be describing something that is not happening. */
+        @media (prefers-reduced-motion: reduce) {
+            .ath-slider-toggle { display: none; }
         }
 
         .ath-dot.active {
@@ -1194,9 +1279,15 @@
             function goToSlide(n) {
                 slides[currentSlide].classList.remove('active');
                 dots[currentSlide].classList.remove('active');
+                dots[currentSlide].removeAttribute('aria-current');
+
                 currentSlide = (n + slides.length) % slides.length;
+
                 slides[currentSlide].classList.add('active');
                 dots[currentSlide].classList.add('active');
+                // The colour says which dot is current to anyone who can see
+                // it; this is the same fact for anyone who cannot.
+                dots[currentSlide].setAttribute('aria-current', 'true');
             }
 
             function nextSlide() {
@@ -1217,9 +1308,29 @@
             // handed a carousel that moves on its own. They keep the dots.
             const stillness = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+            const hero = document.getElementById('hero');
+            const toggle = document.querySelector('.ath-slider-toggle');
+            let userPaused = false;
+
+            /*
+             * One place that decides whether the deck may move.
+             *
+             * Every caller used to make its own judgement, which meant clicking
+             * a dot restarted the timer even though the click had just put
+             * focus inside the hero and focusin had deliberately stopped it.
+             * The reader got a slide change three seconds later, from the one
+             * control that is supposed to put them in charge.
+             */
+            function canAutoplay() {
+                if (stillness.matches || userPaused || document.hidden) return false;
+                if (!hero) return true;
+
+                return !hero.matches(':hover') && !hero.contains(document.activeElement);
+            }
+
             function startSlideShow() {
                 stopSlideShow();
-                if (stillness.matches) return;
+                if (!canAutoplay()) return;
                 slideInterval = setInterval(nextSlide, SLIDE_DURATION);
             }
 
@@ -1227,12 +1338,31 @@
                 clearInterval(slideInterval);
             }
 
-            dots.forEach(dot => {
+            dots.forEach((dot, i) => {
                 dot.addEventListener('click', () => {
-                    stopSlideShow();
                     goToSlide(parseInt(dot.dataset.slide));
                     startSlideShow();
                 });
+
+                // Arrow keys across the group, as with any other set of
+                // controls. Focus follows, so the next press continues from
+                // where the last one left off rather than jumping back.
+                dot.addEventListener('keydown', event => {
+                    const step = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -1, ArrowDown: 1 }[event.key];
+                    if (!step) return;
+
+                    event.preventDefault();
+                    const next = (i + step + dots.length) % dots.length;
+                    goToSlide(next);
+                    dots[next].focus();
+                });
+            });
+
+            toggle?.addEventListener('click', () => {
+                userPaused = !userPaused;
+                toggle.dataset.playing = String(!userPaused);
+                toggle.setAttribute('aria-label', userPaused ? 'Play the slideshow' : 'Pause the slideshow');
+                userPaused ? stopSlideShow() : startSlideShow();
             });
 
             /*
@@ -1242,9 +1372,11 @@
              * thing that makes carousels infuriating, and focusin matters as
              * much as hover: tabbing to "Register free" must not move it out of
              * reach before the key is pressed.
+             *
+             * These only ever stop or re-evaluate; canAutoplay decides whether
+             * a restart actually happens, so leaving the hero does not override
+             * a deliberate pause.
              */
-            const hero = document.getElementById('hero');
-
             hero?.addEventListener('mouseenter', stopSlideShow);
             hero?.addEventListener('mouseleave', startSlideShow);
             hero?.addEventListener('focusin', stopSlideShow);
