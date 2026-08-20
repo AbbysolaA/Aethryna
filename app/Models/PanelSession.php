@@ -79,6 +79,31 @@ class PanelSession extends Model
 
     // ── Helpers ──────────────────────────────────────────────────────────────
 
+    /**
+     * The event currently worth promoting on the site, or null.
+     *
+     * Both the hero slide and the standalone banner ask this question, and they
+     * have to agree: one advertising a finished event while the other has taken
+     * itself down is worse than neither appearing. So the rule lives here rather
+     * than being written out twice in Blade.
+     *
+     * End of the event day rather than its start time, so the promotion stays up
+     * for anyone checking the address on the morning.
+     */
+    public static function promotable(string $slug = 'discovery-session'): ?self
+    {
+        $event = static::query()
+            ->where('slug', $slug)
+            ->whereIn('status', ['upcoming', 'live'])
+            ->first();
+
+        if ($event?->event_date && $event->event_date->copy()->endOfDay()->isPast()) {
+            return null;
+        }
+
+        return $event;
+    }
+
     public function isUpcoming(): bool
     {
         return in_array($this->status, ['upcoming', 'live']);
