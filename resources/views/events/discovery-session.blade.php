@@ -6,10 +6,10 @@
 @section('og_description', 'Saturday 29 August 2026, Wirral Multicultural Organisation. Meet the team. Try the learning. Decide nothing on the day.')
 
 @push('styles')
-    {{-- Playfair Display and Mulish are this page's typefaces and nowhere
+    {{-- Fraunces and Mulish are this page's typefaces and nowhere
          else's, so they load here rather than in the layout. One extra request
          on one page, instead of two extra families on every page. --}}
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Mulish:wght@400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600..800&family=Mulish:wght@400;500;600;700;800&display=swap">
     <style>
         /*
          * The event brand, scoped to this page.
@@ -45,7 +45,7 @@
             margin-top: -5rem;
             margin-bottom: -5rem;
         }
-        .ds h1, .ds h2, .ds h3 { font-family: 'Playfair Display', Georgia, serif; }
+        .ds h1, .ds h2, .ds h3 { font-family: 'Fraunces', Georgia, serif; }
         .ds-wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
 
         /* Hero */
@@ -74,6 +74,9 @@
         .ds-hero h1 {
             font-weight: 800; font-size: clamp(38px, 6vw, 68px); line-height: 1.02;
             letter-spacing: -.01em; margin: 14px 0 0; color: var(--ds-cream);
+            /* Two words on one line and one on the next reads badly; balance
+               splits it evenly wherever it has to break. */
+            text-wrap: balance;
         }
         .ds-tagline {
             font-size: clamp(16px, 1.7vw, 21px); font-weight: 700;
@@ -165,7 +168,7 @@
             background: var(--ds-amber); border: 3px solid var(--ds-cream);
         }
         .ds-time { font-weight: 800; color: var(--ds-amber-deep); font-size: 14px; letter-spacing: .04em; }
-        .ds-what { font-size: 18px; font-weight: 700; color: var(--ds-teal-deep); margin: 3px 0 4px; font-family: 'Playfair Display', Georgia, serif; }
+        .ds-what { font-size: 18px; font-weight: 700; color: var(--ds-teal-deep); margin: 3px 0 4px; font-family: 'Fraunces', Georgia, serif; }
         .ds-detail { font-size: 15px; line-height: 1.6; color: var(--ds-slate); margin: 0; max-width: 58ch; }
 
         /* Form */

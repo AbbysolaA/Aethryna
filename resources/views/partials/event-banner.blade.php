@@ -27,7 +27,7 @@
 @endphp
 
 @if ($bannerEvent)
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Mulish:wght@500;700;800&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700..800&family=Mulish:wght@500;700;800&display=swap">
 
     <aside class="evb" aria-label="Upcoming event">
         <div class="evb-shape evb-shape-1" aria-hidden="true"></div>
@@ -90,13 +90,17 @@
         .evb-text { position: relative; z-index: 2; flex: 1 1 460px; min-width: 0; }
         .evb-brand { display: flex; align-items: center; gap: 12px; margin-bottom: clamp(14px, 1.6vw, 22px); }
         .evb-mark { width: 40px; height: auto; display: block; }
-        .evb-brand span { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 18px; color: #F7F2E8; }
+        .evb-brand span { font-family: 'Fraunces', Georgia, serif; font-weight: 700; font-size: 18px; color: #F7F2E8; }
 
         .evb-eyebrow { font-size: clamp(11px, 1.1vw, 13px); letter-spacing: .28em; font-weight: 800;
                        color: #E8B647; text-transform: uppercase; margin: 0; }
-        .evb-title { font-family: 'Playfair Display', Georgia, serif; font-weight: 800;
+        /* Fraunces sets wider than the fallback serif, so the headline is close
+           to wrapping at the top of its clamp. balance breaks it evenly rather
+           than leaving "Session" alone on a second line. */
+        .evb-title { font-family: 'Fraunces', Georgia, serif; font-weight: 800;
                      font-size: clamp(34px, 5.6vw, 64px); line-height: 1.02; letter-spacing: -.01em;
-                     margin: clamp(8px, 1vw, 14px) 0 0; color: #F7F2E8; }
+                     margin: clamp(8px, 1vw, 14px) 0 0; color: #F7F2E8;
+                     text-wrap: balance; }
 
         .evb-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px;
                     margin-top: clamp(12px, 1.4vw, 18px); font-size: clamp(14px, 1.4vw, 19px); font-weight: 700; }
