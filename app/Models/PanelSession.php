@@ -148,20 +148,14 @@ class PanelSession extends Model
         return $this->spacesLeft() === 0;
     }
 
-    /**
-     * Whether to show the count publicly.
-     *
-     * Scarcity is only worth mentioning when it is real and close. Announcing
-     * "30 places left" of 35 says the room is empty, which is a reason not to
-     * come; saying nothing until it matters is both more honest and kinder to
-     * an audience that will not want to walk into an empty hall.
+    /*
+     * There was a shouldShowSpacesLeft() here, deciding when to publish the
+     * remaining count. The count is not published at all now: it is a scarcity
+     * device, and this is a free event for people who have reason to feel they
+     * are competing for something they might not deserve. spacesLeft() stays,
+     * because staff and the admin screens need it; what went is the helper
+     * whose only purpose was putting it in front of registrants.
      */
-    public function shouldShowSpacesLeft(): bool
-    {
-        $left = $this->spacesLeft();
-
-        return $left !== null && $left > 0 && $left <= 10;
-    }
 
     /**
      * Where this event actually lives, whether or not it has a bespoke page.

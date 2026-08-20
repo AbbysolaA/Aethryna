@@ -1,6 +1,6 @@
-Hi {{ $firstName }},
+Hi {!! $firstName !!},
 
-Thank you for joining Skills Co-op as our {{ $role }}. I am really glad to
+Thank you for joining Skills Co-op as our {!! $role !!}. I am really glad to
 have you on board.
 
 We deliver free, AI-integrated digital skills and employability pathways to
@@ -11,13 +11,13 @@ away. Our pilot cohort launches in January 2027, and the next few months are
 about getting everything ready for that.
 @isset($firstCommitments)
 
-{{ $firstCommitments }}
+{!! $firstCommitments !!}
 @endisset
 @if (! empty($actions))
 
 BEFORE ANYTHING ELSE
 @foreach ($actions as $i => $action)
-{{ $i + 1 }}. {{ strip_tags($action) }}
+{!! $i + 1 !!}. {!! strip_tags($action) !!}
 @endforeach
 
 Once those are done I will set up your access to Todoist, Notion, Eventbrite
@@ -28,21 +28,21 @@ YOUR ONBOARDING PACK
 Everything you need is here. Please take some time to read through it.
 @foreach ($documents as $doc)
 
-{{ $doc['label'] }}
-{{ $doc['note'] }}
-{{ $doc['url'] }}
+{!! $doc['label'] !!}
+{!! $doc['note'] !!}
+{!! $doc['url'] !!}
 @endforeach
 
 SENDING THINGS BACK
 Only the documents marked "sign and return" need to come back. Everything
 else is for reading.
 
-Send them to {{ $returnsEmail }}. A clear photo or a scan is fine.
+Send them to {!! $returnsEmail !!}. A clear photo or a scan is fine.
 It does not need to be a formal e-signature.
 @isset($engagementUrl)
 
 See what is outstanding:
-{{ $engagementUrl }}
+{!! $engagementUrl !!}
 
 Your volunteering page tracks what we have received and what is still to come.
 @endisset
@@ -58,4 +58,4 @@ Founder, Skills Co-op
 
 --
 Skills Co-op
-skillscoop.org · {{ $supportEmail ?? 'hello@skillscoop.org' }}
+skillscoop.org · {!! $supportEmail ?? 'hello@skillscoop.org' !!}

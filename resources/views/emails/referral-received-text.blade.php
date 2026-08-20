@@ -11,35 +11,35 @@ NEW REFERRAL RECEIVED
 Someone has been referred to Skills Co-op.
 @endif
 
-{{ ($isSelfReferral ?? false) ? 'PERSON' : 'REFERRED PERSON' }}
-{{ $referredName }}
+{!! ($isSelfReferral ?? false) ? 'PERSON' : 'REFERRED PERSON' !!}
+{!! $referredName !!}
 @isset($cohort)
-Cohort: {{ $cohort }}
+Cohort: {!! $cohort !!}
 @endisset
 
 @if ($contactConsented && !empty($contact))
-Contact (consent given): {{ $contact }}
+Contact (consent given): {!! $contact !!}
 @else
 Contact details withheld, no consent recorded. Reach the referred person via the referrer below.
 @endif
 @unless ($isSelfReferral ?? false)
 
 REFERRER
-{{ $referrerName }} ({{ $referrerEmail }})
+{!! $referrerName !!} ({!! $referrerEmail !!})
 @endunless
-Organisation: {{ $organisation ?: 'Not provided' }}
-Role: {{ $role ?: 'Not provided' }}
+Organisation: {!! $organisation ?: 'Not provided' !!}
+Role: {!! $role ?: 'Not provided' !!}
 
 CONTEXT
-{{ $context ?: 'None provided' }}
+{!! $context ?: 'None provided' !!}
 
 @isset($dashboardUrl)
-View this referral: {{ $dashboardUrl }}
+View this referral: {!! $dashboardUrl !!}
 @endisset
 
-Submitted {{ $submittedAt }}.
+Submitted {!! $submittedAt !!}.
 
 --
 Skills Co-op
 https://skillscoop.org
-{{ $supportEmail ?? 'hello@skillscoop.org' }}
+{!! $supportEmail ?? 'hello@skillscoop.org' !!}

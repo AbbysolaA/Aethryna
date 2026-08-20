@@ -170,6 +170,36 @@ class DiscoverySessionTest extends TestCase
             fn ($mail) => $mail->hasTo('bola@example.com'));
         Mail::assertSent(DiscoverySessionStaffNotification::class,
             fn ($mail) => $mail->hasTo(config('organisation.email')));
+
+        // Stamped only after a send that did not throw, so a null here always
+        // means somebody was told they had a place and never got it in
+        // writing. discovery:confirmations finds and repairs exactly those.
+        $this->assertNotNull($registration->fresh()->confirmation_sent_at);
+    }
+
+    /**
+     * A confirmation that fails to send must not look like one that succeeded.
+     *
+     * Sending is non-fatal on purpose: the registration is already saved, and a
+     * mail server having a bad afternoon should not become a 500 for someone
+     * who arrived from a flyer. The price is that the failure is silent, so the
+     * only thing standing between that and a person turning up to an event
+     * nobody told them about is this column.
+     */
+    public function test_a_failed_confirmation_leaves_the_registration_marked_unsent(): void
+    {
+        Mail::shouldReceive('to')->andThrow(new \RuntimeException('mail server down'));
+
+        $this->post('/discovery-session', $this->validPayload())
+            ->assertSessionHasNoErrors();
+
+        $registration = SessionRegistration::firstOrFail();
+
+        $this->assertNull($registration->confirmation_sent_at);
+        $this->assertTrue(
+            SessionRegistration::awaitingConfirmation()->whereKey($registration->id)->exists(),
+            'The repair command has to be able to find them.'
+        );
     }
 
     /**
@@ -283,14 +313,18 @@ class DiscoverySessionTest extends TestCase
     }
 
     /**
-     * Scarcity is only worth mentioning when it is real. "30 places left" of 35
-     * says the room is empty, which is a reason not to come.
+     * The count is never published, at any number.
+     *
+     * It is a scarcity device, and this is a free event for people who have
+     * reason to feel they are competing for something they might not deserve.
+     * It also invites the question of what number you are, which is nobody's
+     * business but ours. Staff still see it; registrants never do.
      */
-    public function test_it_only_counts_down_when_the_number_is_small(): void
+    public function test_it_never_tells_registrants_how_many_places_are_left(): void
     {
-        $this->assertFalse($this->event()->shouldShowSpacesLeft());
-
         $session = $this->event();
+
+        // Nearly full, which is exactly when a countdown would be tempting.
         for ($i = 0; $i < $session->capacity - 4; $i++) {
             SessionRegistration::create([
                 'panel_session_id' => $session->id,
@@ -302,8 +336,16 @@ class DiscoverySessionTest extends TestCase
             ]);
         }
 
-        $this->assertTrue($this->event()->shouldShowSpacesLeft());
-        $this->get('/discovery-session')->assertSee('4 places left');
+        $html = $this->get('/discovery-session')->assertOk()
+            ->assertDontSee('places left')
+            ->assertDontSee('place left')
+            ->getContent();
+
+        // Nor the capacity itself, which would let anyone work it out.
+        $this->assertStringNotContainsString('of '.$session->capacity, $html);
+
+        // The number is still there for the people who run the room.
+        $this->assertSame(4, $this->event()->spacesLeft());
     }
 
     /**

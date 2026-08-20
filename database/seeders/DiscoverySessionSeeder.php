@@ -62,7 +62,13 @@ class DiscoverySessionSeeder extends Seeder
 
                 // The room's limit. Registration stays open past it and becomes
                 // a waiting list rather than a closed door.
-                'capacity' => 35,
+                //
+                // Never shown to registrants. A running count is a scarcity
+                // device, and this is a free event for people who have reason
+                // to feel they are competing for something they might not
+                // deserve. It decides who is confirmed and who is waitlisted,
+                // and it appears in the staff notification and in admin.
+                'capacity' => 50,
 
                 'itinerary' => [
                     ['time' => '12.30pm', 'what' => 'Doors open', 'detail' => 'Registration and refreshments. Come when you can, there is no wrong time to arrive.'],

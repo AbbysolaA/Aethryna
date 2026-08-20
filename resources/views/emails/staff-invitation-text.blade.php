@@ -1,19 +1,19 @@
-Hi {{ $firstName }},
+Hi {!! $firstName !!},
 
-{{ $invitedBy }} has set up an account for you at Skills Co-op. Choose a
+{!! $invitedBy !!} has set up an account for you at Skills Co-op. Choose a
 password and it is ready to use.
 
 YOUR ROLE
-{{ $roleLabel }}
+{!! $roleLabel !!}
 
-{{ $roleBlurb }}
+{!! $roleBlurb !!}
 
-Sign in with: {{ $email }}
+Sign in with: {!! $email !!}
 
 SET YOUR PASSWORD
-{{ $acceptUrl }}
+{!! $acceptUrl !!}
 
-This link lasts {{ $expiresDays }} days. If it has expired by the time you get to it, ask
+This link lasts {!! $expiresDays !!} days. If it has expired by the time you get to it, ask
 and we will send another.
 
 Nobody at Skills Co-op knows or can see your password. If you were not
@@ -24,4 +24,4 @@ Founder, Skills Co-op
 
 --
 Skills Co-op
-skillscoop.org · {{ $supportEmail ?? 'hello@skillscoop.org' }}
+skillscoop.org · {!! $supportEmail ?? 'hello@skillscoop.org' !!}

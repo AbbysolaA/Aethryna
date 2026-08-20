@@ -1,8 +1,8 @@
 SAFEGUARDING CONCERN RAISED
 ===========================
-{{ $urgencyLabel }} | Reference {{ $reference }}
+{!! $urgencyLabel !!} | Reference {!! $reference !!}
 
-A concern has been raised and is waiting for your review. It has been recorded as {{ $reference }} regardless of whether this email reached you.
+A concern has been raised and is waiting for your review. It has been recorded as {!! $reference !!} regardless of whether this email reached you.
 
 @if ($isUrgent)
 ** MARKED URGENT BY THE PERSON RAISING IT **
@@ -10,19 +10,19 @@ If there is an immediate risk to someone's safety, contact the emergency service
 
 @endif
 CONCERN IS ABOUT
-{{ $learnerName }}@if ($learnerEmail) ({{ $learnerEmail }})@endif
+{!! $learnerName !!}@if ($learnerEmail) ({!! $learnerEmail !!})@endif
 
 
 WHAT WAS REPORTED
-{{ $concernBody }}
+{!! $concernBody !!}
 
 RAISED BY
-{{ $raiserName }}@if ($raiserEmail) ({{ $raiserEmail }})@endif
+{!! $raiserName !!}@if ($raiserEmail) ({!! $raiserEmail !!})@endif
 
-Their role: {{ $raiserRole }}
-Raised at:  {{ $raisedAt }}
+Their role: {!! $raiserRole !!}
+Raised at:  {!! $raisedAt !!}
 
-You are the decision maker on this one. Reply to this email to reach {{ $raiserName }} directly, and record what you decide against {{ $reference }} so the trail stays complete.
+You are the decision maker on this one. Reply to this email to reach {!! $raiserName !!} directly, and record what you decide against {!! $reference !!} so the trail stays complete.
 
 --
 Skills Co-op

@@ -1,29 +1,40 @@
-@if ($waitlisted)YOU ARE ON THE WAITING LIST@else YOUR PLACE IS BOOKED@endif
+{{-- An expression, not @if/@else/@endif on one line. Blade only compiles a
+     directive at a non-word boundary, so "BOOKED@endif" is left as literal
+     text and the @if is never closed — which is a PHP syntax error, thrown at
+     render, which took the whole confirmation email down.
 
-Hi {{ $firstName }},
+     {!! !!} throughout, not {{ }}. This is a plain text part: escaping turns
+     an apostrophe into &#039; and, worse, the & in the map URL into &amp;,
+     which makes the query string read "amp;query=" and the link stop working.
+     Nothing here is rendered as HTML, so there is nothing to escape for. --}}
+{!! $waitlisted ? 'YOU ARE ON THE WAITING LIST' : 'YOUR PLACE IS BOOKED' !!}
 
-@if ($waitlisted)The room is full, so you are on the waiting list. Places come up more often than you would think, and we will email you the moment one does. The details are below so you have them either way.
-@else You have a place at the Skills Co-op Community Discovery Session. It is free, there is nothing to bring, and there is nothing to sign up to on the day.
+Hi {!! $firstName !!},
+
+@if ($waitlisted)
+The room is full, so you are on the waiting list. Places come up more often than you would think, and we will email you the moment one does. The details are below so you have them either way.
+@else
+You have a place at the Skills Co-op Community Discovery Session. It is free, there is nothing to bring, and there is nothing to sign up to on the day.
 @endif
 
 WHEN
-{{ $dayAndDate }}
-{{ $startTime }} to {{ $endTime }}
+{!! $dayAndDate !!}
+{!! $startTime !!} to {!! $endTime !!}
 
 WHERE
-{{ $venueName }}
-{{ $venueAddress }}
-Map: {{ $mapUrl }}
+{!! $venueName !!}
+{!! $venueAddress !!}
+Map: {!! $mapUrl !!}
 @if ($accessibility)
 
 GETTING IN
-{{ $accessibility }} If you need anything else to be able to come, reply to this email and we will sort it.
+{!! $accessibility !!} If you need anything else to be able to come, reply to this email and we will sort it.
 @endif
 @if (count($itinerary))
 
 WHAT HAPPENS ON THE DAY
 @foreach ($itinerary as $item)
-{{ $item['time'] }}  {{ $item['what'] }}
+{!! $item['time'] !!}  {!! $item['what'] !!}
 @endforeach
 @endif
 
@@ -31,10 +42,10 @@ Come as you are. You do not need experience, qualifications, or a plan.
 
 If something changes and you cannot make it, just reply and let us know. It frees a place for someone on the waiting list.
 
-Full event details: {{ $eventUrl }}
+Full event details: {!! $eventUrl !!}
 
 --
 Skills Co-op
-{{ $supportEmail }}
+{!! $supportEmail !!}
 
-{{ $footerNote }}
+{!! $footerNote !!}
