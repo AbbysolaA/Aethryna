@@ -51,6 +51,36 @@ class DiscoverySessionTest extends TestCase
     }
 
     /**
+     * Eventbrite runs alongside the site's own form, not instead of it.
+     *
+     * The site's form is the primary route because it needs no account and no
+     * redirect off the site, but plenty of people would rather use the thing
+     * they already have a login for, and refusing them that costs a
+     * registration. The link opens in a new tab with rel=noopener so leaving is
+     * not a one-way door.
+     */
+    public function test_the_page_offers_eventbrite_as_an_alternative(): void
+    {
+        $this->get('/discovery-session')
+            ->assertOk()
+            ->assertSee('Prefer Eventbrite?')
+            ->assertSee('eventbrite.co.uk/e/1996441615615', false)
+            ->assertSee('rel="noopener"', false);
+    }
+
+    /**
+     * With no Eventbrite listing there is no half-sentence pointing nowhere.
+     */
+    public function test_the_eventbrite_line_disappears_when_there_is_no_listing(): void
+    {
+        $this->event()->update(['eventbrite_url' => null]);
+
+        $this->get('/discovery-session')
+            ->assertOk()
+            ->assertDontSee('Prefer Eventbrite?');
+    }
+
+    /**
      * Fill the room, so the next registration has to be a waitlist one.
      */
     private function fillTheRoom(): void
