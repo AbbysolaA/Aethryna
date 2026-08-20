@@ -7,6 +7,13 @@
 
 @section('content')
 
+    @php
+        // The event leads the carousel while there is one, and the deck falls
+        // back to its original three slides the day after. Nothing here needs
+        // editing when the event passes.
+        $heroEvent = \App\Models\PanelSession::promotable();
+    @endphp
+
     <!-- Hero Section -->
     <section class="ath-hero" id="hero">
         <div class="ath-hero-bg">
@@ -17,8 +24,43 @@
         </div>
         <div class="ath-container">
             <div class="ath-hero-slider">
+                @if ($heroEvent)
+                    {{--
+                        The event leads.
+
+                        A dated, local, free thing that happens in nine days is a
+                        smaller ask than a 25-week programme starting in 2027, and
+                        it is the only item on this page with a deadline. It takes
+                        the amber treatment so it reads as an announcement rather
+                        than a fourth restatement of the mission, and it steps out
+                        of the deck of its own accord once the date passes.
+                    --}}
+                    <div class="ath-hero-content ath-hero-event active">
+                        <div class="ath-hero-badge ath-hero-badge-event">
+                            Free community event
+                            <span aria-hidden="true">&middot;</span>
+                            {{ $heroEvent->event_date?->format('j F') }}
+                        </div>
+                        <h2 class="ath-title ath-title-lead">Community Discovery Session</h2>
+                        <p class="ath-hero-event-meta">
+                            <span>{{ $heroEvent->event_date?->format('l j F Y') }}</span>
+                            <span class="ath-hero-event-dot" aria-hidden="true"></span>
+                            <span>{{ $heroEvent->venue_name }}</span>
+                        </p>
+                        <p>Meet the team. Try the learning. Decide nothing on the day. Free, step-free, and open to anyone curious about a future in digital work.</p>
+                        <div class="ath-hero-btns">
+                            <a href="{{ route('discovery-session') }}" class="ath-btn ath-btn-primary">
+                                {{ $heroEvent->isFull() ? 'Join the waiting list' : 'Register free' }}
+                            </a>
+                            <a href="{{ route('discovery-session') }}#on-the-day" class="ath-btn ath-btn-outline">
+                                What happens on the day
+                            </a>
+                        </div>
+                    </div>
+                @endif
+
                 <!-- Slide 1 -->
-                <div class="ath-hero-content active" data-index="0">
+                <div class="ath-hero-content @unless ($heroEvent) active @endunless">
                     <div class="ath-hero-badge">Building Digital Careers</div>
                     <h1 class="ath-title ath-title-lead">Digital and AI skills for people the labour market overlooks</h1>
                     {{-- Tagline, not a heading: it is the brand line, and putting it
@@ -51,7 +93,7 @@
                 </div>
 
                 <!-- Slide 2 -->
-                <div class="ath-hero-content" data-index="1">
+                <div class="ath-hero-content">
                     <div class="ath-hero-badge">Bridging the Tech Gap</div>
                     <h2 class="ath-title">Tech. Future. <span class="ath-gradient-text">Mastery.</span></h2>
                     <p>Practical, funded digital skills programmes for people who have been locked out of the tech industry. Four pilot tracks, AI tools embedded throughout.</p>
@@ -62,7 +104,7 @@
                 </div>
 
                 <!-- Slide 3 -->
-                <div class="ath-hero-content" data-index="2">
+                <div class="ath-hero-content">
                     <div class="ath-hero-badge">Mentorship & Community</div>
                     <h2 class="ath-title">Connect. Lead. <span class="ath-gradient-text">Impact.</span></h2>
                     <p>One-to-one guidance from people already working in the industry, in a community built around belonging and mutual support.</p>
@@ -71,24 +113,31 @@
                         <a href="{{ route('stories') }}" class="ath-btn ath-btn-outline">Read our stories</a>
                     </div>
                 </div>
+
+                {{-- Inside the slider, not beside it, so the dots share an
+                     origin with the slide text and stay aligned with it
+                     whatever padding the container carries.
+
+                     Generated rather than written out: the deck is three slides
+                     or four depending on whether an event is running, and a
+                     hard-coded dot that outlives its slide throws on click. --}}
+                <div class="ath-slider-dots">
+                    @for ($i = 0; $i < ($heroEvent ? 4 : 3); $i++)
+                        <span class="ath-dot @if ($i === 0) active @endif" data-slide="{{ $i }}"></span>
+                    @endfor
+                </div>
             </div>
 
-            <!-- Slider Navigation -->
-            <div class="ath-slider-dots">
-                <span class="ath-dot active" data-slide="0"></span>
-                <span class="ath-dot" data-slide="1"></span>
-                <span class="ath-dot" data-slide="2"></span>
-            </div>
         </div>
         <div class="ath-scroll-indicator reveal-fade">
             <div class="ath-mouse"></div>
         </div>
     </section>
 
-    {{-- Straight under the hero, not above it. The hero says what Skills Co-op
-         is, which is what a first-time visitor needs before a date and a
-         postcode mean anything. The banner takes itself down after the event. --}}
-    @include('partials.event-banner')
+    {{-- The standalone banner used to sit here. The event now leads the hero
+         carousel instead, and running both meant the same event announced twice
+         within one screen of itself. The partial is still there for any other
+         page that wants it. --}}
 
     <!-- About Section -->
     <section class="ath-section ath-about" id="about">
@@ -526,7 +575,10 @@
 
         .ath-slider-dots {
             position: absolute;
-            bottom: -50px;
+            /* Was -50px, which put them at the hero's own bottom edge, where
+               overflow: hidden clipped them to a two-pixel sliver. Nothing
+               indicated the deck had more slides in it. */
+            bottom: -34px;
             left: 20px;
             display: flex;
             gap: 12px;
@@ -579,6 +631,42 @@
             line-height: 1.15;
             margin-bottom: 14px;
         }
+
+        /*
+         * The event slide.
+         *
+         * The other three slides restate the mission; this one announces a
+         * dated thing, so it is given the solid amber badge and a line of
+         * hard facts under the title. It stays inside the hero's own type and
+         * layout system rather than importing the event page's palette, so the
+         * carousel does not visibly change brand every six seconds.
+         */
+        .ath-hero-badge-event {
+            background: var(--ath-gold);
+            color: #08444A;
+            font-weight: 800;
+            border-color: transparent;
+            letter-spacing: .02em;
+        }
+        .ath-hero-badge-event span { opacity: .6; margin: 0 4px; }
+
+        .ath-hero-event-meta {
+            display: flex; flex-wrap: wrap; align-items: center;
+            gap: 8px 14px;
+            font-size: clamp(1rem, 1.5vw, 1.15rem);
+            font-weight: 700;
+            margin-bottom: 14px;
+            color: #fff;
+        }
+        .ath-hero-event-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--ath-gold); flex: 0 0 auto;
+        }
+
+        /* The meta line is a <p>, so it inherits the slide's entrance
+           transition and would otherwise arrive on the body-copy delay,
+           after the line it sits above. */
+        .ath-hero-content.active .ath-hero-event-meta { transition-delay: 0.25s; }
 
         .ath-hero-tagline {
             font-size: clamp(1.05rem, 1.8vw, 1.4rem);
@@ -1002,7 +1090,34 @@
             .ath-about-grid, .ath-impact-grid { grid-template-columns: 1fr; text-align: center; }
             .ath-about-card { padding: 30px; }
             .ath-hero-content { text-align: center; margin: 0 auto; }
-            .ath-hero-btns { justify-content: center; }
+
+            /*
+             * The two hero buttons used to sit on one nowrap row at every
+             * width. On a phone that squeezed each one narrower than its own
+             * label, and because .ath-btn is a 100px-radius pill, the result
+             * was two circles with the text broken across four lines inside
+             * them. "Join the founding cohort" is the site's primary call to
+             * action and it was unreadable on the device most of this audience
+             * uses.
+             *
+             * Stacked full-width instead, which is also a bigger tap target.
+             */
+            .ath-hero-btns {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+            .ath-hero-btns .ath-btn {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+            }
+
+            /* Date and venue take a line each at this width, which leaves the
+               separator stranded at the end of the first one. */
+            .ath-hero-event-meta { display: block; }
+            .ath-hero-event-meta span { display: block; }
+            .ath-hero-event-meta .ath-hero-event-dot { display: none; }
             .ath-section { padding: 80px 0; }
             .ath-hero { height: auto; min-height: 600px; padding: 120px 0 80px; }
             /* Slides are absolutely positioned, so the slider cannot size to

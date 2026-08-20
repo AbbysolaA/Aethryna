@@ -13,17 +13,9 @@
     Include with @include('partials.event-banner'), optionally passing a slug.
 --}}
 @php
-    $bannerEvent = \App\Models\PanelSession::query()
-        ->where('slug', $slug ?? 'discovery-session')
-        ->whereIn('status', ['upcoming', 'live'])
-        ->first();
-
-    // Past the day itself it stops being a promotion and starts being a
-    // liability. End of the event day rather than the start time, so it stays
-    // up for anyone checking the address on the morning.
-    if ($bannerEvent?->event_date && $bannerEvent->event_date->copy()->endOfDay()->isPast()) {
-        $bannerEvent = null;
-    }
+    // Same question the hero slide asks, answered in one place so the two
+    // cannot disagree about whether an event is still worth advertising.
+    $bannerEvent = \App\Models\PanelSession::promotable($slug ?? 'discovery-session');
 @endphp
 
 @if ($bannerEvent)

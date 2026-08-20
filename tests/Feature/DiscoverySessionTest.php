@@ -291,27 +291,93 @@ class DiscoverySessionTest extends TestCase
 
     // ── The banner ───────────────────────────────────────────────────────────
 
-    public function test_the_home_page_carries_the_banner(): void
+    /**
+     * The class attributes of the hero slides, in document order.
+     *
+     * Counting the raw string would also count the stylesheet, which names
+     * .ath-hero-content a dozen times.
+     */
+    private function slideClasses(string $html): array
     {
-        $this->get('/')
-            ->assertOk()
+        preg_match_all('/class="(ath-hero-content[^"]*)"/', $html, $m);
+
+        return $m[1];
+    }
+
+    private function dotClasses(string $html): array
+    {
+        preg_match_all('/class="(ath-dot[^"]*)"/', $html, $m);
+
+        return $m[1];
+    }
+
+    public function test_the_event_leads_the_home_carousel(): void
+    {
+        $html = $this->get('/')->assertOk()
             ->assertSee('Free community event')
             ->assertSee('Community Discovery Session')
             ->assertSee('/discovery-session')
-            ->assertSee('images/logo_white.png');
+            ->getContent();
+
+        $slides = $this->slideClasses($html);
+
+        // First in the deck and already showing. A slide the visitor only sees
+        // after waiting six seconds is not leading anything.
+        $this->assertStringContainsString('ath-hero-event', $slides[0]);
+        $this->assertStringContainsString('active', $slides[0]);
+
+        // And it is the only one showing.
+        $this->assertSame(1, count(array_filter($slides, fn ($c) => str_contains($c, 'active'))));
     }
 
     /**
-     * A banner advertising a date that has passed is worse than no banner.
+     * The slider indexes slides and dots positionally, so a dot without a
+     * slide behind it throws on click.
      */
-    public function test_the_banner_takes_itself_down_after_the_event(): void
+    public function test_the_dots_match_the_slide_count(): void
+    {
+        $html = $this->get('/')->assertOk()->getContent();
+
+        $this->assertCount(4, $this->slideClasses($html));
+        $this->assertCount(4, $this->dotClasses($html));
+    }
+
+    /**
+     * Exactly one h1, and it is the page's own rather than the rotating event.
+     */
+    public function test_the_event_slide_does_not_add_a_second_h1(): void
+    {
+        $html = $this->get('/')->assertOk()->getContent();
+
+        $this->assertSame(1, substr_count($html, '<h1'));
+        $this->assertStringContainsString('<h2 class="ath-title ath-title-lead">Community Discovery Session</h2>', $html);
+    }
+
+    /**
+     * A carousel advertising a date that has passed is worse than no slide, and
+     * the deck has to close back up rather than leave a dot with nothing behind
+     * it.
+     */
+    public function test_the_deck_returns_to_three_slides_after_the_event(): void
     {
         $this->event()->update(['event_date' => now()->subDays(2)]);
 
-        $this->get('/')->assertOk()->assertDontSee('Free community event');
+        $html = $this->get('/')->assertOk()
+            ->assertDontSee('Free community event')
+            ->getContent();
+
+        $slides = $this->slideClasses($html);
+
+        $this->assertCount(3, $slides);
+        $this->assertCount(3, $this->dotClasses($html));
+
+        // The mission slide takes the lead back, rather than the deck opening
+        // on nothing.
+        $this->assertStringContainsString('active', $slides[0]);
+        $this->assertStringNotContainsString('ath-hero-event', $slides[0]);
     }
 
-    public function test_the_banner_stays_up_on_the_day_itself(): void
+    public function test_the_event_slide_stays_up_on_the_day_itself(): void
     {
         $this->event()->update(['event_date' => now()->startOfDay()->addHours(2)]);
 
