@@ -43,25 +43,15 @@
 
         <div class="evb-text">
             <div class="evb-brand">
-                <svg viewBox="29.39 17.73 10.48 12.02" class="evb-mark" aria-hidden="true">
-                    <path d="M29.4299 26.8212 L34.7031 29.7363 L36.9130 28.5146 L36.9130 25.9627 L34.7807 27.1415 L29.4299 24.1835 Z" fill="#055860"/>
-                    <path d="M32.4775 24.9073 L34.8041 26.1935 L37.0504 24.9517 L37.6490 25.2826 L37.6490 27.9898 L39.8619 26.7665 L39.8619 24.0579 L34.6760 21.1910 L32.4775 22.4063 Z" fill="#2D353C"/>
-                    <path d="M34.6295 17.7363 L29.3939 20.6306 L29.3939 23.2696 L31.7992 24.5993 L31.7992 22.0785 L34.6716 20.4906 L37.3385 21.9648 L39.8086 20.5993 Z" fill="#C77F14"/>
-                    <path d="M34.6302 17.7824 L29.3956 20.6762 L31.8189 22.0158 L34.6714 20.4390 L37.3453 21.9172 L39.7275 20.6003 Z" fill="#EE9D1D"/>
-                    <path d="M29.4325 22.5823 L29.4952 22.6169 L29.4952 23.1851 L31.7992 24.5313 L31.7992 22.0097 L29.4325 20.7014 Z" fill="#C77F14"/>
-                    <path d="M37.7022 25.3186 L37.7022 27.8376 L37.8947 27.8376 L39.8619 26.7501 L39.8619 24.1246 Z" fill="#2D353C"/>
-                    <path d="M32.4775 24.8864 L34.7246 26.1286 L34.9072 26.1286 L37.0755 24.9299 L32.4775 22.3881 Z" fill="#2D353C"/>
-                    <path d="M34.9180 23.6993 L37.0422 22.5250 L34.6828 21.2207 L32.5586 22.3950 Z" fill="#414A52"/>
-                    <path d="M37.6933 25.2853 L39.8292 24.1046 L37.0132 22.5479 L34.8773 23.7286 Z" fill="#59626A"/>
-                    <path d="M34.7541 27.1863 L34.7541 29.6801 L36.9130 28.4867 L36.9130 25.9928 Z" fill="#038B88"/>
-                    <path d="M29.4612 26.8429 L31.7212 28.0922 L34.0817 26.7873 L29.4612 24.2331 Z" fill="#038B88"/>
-                    <path d="M34.7492 29.7205 L34.7492 27.1758 L34.0683 26.7993 L31.7666 28.0717 Z" fill="#055860"/>
-                </svg>
+                {{-- The real mark, not a redrawing of it. The nav and footer
+                     already serve this file on every page, so by the time the
+                     banner is reached it is coming from cache. --}}
+                <img src="{{ asset('images/logo_white.png') }}" alt="" class="evb-mark" width="40" height="40">
                 <span>Skills Co-op</span>
             </div>
 
             <p class="evb-eyebrow">Free community event</p>
-            <h2 class="evb-title">Discovery Session</h2>
+            <h2 class="evb-title">Community Discovery Session</h2>
 
             <div class="evb-meta">
                 <span>{{ $bannerEvent->event_date?->format('l j F Y') }}</span>
@@ -99,7 +89,7 @@
 
         .evb-text { position: relative; z-index: 2; flex: 1 1 460px; min-width: 0; }
         .evb-brand { display: flex; align-items: center; gap: 12px; margin-bottom: clamp(14px, 1.6vw, 22px); }
-        .evb-mark { width: 34px; height: auto; display: block; }
+        .evb-mark { width: 40px; height: auto; display: block; }
         .evb-brand span { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 18px; color: #F7F2E8; }
 
         .evb-eyebrow { font-size: clamp(11px, 1.1vw, 13px); letter-spacing: .28em; font-weight: 800;

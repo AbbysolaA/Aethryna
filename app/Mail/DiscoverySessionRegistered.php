@@ -49,8 +49,8 @@ class DiscoverySessionRegistered extends Mailable
 
         return [
             'subject' => $waitlisted
-                ? 'You are on the waiting list: Skills Co-op Discovery Session'
-                : 'Your place is booked: Skills Co-op Discovery Session',
+                ? 'You are on the waiting list: Community Discovery Session'
+                : 'Your place is booked: Community Discovery Session',
 
             'preheader' => $waitlisted
                 ? 'We will email you the moment a place comes up.'

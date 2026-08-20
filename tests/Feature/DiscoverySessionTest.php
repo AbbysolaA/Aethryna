@@ -75,7 +75,7 @@ class DiscoverySessionTest extends TestCase
     {
         $this->get('/discovery-session')
             ->assertOk()
-            ->assertSee('Discovery Session')
+            ->assertSee('Community Discovery Session')
             ->assertSee('Wirral Multicultural Organisation')
             ->assertSee('111 Conway Street, Birkenhead, CH41 4AF')
             ->assertSee('Step-free');
@@ -296,8 +296,9 @@ class DiscoverySessionTest extends TestCase
         $this->get('/')
             ->assertOk()
             ->assertSee('Free community event')
-            ->assertSee('Discovery Session')
-            ->assertSee('/discovery-session');
+            ->assertSee('Community Discovery Session')
+            ->assertSee('/discovery-session')
+            ->assertSee('images/logo_white.png');
     }
 
     /**

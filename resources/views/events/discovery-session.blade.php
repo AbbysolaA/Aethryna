@@ -1,6 +1,6 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Discovery Session, 29 August, Birkenhead | Skills Co-op')
+@section('title', 'Community Discovery Session, Birkenhead | Skills Co-op')
 @section('meta_description', 'A free afternoon in Birkenhead on Saturday 29 August 2026, introducing Skills Co-op. No experience needed, nothing to sign up to on the day. Step-free venue. Register free.')
 @section('og_title', 'Skills Co-op Community Discovery Session')
 @section('og_description', 'Saturday 29 August 2026, Wirral Multicultural Organisation. Meet the team. Try the learning. Decide nothing on the day.')
@@ -52,7 +52,10 @@
         .ds-hero {
             background: linear-gradient(135deg, #062f35 0%, var(--ds-teal-deep) 55%, #0a5a60 100%);
             color: var(--ds-cream);
-            padding: clamp(48px, 7vw, 92px) 0 clamp(56px, 8vw, 104px);
+            /* The 5rem the wrapper's negative margin removed, given back as
+               padding so the hero's own background fills it instead of the
+               page's white, and so the eyebrow clears the sticky masthead. */
+            padding: calc(clamp(48px, 7vw, 92px) + 5rem) 0 clamp(56px, 8vw, 104px);
             position: relative;
             overflow: hidden;
         }
@@ -166,7 +169,12 @@
         .ds-detail { font-size: 15px; line-height: 1.6; color: var(--ds-slate); margin: 0; max-width: 58ch; }
 
         /* Form */
-        .ds-form-section { background: var(--ds-teal-deep); color: var(--ds-cream); padding: clamp(48px, 6vw, 84px) 0; }
+        /* Same trick at the foot: the extra 5rem stops the negative bottom
+           margin pulling the site footer up against the form. */
+        .ds-form-section {
+            background: var(--ds-teal-deep); color: var(--ds-cream);
+            padding: clamp(48px, 6vw, 84px) 0 calc(clamp(48px, 6vw, 84px) + 5rem);
+        }
         .ds-form-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(28px, 4vw, 56px); align-items: start; }
         @media (max-width: 860px) { .ds-form-grid { grid-template-columns: 1fr; } }
         .ds-form-section h2 { color: var(--ds-cream); }
@@ -245,7 +253,7 @@
     <section class="ds-hero">
         <div class="ds-wrap">
             <p class="ds-eyebrow">Free community event</p>
-            <h1>Discovery Session</h1>
+            <h1>Community Discovery Session</h1>
             <p class="ds-tagline">{{ $session->tagline }}</p>
             <p class="ds-lede">
                 Meet the team. Try the learning. Decide nothing on the day.
