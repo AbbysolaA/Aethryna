@@ -114,9 +114,18 @@ class DiscoverySessionController extends Controller
     {
         try {
             Mail::to($registration->email)->send(new DiscoverySessionRegistered($registration, $session));
+
+            // Stamped only on the way out of a successful send, so a null is
+            // always somebody who was told they had a place and never got it
+            // in writing. `php artisan discovery:confirmations` finds them.
+            $registration->forceFill(['confirmation_sent_at' => now()])->save();
         } catch (\Throwable $e) {
-            Log::warning('Discovery Session confirmation email failed', [
+            // error, not warning: nobody scans a log for warnings, and the
+            // person on the other end of this is expecting an email that is
+            // not coming.
+            Log::error('Discovery Session confirmation email failed', [
                 'registration' => $registration->id,
+                'email'        => $registration->email,
                 'error'        => $e->getMessage(),
             ]);
         }

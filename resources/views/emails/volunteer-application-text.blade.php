@@ -1,26 +1,26 @@
 NEW VOLUNTEER APPLICATION
 
-Applicant: {{ $applicantName }}
-Role: {{ $roleTitle }}
-Email: {{ $applicantEmail }}
+Applicant: {!! $applicantName !!}
+Role: {!! $roleTitle !!}
+Email: {!! $applicantEmail !!}
 @if ($phone)
-Phone: {{ $phone }}
+Phone: {!! $phone !!}
 @endif
 
 WHY THIS ROLE
-{{ $about }}
+{!! $about !!}
 
 AVAILABILITY
-{{ $availability }}
+{!! $availability !!}
 
 RELEVANT EXPERIENCE
-{{ $experience ?: 'None given' }}
+{!! $experience ?: 'None given' !!}
 
 Open the roster:
-{{ $rosterUrl }}
+{!! $rosterUrl !!}
 
-Applied {{ $appliedAt }}. Reply to this email to reach them directly.
+Applied {!! $appliedAt !!}. Reply to this email to reach them directly.
 
 --
 Skills Co-op
-skillscoop.org · {{ $supportEmail ?? 'hello@skillscoop.org' }}
+skillscoop.org · {!! $supportEmail ?? 'hello@skillscoop.org' !!}

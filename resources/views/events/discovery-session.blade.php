@@ -247,7 +247,6 @@
     // stored 12.30 as UTC and print 1.30pm, an hour after the doors open.
     $starts = $session->event_date;
     $ends   = $starts?->copy()->addMinutes(180);
-    $left   = $session->spacesLeft();
 @endphp
 
 <div class="ds">
@@ -298,9 +297,16 @@
                 <a href="#on-the-day" class="ds-btn ds-btn-ghost">See what happens</a>
             </div>
 
-            @if ($session->shouldShowSpacesLeft())
-                <p class="ds-alt-route">{{ $left }} {{ $left === 1 ? 'place' : 'places' }} left of {{ $session->capacity }}.</p>
-            @elseif ($session->isFull())
+            {{-- No running count of places, deliberately.
+
+                 "12 places left of 50" is a scarcity device, and this is a free
+                 event for people who have reason to feel they are competing for
+                 something they might not deserve. It also invites the question
+                 of what number you are, which is nobody's business but ours.
+
+                 Whether the room is full is different: someone joining a
+                 waiting list is owed the reason they are on one. --}}
+            @if ($session->isFull())
                 <p class="ds-alt-route">The room is full. You can still join the waiting list below.</p>
             @endif
 

@@ -19,6 +19,7 @@ class SessionRegistration extends Model
         'notes',
         'consented_at',
         'waitlisted',
+        'confirmation_sent_at',
         'referral_source',
         'wants_to_speak',
         'speaker_topic',
@@ -28,6 +29,7 @@ class SessionRegistration extends Model
         'wants_to_speak' => 'boolean',
         'waitlisted'     => 'boolean',
         'consented_at'   => 'datetime',
+        'confirmation_sent_at' => 'datetime',
     ];
 
     /**
@@ -66,6 +68,17 @@ class SessionRegistration extends Model
     public function scopeWaitlisted($query)
     {
         return $query->where('waitlisted', true);
+    }
+
+    /**
+     * Registered, but never actually told so.
+     *
+     * The people to repair once a broken mailer is fixed: they believe they
+     * have a place because the page said so, and have nothing in writing.
+     */
+    public function scopeAwaitingConfirmation($query)
+    {
+        return $query->whereNull('confirmation_sent_at');
     }
 
     public function scopeConfirmed($query)
