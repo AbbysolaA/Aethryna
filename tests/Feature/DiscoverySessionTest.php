@@ -341,6 +341,50 @@ class DiscoverySessionTest extends TestCase
         return $m[1];
     }
 
+    /**
+     * The controls are operable, and they say what they do.
+     *
+     * They were unlabelled <span>s: no keyboard could reach them and a screen
+     * reader had nothing to announce. That was a gap before; it matters more
+     * now, because under prefers-reduced-motion the deck does not advance on
+     * its own and these are the only way to see the other slides at all.
+     */
+    public function test_the_carousel_controls_are_reachable_and_named(): void
+    {
+        $html = $this->get('/')->assertOk()->getContent();
+
+        preg_match_all('/<button[^>]*class="ath-dot[^"]*"[^>]*>/', $html, $m);
+        $dotButtons = $m[0];
+
+        // A button per slide, not a span per slide.
+        $this->assertCount(count($this->slideClasses($html)), $dotButtons);
+
+        foreach ($dotButtons as $button) {
+            $this->assertMatchesRegularExpression('/aria-label="[^"]{8,}"/', $button);
+        }
+
+        // The names describe the slide rather than its position, so "button 3
+        // of 4" is not the whole of what a listener gets.
+        $this->assertStringContainsString('aria-label="Community Discovery Session, 29 August"', $html);
+
+        // Exactly one is current, and it is the first.
+        $this->assertSame(1, substr_count($html, 'aria-current="true"'));
+        $this->assertStringContainsString('aria-current="true"', $dotButtons[0]);
+    }
+
+    /**
+     * WCAG 2.2.2 wants a mechanism to stop moving content. Hovering and tabbing
+     * both hold the deck, but neither is a control somebody can find on
+     * purpose, so there is a real one.
+     */
+    public function test_the_carousel_offers_a_pause_control(): void
+    {
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('ath-slider-toggle', false)
+            ->assertSee('aria-label="Pause the slideshow"', false);
+    }
+
     public function test_the_event_leads_the_home_carousel(): void
     {
         $html = $this->get('/')->assertOk()
