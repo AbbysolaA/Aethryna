@@ -59,5 +59,13 @@ class AppServiceProvider extends ServiceProvider
             Limit::perMinute(20)->by($request->ip()),
             Limit::perHour(60)->by($request->ip()),
         ]);
+
+        // Event registration. Generous enough that a family or a keyworker
+        // signing several people up from one address is not mistaken for an
+        // attack, tight enough that the form is not a free mail relay.
+        RateLimiter::for('discovery-register', fn (Request $request) => [
+            Limit::perMinute(6)->by($request->ip()),
+            Limit::perHour(30)->by($request->ip()),
+        ]);
     }
 }

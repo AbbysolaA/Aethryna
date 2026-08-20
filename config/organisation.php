@@ -92,6 +92,35 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | The pilot pathways, as announced
+    |--------------------------------------------------------------------------
+    |
+    | The five tracks the pilot is being announced with, in the words used on
+    | print and at events.
+    |
+    | These do NOT currently match the `pathways` table, which still carries the
+    | earlier four-track structure under older names: Project Management,
+    | Data & Business Analytics, UI/UX & Digital Design and Software Development
+    | Foundations, with Product Management sitting outside the pilot. The site's
+    | default meta description also still names four tracks.
+    |
+    | This list exists so event material can say the right thing today without a
+    | taxonomy change rippling through /programs, the course pages, the
+    | assessment results and the sitemap. It is a stopgap and should be deleted
+    | once the seeder, the pilot flags and this list agree — at which point the
+    | pages that read this should read the Pathway model instead.
+    |
+    */
+    'pathways' => [
+        'Project Management and Delivery',
+        'Product Management',
+        'Product Design and Marketing',
+        'Data and AI',
+        'Software Development',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | The cohort people are applying to
     |--------------------------------------------------------------------------
     |

@@ -46,7 +46,10 @@ class WelcomeEmail extends Mailable
             'pathwayUrl'    => 'https://skillscoop.org/pathway',
             'sessionsUrl'   => 'https://skillscoop.org/sessions',
             'nextPanel'     => $nextPanel,
-            'panelDate'     => $nextPanel?->event_date?->timezone('Europe/London')->format('j F Y'),
+            // Not converted: event_date is UK wall-clock, not a UTC instant.
+            // Only the date is shown here so nothing visible was wrong, but the
+            // same conversion an hour before midnight would print the wrong day.
+            'panelDate'     => $nextPanel?->event_date?->format('j F Y'),
             'panelTitle'    => $nextPanel?->tagline,
         ];
     }

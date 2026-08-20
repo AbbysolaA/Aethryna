@@ -85,6 +85,11 @@
         </div>
     </section>
 
+    {{-- Straight under the hero, not above it. The hero says what Skills Co-op
+         is, which is what a first-time visitor needs before a date and a
+         postcode mean anything. The banner takes itself down after the event. --}}
+    @include('partials.event-banner')
+
     <!-- About Section -->
     <section class="ath-section ath-about" id="about">
         <div class="ath-container">

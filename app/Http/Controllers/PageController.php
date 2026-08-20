@@ -115,6 +115,13 @@ class PageController extends Controller
      */
     public function session(\App\Models\PanelSession $panelSession)
     {
+        // An event with a page of its own is served from there, not from here.
+        // Two URLs rendering the same event would compete in search results and
+        // split whatever links the event earns, so this one defers permanently.
+        if ($panelSession->landing_path) {
+            return redirect($panelSession->landing_path, 301);
+        }
+
         $panelSession->load(['speakers', 'images', 'videos']);
 
         return view('sessions.show', ['session' => $panelSession]);
