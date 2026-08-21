@@ -80,6 +80,24 @@ class VolunteerCvUploadTest extends TestCase
      * The one that must not regress. A required upload turns away people with
      * no CV to hand, and lived experience is worth as much here as a CV.
      */
+    /**
+     * The gap a question from the founder exposed: jobs and speaker pitches
+     * answered with an email, volunteers only saw a thanks page. Mentors are
+     * people we ask to give time for nothing; they should not also be the
+     * only applicants we do not write back to.
+     */
+    public function test_the_applicant_gets_a_confirmation_email(): void
+    {
+        Storage::fake('local');
+
+        $this->apply();
+
+        \Illuminate\Support\Facades\Mail::assertSent(
+            \App\Mail\VolunteerApplicationConfirmation::class,
+            fn ($mail) => $mail->hasTo('ada@example.com')
+        );
+    }
+
     public function test_an_application_without_a_cv_still_goes_through(): void
     {
         Storage::fake('local');
