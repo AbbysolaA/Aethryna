@@ -87,7 +87,7 @@ class VolunteerRole extends Model
      * Unpaid roles only.
      *
      * The volunteer application form asks for availability and takes no CV,
-     * which is the wrong shape for a paid post — and a paid post appearing in
+     * which is the wrong shape for a paid post, and a paid post appearing in
      * that dropdown would route a jobseeker into a volunteer pipeline. So the
      * two lists are explicitly separate rather than "everything that is open".
      */

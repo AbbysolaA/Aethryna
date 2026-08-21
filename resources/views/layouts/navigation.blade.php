@@ -72,7 +72,7 @@
                     @if (\App\Models\VolunteerRole::paid()->acceptingApplications()->exists())
                         <a href="{{ route('careers.index') }}" @class(['is-active' => request()->routeIs('careers.*')])>
                             <strong>Work with us</strong>
-                            <span>Paid roles on the team</span>
+                            <span>Open roles on our team</span>
                         </a>
                     @endif
                     <a href="{{ route('referral.create') }}" @class(['is-active' => request()->routeIs('referral.*')])>

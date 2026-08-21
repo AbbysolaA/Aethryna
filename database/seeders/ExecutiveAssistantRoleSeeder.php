@@ -6,10 +6,11 @@ use App\Models\VolunteerRole;
 use Illuminate\Database\Seeder;
 
 /**
- * Executive Assistant & Content Lead — the organisation's first paid hire.
+ * Executive Assistant & Content Lead.
  *
- * Taken from the job description document rather than rewritten, so the page
- * and the file say the same thing.
+ * Follows the job description document, so the page and the file say the same
+ * thing. Two phrasings differ on purpose, both noted below: the summary, and
+ * the salary.
  *
  * updateOrCreate on the slug: re-running corrects the copy rather than creating
  * a second vacancy, and the salary can be filled in by re-seeding once it is
@@ -25,9 +26,12 @@ class ExecutiveAssistantRoleSeeder extends Seeder
                 'title'           => 'Executive Assistant & Content Lead',
                 'engagement_type' => 'employee',
 
-                'summary' => 'Our first paid hire: keep the Founder\'s time under control and run our social media and content end to end.',
+                // Describes the work rather than the hiring milestone. "Our
+                // first paid hire" says more about the organisation than the
+                // job, and it implies everyone else is working for nothing.
+                'summary' => 'A broad role across operations and content, working closely with the Founder.',
 
-                'description' => 'Skills Co-op is run as a remote-first organisation. This is a generalist role for someone who can genuinely handle both ends of the job: keeping the Founder\'s time and admin under control, and running our entire social media and content output. You will be our first paid hire, working directly with the Founder on everything. As we grow and secure further funding, this role will split into specialist positions, and early hires get first consideration for those.',
+                'description' => 'Skills Co-op is run as a remote-first organisation. This is a generalist role for someone who can genuinely handle both ends of the job: running the operations side, and owning our social media and content output. You will work directly with the Founder on everything. As we grow and secure further funding, this role will split into specialist positions, and early hires get first consideration for those.',
 
                 'employment_basis' => 'Full-time',
                 'location'         => 'Remote first, open to applicants in UK-adjacent time zones (GMT to GMT+2)',
@@ -37,9 +41,9 @@ class ExecutiveAssistantRoleSeeder extends Seeder
                  * Deliberately not set from the document.
                  *
                  * The JD reads "Salary 100,000" with no currency and no period.
-                 * For a first hire at an early-stage CIC that is far enough
-                 * outside the UK market for this role to look like a
-                 * placeholder rather than an offer, and publishing it would
+                 * For this role at an early-stage CIC that sits far enough
+                 * outside the UK market to read as a placeholder rather than
+                 * an offer, and publishing it would
                  * shape the applicant pool around a number that may be wrong.
                  * The page omits the row entirely while this is null, which is
                  * a smaller problem than advertising the wrong figure.
@@ -51,18 +55,17 @@ class ExecutiveAssistantRoleSeeder extends Seeder
 
                 'sections' => [
                     [
-                        'heading' => 'What you will own: calendar and admin',
+                        // One list rather than two sublabelled ones. Splitting
+                        // it made the role look like two jobs bolted together,
+                        // which is the impression a generalist post least needs
+                        // to give.
+                        'heading' => 'What you will own',
                         'items'   => [
                             'Manage the Founder\'s calendar and inbox, scheduling calls and meetings across speakers, partners, and advisers',
                             'Triage incoming email and draft responses to routine enquiries',
                             'Prepare documents, letters, and briefing packs',
                             'Keep task tracking tools current and flag what is falling behind',
                             'Provide general operational support wherever it is needed that week',
-                        ],
-                    ],
-                    [
-                        'heading' => 'What you will own: social media and content',
-                        'items'   => [
                             'Own Instagram, TikTok, Facebook, YouTube and LinkedIn end to end: content calendar, posting, and community response',
                             'Write and post content, including short-form video, without waiting to be told what to make',
                             'Design graphics and visual assets on brand',
@@ -109,8 +112,8 @@ class ExecutiveAssistantRoleSeeder extends Seeder
                 'requires_dbs'  => false,
                 'requires_nda'  => true,
 
-                // No closing date: this is a first hire and the organisation
-                // will recruit until it finds the right person.
+                // No closing date. The organisation will recruit until it
+                // finds the right person rather than to a deadline.
                 'closes_at' => null,
 
                 'is_open' => true,

@@ -57,7 +57,10 @@
             <div class="vl-panel vl-apply-panel" id="apply">
                 <h2 class="vl-panel-title">Put yourself forward</h2>
 
-                <form method="POST" action="{{ route('volunteer.apply.store') }}" novalidate>
+                {{-- enctype matters: without it the browser sends the filename only and
+                     the CV silently never arrives. --}}
+                <form method="POST" action="{{ route('volunteer.apply.store') }}"
+                      enctype="multipart/form-data" novalidate>
                     @csrf
 
                     {{-- Honeypot: hidden from real users; only bots fill this.
@@ -124,6 +127,19 @@
                         <textarea id="experience" name="experience" rows="3" maxlength="2000"
                                   placeholder="Anything that feels relevant. Lived experience counts as much as professional experience here.">{{ old('experience') }}</textarea>
                         @error('experience')<p class="vl-error">{{ $message }}</p>@enderror
+                    </div>
+
+                    <div class="vl-field">
+                        <label for="cv">CV <span class="vl-opt">(optional)</span></label>
+                        <input id="cv" name="cv" type="file"
+                               accept=".pdf,.doc,.docx,.odt,.rtf,application/pdf">
+                        <p class="vl-side-note vl-hint">
+                            PDF or Word, up to 5MB. Useful if you would rather show us your
+                            background than write it out, and it saves repeating yourself if we
+                            talk. Leave it out if you do not have one to hand: we read every
+                            application either way, and nobody is turned down for not attaching a file.
+                        </p>
+                        @error('cv')<p class="vl-error">{{ $message }}</p>@enderror
                     </div>
 
                     <div class="vl-consent">

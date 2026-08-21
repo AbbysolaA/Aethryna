@@ -104,6 +104,11 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
         ->name('volunteers.destroy');
     // Turn an application into an offer. Separate from store() because the
     // engagement already exists; this only mints the token and sends the email.
+    // Applicant CVs sit on a disk the web server does not serve, so this is the
+    // only way to one. Inside the admin group, so it is already behind auth.
+    Route::get('/volunteers/{engagement}/cv', [\App\Http\Controllers\Admin\VolunteerAdminController::class, 'downloadCv'])
+        ->name('volunteers.cv');
+
     Route::get('/volunteers/{engagement}/extend', [\App\Http\Controllers\Admin\VolunteerAdminController::class, 'extendForm'])
         ->name('volunteers.extend.form');
     Route::post('/volunteers/{engagement}/extend', [\App\Http\Controllers\Admin\VolunteerAdminController::class, 'extend'])
