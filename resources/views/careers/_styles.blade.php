@@ -72,6 +72,47 @@
 
     .cr-back { display: inline-block; margin: 26px 0 0; color: var(--cr-teal-bright); font-weight: 600; }
 
+    /* The application form */
+    .cr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; }
+    @media (max-width: 640px) { .cr-grid { grid-template-columns: 1fr; } }
+
+    .cr-field { margin: 0 0 18px; }
+    .cr-field label { display: block; font-weight: 700; color: var(--cr-teal); font-size: .95rem; margin: 0 0 6px; }
+    .cr-opt { font-weight: 500; color: var(--cr-slate); }
+    .cr-field input:not([type="file"]), .cr-field textarea {
+        width: 100%; box-sizing: border-box;
+        border: 1.5px solid var(--cr-line); border-radius: 8px;
+        padding: 11px 13px; font: inherit; color: var(--cr-ink); background: #fff;
+    }
+    .cr-field input:focus, .cr-field textarea:focus {
+        outline: none; border-color: var(--cr-teal-bright);
+        box-shadow: 0 0 0 3px rgba(3,139,137,.15);
+    }
+    .cr-field input[type="file"] { font: inherit; color: var(--cr-ink); }
+    .cr-hint { font-size: .88rem; color: var(--cr-slate); margin: 6px 0 0; line-height: 1.5; }
+    .cr-error { font-size: .88rem; color: #a33a3a; margin: 6px 0 0; font-weight: 600; }
+
+    .cr-consent { display: flex; gap: 10px; align-items: flex-start; margin: 6px 0 0;
+                  font-size: .95rem; color: var(--cr-ink); line-height: 1.6; }
+    .cr-consent input { margin-top: 4px; flex: 0 0 auto; }
+
+    .cr-flash-ok {
+        background: #eef7ee; border: 1px solid #cfe6cf; border-radius: 10px;
+        padding: 14px 18px; color: #2b5a2b; line-height: 1.6; margin: 0 0 4px;
+    }
+    .cr-flash-err {
+        background: #fdf3f3; border: 1px solid #f0d5d5; border-radius: 10px;
+        padding: 14px 18px; color: #7a2b2b; line-height: 1.6; margin: 0 0 16px;
+    }
+
+    /* The honeypot. Moved out of the page rather than display:none, which some
+       form fillers treat as a cue to skip it: the point is that scripts do
+       fill it. */
+    .cr-ref {
+        position: absolute; left: -9999px; top: auto;
+        width: 1px; height: 1px; overflow: hidden;
+    }
+
     @media (max-width: 640px) {
         .cr-card, .cr-apply { padding: 20px; }
     }

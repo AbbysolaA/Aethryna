@@ -63,7 +63,9 @@
                 'addressCountry'  => config('organisation.country'),
             ]),
         ]),
-        'directApply' => false,
+        // True now: the vacancy page takes the application itself rather
+        // than pointing at an inbox.
+        'directApply' => true,
     ], fn ($v) => ! is_null($v) && $v !== [] && $v !== '');
 @endphp
 <script type="application/ld+json">{!! json_encode($jobSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
@@ -132,22 +134,102 @@
                 </div>
             @endforeach
 
-            @if ($role->isAcceptingApplications() && $role->apply_email)
-                <div class="cr-apply">
-                    <h2>How to apply</h2>
-                    @if ($role->apply_instructions)
-                        <p>{{ $role->apply_instructions }}</p>
+            @if ($role->isAcceptingApplications())
+                <div class="cr-apply" id="apply">
+                    <h2>Apply for this role</h2>
+
+                    @if (session('success'))
+                        <p class="cr-flash-ok" role="status">{{ session('success') }}</p>
+                    @else
+                        @if (session('error'))
+                            <p class="cr-flash-err" role="alert">{{ session('error') }}</p>
+                        @endif
+
+                        @if ($errors->any())
+                            <p class="cr-flash-err" role="alert">
+                                Something needs a look before this can go in. The fields below say what.
+                            </p>
+                        @endif
+
+                        @if ($role->apply_instructions)
+                            <p>{{ $role->apply_instructions }}</p>
+                        @endif
+
+                        {{-- enctype, or the CV silently never arrives. --}}
+                        <form method="POST" action="{{ route('careers.apply', $role) }}"
+                              enctype="multipart/form-data" novalidate>
+                            @csrf
+
+                            {{-- Honeypot. Real users never see it; bots fill it. --}}
+                            <div class="cr-ref" aria-hidden="true">
+                                <label for="jb_reference">Reference</label>
+                                <input id="jb_reference" name="jb_reference" type="text"
+                                       tabindex="-1" autocomplete="off">
+                            </div>
+
+                            <div class="cr-grid">
+                                <div class="cr-field">
+                                    <label for="name">Full name</label>
+                                    <input id="name" name="name" required maxlength="255"
+                                           autocomplete="name" value="{{ old('name') }}">
+                                    @error('name')<p class="cr-error">{{ $message }}</p>@enderror
+                                </div>
+                                <div class="cr-field">
+                                    <label for="email">Email</label>
+                                    <input id="email" name="email" type="email" required maxlength="255"
+                                           autocomplete="email" value="{{ old('email') }}">
+                                    @error('email')<p class="cr-error">{{ $message }}</p>@enderror
+                                </div>
+                                <div class="cr-field">
+                                    <label for="phone">Phone <span class="cr-opt">(optional)</span></label>
+                                    <input id="phone" name="phone" type="tel" maxlength="40"
+                                           autocomplete="tel" value="{{ old('phone') }}">
+                                    @error('phone')<p class="cr-error">{{ $message }}</p>@enderror
+                                </div>
+                                <div class="cr-field">
+                                    <label for="portfolio_url">Portfolio or work you are proud of <span class="cr-opt">(optional)</span></label>
+                                    <input id="portfolio_url" name="portfolio_url" type="url" maxlength="255"
+                                           placeholder="https://" value="{{ old('portfolio_url') }}">
+                                    @error('portfolio_url')<p class="cr-error">{{ $message }}</p>@enderror
+                                </div>
+                            </div>
+
+                            <div class="cr-field">
+                                <label for="cover_note">Why does this role fit you?</label>
+                                <textarea id="cover_note" name="cover_note" rows="5" required
+                                          maxlength="4000">{{ old('cover_note') }}</textarea>
+                                <p class="cr-hint">A few honest sentences beat a formal cover letter.</p>
+                                @error('cover_note')<p class="cr-error">{{ $message }}</p>@enderror
+                            </div>
+
+                            <div class="cr-field">
+                                <label for="cv">CV</label>
+                                <input id="cv" name="cv" type="file" required
+                                       accept=".pdf,.doc,.docx,.odt,.rtf,application/pdf">
+                                <p class="cr-hint">PDF or Word, up to 5MB.</p>
+                                @error('cv')<p class="cr-error">{{ $message }}</p>@enderror
+                            </div>
+
+                            <label class="cr-consent">
+                                <input type="checkbox" name="consent" value="1" required @checked(old('consent'))>
+                                <span>I am happy for Skills Co-op to hold these details and my CV while my
+                                    application is considered. See our <a href="{{ route('privacy') }}">privacy notice</a>.</span>
+                            </label>
+                            @error('consent')<p class="cr-error">{{ $message }}</p>@enderror
+
+                            <button type="submit" class="ath-btn ath-btn-primary" style="margin-top:18px;">
+                                Send my application
+                            </button>
+
+                            @if ($role->apply_email)
+                                <p class="cr-hint" style="margin-top:14px;">
+                                    Forms not your thing? Email
+                                    <a href="mailto:{{ $role->apply_email }}?subject={{ rawurlencode('Application: '.$role->title) }}">{{ $role->apply_email }}</a>
+                                    instead. Both routes land on the same desk.
+                                </p>
+                            @endif
+                        </form>
                     @endif
-                    {{-- A mailto with the subject prefilled, because the
-                         instructions ask for a specific subject line and
-                         nobody reliably reads that far before clicking. --}}
-                    <a class="ath-btn ath-btn-primary"
-                       href="mailto:{{ $role->apply_email }}?subject={{ rawurlencode('Application: '.$role->title) }}">
-                        Email your application
-                    </a>
-                    <p style="margin:14px 0 0;font-size:.92rem;color:#59626A;">
-                        Or write to <a href="mailto:{{ $role->apply_email }}">{{ $role->apply_email }}</a> directly.
-                    </p>
                 </div>
             @endif
 

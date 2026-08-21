@@ -46,6 +46,11 @@ class VolunteerRole extends Model
         return $this->hasMany(VolunteerEngagement::class);
     }
 
+    public function jobApplications(): HasMany
+    {
+        return $this->hasMany(JobApplication::class);
+    }
+
     public function getRouteKeyName(): string
     {
         return 'slug';
