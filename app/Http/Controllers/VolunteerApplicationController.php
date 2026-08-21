@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\VolunteerApplicationConfirmation;
 use App\Mail\VolunteerApplicationReceived;
 use App\Models\User;
 use App\Models\VolunteerEngagement;
@@ -140,10 +141,39 @@ class VolunteerApplicationController extends Controller
             'applied_at'        => now(),
         ]);
 
-        Mail::to(config('mail.volunteer_inbox', 'hello@skillscoop.org'))
-            ->send(new VolunteerApplicationReceived($engagement));
+        $this->sendEmails($engagement);
 
         return redirect()->route('volunteer.apply.thanks');
+    }
+
+    /**
+     * Neither email may cost anyone their application. The row is saved by
+     * this point, and the staff notification used to be sent bare: a mail
+     * server having a bad afternoon would have shown the applicant a 500
+     * after their application had in fact been received.
+     */
+    private function sendEmails(VolunteerEngagement $engagement): void
+    {
+        try {
+            Mail::to($engagement->offer_email)
+                ->send(new VolunteerApplicationConfirmation($engagement));
+        } catch (\Throwable $e) {
+            Log::error('Volunteer application confirmation failed', [
+                'engagement' => $engagement->id,
+                'email'      => $engagement->offer_email,
+                'error'      => $e->getMessage(),
+            ]);
+        }
+
+        try {
+            Mail::to(config('mail.volunteer_inbox', 'hello@skillscoop.org'))
+                ->send(new VolunteerApplicationReceived($engagement));
+        } catch (\Throwable $e) {
+            Log::error('Volunteer application staff notification failed', [
+                'engagement' => $engagement->id,
+                'error'      => $e->getMessage(),
+            ]);
+        }
     }
 
     public function thanks(): View
