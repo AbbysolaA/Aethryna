@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 /**
@@ -30,6 +31,10 @@ class VolunteerEngagement extends Model
         'about',
         'availability',
         'experience',
+        'cv_path',
+        'cv_original_name',
+        'cv_mime',
+        'cv_size',
         'status',
         'offer_token',
         'offer_expires_at',
@@ -325,5 +330,45 @@ class VolunteerEngagement extends Model
         }
 
         return 'Dates to be confirmed.';
+    }
+
+    // --- CV ---
+
+    /**
+     * Disk the uploaded CVs live on. Not web reachable, so the only way to one
+     * is VolunteerController::downloadCv, which checks the caller first.
+     */
+    public const CV_DISK = 'local';
+
+    public function hasCv(): bool
+    {
+        return (bool) $this->cv_path && Storage::disk(self::CV_DISK)->exists($this->cv_path);
+    }
+
+    /** Size in a form a human reads, for the admin list. */
+    public function cvSizeForHumans(): string
+    {
+        $bytes = (int) $this->cv_size;
+
+        return $bytes >= 1048576
+            ? round($bytes / 1048576, 1).'MB'
+            : max(1, (int) round($bytes / 1024)).'KB';
+    }
+
+    /**
+     * Take the file with the row.
+     *
+     * On the deleting event rather than at the call sites, so a CV cannot be
+     * orphaned on disk by a delete somebody adds later. These are unsolicited
+     * personal documents; leaving them lying around after the application they
+     * belonged to has gone is the kind of thing a data audit asks about.
+     */
+    protected static function booted(): void
+    {
+        static::deleting(function (self $engagement) {
+            if ($engagement->cv_path) {
+                Storage::disk(self::CV_DISK)->delete($engagement->cv_path);
+            }
+        });
     }
 }

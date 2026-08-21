@@ -69,7 +69,7 @@ class CareersTest extends TestCase
         $this->get('/careers')
             ->assertOk()
             ->assertDontSee('Volunteer Project Manager')
-            ->assertSee('No paid roles are open at the moment.');
+            ->assertSee('No roles are open at the moment.');
     }
 
     public function test_a_vacancy_page_carries_the_description_and_how_to_apply(): void

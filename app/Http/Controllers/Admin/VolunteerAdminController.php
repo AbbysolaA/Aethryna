@@ -11,7 +11,9 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * Admin side of volunteering: extending offers and tracking onboarding.
@@ -94,6 +96,25 @@ class VolunteerAdminController extends Controller
         [$key, $message] = $this->offerFlash($engagement, $this->sendOffer($engagement));
 
         return redirect()->route('admin.volunteers.index')->with($key, $message);
+    }
+
+    /**
+     * An applicant's CV.
+     *
+     * The file is on a disk the web server does not serve, so this is the only
+     * route to it and it sits inside the admin group. Served as a download
+     * rather than inline: these are unsolicited documents from strangers, and
+     * nothing is gained by asking the browser to render one.
+     */
+    public function downloadCv(VolunteerEngagement $engagement): StreamedResponse
+    {
+        // The row can outlive the file if storage was cleared underneath it.
+        abort_unless($engagement->hasCv(), 404);
+
+        return Storage::disk(VolunteerEngagement::CV_DISK)->download(
+            $engagement->cv_path,
+            $engagement->cv_original_name ?: 'cv'
+        );
     }
 
     /**

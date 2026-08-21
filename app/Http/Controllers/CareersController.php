@@ -10,7 +10,7 @@ use Illuminate\View\View;
  *
  * Separate from /volunteer/apply on purpose. That page lists unpaid roles and
  * its form asks for availability and takes no CV, which is the wrong set of
- * questions for someone applying for a salaried job — and putting a vacancy in
+ * questions for someone applying for a salaried job, and putting a vacancy in
  * that dropdown would quietly route a jobseeker into the volunteer pipeline.
  *
  * /careers is also the URL people guess, type and link to, which matters more

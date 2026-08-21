@@ -16,6 +16,9 @@ AVAILABILITY
 RELEVANT EXPERIENCE
 {!! $experience ?: 'None given' !!}
 
+CV
+{!! $cvName ? $cvName.' (on the roster page, not attached here)' : 'None attached' !!}
+
 Open the roster:
 {!! $rosterUrl !!}
 

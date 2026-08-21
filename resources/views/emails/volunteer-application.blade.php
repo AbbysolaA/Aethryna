@@ -4,7 +4,7 @@
 
     Data expected (see App\Mail\VolunteerApplicationReceived):
         applicantName, applicantEmail, phone, roleTitle, about, availability,
-        experience, appliedAt, rosterUrl
+        experience, cvName, appliedAt, rosterUrl
 --}}
 @extends('emails.layout')
 
@@ -78,6 +78,12 @@
                     <td style="padding:12px 0 0 0;">
                         <p style="margin:0 0 3px 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:11px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:#8a8f86;">Relevant experience</p>
                         <p style="margin:0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:16px; line-height:26px; color:{{ $experience ? '#2b333a' : '#8a8f86' }}; white-space:pre-wrap;">{{ $experience ?: 'None given' }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding:0 0 18px 0;">
+                        <p style="margin:0 0 3px 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:11px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:#8a8f86;">CV</p>
+                        <p style="margin:0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:16px; line-height:26px; color:{{ $cvName ? '#2b333a' : '#8a8f86' }};">{{ $cvName ? $cvName.' (open it from the roster page)' : 'None attached' }}</p>
                     </td>
                 </tr>
             </table>

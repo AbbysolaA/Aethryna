@@ -1,7 +1,7 @@
 @extends('layouts.aethryna')
 
 @section('title', 'Jobs at Skills Co-op | Careers')
-@section('meta_description', 'Paid roles at Skills Co-op, a UK community interest company delivering free digital skills and AI literacy training. Remote first.')
+@section('meta_description', 'Open roles at Skills Co-op, a UK community interest company delivering free digital skills and AI literacy training. Remote first.')
 @section('og_title', 'Careers at Skills Co-op')
 
 @push('styles')
@@ -29,7 +29,7 @@
 
             @if ($roles->isEmpty())
                 <div class="cr-empty">
-                    <p><strong>No paid roles are open at the moment.</strong></p>
+                    <p><strong>No roles are open at the moment.</strong></p>
                     <p>
                         We are still glad to hear from people who want to get involved.
                         <a href="{{ route('volunteer.apply') }}">See how you can volunteer</a>,
@@ -66,11 +66,14 @@
                 </ul>
             @endif
 
-            {{-- Volunteering is a different pipeline with a different form, so it
-                 is signposted rather than mixed into the list above. --}}
+            {{-- Volunteering runs through a different form, so it is signposted
+                 rather than mixed into the list above. Framed as another door
+                 rather than as the unpaid one: nobody is looking for a way to
+                 work for nothing, and saying so out loud reads badly whichever
+                 way it is meant. --}}
             <p style="margin-top:32px;color:#59626A;line-height:1.7;">
-                Looking for unpaid ways to help?
-                <a href="{{ route('volunteer.apply') }}">We list volunteer roles separately</a>.
+                Not what you are looking for?
+                <a href="{{ route('volunteer.apply') }}">There are other ways to get involved</a>.
             </p>
 
         </div>

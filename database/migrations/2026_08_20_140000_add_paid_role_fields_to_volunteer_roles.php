@@ -63,10 +63,10 @@ return new class extends Migration
             /*
              * The body of the job description, as [{heading, items[]}].
              *
-             * A job description is a series of headed lists — what you will
-             * own, what you need, nice to have — and storing it as one blob of
-             * prose would mean either publishing unformatted text or parsing
-             * markup at render. Same shape as the event itinerary.
+             * A job description is a series of headed lists: what you will
+             * own, what you need, nice to have. Storing it as one blob of prose
+             * would mean either publishing unformatted text or parsing markup
+             * at render. Same shape as the event itinerary.
              */
             $table->json('sections')->nullable()->after('closes_at');
         });

@@ -57,6 +57,11 @@ class VolunteerApplicationReceived extends Mailable
             'about'          => $e->about,
             'availability'   => $e->availability,
             'experience'     => $e->experience,
+
+            // Named rather than attached. The file is a stranger's document on
+            // a private disk, and forwarding it into an inbox puts a copy
+            // somewhere the delete-with-the-row rule cannot reach.
+            'cvName'         => $e->hasCv() ? $e->cv_original_name : null,
             'appliedAt'      => $e->applied_at?->timezone('Europe/London')->format('j F Y, H:i') . ' UK time',
             'rosterUrl'      => route('admin.volunteers.index'),
         ];

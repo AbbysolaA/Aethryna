@@ -44,6 +44,22 @@
 
                     <dt>Relevant experience</dt>
                     <dd class="vl-appdl-long">{{ $engagement->experience ?: 'Nothing given' }}</dd>
+
+                    <dt>CV</dt>
+                    <dd>
+                        @if ($engagement->hasCv())
+                            <a href="{{ route('admin.volunteers.cv', $engagement) }}">
+                                {{ $engagement->cv_original_name }}
+                            </a>
+                            <span class="vl-cell-sub">{{ $engagement->cvSizeForHumans() }}</span>
+                        @elseif ($engagement->cv_path)
+                            {{-- The row can outlive the file if storage was cleared
+                                 underneath it, and a dead link is worse than saying so. --}}
+                            <span class="vl-cell-sub">Attached, but the file is missing from storage</span>
+                        @else
+                            Nothing attached
+                        @endif
+                    </dd>
                 </dl>
             </div>
 

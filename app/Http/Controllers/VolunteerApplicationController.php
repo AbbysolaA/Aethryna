@@ -69,11 +69,25 @@ class VolunteerApplicationController extends Controller
             'about'             => ['required', 'string', 'max:2000'],
             'availability'      => ['required', 'string', 'max:255'],
             'experience'        => ['nullable', 'string', 'max:2000'],
+
+            /*
+             * Optional, and it has to stay optional. Plenty of people who would
+             * be good at this have no CV to hand, and a required upload would
+             * turn them away at the last field. It is the difference between
+             * asking for evidence and demanding paperwork.
+             *
+             * mimes checks the file's actual type rather than trusting the
+             * extension. 5MB covers a CV with a photo in it and stops the form
+             * being used to park large files on the server.
+             */
+            'cv'                => ['nullable', 'file', 'mimes:pdf,doc,docx,odt,rtf', 'max:5120'],
             'consent'           => ['accepted'],
         ], [
             'about.required'        => 'Please tell us a little about why you are interested.',
             'availability.required' => 'Please tell us roughly how much time you can give.',
             'consent.accepted'      => 'Please confirm we can hold your details to consider your application.',
+            'cv.mimes'              => 'Please upload a PDF or Word document.',
+            'cv.max'                => 'That file is larger than 5MB. Please upload a smaller one.',
         ]);
 
         $role = VolunteerRole::where('is_open', true)->find($validated['volunteer_role_id']);
@@ -98,6 +112,17 @@ class VolunteerApplicationController extends Controller
             return redirect()->route('volunteer.apply.thanks');
         }
 
+        /*
+         * Stored before the row is written, so the path can go in with it.
+         *
+         * The disk is 'local' (storage/app/private), which the web server does
+         * not serve: an unsolicited CV sitting on a guessable public URL is a
+         * personal data leak waiting to be found. store() also names the file
+         * randomly, so the original name is kept in its own column and only
+         * reapplied on download.
+         */
+        $cv = $request->file('cv');
+
         $engagement = VolunteerEngagement::create([
             'volunteer_role_id' => $role->id,
             'user_id'           => User::where('email', $validated['email'])->value('id'),
@@ -107,6 +132,10 @@ class VolunteerApplicationController extends Controller
             'about'             => $validated['about'],
             'availability'      => $validated['availability'],
             'experience'        => $validated['experience'] ?? null,
+            'cv_path'           => $cv?->store('volunteer-cvs', VolunteerEngagement::CV_DISK),
+            'cv_original_name'  => $cv?->getClientOriginalName(),
+            'cv_mime'           => $cv?->getClientMimeType(),
+            'cv_size'           => $cv?->getSize(),
             'status'            => 'applied',
             'applied_at'        => now(),
         ]);
