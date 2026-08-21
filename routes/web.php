@@ -4,6 +4,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CareersController;
 use App\Http\Controllers\DiscoverySessionController;
 use App\Http\Controllers\ReferralController;
 use App\Http\Controllers\VolunteerApplicationController;
@@ -35,6 +36,19 @@ Route::get('/discovery-session', [DiscoverySessionController::class, 'show'])->n
 Route::post('/discovery-session', [DiscoverySessionController::class, 'register'])
     ->middleware('throttle:discovery-register')
     ->name('discovery-session.register');
+
+/*
+ * Paid vacancies, kept apart from /volunteer/apply.
+ *
+ * That page lists unpaid roles and its form asks for availability and takes no
+ * CV, which is the wrong set of questions for a salaried job — and a vacancy in
+ * that dropdown would route a jobseeker into the volunteer pipeline.
+ *
+ * /careers is the URL people guess, type and link to, and the one job boards
+ * and search engines look for.
+ */
+Route::get('/careers', [CareersController::class, 'index'])->name('careers.index');
+Route::get('/careers/{role}', [CareersController::class, 'show'])->name('careers.show');
 
 // Waitlist
 Route::post('/waitlist', [WaitlistController::class, 'store'])->name('waitlist.store');

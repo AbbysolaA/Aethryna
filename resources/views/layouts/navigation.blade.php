@@ -66,6 +66,15 @@
                         <strong>Volunteer with us</strong>
                         <span>Delivery, outreach and more</span>
                     </a>
+                    {{-- Only while something is actually open. A "Jobs" link to
+                         an empty page is a worse answer than no link, and this
+                         menu is already five items long. --}}
+                    @if (\App\Models\VolunteerRole::paid()->acceptingApplications()->exists())
+                        <a href="{{ route('careers.index') }}" @class(['is-active' => request()->routeIs('careers.*')])>
+                            <strong>Work with us</strong>
+                            <span>Paid roles on the team</span>
+                        </a>
+                    @endif
                     <a href="{{ route('referral.create') }}" @class(['is-active' => request()->routeIs('referral.*')])>
                         <strong>Refer someone</strong>
                         <span>Point us to someone who would benefit</span>

@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 /**
@@ -24,7 +25,11 @@ class VolunteerApplicationController extends Controller
     public function create(Request $request): View
     {
         return view('volunteer.apply', [
-            'roles'    => VolunteerRole::where('is_open', true)->orderBy('title')->get(),
+            // Unpaid roles only. This form asks for availability and takes no
+            // CV, so a paid vacancy appearing in it would route a jobseeker
+            // into the volunteer pipeline and lose their application. Paid
+            // posts live at /careers.
+            'roles'    => VolunteerRole::volunteer()->acceptingApplications()->orderBy('title')->get(),
             // Deep link from a role listing preselects that role.
             'selected' => $request->query('role'),
         ]);
@@ -51,7 +56,13 @@ class VolunteerApplicationController extends Controller
         }
 
         $validated = $request->validate([
-            'volunteer_role_id' => ['required', 'exists:volunteer_roles,id'],
+            // Constrained to unpaid roles, not just any row in the table.
+            // Filtering the dropdown decides what is offered; this decides
+            // what is accepted, and only the second one is a rule.
+            'volunteer_role_id' => [
+                'required',
+                Rule::exists('volunteer_roles', 'id')->where('engagement_type', 'volunteer'),
+            ],
             'name'              => ['required', 'string', 'max:255'],
             'email'             => ['required', 'email', 'max:255'],
             'phone'             => ['nullable', 'string', 'max:40'],

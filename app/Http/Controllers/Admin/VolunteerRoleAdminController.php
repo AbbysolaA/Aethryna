@@ -32,7 +32,7 @@ class VolunteerRoleAdminController extends Controller
     public function create(): View
     {
         return view('admin.volunteer-roles.form', [
-            'role' => new VolunteerRole(['is_open' => true, 'requires_nda' => true]),
+            'role' => new VolunteerRole(['is_open' => true, 'requires_nda' => true, 'engagement_type' => 'volunteer']),
         ]);
     }
 
@@ -42,11 +42,13 @@ class VolunteerRoleAdminController extends Controller
 
         $validated['slug'] = $this->uniqueSlug($validated['title']);
 
-        VolunteerRole::create($validated);
+        $role = VolunteerRole::create($validated);
 
         return redirect()
             ->route('admin.volunteer-roles.index')
-            ->with('status', 'Role created. It is now listed on /volunteer/apply.');
+            ->with('status', $role->isPaid()
+                ? 'Role created. It is now listed at /careers.'
+                : 'Role created. It is now listed on /volunteer/apply.');
     }
 
     public function edit(VolunteerRole $role): View
@@ -102,9 +104,22 @@ class VolunteerRoleAdminController extends Controller
             'requires_dbs'  => ['nullable', 'boolean'],
             'requires_nda'  => ['nullable', 'boolean'],
             'is_open'       => ['nullable', 'boolean'],
+
+            // Paid roles. All optional: a volunteer role leaves every one of
+            // them blank, and a vacancy can be posted before the salary is
+            // settled without the form standing in the way.
+            'engagement_type'    => ['required', Rule::in(['volunteer', 'employee', 'contractor'])],
+            'compensation'       => ['nullable', 'string', 'max:255'],
+            'employment_basis'   => ['nullable', 'string', 'max:255'],
+            'location'           => ['nullable', 'string', 'max:255'],
+            'reports_to'         => ['nullable', 'string', 'max:255'],
+            'apply_email'        => ['nullable', 'email', 'max:255'],
+            'apply_instructions' => ['nullable', 'string', 'max:1000'],
+            'closes_at'          => ['nullable', 'date'],
         ], [
             'title.unique'    => 'There is already a role with that title.',
             'summary.required' => 'The summary is the one line shown on the application page.',
+            'apply_email.email' => 'Applications need somewhere to go: use a real email address or leave it blank.',
         ]);
 
         // Unchecked boxes are absent from the request rather than false.
