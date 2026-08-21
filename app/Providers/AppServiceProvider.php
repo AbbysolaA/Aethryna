@@ -63,6 +63,20 @@ class AppServiceProvider extends ServiceProvider
         // Event registration. Generous enough that a family or a keyworker
         // signing several people up from one address is not mistaken for an
         // attack, tight enough that the form is not a free mail relay.
+        // Application forms with file uploads. Failed validation counts as an
+        // attempt too, so the per-minute allowance leaves room for someone
+        // fixing their mistakes without reuploading from a cafe connection
+        // being mistaken for an attack.
+        RateLimiter::for('job-apply', fn (Request $request) => [
+            Limit::perMinute(6)->by($request->ip()),
+            Limit::perHour(20)->by($request->ip()),
+        ]);
+
+        RateLimiter::for('speak-apply', fn (Request $request) => [
+            Limit::perMinute(6)->by($request->ip()),
+            Limit::perHour(20)->by($request->ip()),
+        ]);
+
         RateLimiter::for('discovery-register', fn (Request $request) => [
             Limit::perMinute(6)->by($request->ip()),
             Limit::perHour(30)->by($request->ip()),

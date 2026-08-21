@@ -32,6 +32,7 @@
         'Sessions' => [
             ['route' => 'admin.panels.index',        'label' => 'Panels', 'match' => 'admin.panels.*'],
             ['route' => 'admin.speakers.index',      'label' => 'Speakers', 'match' => 'admin.speakers.*'],
+            ['route' => 'admin.speaker-applications.index', 'label' => 'Speaker pitches', 'match' => 'admin.speaker-applications.*'],
             ['route' => 'admin.registrations.index', 'label' => 'Registrations', 'match' => 'admin.registrations.*'],
         ],
         'People' => [
@@ -39,6 +40,7 @@
             ['route' => 'admin.staff.index',                 'label' => 'Staff', 'match' => 'admin.staff.*'],
             ['route' => 'admin.volunteers.index',            'label' => 'Volunteers', 'match' => 'admin.volunteers.*'],
             ['route' => 'admin.volunteer-roles.index',       'label' => 'Positions', 'match' => 'admin.volunteer-roles.*'],
+            ['route' => 'admin.job-applications.index',      'label' => 'Job applications', 'match' => 'admin.job-applications.*'],
             ['route' => 'admin.volunteer-documents.index',   'label' => 'Onboarding pack', 'match' => 'admin.volunteer-documents.*'],
         ],
         'Governance' => [

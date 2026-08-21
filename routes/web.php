@@ -5,6 +5,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CareersController;
+use App\Http\Controllers\JobApplicationController;
+use App\Http\Controllers\SpeakerApplicationController;
 use App\Http\Controllers\DiscoverySessionController;
 use App\Http\Controllers\ReferralController;
 use App\Http\Controllers\VolunteerApplicationController;
@@ -49,6 +51,20 @@ Route::post('/discovery-session', [DiscoverySessionController::class, 'register'
  */
 Route::get('/careers', [CareersController::class, 'index'])->name('careers.index');
 Route::get('/careers/{role}', [CareersController::class, 'show'])->name('careers.show');
+// Applying happens on the vacancy page itself rather than by composing an
+// email. The application lands as a record an admin works through, and the
+// applicant gets a confirmation instead of silence.
+Route::post('/careers/{role}/apply', [JobApplicationController::class, 'store'])
+    ->middleware('throttle:job-apply')
+    ->name('careers.apply');
+
+// Speaking at our sessions. Its own URL because it gets shared and read out
+// loud, same reasoning as /discovery-session.
+Route::get('/apply-to-speak', [SpeakerApplicationController::class, 'create'])->name('speakers.apply');
+Route::post('/apply-to-speak', [SpeakerApplicationController::class, 'store'])
+    ->middleware('throttle:speak-apply')
+    ->name('speakers.apply.store');
+Route::get('/apply-to-speak/thanks', [SpeakerApplicationController::class, 'thanks'])->name('speakers.apply.thanks');
 
 // Waitlist
 Route::post('/waitlist', [WaitlistController::class, 'store'])->name('waitlist.store');
@@ -108,6 +124,22 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     // only way to one. Inside the admin group, so it is already behind auth.
     Route::get('/volunteers/{engagement}/cv', [\App\Http\Controllers\Admin\VolunteerAdminController::class, 'downloadCv'])
         ->name('volunteers.cv');
+
+    // Applications for paid roles, and pitches to speak. Same private disk
+    // rule for their files: these routes are the only way to them.
+    Route::get('/job-applications', [\App\Http\Controllers\Admin\JobApplicationAdminController::class, 'index'])
+        ->name('job-applications.index');
+    Route::patch('/job-applications/{application}', [\App\Http\Controllers\Admin\JobApplicationAdminController::class, 'update'])
+        ->name('job-applications.update');
+    Route::get('/job-applications/{application}/cv', [\App\Http\Controllers\Admin\JobApplicationAdminController::class, 'downloadCv'])
+        ->name('job-applications.cv');
+
+    Route::get('/speaker-applications', [\App\Http\Controllers\Admin\SpeakerApplicationAdminController::class, 'index'])
+        ->name('speaker-applications.index');
+    Route::patch('/speaker-applications/{application}', [\App\Http\Controllers\Admin\SpeakerApplicationAdminController::class, 'update'])
+        ->name('speaker-applications.update');
+    Route::get('/speaker-applications/{application}/headshot', [\App\Http\Controllers\Admin\SpeakerApplicationAdminController::class, 'downloadHeadshot'])
+        ->name('speaker-applications.headshot');
 
     Route::get('/volunteers/{engagement}/extend', [\App\Http\Controllers\Admin\VolunteerAdminController::class, 'extendForm'])
         ->name('volunteers.extend.form');

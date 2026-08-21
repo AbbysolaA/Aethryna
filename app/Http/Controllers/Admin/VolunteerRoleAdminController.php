@@ -81,6 +81,14 @@ class VolunteerRoleAdminController extends Controller
                 ->with('error', 'That role has engagements against it, so it cannot be deleted. Close it instead.');
         }
 
+        // Same rule for job applications: deleting the role would leave the
+        // people who applied for it pointing at nothing.
+        if ($role->jobApplications()->exists()) {
+            return redirect()
+                ->route('admin.volunteer-roles.index')
+                ->with('error', 'People have applied for that role, so it cannot be deleted. Close it instead.');
+        }
+
         $role->delete();
 
         return redirect()

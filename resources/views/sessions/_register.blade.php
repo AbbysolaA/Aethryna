@@ -28,7 +28,10 @@
                         <span class="ss-register-card-icon"><i class="fas fa-microphone-alt"></i></span>
                         <div>
                             <strong>Want to speak on a future panel?</strong>
-                            <p><a href="#wants_to_speak" data-speaker-cta>Tell us what you would cover &rarr;</a></p>
+                            {{-- The full pitch page, not just the checkbox below.
+                                 A checkbox captures a maybe; the page captures a
+                                 talk we can actually book. --}}
+                            <p><a href="{{ route('speakers.apply') }}">Pitch your talk &rarr;</a></p>
                         </div>
                     </div>
                 </div>
@@ -89,6 +92,10 @@
                                 <input type="checkbox" id="wants_to_speak" name="wants_to_speak" value="1" {{ old('wants_to_speak') ? 'checked' : '' }}>
                                 <span>I would be interested in speaking on a future panel</span>
                             </label>
+                            <p class="ss-register-alt" style="margin-top:6px;">
+                                Have a talk in mind already?
+                                <a href="{{ route('speakers.apply') }}">Pitch it properly here &rarr;</a>
+                            </p>
                             <div class="ss-form-group ss-speaker-topic" id="speaker-topic-group" @unless(old('wants_to_speak')) hidden @endunless>
                                 <label for="speaker_topic">What would you speak about? <span class="ss-form-opt">(optional)</span></label>
                                 <textarea id="speaker_topic" name="speaker_topic" rows="3" placeholder="A sentence is plenty. What do you work on, and what would you want to say?">{{ old('speaker_topic') }}</textarea>

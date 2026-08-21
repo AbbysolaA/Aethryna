@@ -67,7 +67,9 @@ class SiteUrls
     public static function vacancies(): array
     {
         return array_merge(
-            ['/careers'],
+            // The speak page rides along here: it is recruiting of a different
+            // kind, and it is permanent rather than tied to one vacancy.
+            ['/careers', '/apply-to-speak'],
             VolunteerRole::paid()
                 ->acceptingApplications()
                 ->orderBy('title')

@@ -51,7 +51,7 @@ class ExecutiveAssistantRoleSeeder extends Seeder
                 'compensation' => null,
 
                 'apply_email' => 'hr@skillscoop.org',
-                'apply_instructions' => 'Send your CV and a short portfolio or examples of content you have created, with a subject line telling us why this role fits you.',
+                'apply_instructions' => 'Attach your CV and link to a portfolio or examples of content you have created. Use the covering note to tell us why this role fits you.',
 
                 'sections' => [
                     [
