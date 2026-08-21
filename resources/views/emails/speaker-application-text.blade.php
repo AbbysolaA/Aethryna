@@ -7,6 +7,10 @@ CONTACT
 
 THE TALK
 {!! $talkTitle !!}
+@if ($formatLabel)Prefers: {!! strtolower($formatLabel) !!}
+@endif
+@if ($topics)Tracks: {!! $topics !!}
+@endif
 
 {!! $talkSummary !!}
 

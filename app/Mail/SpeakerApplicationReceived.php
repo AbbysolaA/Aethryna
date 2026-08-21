@@ -44,6 +44,8 @@ class SpeakerApplicationReceived extends Mailable
             'affiliation'  => collect([$a->job_title, $a->organisation])->filter()->implode(', '),
             'talkTitle'    => $a->talk_title,
             'talkSummary'  => $a->talk_summary,
+            'formatLabel'  => $a->formatLabel(),
+            'topics'       => $a->topic_areas ? implode(', ', $a->topic_areas) : null,
             'bio'          => $a->bio,
             'adminUrl'     => route('admin.speaker-applications.index'),
         ];

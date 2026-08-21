@@ -69,6 +69,12 @@
                                     </td>
                                     <td>
                                         <strong>{{ $application->talk_title }}</strong>
+                                        @if ($application->formatLabel())
+                                            <span class="vl-cell-sub">Prefers: {{ strtolower($application->formatLabel()) }}</span>
+                                        @endif
+                                        @if ($application->topic_areas)
+                                            <span class="vl-cell-sub">{{ implode(' · ', $application->topic_areas) }}</span>
+                                        @endif
                                         <details class="vl-note-details">
                                             <summary>What they would cover</summary>
                                             <p>{{ $application->talk_summary }}</p>
