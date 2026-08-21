@@ -4,6 +4,7 @@ namespace App\Support;
 
 use App\Models\PanelSession;
 use App\Models\Pathway;
+use App\Models\VolunteerRole;
 
 /**
  * Every public URL, in one place.
@@ -37,6 +38,7 @@ class SiteUrls
             config('services.indexnow.urls', []),
             self::panels(),
             self::courses(),
+            self::vacancies(),
         )));
     }
 
@@ -50,6 +52,29 @@ class SiteUrls
             ->get(['slug', 'landing_path'])
             ->map(fn ($panel) => $panel->landing_path ?: '/sessions/'.$panel->slug)
             ->all();
+    }
+
+    /**
+     * Open paid vacancies, plus the careers index itself.
+     *
+     * A job page nobody can find is a job page nobody applies to, and this is
+     * an organisation with no recruitment budget. Closed roles are left out:
+     * their pages still resolve for anyone holding a link, but there is no
+     * reason to ask a search engine to index a post that cannot be applied for.
+     *
+     * @return array<int, string>
+     */
+    public static function vacancies(): array
+    {
+        return array_merge(
+            ['/careers'],
+            VolunteerRole::paid()
+                ->acceptingApplications()
+                ->orderBy('title')
+                ->pluck('slug')
+                ->map(fn ($slug) => '/careers/'.$slug)
+                ->all()
+        );
     }
 
     /** @return array<int, string> */

@@ -38,6 +38,11 @@
                         <li><a href="{{ route('sessions') }}">Sessions & Events</a></li>
                         <li><a href="{{ route('mentors') }}">Become a Mentor</a></li>
                         <li><a href="{{ route('referral.create') }}">Refer Someone</a></li>
+                        {{-- Footers are where people look for a jobs link, but
+                             only worth showing while there is one to click. --}}
+                        @if (\App\Models\VolunteerRole::paid()->acceptingApplications()->exists())
+                            <li><a href="{{ route('careers.index') }}">Careers</a></li>
+                        @endif
                     </ul>
                 </div>
 
