@@ -43,6 +43,7 @@ class SpeakerApplicationTest extends TestCase
             'talk_title'   => 'From the phones to team lead',
             'talk_summary' => 'How a support role becomes a career, and what I would tell myself at the start.',
             'consent'      => '1',
+            'recording_consent' => '1',
         ], $overrides));
     }
 
@@ -161,6 +162,56 @@ class SpeakerApplicationTest extends TestCase
 
         $this->assertSame($first, $application->fresh()->panel_speaker_id);
         $this->assertSame(1, PanelSpeaker::count());
+    }
+
+    /**
+     * The sharp one from the Gatherverse comparison. Sessions are recorded
+     * and shared; discovering a booked speaker never agreed to that after the
+     * recording exists is a conversation nobody should have.
+     */
+    public function test_recording_consent_is_required_and_stamped(): void
+    {
+        $this->pitch(['recording_consent' => null])->assertSessionHasErrors('recording_consent');
+        $this->assertDatabaseCount('speaker_applications', 0);
+
+        $this->pitch();
+        $this->assertNotNull(SpeakerApplication::firstOrFail()->recording_consented_at);
+    }
+
+    public function test_format_preference_and_topics_are_stored(): void
+    {
+        $this->pitch([
+            'session_format' => 'pre-recorded',
+            'topic_areas'    => ['Data and AI', 'Routes into tech, any role'],
+        ]);
+
+        $application = SpeakerApplication::firstOrFail();
+
+        $this->assertSame('pre-recorded', $application->session_format);
+        $this->assertSame('A pre-recorded talk', $application->formatLabel());
+        $this->assertSame(['Data and AI', 'Routes into tech, any role'], $application->topic_areas);
+    }
+
+    /** No preference is a fine answer and the default. */
+    public function test_format_and_topics_stay_optional(): void
+    {
+        $this->pitch(['session_format' => '']);
+
+        $application = SpeakerApplication::firstOrFail();
+
+        $this->assertNull($application->session_format);
+        $this->assertNull($application->topic_areas);
+    }
+
+    public function test_an_invented_format_or_topic_is_rejected(): void
+    {
+        $this->pitch(['session_format' => 'interpretive-dance'])
+            ->assertSessionHasErrors('session_format');
+
+        $this->pitch(['topic_areas' => ['Blockchain thought leadership']])
+            ->assertSessionHasErrors('topic_areas.0');
+
+        $this->assertDatabaseCount('speaker_applications', 0);
     }
 
     public function test_the_admin_list_renders_with_the_pitch_on_it(): void

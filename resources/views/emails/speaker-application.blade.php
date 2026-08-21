@@ -54,6 +54,12 @@
                     <td style="padding:0 0 18px 0;">
                         <p style="margin:0 0 3px 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:11px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:#8a8f86;">The talk</p>
                         <p style="margin:0 0 6px 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:18px; line-height:26px; font-weight:700; color:#2b333a;">{{ $talkTitle }}</p>
+                        @if ($formatLabel || $topics)
+                            <p style="margin:0 0 8px 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:13px; line-height:20px; color:#8a8f86;">
+                                @if ($formatLabel)Prefers: {{ strtolower($formatLabel) }}.@endif
+                                @if ($topics) Tracks: {{ $topics }}.@endif
+                            </p>
+                        @endif
                         <p style="margin:0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:16px; line-height:26px; color:#2b333a; white-space:pre-wrap;">{{ $talkSummary }}</p>
                     </td>
                 </tr>

@@ -137,6 +137,40 @@
                     @error('talk_summary')<p class="vl-error">{{ $message }}</p>@enderror
                 </div>
 
+                <fieldset class="vl-field vl-choice-group">
+                    <legend>How would you rather do it? <span class="vl-opt">(optional)</span></legend>
+                    {{-- A live panel and a pre-recorded talk are different asks
+                         of a nervous first-timer. Better to know now than at
+                         scheduling. No preference is a fine answer, so it is
+                         the default rather than a required choice. --}}
+                    <label class="vl-check">
+                        <input type="radio" name="session_format" value=""
+                               @checked(old('session_format', '') === '')>
+                        <span>No preference, happy either way</span>
+                    </label>
+                    @foreach (\App\Models\SpeakerApplication::FORMATS as $value => $label)
+                        <label class="vl-check">
+                            <input type="radio" name="session_format" value="{{ $value }}"
+                                   @checked(old('session_format') === $value)>
+                            <span>{{ $label }}</span>
+                        </label>
+                    @endforeach
+                    @error('session_format')<p class="vl-error">{{ $message }}</p>@enderror
+                </fieldset>
+
+                <fieldset class="vl-field vl-choice-group">
+                    <legend>Which of our tracks does it speak to? <span class="vl-opt">(optional, pick any)</span></legend>
+                    @foreach (\App\Models\SpeakerApplication::TOPICS as $topic)
+                        <label class="vl-check">
+                            <input type="checkbox" name="topic_areas[]" value="{{ $topic }}"
+                                   @checked(in_array($topic, old('topic_areas', []), true))>
+                            <span>{{ $topic }}</span>
+                        </label>
+                    @endforeach
+                    @error('topic_areas')<p class="vl-error">{{ $message }}</p>@enderror
+                    @error('topic_areas.*')<p class="vl-error">{{ $message }}</p>@enderror
+                </fieldset>
+
                 <div class="vl-field">
                     <label for="prior_speaking">Where you have spoken before <span class="vl-opt">(optional)</span></label>
                     <textarea id="prior_speaking" name="prior_speaking" rows="2" maxlength="2000"
@@ -168,6 +202,14 @@
                         <span>I am happy for Skills Co-op to hold these details while my pitch is considered. See our <a href="{{ route('privacy') }}">privacy notice</a>.</span>
                     </label>
                     @error('consent')<p class="vl-error">{{ $message }}</p>@enderror
+
+                    {{-- A separate promise, so a separate box. Asked now
+                         rather than after a recording exists. --}}
+                    <label class="vl-check">
+                        <input type="checkbox" name="recording_consent" value="1" required @checked(old('recording_consent'))>
+                        <span>Our sessions are recorded and shared afterwards, on the session page and our channels, so people who could not attend can still watch. If my talk goes ahead, I am happy for it to be recorded and shared that way.</span>
+                    </label>
+                    @error('recording_consent')<p class="vl-error">{{ $message }}</p>@enderror
                 </div>
 
                 <button type="submit" class="vl-btn vl-btn-primary">Send my pitch</button>
@@ -213,6 +255,21 @@
         .vl-form-note { margin-top: 16px; }
         @media (max-width: 640px) {
             .vl-role-list { margin-top: -40px; }
+        }
+
+        .vl-choice-group { border: 1.5px solid rgba(0,0,0,0.08); border-radius: 12px; padding: 16px 18px 8px; }
+        .vl-choice-group legend { font-weight: 700; padding: 0 6px; }
+        /* The shared sheet's .vl-field rules are written for text inputs:
+           full width boxes, custom borders, and bold teal labels. Applied to
+           a group of choices they turn radios into stretched slivers and make
+           every option shout, so the natural control and body text come back
+           here. */
+        .vl-choice-group .vl-check { margin: 0 0 10px; font-weight: 500; color: var(--ath-text); }
+        .vl-choice-group input[type="radio"],
+        .vl-choice-group input[type="checkbox"] {
+            appearance: auto; width: 17px; height: 17px; padding: 0;
+            border: none; box-shadow: none; flex: 0 0 auto; margin-top: 3px;
+            accent-color: var(--ath-teal);
         }
 
         /* The honeypot, moved off the page rather than display:none, which

@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 /**
@@ -52,6 +53,10 @@ class SpeakerApplicationController extends Controller
             'talk_title'     => ['required', 'string', 'max:255'],
             'talk_summary'   => ['required', 'string', 'max:4000'],
 
+            'session_format' => ['nullable', Rule::in(array_keys(SpeakerApplication::FORMATS))],
+            'topic_areas'    => ['nullable', 'array'],
+            'topic_areas.*'  => [Rule::in(SpeakerApplication::TOPICS)],
+
             // Never required. A first-time speaker with lived experience of
             // our audience can be a better booking than a conference regular.
             'prior_speaking' => ['nullable', 'string', 'max:2000'],
@@ -59,6 +64,11 @@ class SpeakerApplicationController extends Controller
 
             'headshot'       => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'consent'        => ['accepted'],
+
+            // Separate from the data consent, because it is a different
+            // promise. Asked at pitch time so nobody is booked, recorded and
+            // then asked. See the migration for the fuller reasoning.
+            'recording_consent' => ['accepted'],
         ], [
             'bio.required'          => 'Please tell us a little about yourself. A short paragraph is plenty.',
             'talk_title.required'   => 'Please give your talk a working title. It can change later.',
@@ -66,6 +76,7 @@ class SpeakerApplicationController extends Controller
             'headshot.mimes'        => 'Please upload the photo as a JPG, PNG or WebP.',
             'headshot.max'          => 'That photo is larger than 5MB. Please upload a smaller one.',
             'consent.accepted'      => 'Please confirm we can hold your details to consider your pitch.',
+            'recording_consent.accepted' => 'Sessions are recorded and shared, so we need your OK on that before we can book you.',
         ]);
 
         // A second pitch from the same address while the first is unread gets
@@ -78,7 +89,8 @@ class SpeakerApplicationController extends Controller
         $headshot = $request->file('headshot');
 
         $application = SpeakerApplication::create([
-            ...collect($validated)->except(['headshot', 'consent'])->all(),
+            ...collect($validated)->except(['headshot', 'consent', 'recording_consent'])->all(),
+            'recording_consented_at' => now(),
             'headshot_path'          => $headshot?->store('speaker-headshots', SpeakerApplication::HEADSHOT_DISK),
             'headshot_original_name' => $headshot?->getClientOriginalName(),
             'headshot_mime'          => $headshot?->getClientMimeType(),
