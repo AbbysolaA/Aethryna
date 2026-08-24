@@ -2,7 +2,7 @@
 
 @section('title', 'Refer someone | Skills Co-op')
 
-@section('meta_description', 'If you support someone who could benefit from free digital skills training, refer them to Skills Co-op. Consent-first, gentle follow-up, no pressure on them or on you.')
+@section('meta_description', 'Refer a young person who is NEET, an adult with experience of the justice system, or a returner to free digital skills training. We take referrals from job coaches, youth services and community organisations across Liverpool City Region and the UK.')
 @section('og_description', 'If you support someone who could benefit from free digital skills training, refer them to Skills Co-op. Consent-first, gentle follow-up, no pressure on them or on you.')
 
 @section('content')
