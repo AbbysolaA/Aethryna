@@ -88,7 +88,15 @@ return [
      * development traffic out of the reporting.
      */
     'gtm' => [
-        'id' => env('GOOGLE_TAG_MANAGER_ID', 'GTM-KD4HX7VQ'),
+        /*
+         * No default, deliberately. The fallback container ID that used to sit
+         * here meant Tag Manager loaded on every page of every environment
+         * whether anyone had configured it or not, on a site whose cookie
+         * policy says no analytics platform is used and whose measurement is
+         * Cloudflare's cookieless beacon. Off unless someone turns it on is
+         * the only state consistent with what the legal pages promise.
+         */
+        'id' => env('GOOGLE_TAG_MANAGER_ID'),
     ],
 
     /*
