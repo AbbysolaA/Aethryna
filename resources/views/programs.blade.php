@@ -1,8 +1,8 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Programmes | Free Digital Skills Training with Skills Co-op')
+@section('title', 'Free Digital Skills Courses & Training | Skills Co-op')
 
-@section('meta_description', 'Structured, AI-native training with mentorship, real project work, and pathways into freelance and employed work. Free for NEET young people, justice-involved adults, and women re-entering the workforce.')
+@section('meta_description', 'Free digital skills courses with mentoring, real project work and certificates. No experience or qualifications needed. Funded places for people facing barriers to work, across the UK.')
 @section('og_description', 'Structured, AI-native training with mentorship, real project work, and pathways into freelance and employed work. Free for NEET young people, justice-involved adults, and women re-entering the workforce.')
 
 @section('content')

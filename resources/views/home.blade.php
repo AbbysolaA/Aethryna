@@ -1,9 +1,13 @@
 @extends('layouts.aethryna')
 
-@section('title', 'Skills Co-op | Digital Skills, AI Literacy, and Real Career Pathways')
+{{-- Title and description written in searcher language, not funder language.
+     Nobody types "AI literacy" or "career pathways" into Google; they type
+     "free digital skills course", "no experience", "certificate". The brand
+     stays first so the brand result still reads as us. --}}
+@section('title', 'Skills Co-op | Free Digital Skills Courses for Real Careers')
 
-@section('meta_description', 'Free AI-integrated digital skills and career pathways for NEET young people, justice-involved adults and women returning to work.')
-@section('og_description', 'Free AI-integrated digital skills and career pathways for NEET young people, justice-involved adults and women returning to work.')
+@section('meta_description', 'Free, funded digital skills training with no experience needed. Learn project delivery, data and AI, design or software development with mentoring and certificates. Liverpool based, open across the UK.')
+@section('og_description', 'Free, funded digital skills training with no experience needed. Mentoring, certificates and real routes into work. Liverpool based, open across the UK.')
 
 @section('content')
 
