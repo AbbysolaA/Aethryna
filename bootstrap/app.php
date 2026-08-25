@@ -20,6 +20,13 @@ return Application::configure(basePath: dirname(__DIR__))
             'assessment/unsubscribe/*',
         ]);
 
+        // Site-wide because ads will not always point at the front door: a
+        // tagged link can land on the event page, the home page or a course
+        // page, and the registration that follows can happen anywhere.
+        $middleware->web(append: [
+            \App\Http\Middleware\CaptureUtmAttribution::class,
+        ]);
+
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
             'coach' => \App\Http\Middleware\CoachMiddleware::class,

@@ -16,6 +16,9 @@
                 <p class="vl-side-note">
                     {{ number_format($totalCount) }} registration{{ $totalCount === 1 ? '' : 's' }},
                     {{ number_format($speakerCount) }} of whom offered to speak on a future panel.
+                    @if ($campaignCount > 0)
+                        {{ number_format($campaignCount) }} arrived from a tagged campaign link.
+                    @endif
                 </p>
             </div>
             <div class="vl-head-actions">
@@ -76,7 +79,12 @@
                                     <td><a href="mailto:{{ $r->email }}">{{ $r->email }}</a></td>
                                     <td>{{ $r->panelSession?->tagline ?? '—' }}</td>
                                     <td>{{ $r->interestLabel() }}</td>
-                                    <td>{{ $r->referral_source ?: '—' }}</td>
+                                    <td>
+                                        {{ $r->referral_source ?: '—' }}
+                                        @if ($r->attributionLabel())
+                                            <span class="vl-cell-sub">{{ $r->attributionLabel() }}</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         @if ($r->wants_to_speak)
                                             <span class="vl-cell-flag">Yes</span>
