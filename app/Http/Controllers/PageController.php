@@ -162,7 +162,10 @@ class PageController extends Controller
                 'panel_session_id' => $nextSession?->id,
                 'email'            => $validated['email'],
             ],
-            [
+            // Campaign attribution captured when they landed, distinct from
+            // referral_source above, which is their own answer. Empty for an
+            // untagged visit so re-registering keeps the original attribution.
+            \App\Http\Middleware\CaptureUtmAttribution::forRegistration($request) + [
                 'name'            => $validated['name'],
                 'interest_type'   => $validated['interest_type'],
                 'referral_source' => $validated['referral_source'] ?? null,

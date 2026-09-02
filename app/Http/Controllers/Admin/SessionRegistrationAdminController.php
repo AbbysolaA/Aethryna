@@ -37,6 +37,13 @@ class SessionRegistrationAdminController extends Controller
             'speakersOnly'   => $request->boolean('speakers'),
             'totalCount'     => SessionRegistration::count(),
             'speakerCount'   => SessionRegistration::wantsToSpeak()->count(),
+
+            // The number the ad campaigns are judged on: registrations, not
+            // clicks. Counted within the current panel filter so "how many of
+            // the Discovery Session's places did the ads fill" is one glance.
+            'campaignCount'  => SessionRegistration::fromCampaign()
+                ->when($panelId, fn ($q) => $q->where('panel_session_id', $panelId))
+                ->count(),
         ]);
     }
 
@@ -61,9 +68,12 @@ class SessionRegistrationAdminController extends Controller
         return response()->streamDownload(function () use ($query) {
             $out = fopen('php://output', 'w');
 
+            // The utm columns are raw values rather than the readable label so
+            // a spreadsheet can pivot on source and campaign directly.
             fputcsv($out, [
                 'Registered at', 'Panel', 'Name', 'Email',
                 'Joining as', 'Heard about us', 'Wants to speak', 'Speaker topic',
+                'UTM source', 'UTM medium', 'UTM campaign',
             ]);
 
             $query->chunk(500, function ($rows) use ($out) {
@@ -77,6 +87,9 @@ class SessionRegistrationAdminController extends Controller
                         $r->referral_source,
                         $r->wants_to_speak ? 'Yes' : 'No',
                         $r->speaker_topic,
+                        $r->utm_source,
+                        $r->utm_medium,
+                        $r->utm_campaign,
                     ]);
                 }
             });

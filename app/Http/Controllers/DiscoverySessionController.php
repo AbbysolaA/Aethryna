@@ -75,7 +75,10 @@ class DiscoverySessionController extends Controller
                 'panel_session_id' => $session->id,
                 'email'            => $data['email'],
             ],
-            [
+            // The attribution spread is empty for an untagged visit, so a
+            // returning registrant updating their details does not have the
+            // campaign that originally brought them wiped to null.
+            \App\Http\Middleware\CaptureUtmAttribution::forRegistration($request) + [
                 'first_name'     => $data['first_name'],
                 'last_name'      => $data['last_name'],
                 'phone'          => $data['phone'] ?? null,

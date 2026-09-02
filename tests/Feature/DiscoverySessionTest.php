@@ -29,6 +29,15 @@ class DiscoverySessionTest extends TestCase
         parent::setUp();
 
         $this->seed(DiscoverySessionSeeder::class);
+
+        // The seeder dates the event 29 August 2026, a real one-off. Once the
+        // real clock passed that day, every test expecting the event to be
+        // upcoming started failing on schedule, which proved the carousel
+        // drops past events but broke the suite. The clock is pinned to just
+        // before the event so these tests describe the event while it was
+        // live; the tests for afterwards move the event date themselves.
+        $this->travelTo('2026-08-20 12:00:00');
+
         Mail::fake();
     }
 

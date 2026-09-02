@@ -21,6 +21,9 @@ class SessionRegistration extends Model
         'waitlisted',
         'confirmation_sent_at',
         'referral_source',
+        'utm_source',
+        'utm_medium',
+        'utm_campaign',
         'wants_to_speak',
         'speaker_topic',
     ];
@@ -104,6 +107,47 @@ class SessionRegistration extends Model
         }
 
         return 'there';
+    }
+
+    /**
+     * Only registrations a campaign link can take credit for.
+     */
+    public function scopeFromCampaign($query)
+    {
+        return $query->whereNotNull('utm_source');
+    }
+
+    /**
+     * Where the campaign tag says this person came from, in plain words.
+     *
+     * "Facebook ad (discovery-aug)" rather than three raw utm columns, because
+     * the admin list is read at a glance and the raw values are still in the
+     * CSV for anyone counting. Distinct from referral_source, which is what
+     * the person themselves said.
+     */
+    public function attributionLabel(): ?string
+    {
+        if (! $this->utm_source) {
+            return null;
+        }
+
+        $platform = match (strtolower($this->utm_source)) {
+            'facebook', 'fb', 'meta' => 'Facebook',
+            'tiktok'                 => 'TikTok',
+            'instagram', 'ig'        => 'Instagram',
+            'linkedin'               => 'LinkedIn',
+            'google'                 => 'Google',
+            default                  => ucfirst($this->utm_source),
+        };
+
+        // The medium says whether money changed hands. A tagged organic post
+        // and a paid placement should not be counted as the same thing when
+        // deciding where the next ad budget goes.
+        $kind = in_array(strtolower((string) $this->utm_medium), ['paid_social', 'paid', 'cpc', 'ppc', 'ad', 'ads'], true)
+            ? 'ad'
+            : 'link';
+
+        return $platform.' '.$kind.($this->utm_campaign ? ' ('.$this->utm_campaign.')' : '');
     }
 
     /**
