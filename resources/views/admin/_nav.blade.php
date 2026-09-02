@@ -43,6 +43,9 @@
             ['route' => 'admin.job-applications.index',      'label' => 'Job applications', 'match' => 'admin.job-applications.*'],
             ['route' => 'admin.volunteer-documents.index',   'label' => 'Onboarding pack', 'match' => 'admin.volunteer-documents.*'],
         ],
+        'Site' => [
+            ['route' => 'admin.posts.index', 'label' => 'Blog posts', 'match' => 'admin.posts.*'],
+        ],
         'Governance' => [
             ['route' => 'admin.risks.index',        'label' => 'Risks', 'match' => 'admin.risks.*'],
             ['route' => 'admin.safeguarding.index', 'label' => 'Safeguarding', 'match' => 'admin.safeguarding.*'],

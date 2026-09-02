@@ -36,6 +36,7 @@
                         <li><a href="{{ route('impact') }}">Our Impact</a></li>
                         <li><a href="{{ route('stories') }}">Success Stories</a></li>
                         <li><a href="{{ route('sessions') }}">Sessions & Events</a></li>
+                        <li><a href="{{ route('blog.index') }}">Blog</a></li>
                         <li><a href="{{ route('mentors') }}">Become a Mentor</a></li>
                         <li><a href="{{ route('referral.create') }}">Refer Someone</a></li>
                         {{-- Footers are where people look for a jobs link, but

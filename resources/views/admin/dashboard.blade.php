@@ -158,6 +158,14 @@
                     <span class="text-sm font-semibold text-slate-700 text-center">Positions</span>
                 </a>
 
+                <a href="{{ route('admin.posts.index') }}"
+                    class="relative flex flex-col items-center p-4 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
+                    <div class="w-12 h-12 bg-teal-500 rounded-full flex items-center justify-center text-white mb-3">
+                        <i class="fas fa-pen-nib"></i>
+                    </div>
+                    <span class="text-sm font-semibold text-teal-700 text-center">Blog Posts</span>
+                </a>
+
                 <a href="{{ route('admin.volunteer-documents.index') }}"
                     class="relative flex flex-col items-center p-4 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
                     <div class="w-12 h-12 bg-slate-500 rounded-full flex items-center justify-center text-white mb-3">

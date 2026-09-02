@@ -4,6 +4,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CareersController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\SpeakerApplicationController;
@@ -49,6 +50,14 @@ Route::post('/discovery-session', [DiscoverySessionController::class, 'register'
  * /careers is the URL people guess, type and link to, and the one job boards
  * and search engines look for.
  */
+// ── Blog ─────────────────────────────────────────────────────────────────────
+// Written for the searches the keyword research surfaced: questions, answered
+// as articles. /blog/feed is declared before the slug route so "feed" cannot
+// be mistaken for a post.
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/feed', [BlogController::class, 'feed'])->name('blog.feed');
+Route::get('/blog/{post}', [BlogController::class, 'show'])->name('blog.show');
+
 Route::get('/careers', [CareersController::class, 'index'])->name('careers.index');
 Route::get('/careers/{role}', [CareersController::class, 'show'])->name('careers.show');
 // Applying happens on the vacancy page itself rather than by composing an
@@ -160,6 +169,20 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
         ->name('volunteer-roles.update');
     Route::delete('/volunteer-roles/{role}', [\App\Http\Controllers\Admin\VolunteerRoleAdminController::class, 'destroy'])
         ->name('volunteer-roles.destroy');
+
+    // The blog. Same list-and-form shape as the roles above.
+    Route::get('/posts', [\App\Http\Controllers\Admin\PostAdminController::class, 'index'])
+        ->name('posts.index');
+    Route::get('/posts/create', [\App\Http\Controllers\Admin\PostAdminController::class, 'create'])
+        ->name('posts.create');
+    Route::post('/posts', [\App\Http\Controllers\Admin\PostAdminController::class, 'store'])
+        ->name('posts.store');
+    Route::get('/posts/{post}/edit', [\App\Http\Controllers\Admin\PostAdminController::class, 'edit'])
+        ->name('posts.edit');
+    Route::patch('/posts/{post}', [\App\Http\Controllers\Admin\PostAdminController::class, 'update'])
+        ->name('posts.update');
+    Route::delete('/posts/{post}', [\App\Http\Controllers\Admin\PostAdminController::class, 'destroy'])
+        ->name('posts.destroy');
 
     // Onboarding pack. Uploads land on a private disk; the welcome email lists
     // whatever is active here, in sort order.

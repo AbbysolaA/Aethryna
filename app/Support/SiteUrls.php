@@ -4,6 +4,7 @@ namespace App\Support;
 
 use App\Models\PanelSession;
 use App\Models\Pathway;
+use App\Models\Post;
 use App\Models\VolunteerRole;
 
 /**
@@ -39,6 +40,7 @@ class SiteUrls
             self::panels(),
             self::courses(),
             self::vacancies(),
+            self::posts(),
         )));
     }
 
@@ -75,6 +77,25 @@ class SiteUrls
                 ->orderBy('title')
                 ->pluck('slug')
                 ->map(fn ($slug) => '/careers/'.$slug)
+                ->all()
+        );
+    }
+
+    /**
+     * The blog index and every published post. Drafts stay out for the same
+     * reason they 404 publicly: a URL submitted to a search engine is a
+     * promise there is a page behind it.
+     *
+     * @return array<int, string>
+     */
+    public static function posts(): array
+    {
+        return array_merge(
+            ['/blog'],
+            Post::published()
+                ->orderByDesc('published_at')
+                ->pluck('slug')
+                ->map(fn ($slug) => '/blog/'.$slug)
                 ->all()
         );
     }
