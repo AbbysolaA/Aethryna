@@ -115,6 +115,14 @@
     }
     .bl-prose pre code { background: none; padding: 0; }
     .bl-prose hr { border: none; border-top: 1px solid rgba(8, 68, 74, 0.14); margin: 2em 0; }
+    .bl-video {
+        aspect-ratio: 16 / 9;
+        margin: 1.4em 0;
+        border-radius: 10px;
+        overflow: hidden;
+        background: #08444A;
+    }
+    .bl-video iframe { width: 100%; height: 100%; border: 0; display: block; }
 
     .bl-back {
         display: inline-block;
