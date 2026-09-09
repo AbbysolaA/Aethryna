@@ -49,10 +49,21 @@ class SiteUrls
     {
         // landing_path wins where an event has a page of its own, because
         // /sessions/{slug} redirects to it. Submitting the redirect would ask
-        // search engines to index a URL that only points somewhere else.
+        // search engines to index a URL that only points somewhere else. The
+        // same rule removes a landing page whose event has happened: that URL
+        // now redirects letter-scanners to the referral form, so neither it
+        // nor the /sessions/ URL that chains into it belongs in a sitemap.
         return PanelSession::orderBy('sort_order')
-            ->get(['slug', 'landing_path'])
-            ->map(fn ($panel) => $panel->landing_path ?: '/sessions/'.$panel->slug)
+            ->get(['slug', 'landing_path', 'event_date', 'status'])
+            ->map(function ($panel) {
+                if ($panel->landing_path) {
+                    return $panel->hasHappened() ? null : $panel->landing_path;
+                }
+
+                return '/sessions/'.$panel->slug;
+            })
+            ->filter()
+            ->values()
             ->all();
     }
 

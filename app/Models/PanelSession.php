@@ -114,6 +114,17 @@ class PanelSession extends Model
         return $this->status === 'past';
     }
 
+    /**
+     * The event's day is over, by the calendar or by an admin marking it
+     * past. Date first: nobody remembers to flip a status flag the morning
+     * after, and the carousel already trusts the date for the same reason.
+     */
+    public function hasHappened(): bool
+    {
+        return ($this->event_date && $this->event_date->copy()->endOfDay()->isPast())
+            || $this->isPast();
+    }
+
     public function isInPerson(): bool
     {
         return (bool) $this->venue_name;

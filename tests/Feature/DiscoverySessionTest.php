@@ -479,6 +479,55 @@ class DiscoverySessionTest extends TestCase
     }
 
     /**
+     * The letters with the QR code outlive the event: months on, people are
+     * still scanning their way to /discovery-session. Once the day is over
+     * the page sends them to the referral form instead of a poster for a
+     * finished event, and it does so with a 302 so the URL can host the next
+     * discovery session without crawlers remembering a permanent detour.
+     */
+    public function test_the_page_redirects_to_the_referral_form_after_the_event(): void
+    {
+        $this->event()->update(['event_date' => now()->subDays(2)]);
+
+        $this->get('/discovery-session')
+            ->assertStatus(302)
+            ->assertRedirect(route('referral.create'));
+
+        // A stale open tab posting the form gets the same journey, and no row
+        // is written for an event that has happened.
+        $this->post('/discovery-session', $this->validPayload())
+            ->assertRedirect(route('referral.create'));
+        $this->assertDatabaseMissing('session_registrations', ['email' => 'bola@example.com']);
+    }
+
+    /**
+     * On the day itself the page still stands: doors are open, someone is
+     * checking the address from the bus.
+     */
+    public function test_the_page_stays_up_on_the_day_of_the_event(): void
+    {
+        $this->event()->update(['event_date' => now()->startOfDay()->addHours(2)]);
+
+        $this->get('/discovery-session')->assertOk();
+    }
+
+    /**
+     * A URL that now redirects has no place in the sitemap, and the
+     * /sessions/ URL that 301s into it would just chain there.
+     */
+    public function test_the_sitemap_drops_the_landing_page_after_the_event(): void
+    {
+        $this->assertContains('/discovery-session', \App\Support\SiteUrls::all());
+
+        $this->event()->update(['event_date' => now()->subDays(2)]);
+
+        $urls = \App\Support\SiteUrls::all();
+
+        $this->assertNotContains('/discovery-session', $urls);
+        $this->assertNotContains('/sessions/discovery-session', $urls);
+    }
+
+    /**
      * A carousel advertising a date that has passed is worse than no slide, and
      * the deck has to close back up rather than leave a dot with nothing behind
      * it.
