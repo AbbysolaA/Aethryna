@@ -14,8 +14,9 @@
                 <h1 class="vl-engagement-title">Blog posts</h1>
                 <p class="vl-side-note">
                     Published posts appear on <a href="{{ route('blog.index') }}">/blog</a>.
-                    Drafts are visible only to admins, at their real URL, so they can be
-                    proofread in place before anyone else sees them.
+                    Drafts stay off the public site but open at their real URL for the
+                    people who work on them, so a post can be proofread in place before
+                    anyone else sees it.
                 </p>
             </div>
             <div class="vl-head-actions">
@@ -59,6 +60,8 @@
                                     <td>
                                         @if ($post->isPublished())
                                             <span class="vl-badge vl-badge-open">Live</span>
+                                        @elseif ($post->isAwaitingReview())
+                                            <span class="vl-badge vl-badge-active">Awaiting review</span>
                                         @else
                                             <span class="vl-badge vl-badge-muted">Draft</span>
                                         @endif
@@ -68,6 +71,12 @@
                                     </td>
                                     <td class="vl-cell-num">{{ $post->readingMinutes() }} min</td>
                                     <td class="vl-cell-actions">
+                                        @if ($post->isAwaitingReview() && auth()->user()->isAdmin())
+                                            <form method="POST" action="{{ route('admin.posts.publish', $post) }}">
+                                                @csrf
+                                                <button type="submit" class="vl-mini-btn">Publish</button>
+                                            </form>
+                                        @endif
                                         <a href="{{ $post->url() }}" class="vl-mini-btn">View</a>
                                         <a href="{{ route('admin.posts.edit', $post) }}" class="vl-mini-btn">Edit</a>
                                         <form method="POST" action="{{ route('admin.posts.destroy', $post) }}"

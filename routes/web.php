@@ -170,6 +170,11 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::delete('/volunteer-roles/{role}', [\App\Http\Controllers\Admin\VolunteerRoleAdminController::class, 'destroy'])
         ->name('volunteer-roles.destroy');
 
+    // Approving a submitted blog post. In the admin group, not the editor
+    // group: pressing publish is exactly the power the writer role lacks.
+    Route::post('/posts/{post}/publish', [\App\Http\Controllers\Admin\PostAdminController::class, 'publish'])
+        ->name('posts.publish');
+
     // The blog admin lives in its own group further down: it takes the
     // 'editor' middleware rather than 'admin', so a content writer can hold
     // the posts screens and nothing else.
@@ -288,6 +293,14 @@ Route::middleware(['auth', 'verified', 'editor'])->prefix('admin')->name('admin.
         ->name('posts.update');
     Route::delete('/posts/{post}', [\App\Http\Controllers\Admin\PostAdminController::class, 'destroy'])
         ->name('posts.destroy');
+
+    // The shared picture library on the post form. The filename constraint
+    // is the traversal guard: one plain path segment, nothing else.
+    Route::post('/posts/images', [\App\Http\Controllers\Admin\PostImageController::class, 'store'])
+        ->name('posts.images.store');
+    Route::delete('/posts/images/{image}', [\App\Http\Controllers\Admin\PostImageController::class, 'destroy'])
+        ->where('image', '[A-Za-z0-9][A-Za-z0-9._-]*')
+        ->name('posts.images.destroy');
 });
 
 Route::middleware(['auth', 'verified', 'safeguarding'])->prefix('admin')->name('admin.')->group(function () {

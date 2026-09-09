@@ -38,6 +38,21 @@ return [
             'report' => false,
         ],
 
+        /*
+         * Pictures used in blog posts. Rooted directly in public/ rather than
+         * behind a storage symlink, because deploys here are a git pull on
+         * shared hosting and a missing symlink would 404 every picture while
+         * looking fine locally. Everything on it is re-encoded on upload.
+         */
+        'blog_images' => [
+            'driver' => 'local',
+            'root' => public_path('images/blog'),
+            'url' => env('APP_URL').'/images/blog',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

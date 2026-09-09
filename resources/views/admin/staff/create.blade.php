@@ -62,6 +62,9 @@
                         <dt>Mentor</dt>
                         <dd>The learners matched with them, and session logging.</dd>
 
+                        <dt>Content writer</dt>
+                        <dd>The blog only. Writes and edits posts and submits them for review; an administrator presses publish. No learner records, no registrations, no other admin screens.</dd>
+
                         <dt>Administrator</dt>
                         <dd><strong>Everything.</strong> Learner records, safeguarding, the risk register, volunteers, content and other people's access. Give this sparingly.</dd>
                     </dl>

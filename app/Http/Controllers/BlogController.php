@@ -22,10 +22,14 @@ class BlogController extends Controller
 
     public function show(Post $post)
     {
-        // A draft is invisible to the public but readable by an admin, so a
-        // post can be proofread at its real URL before anyone else sees it.
+        // A draft is invisible to the public but readable by the people who
+        // work on it, so a post can be proofread at its real URL before
+        // anyone else sees it. That includes the content writer: asking
+        // somebody to submit work they cannot look at is absurd.
         abort_unless(
-            $post->isPublished() || auth()->user()?->isAdmin(),
+            $post->isPublished()
+                || auth()->user()?->isAdmin()
+                || auth()->user()?->isEditor(),
             404
         );
 
