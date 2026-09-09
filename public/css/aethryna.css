@@ -578,13 +578,21 @@
     position: absolute;
     top: calc(100% + 10px);
     right: 0;
-    min-width: 280px;
     background: #ffffff;
     border-radius: 14px;
     box-shadow: 0 18px 50px rgba(5, 88, 96, 0.18);
     border: 1px solid rgba(3, 139, 137, 0.12);
     padding: 8px;
     z-index: 1200;
+    /* Two columns rather than one long drop: six items in a single column
+       reached most of the way down the viewport. Capped against the viewport
+       so the right-aligned panel cannot poke off the left edge of a narrow
+       desktop window; the mobile menu is separate markup and unaffected. */
+    display: grid;
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+    gap: 2px 6px;
+    width: max-content;
+    max-width: min(540px, calc(100vw - 32px));
 }
 
 /* Bridges the gap between toggle and panel so hover does not break. */

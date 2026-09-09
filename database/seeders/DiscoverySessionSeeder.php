@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\PanelMedia;
 use App\Models\PanelSession;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 
 /**
  * The Community Discovery Session, Birkenhead, 29 August 2026.
@@ -21,7 +23,9 @@ class DiscoverySessionSeeder extends Seeder
 {
     public function run(): void
     {
-        PanelSession::updateOrCreate(
+        $eventDate = Carbon::parse('2026-08-29 12:30:00');
+
+        $event = PanelSession::updateOrCreate(
             ['slug' => 'discovery-session'],
             [
                 'title'    => 'Skills Co-op Community Discovery Session',
@@ -32,7 +36,7 @@ class DiscoverySessionSeeder extends Seeder
                 // Saturday afternoon on purpose. A weekday event asks people in
                 // work, in caring, or on a placement to choose between coming
                 // and the thing that pays.
-                'event_date' => '2026-08-29 12:30:00',
+                'event_date' => $eventDate,
 
                 'description' => 'A free, informal taster afternoon introducing Skills Co-op to the local community, ahead of the full pilot launching January 2027. No experience or qualifications needed, and no obligation to sign up to anything on the day.',
 
@@ -85,9 +89,24 @@ class DiscoverySessionSeeder extends Seeder
                 // being typed from memory.
                 'landing_path' => '/discovery-session',
 
-                'status'     => 'upcoming',
+                // Derived from the calendar, so re-running the seeder after
+                // the day moves the event into the past-sessions archive on
+                // /sessions rather than resurrecting it as upcoming.
+                'status'     => $eventDate->copy()->endOfDay()->isPast() ? 'past' : 'upcoming',
                 'sort_order' => 0,
             ]
         );
+
+        // The recordings from the day, shown on the archive entry once the
+        // event is past. Keyed on url so re-running never duplicates them.
+        foreach ([
+            ['url' => 'https://youtu.be/59o-BYdG22A', 'caption' => 'Community Discovery Session, part one', 'sort_order' => 0],
+            ['url' => 'https://youtu.be/p1NPA4ck-2M', 'caption' => 'Community Discovery Session, part two', 'sort_order' => 1],
+        ] as $video) {
+            PanelMedia::updateOrCreate(
+                ['panel_session_id' => $event->id, 'url' => $video['url']],
+                ['type' => 'video', 'caption' => $video['caption'], 'sort_order' => $video['sort_order']]
+            );
+        }
     }
 }

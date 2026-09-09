@@ -23,13 +23,6 @@
     </div>
 </section>
 
-<!-- Honesty note -->
-<div class="honesty-banner">
-    <div class="ath-container">
-        <p><strong>A note on authenticity:</strong> We will not publish learner outcome stories until we have real learner outcomes to share. What you read here is what has actually happened. We think that matters.</p>
-    </div>
-</div>
-
 <!-- Story Journal / Milestones -->
 <main class="story-journal" id="milestones">
     <div class="ath-container">
@@ -199,14 +192,6 @@
 }
 
 @keyframes bounce-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
-
-/* Honesty banner */
-.honesty-banner {
-    background: rgba(3,139,137,0.07);
-    border-top: 3px solid var(--ath-teal);
-    padding: 20px 0;
-}
-.honesty-banner p { margin: 0; color: var(--ath-text); font-size: 0.95rem; line-height: 1.6; }
 
 /* Journal Entries */
 .story-journal { padding: 100px 0; background: #fff; }

@@ -124,6 +124,17 @@
                 Referral records are deleted or anonymised twelve months after submission unless the person becomes a learner. See our <a href="{{ route('privacy') }}">privacy policy</a> for the full basis.
             </p>
         </form>
+
+        {{-- The directory keyworkers on the Wirral already trust. Someone
+             sent here by a colleague can verify us where they normally look
+             things up, which is worth more than any claim we make about
+             ourselves. Plain link, not their logo: hotlinking it would break
+             whenever they move it, and using it uninvited is not ours to do. --}}
+        <p class="rf-directory-note">
+            Skills Co-op is listed on
+            <a href="https://www.wirralinfobank.co.uk/Services/16439" target="_blank" rel="noopener">Wirral InfoBank</a>,
+            Wirral Council's directory of local services and support.
+        </p>
     </div>
 </section>
 
@@ -192,6 +203,15 @@
 .rf-consent-block { background: rgba(238,157,29,0.06); border-left: 4px solid var(--ath-gold); padding: 24px 26px; border-radius: 0 12px 12px 0; }
 .rf-consent-block h2 { border-bottom: none; padding-bottom: 0; margin-bottom: 8px; }
 .rf-consent-lede { font-size: 0.92rem; color: var(--ath-muted); line-height: 1.65; margin-bottom: 18px; }
+.rf-directory-note {
+    margin: 26px auto 0;
+    max-width: 640px;
+    text-align: center;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: var(--ath-muted);
+}
+.rf-directory-note a { color: var(--ath-teal); font-weight: 600; }
 .rf-consent-check { display: flex; align-items: flex-start; gap: 12px; font-size: 0.92rem; color: var(--ath-text); line-height: 1.65; margin-top: 6px; cursor: pointer; }
 .rf-consent-check input { margin-top: 4px; flex-shrink: 0; accent-color: var(--ath-teal); }
 
