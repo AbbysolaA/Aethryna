@@ -14,10 +14,12 @@ class Post extends Model
         'body',
         'author_name',
         'published_at',
+        'review_requested_at',
     ];
 
     protected $casts = [
-        'published_at' => 'datetime',
+        'published_at'        => 'datetime',
+        'review_requested_at' => 'datetime',
     ];
 
     /** Posts are addressed by slug everywhere a person sees a URL. */
@@ -39,6 +41,19 @@ class Post extends Model
     {
         return $query->whereNotNull('published_at')
             ->where('published_at', '<=', now());
+    }
+
+    /**
+     * Finished by its writer, waiting for an admin to press publish.
+     */
+    public function isAwaitingReview(): bool
+    {
+        return ! $this->isPublished() && $this->review_requested_at !== null;
+    }
+
+    public function scopeAwaitingReview($query)
+    {
+        return $query->whereNull('published_at')->whereNotNull('review_requested_at');
     }
 
     public function url(): string
