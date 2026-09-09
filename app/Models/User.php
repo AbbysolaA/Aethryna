@@ -104,6 +104,7 @@ class User extends Authenticatable
         return match (true) {
             $this->isAdmin()            => 'admin.dashboard',
             $this->isSafeguardingLead() => 'admin.safeguarding.index',
+            $this->isEditor()           => 'admin.posts.index',
             $this->isCoach()            => 'coach.dashboard',
             $this->isMentor()           => 'mentor.dashboard',
             $this->isVolunteer()        => 'volunteer.index',
@@ -132,6 +133,18 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if user is a content writer.
+     *
+     * Narrow in the same way as the safeguarding lead: this role reaches the
+     * blog admin and nothing else, so somebody hired to write posts is not
+     * also handed registrations, applications and the user list.
+     */
+    public function isEditor(): bool
+    {
+        return $this->role === 'editor';
+    }
+
+    /**
      * Roles that are granted by an admin rather than self-served, and which
      * therefore come through the staff invite flow.
      *
@@ -143,6 +156,7 @@ class User extends Authenticatable
             'safeguarding' => 'Safeguarding lead',
             'coach'        => 'Skills coach',
             'mentor'       => 'Mentor',
+            'editor'       => 'Content writer',
             'admin'        => 'Administrator',
         ];
     }

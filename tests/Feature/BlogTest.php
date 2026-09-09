@@ -166,6 +166,38 @@ class BlogTest extends TestCase
         $this->actingAs($learner)->get('/admin/posts')->assertForbidden();
     }
 
+    /**
+     * The content writer role holds the blog and only the blog. Hired to
+     * write posts, not handed registrations, applications and the user list.
+     */
+    public function test_an_editor_can_manage_posts_but_reach_nothing_else(): void
+    {
+        $editor = User::factory()->create(['role' => 'editor']);
+
+        $this->actingAs($editor)
+            ->post('/admin/posts', [
+                'title'      => 'Written by the content writer',
+                'standfirst' => 'Proof the editor role can publish.',
+                'body'       => 'A post.',
+                'publish'    => '1',
+            ])
+            ->assertRedirect(route('admin.posts.index'));
+
+        $this->actingAs($editor)->get('/admin/posts')->assertOk();
+
+        // Every other admin door stays shut.
+        foreach (['/admin/dashboard', '/admin/registrations', '/admin/volunteer-roles', '/admin/users'] as $url) {
+            $this->actingAs($editor)->get($url)->assertForbidden();
+        }
+
+        // And the narrow roles do not bleed into each other.
+        $safeguarding = User::factory()->create(['role' => 'safeguarding']);
+        $this->actingAs($safeguarding)->get('/admin/posts')->assertForbidden();
+
+        // Signing in lands the writer on their screen, not a 403.
+        $this->assertSame('admin.posts.index', $editor->homeRoute());
+    }
+
     public function test_an_admin_can_write_and_publish_a_post(): void
     {
         $this->actingAs($this->admin())

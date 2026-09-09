@@ -52,6 +52,21 @@
         ],
     ];
 
+    // The narrow roles hold one corner of admin each, so their menu offers
+    // that corner and nothing else. Links to screens that would 403 are not
+    // navigation, they are a list of doors that will not open.
+    $navUser = auth()->user();
+    if (! $navUser->isAdmin()) {
+        foreach ($adminSections as $group => $items) {
+            $adminSections[$group] = array_values(array_filter($items, fn ($item) => match (true) {
+                $navUser->isEditor()           => str_starts_with($item['match'], 'admin.posts.'),
+                $navUser->isSafeguardingLead() => str_starts_with($item['match'], 'admin.safeguarding.'),
+                default                        => false,
+            }));
+        }
+        $adminSections = array_filter($adminSections);
+    }
+
     // Where we are. Falls back to nothing rather than guessing, so a screen not
     // listed above shows a plain way back instead of claiming a wrong location.
     $currentLabel = null;
@@ -73,10 +88,18 @@
     <div class="ath-container ad-nav-inner">
 
         @unless ($onDashboard)
-            {{-- The way back, always in the same place. --}}
-            <a href="{{ route('admin.dashboard') }}" class="ad-back">
-                <span class="ad-back-arrow" aria-hidden="true">&larr;</span> Dashboard
-            </a>
+            {{-- The way back, always in the same place. The dashboard is
+                 admin-only, so anyone else gets their own landing screen
+                 rather than a link to a 403. --}}
+            @if (auth()->user()->isAdmin())
+                <a href="{{ route('admin.dashboard') }}" class="ad-back">
+                    <span class="ad-back-arrow" aria-hidden="true">&larr;</span> Dashboard
+                </a>
+            @else
+                <a href="{{ route(auth()->user()->homeRoute()) }}" class="ad-back">
+                    <span class="ad-back-arrow" aria-hidden="true">&larr;</span> My screen
+                </a>
+            @endif
 
             @if ($currentLabel)
                 <span class="ad-where">
