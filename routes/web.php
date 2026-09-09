@@ -170,19 +170,9 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::delete('/volunteer-roles/{role}', [\App\Http\Controllers\Admin\VolunteerRoleAdminController::class, 'destroy'])
         ->name('volunteer-roles.destroy');
 
-    // The blog. Same list-and-form shape as the roles above.
-    Route::get('/posts', [\App\Http\Controllers\Admin\PostAdminController::class, 'index'])
-        ->name('posts.index');
-    Route::get('/posts/create', [\App\Http\Controllers\Admin\PostAdminController::class, 'create'])
-        ->name('posts.create');
-    Route::post('/posts', [\App\Http\Controllers\Admin\PostAdminController::class, 'store'])
-        ->name('posts.store');
-    Route::get('/posts/{post}/edit', [\App\Http\Controllers\Admin\PostAdminController::class, 'edit'])
-        ->name('posts.edit');
-    Route::patch('/posts/{post}', [\App\Http\Controllers\Admin\PostAdminController::class, 'update'])
-        ->name('posts.update');
-    Route::delete('/posts/{post}', [\App\Http\Controllers\Admin\PostAdminController::class, 'destroy'])
-        ->name('posts.destroy');
+    // The blog admin lives in its own group further down: it takes the
+    // 'editor' middleware rather than 'admin', so a content writer can hold
+    // the posts screens and nothing else.
 
     // Onboarding pack. Uploads land on a private disk; the welcome email lists
     // whatever is active here, in sort order.
@@ -281,6 +271,25 @@ Route::post('/staff/invite', [\App\Http\Controllers\Auth\AcceptInviteController:
 // 'safeguarding' rather than 'admin'. Admins still pass. The point is that the
 // safeguarding lead no longer has to be made a full admin, inheriting the user
 // list and the risk register, in order to read concerns about named learners.
+// The blog admin. Same pattern as safeguarding above: under the /admin
+// prefix and admin.posts.* names, but gated by 'editor' rather than 'admin'.
+// EditorMiddleware accepts admins too, so nothing is lost from the dashboard,
+// while a content writer holds these six routes and no others.
+Route::middleware(['auth', 'verified', 'editor'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/posts', [\App\Http\Controllers\Admin\PostAdminController::class, 'index'])
+        ->name('posts.index');
+    Route::get('/posts/create', [\App\Http\Controllers\Admin\PostAdminController::class, 'create'])
+        ->name('posts.create');
+    Route::post('/posts', [\App\Http\Controllers\Admin\PostAdminController::class, 'store'])
+        ->name('posts.store');
+    Route::get('/posts/{post}/edit', [\App\Http\Controllers\Admin\PostAdminController::class, 'edit'])
+        ->name('posts.edit');
+    Route::patch('/posts/{post}', [\App\Http\Controllers\Admin\PostAdminController::class, 'update'])
+        ->name('posts.update');
+    Route::delete('/posts/{post}', [\App\Http\Controllers\Admin\PostAdminController::class, 'destroy'])
+        ->name('posts.destroy');
+});
+
 Route::middleware(['auth', 'verified', 'safeguarding'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/safeguarding', [\App\Http\Controllers\SafeguardingController::class, 'index'])
         ->name('safeguarding.index');
