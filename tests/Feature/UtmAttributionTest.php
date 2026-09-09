@@ -29,12 +29,13 @@ class UtmAttributionTest extends TestCase
     {
         parent::setUp();
 
-        $this->seed(DiscoverySessionSeeder::class);
-
         // Same clock pin as DiscoverySessionTest: the seeded event is dated
         // 29 August 2026, and once that day passed for real, the page these
         // tests register through began (correctly) redirecting to /refer.
+        // Pinned before seeding, because the seeder derives status from it.
         $this->travelTo('2026-08-20 12:00:00');
+
+        $this->seed(DiscoverySessionSeeder::class);
 
         Mail::fake();
         Http::fake();
