@@ -85,6 +85,29 @@ class BlogTest extends TestCase
         $this->assertStringNotContainsString('<script>alert(1)</script>', $response->getContent());
     }
 
+    /**
+     * A YouTube link alone on a line becomes a privacy-friendly embed, the
+     * same youtube-nocookie treatment as the session recordings. One in the
+     * middle of a sentence stays a plain mention: prose should not sprout a
+     * video player because it cited one.
+     */
+    public function test_a_youtube_link_on_its_own_line_becomes_an_embed(): void
+    {
+        $this->makePost([
+            'slug' => 'video-post',
+            'body' => "The day in full:\n\nhttps://www.youtube.com/watch?v=dQw4w9WgXcQ\n\nWe also mentioned https://youtu.be/dQw4w9WgXcQ in passing.",
+        ]);
+
+        $response = $this->get('/blog/video-post')->assertOk();
+        $html = $response->getContent();
+
+        $this->assertStringContainsString('youtube-nocookie.com/embed/dQw4w9WgXcQ', $html);
+        $this->assertSame(1, substr_count($html, '<iframe'), 'only the standalone link should embed');
+        // GitHub-flavoured Markdown autolinks the inline mention, so it
+        // renders as a hyperlink rather than a second player.
+        $this->assertStringContainsString('<a href="https://youtu.be/dQw4w9WgXcQ">', $html);
+    }
+
     public function test_drafts_are_invisible_to_the_public_but_readable_by_admins(): void
     {
         $this->makePost(['published_at' => null]);

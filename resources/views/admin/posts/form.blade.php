@@ -64,7 +64,8 @@
                     <p class="vl-side-note vl-hint">
                         Markdown: <code>## Heading</code>, <code>**bold**</code>,
                         <code>- bullet</code>, <code>[text](url)</code>. Pasted HTML is
-                        stripped rather than rendered.
+                        stripped rather than rendered. A YouTube link on a line of its
+                        own becomes an embedded video player.
                     </p>
                     @error('body')<p class="vl-error">{{ $message }}</p>@enderror
                 </div>
