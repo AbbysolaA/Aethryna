@@ -26,6 +26,16 @@ class DiscoverySessionController extends Controller
 
     public function show()
     {
+        // Once the day is over the page's job is over, but the QR codes on
+        // the printed letters keep bringing people here for months. They are
+        // sent on to the referral form rather than a poster for a finished
+        // event. 302, not 301: temporary by design, so the URL can host the
+        // next discovery session without browsers and crawlers remembering a
+        // permanent detour.
+        if ($this->session()->hasHappened()) {
+            return redirect()->route('referral.create');
+        }
+
         return view('events.discovery-session', [
             'session'  => $this->session(),
             'pathways' => config('organisation.pathways', []),
@@ -36,6 +46,13 @@ class DiscoverySessionController extends Controller
     public function register(Request $request)
     {
         $session = $this->session();
+
+        // The form is unreachable once the page redirects, so a POST landing
+        // here after the event is a stale open tab. No error to explain,
+        // nothing to save for an event that has happened: same destination.
+        if ($session->hasHappened()) {
+            return redirect()->route('referral.create');
+        }
 
         $data = $request->validate([
             'first_name' => ['required', 'string', 'max:100'],
