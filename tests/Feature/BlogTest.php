@@ -251,6 +251,17 @@ class BlogTest extends TestCase
         $this->assertSame('admin.posts.index', $editor->homeRoute());
     }
 
+    public function test_the_post_form_carries_the_formatting_toolbar(): void
+    {
+        $this->actingAs($this->admin())
+            ->get('/admin/posts/create')
+            ->assertOk()
+            ->assertSee('data-md="bold"', false)
+            ->assertSee('data-md="code"', false)
+            ->assertSee('data-md="image"', false)
+            ->assertSee('data-md="video"', false);
+    }
+
     public function test_an_admin_can_write_and_publish_a_post(): void
     {
         $this->actingAs($this->admin())
