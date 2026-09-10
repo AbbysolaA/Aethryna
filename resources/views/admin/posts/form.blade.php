@@ -78,6 +78,7 @@
                         <button type="button" data-md="code" title="Code (select text first for inline, nothing for a block)">&lt;/&gt;</button>
                         <button type="button" data-md="image" title="Picture (upload below, then paste its line)">&#128247; picture</button>
                         <button type="button" data-md="video" title="Video (a YouTube link on its own line)">&#9654; video</button>
+                        <button type="button" data-md="subscribe" title="Mid-post subscribe form">&#9993; subscribe</button>
                     </div>
 
                     <textarea id="body" name="body" required rows="24"
@@ -88,7 +89,9 @@
                         <code>- bullet</code>, <code>[text](url)</code>, and
                         <code>---</code> on its own line for a section divider. Pasted
                         HTML is stripped rather than rendered. A YouTube link on a line
-                        of its own becomes an embedded video player.
+                        of its own becomes an embedded video player, and
+                        <code>[subscribe]</code> on its own line becomes a mid-post
+                        subscribe form.
                     </p>
                     @error('body')<p class="vl-error">{{ $message }}</p>@enderror
                 </div>
@@ -303,6 +306,7 @@
         },
         image:   function () { wrap('\n\n![', '](/images/blog/file-name.jpg)\n', 'What the picture shows'); },
         video:   function () { insert('\n\nhttps://www.youtube.com/watch?v=VIDEO-ID\n\n', 2, 42); },
+        subscribe: function () { insert('\n\n[subscribe]\n\n', 13, 13); },
     };
 
     document.querySelectorAll('.mdt [data-md]').forEach(function (btn) {
