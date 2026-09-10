@@ -18,6 +18,10 @@ return Application::configure(basePath: dirname(__DIR__))
         // stop us emailing that one assessment.
         $middleware->validateCsrfTokens(except: [
             'assessment/unsubscribe/*',
+            // Same reasoning for the blog: mail providers POST the one-click
+            // unsubscribe with no session and no token, and the URL's own
+            // unguessable token is the authorisation.
+            'blog/unsubscribe/*',
         ]);
 
         // Site-wide because ads will not always point at the front door: a

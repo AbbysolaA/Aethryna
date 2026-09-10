@@ -68,12 +68,34 @@ class BlogController extends Controller
         // Same honeypot convention as every other public form: a field real
         // people never see, answered as success so the bot learns nothing.
         if (! filled($request->input('website'))) {
+            // The local row is what actually receives the posts; EmailOctopus
+            // keeps a copy for marketing. Local first, because the mailing
+            // must not depend on a third party being reachable.
+            \App\Models\BlogSubscriber::enrol($validated['email']);
+
             $this->emailOctopus->subscribe($validated['email'], [], ['blog']);
         }
 
         return back()
             ->with('subscribed', 'You are on the list. New posts will come to your inbox.')
             ->withFragment('subscribe');
+    }
+
+    /**
+     * The link at the foot of every post email, and the target of the mail
+     * clients' own unsubscribe buttons (which POST, hence both verbs on the
+     * route). Idempotent and quiet: clicking twice is not an error.
+     */
+    public function unsubscribe(string $token)
+    {
+        \App\Models\BlogSubscriber::where('token', $token)
+            ->firstOrFail()
+            ->forceFill(['unsubscribed_at' => now()])
+            ->save();
+
+        return redirect()
+            ->route('blog.index')
+            ->with('subscribed', 'You are unsubscribed. No more emails from the blog, and you are welcome back any time.');
     }
 
     /**

@@ -58,6 +58,12 @@ Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::post('/blog/subscribe', [BlogController::class, 'subscribe'])
     ->middleware('throttle:6,1')
     ->name('blog.subscribe');
+// GET for the human clicking the footer link, POST for mail clients' own
+// one-click unsubscribe buttons (RFC 8058), which send no CSRF token; the
+// route is exempted in bootstrap/app.php like the assessment unsubscribe.
+Route::match(['get', 'post'], '/blog/unsubscribe/{token}', [BlogController::class, 'unsubscribe'])
+    ->where('token', '[A-Za-z0-9]{20,64}')
+    ->name('blog.unsubscribe');
 Route::get('/blog/feed', [BlogController::class, 'feed'])->name('blog.feed');
 Route::get('/blog/{post}', [BlogController::class, 'show'])->name('blog.show');
 

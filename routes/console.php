@@ -35,3 +35,11 @@ Schedule::command('assessments:remind')
     ->dailyAt('10:15')
     ->timezone('Europe/London')
     ->withoutOverlapping();
+
+// Emails each newly published blog post to the blog's subscribers. Every ten
+// minutes rather than instantly on publish: pressing publish stays fast, a
+// mail outage delays the send instead of losing it, and an admin who spots a
+// typo right after publishing has a window to fix it before it is in inboxes.
+Schedule::command('blog:notify-subscribers')
+    ->everyTenMinutes()
+    ->withoutOverlapping();
