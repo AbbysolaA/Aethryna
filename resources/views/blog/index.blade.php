@@ -31,6 +31,8 @@
     <section class="bl-body">
         <div class="bl-wrap">
 
+            @include('blog._subscribe')
+
             @if ($posts->isEmpty())
                 <div class="bl-empty">
                     <p><strong>Nothing here yet.</strong></p>

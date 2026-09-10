@@ -42,15 +42,15 @@
         border-radius: 14px;
         padding: 28px 30px;
     }
-    .bl-card h2 {
+    .bl-card h2, .bl-card h3 {
         font-family: 'Fraunces', Georgia, serif;
         font-weight: 600;
         font-size: 1.45rem;
         line-height: 1.3;
         margin: 0 0 10px;
     }
-    .bl-card h2 a { color: #08444A; text-decoration: none; }
-    .bl-card h2 a:hover { color: #038b89; text-decoration: underline; }
+    .bl-card h2 a, .bl-card h3 a { color: #08444A; text-decoration: none; }
+    .bl-card h2 a:hover, .bl-card h3 a:hover { color: #038b89; text-decoration: underline; }
     .bl-card p { color: #444d54; line-height: 1.7; margin: 0 0 6px; }
     .bl-meta {
         font-size: 0.82rem;
@@ -114,7 +114,18 @@
         overflow-x: auto;
     }
     .bl-prose pre code { background: none; padding: 0; }
-    .bl-prose hr { border: none; border-top: 1px solid rgba(8, 68, 74, 0.14); margin: 2em 0; }
+    /* A divider (--- in Markdown), drawn as Substack draws theirs: a small
+       ornament rather than a rule the width of the page. */
+    /* overflow visible and a real height: browsers hide overflow on hr, and
+       a borderless hr is zero-height, which together swallow the ornament. */
+    .bl-prose hr { border: none; text-align: center; margin: 2.2em 0; height: 1.6rem; overflow: visible; }
+    .bl-prose hr::after {
+        content: '\00B7 \00A0 \00B7 \00A0 \00B7';
+        color: #EE9D1D;
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+    }
     .bl-video {
         aspect-ratio: 16 / 9;
         margin: 1.4em 0;
@@ -151,4 +162,101 @@
         line-height: 1.7;
     }
     .bl-foot p { margin: 0 0 8px; }
+
+    /* Share row */
+    .bl-share {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 24px;
+    }
+    .bl-prose + .bl-share { margin: 28px 0 0; }
+    .bl-share-label {
+        font-family: var(--font-mono, ui-monospace, monospace);
+        font-size: 0.68rem;
+        letter-spacing: 1.6px;
+        text-transform: uppercase;
+        color: #7a838b;
+        margin-right: 4px;
+    }
+    .bl-share a, .bl-share button {
+        display: inline-block;
+        padding: 6px 14px;
+        border: 1px solid rgba(8, 68, 74, 0.22);
+        border-radius: 100px;
+        background: none;
+        font: inherit;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #08444A;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .bl-share a:hover, .bl-share button:hover {
+        background: rgba(3, 139, 137, 0.08);
+        border-color: #038b89;
+    }
+
+    /* Subscribe card */
+    .bl-subscribe {
+        background: #08444A;
+        color: #F7F2E8;
+        border-radius: 14px;
+        padding: 30px 32px;
+        margin: 28px 0;
+        scroll-margin-top: 90px;
+    }
+    .bl-subscribe h2 {
+        font-family: 'Fraunces', Georgia, serif;
+        font-weight: 600;
+        font-size: 1.4rem;
+        margin: 0 0 8px;
+    }
+    .bl-subscribe p { margin: 0 0 16px; line-height: 1.65; color: rgba(247, 242, 232, 0.85); }
+    .bl-subscribe-form { display: flex; flex-wrap: wrap; gap: 10px; }
+    .bl-subscribe-form input[type="email"] {
+        flex: 1 1 220px;
+        padding: 12px 16px;
+        border: 1px solid rgba(247, 242, 232, 0.35);
+        border-radius: 10px;
+        background: rgba(247, 242, 232, 0.08);
+        color: #F7F2E8;
+        font: inherit;
+    }
+    .bl-subscribe-form input[type="email"]::placeholder { color: rgba(247, 242, 232, 0.55); }
+    .bl-subscribe-form button {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 10px;
+        background: #EE9D1D;
+        color: #08444A;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+    }
+    .bl-subscribe-form button:hover { background: #E8B647; }
+    .bl-subscribed { font-weight: 600; color: #E8B647; }
+    .bl-subscribe-error { margin: 10px 0 0; color: #ffd9a8; font-size: 0.9rem; }
+
+    /* Off-screen, matching the honeypot convention on the other forms. */
+    .bl-ref { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+    .bl-sr-only {
+        position: absolute;
+        width: 1px; height: 1px;
+        margin: -1px; padding: 0; border: 0;
+        clip: rect(0 0 0 0);
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    /* More from the blog */
+    .bl-more { margin-top: 40px; }
+    .bl-more > h2 {
+        font-family: 'Fraunces', Georgia, serif;
+        font-weight: 600;
+        font-size: 1.5rem;
+        color: #08444A;
+        margin: 0 0 18px;
+    }
 </style>

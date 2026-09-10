@@ -55,6 +55,9 @@ Route::post('/discovery-session', [DiscoverySessionController::class, 'register'
 // as articles. /blog/feed is declared before the slug route so "feed" cannot
 // be mistaken for a post.
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::post('/blog/subscribe', [BlogController::class, 'subscribe'])
+    ->middleware('throttle:6,1')
+    ->name('blog.subscribe');
 Route::get('/blog/feed', [BlogController::class, 'feed'])->name('blog.feed');
 Route::get('/blog/{post}', [BlogController::class, 'show'])->name('blog.show');
 
