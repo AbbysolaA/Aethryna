@@ -251,6 +251,49 @@ class BlogTest extends TestCase
         $this->assertSame('admin.posts.index', $editor->homeRoute());
     }
 
+    /**
+     * [subscribe] on its own line becomes the inline form, once, however
+     * many times it is written; in a sentence it stays prose.
+     */
+    public function test_the_subscribe_shortcode_renders_the_inline_form_once(): void
+    {
+        $this->makePost([
+            'slug' => 'with-subscribe',
+            'body' => "Before.\n\n[subscribe]\n\nBetween. Type [subscribe] on its own line.\n\n[subscribe]\n\nAfter.",
+        ]);
+
+        $html = $this->get('/blog/with-subscribe')->assertOk()->getContent();
+
+        // One rendered inline form (the class also appears in the CSS),
+        // plus the standing card at the foot of the page.
+        $this->assertSame(1, substr_count($html, '<div class="bl-subscribe-inline">'));
+        $this->assertStringContainsString('Type [subscribe] on its own line', $html);
+    }
+
+    public function test_the_byline_shows_initials_until_a_photo_exists(): void
+    {
+        $this->makePost();
+
+        $this->get('/blog/tech-without-a-degree')
+            ->assertOk()
+            ->assertSee('bl-avatar-initials', false)
+            ->assertSee('>SC<', false);
+
+        // A conventionally named file in images/authors becomes the avatar.
+        $dir = public_path('images/authors');
+        $file = $dir.'/skills-co-op.png';
+        imagepng(imagecreatetruecolor(4, 4), $file);
+
+        try {
+            $this->get('/blog/tech-without-a-degree')
+                ->assertOk()
+                ->assertSee('images/authors/skills-co-op.png', false)
+                ->assertDontSee('>SC<', false);
+        } finally {
+            @unlink($file);
+        }
+    }
+
     public function test_the_post_form_carries_the_formatting_toolbar(): void
     {
         $this->actingAs($this->admin())

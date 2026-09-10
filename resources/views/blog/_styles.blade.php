@@ -163,6 +163,71 @@
     }
     .bl-foot p { margin: 0 0 8px; }
 
+    /* Byline with the author's face, or their initials until a photo named
+       after them lands in images/authors. */
+    .bl-byline { display: flex; align-items: center; gap: 12px; margin: 0 0 16px; }
+    .bl-byline .bl-meta { margin: 0; line-height: 1.45; }
+    .bl-byline strong { color: #08444A; }
+    .bl-avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        object-fit: cover;
+        flex: none;
+    }
+    .bl-avatar-initials {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #08444A;
+        color: #E8B647;
+        font-weight: 700;
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
+    }
+
+    /* The mid-post subscribe form, summoned by [subscribe] on its own line. */
+    .bl-subscribe-inline {
+        margin: 1.8em 0;
+        padding: 18px 20px;
+        border: 1px solid rgba(8, 68, 74, 0.16);
+        border-radius: 12px;
+        background: #F7F2E8;
+        text-align: center;
+    }
+    .bl-subscribe-inline form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+    .bl-subscribe-inline input[type="email"] {
+        flex: 1 1 200px;
+        max-width: 320px;
+        padding: 10px 14px;
+        border: 1px solid rgba(8, 68, 74, 0.25);
+        border-radius: 9px;
+        font: inherit;
+        background: #fff;
+    }
+    .bl-subscribe-inline button {
+        padding: 10px 22px;
+        border: none;
+        border-radius: 9px;
+        background: #EE9D1D;
+        color: #08444A;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+    }
+    .bl-subscribe-inline button:hover { background: #E8B647; }
+    .bl-subscribe-inline-note {
+        margin: 10px 0 0;
+        font-size: 0.82rem;
+        color: #7a838b;
+    }
+    .bl-subscribe-inline .bl-subscribed { color: #055860; margin: 0; }
+
     /* Share row */
     .bl-share {
         display: flex;

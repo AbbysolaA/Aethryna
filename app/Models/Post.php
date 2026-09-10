@@ -71,6 +71,13 @@ class Post extends Model
     private const YOUTUBE_LINE = '#^[ \t]*https?://(?:www\.)?(?:youtube\.com/(?:watch\?v=|live/|shorts/|embed/)|youtu\.be/)([\w-]{6,20})\S*[ \t]*$#m';
 
     /**
+     * [subscribe] alone on a line becomes the inline subscribe form, the way
+     * Substack drops its button mid-article. Same only-on-its-own-line rule
+     * as the video embeds: mentioning [subscribe] in a sentence is prose.
+     */
+    private const SUBSCRIBE_LINE = '#^[ \t]*\[subscribe\][ \t]*$#mi';
+
+    /**
      * The body, rendered.
      *
      * html_input strip: the body is Markdown, and any raw HTML pasted into it
@@ -105,6 +112,24 @@ class Post extends Model
             return $token;
         }, $this->body);
 
+        if (preg_match(self::SUBSCRIBE_LINE, $markdown)) {
+            // Rendered once however many times the token appears: the same
+            // form twice in one article is nagging, not persuasion. The
+            // first occurrence becomes the form, the rest disappear.
+            $first = true;
+            $markdown = preg_replace_callback(self::SUBSCRIBE_LINE, function () use (&$first) {
+                if ($first) {
+                    $first = false;
+
+                    return '@@subscribe@@';
+                }
+
+                return '';
+            }, $markdown);
+
+            $embeds['<p>@@subscribe@@</p>'] = view('blog._subscribe-inline')->render();
+        }
+
         $html = Str::markdown($markdown, [
             'html_input'         => 'strip',
             'allow_unsafe_links' => false,
@@ -125,5 +150,37 @@ class Post extends Model
     public function authorName(): string
     {
         return $this->author_name ?: 'Skills Co-op';
+    }
+
+    /**
+     * The author's photo, by convention rather than configuration: a square
+     * image named after the author in public/images/authors, for example
+     * abisola-areola.jpg. Null when there is none, and the byline falls back
+     * to initials, so the feature is complete before any photo is uploaded.
+     */
+    public function authorPhotoUrl(): ?string
+    {
+        $slug = Str::slug($this->authorName());
+
+        foreach (['jpg', 'jpeg', 'png', 'webp'] as $ext) {
+            if (is_file(public_path('images/authors/'.$slug.'.'.$ext))) {
+                return asset('images/authors/'.$slug.'.'.$ext);
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * At most two initials, so "Skills Co-op" reads SC and a mononym still
+     * gets a letter.
+     */
+    public function authorInitials(): string
+    {
+        return collect(preg_split('/\s+/', trim($this->authorName())))
+            ->filter()
+            ->map(fn ($word) => Str::upper(Str::substr($word, 0, 1)))
+            ->take(2)
+            ->implode('');
     }
 }

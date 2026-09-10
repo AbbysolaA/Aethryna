@@ -41,13 +41,20 @@
             @endunless
 
             <article class="bl-article">
-                <p class="bl-meta" style="margin:0 0 14px;">
-                    {{ $post->authorName() }}
-                    @if ($post->published_at)
-                        &middot; {{ $post->published_at->format('j F Y') }}
+                <div class="bl-byline">
+                    @if ($post->authorPhotoUrl())
+                        <img class="bl-avatar" src="{{ $post->authorPhotoUrl() }}" alt="" width="44" height="44">
+                    @else
+                        <span class="bl-avatar bl-avatar-initials" aria-hidden="true">{{ $post->authorInitials() }}</span>
                     @endif
-                    &middot; {{ $post->readingMinutes() }} minute read
-                </p>
+                    <p class="bl-meta">
+                        <strong>{{ $post->authorName() }}</strong><br>
+                        @if ($post->published_at)
+                            {{ $post->published_at->format('j F Y') }} &middot;
+                        @endif
+                        {{ $post->readingMinutes() }} minute read
+                    </p>
+                </div>
 
                 @include('blog._share')
 
