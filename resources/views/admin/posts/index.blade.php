@@ -13,10 +13,11 @@
                 <span class="vl-eyebrow">The blog</span>
                 <h1 class="vl-engagement-title">Blog posts</h1>
                 <p class="vl-side-note">
-                    Published posts appear on <a href="{{ route('blog.index') }}">/blog</a>.
-                    Drafts stay off the public site but open at their real URL for the
-                    people who work on them, so a post can be proofread in place before
-                    anyone else sees it.
+                    Published posts appear on <a href="{{ route('blog.index') }}">/blog</a>
+                    and are emailed to the {{ number_format($subscriberCount) }}
+                    {{ $subscriberCount === 1 ? 'person' : 'people' }} subscribed, within
+                    ten minutes of going live. Drafts stay off the public site but open
+                    at their real URL for the people who work on them.
                 </p>
             </div>
             <div class="vl-head-actions">
@@ -68,6 +69,9 @@
                                     </td>
                                     <td class="vl-cell-dates">
                                         {{ $post->published_at?->format('j M Y') ?? '—' }}
+                                        @if ($post->subscribers_notified_at)
+                                            <span class="vl-cell-sub">Emailed to subscribers</span>
+                                        @endif
                                     </td>
                                     <td class="vl-cell-num">{{ $post->readingMinutes() }} min</td>
                                     <td class="vl-cell-actions">

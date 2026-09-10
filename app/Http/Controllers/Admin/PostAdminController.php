@@ -31,6 +31,7 @@ class PostAdminController extends Controller
                 ->orderByDesc('published_at')
                 ->orderByDesc('created_at')
                 ->get(),
+            'subscriberCount' => \App\Models\BlogSubscriber::active()->count(),
         ]);
     }
 

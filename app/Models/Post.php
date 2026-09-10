@@ -18,8 +18,10 @@ class Post extends Model
     ];
 
     protected $casts = [
-        'published_at'        => 'datetime',
-        'review_requested_at' => 'datetime',
+        'published_at'            => 'datetime',
+        'review_requested_at'     => 'datetime',
+        // Set by blog:notify-subscribers only, hence cast but not fillable.
+        'subscribers_notified_at' => 'datetime',
     ];
 
     /** Posts are addressed by slug everywhere a person sees a URL. */
