@@ -63,9 +63,10 @@
                               placeholder="Write in Markdown. ## for a heading, blank line between paragraphs, [link text](https://example.org) for a link.">{{ old('body', $post->body) }}</textarea>
                     <p class="vl-side-note vl-hint">
                         Markdown: <code>## Heading</code>, <code>**bold**</code>,
-                        <code>- bullet</code>, <code>[text](url)</code>. Pasted HTML is
-                        stripped rather than rendered. A YouTube link on a line of its
-                        own becomes an embedded video player.
+                        <code>- bullet</code>, <code>[text](url)</code>, and
+                        <code>---</code> on its own line for a section divider. Pasted
+                        HTML is stripped rather than rendered. A YouTube link on a line
+                        of its own becomes an embedded video player.
                     </p>
                     @error('body')<p class="vl-error">{{ $message }}</p>@enderror
                 </div>

@@ -41,7 +41,7 @@
             @endunless
 
             <article class="bl-article">
-                <p class="bl-meta" style="margin:0 0 22px;">
+                <p class="bl-meta" style="margin:0 0 14px;">
                     {{ $post->authorName() }}
                     @if ($post->published_at)
                         &middot; {{ $post->published_at->format('j F Y') }}
@@ -49,7 +49,11 @@
                     &middot; {{ $post->readingMinutes() }} minute read
                 </p>
 
+                @include('blog._share')
+
                 <div class="bl-prose">{!! $post->bodyHtml() !!}</div>
+
+                @include('blog._share')
 
                 <div class="bl-foot">
                     <p>
@@ -63,6 +67,26 @@
                     </p>
                 </div>
             </article>
+
+            @include('blog._subscribe')
+
+            @if ($morePosts->isNotEmpty())
+                <div class="bl-more">
+                    <h2>More from the blog</h2>
+                    <ul class="bl-list">
+                        @foreach ($morePosts as $more)
+                            <li class="bl-card">
+                                <h3><a href="{{ $more->url() }}">{{ $more->title }}</a></h3>
+                                <p>{{ $more->standfirst }}</p>
+                                <p class="bl-meta">
+                                    {{ $more->published_at->format('j F Y') }}
+                                    &middot; {{ $more->readingMinutes() }} minute read
+                                </p>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
         </div>
     </section>

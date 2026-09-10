@@ -3,14 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Services\EmailOctopusService;
+use Illuminate\Http\Request;
 
 /**
- * The public face of the blog: the index, the articles and the feed.
+ * The public face of the blog: the index, the articles, the feed and the
+ * subscriber list.
  *
  * Reading only. Writing happens in admin, and the two never share a route.
  */
 class BlogController extends Controller
 {
+    public function __construct(protected EmailOctopusService $emailOctopus)
+    {
+    }
+
     public function index()
     {
         return view('blog.index', [
@@ -33,7 +40,40 @@ class BlogController extends Controller
             404
         );
 
-        return view('blog.show', ['post' => $post]);
+        return view('blog.show', [
+            'post' => $post,
+
+            // The Substack habit worth copying: a finished article offers the
+            // next one, not a dead end.
+            'morePosts' => Post::published()
+                ->whereKeyNot($post->id)
+                ->orderByDesc('published_at')
+                ->limit(3)
+                ->get(),
+        ]);
+    }
+
+    /**
+     * Blog subscribers, into the same EmailOctopus list as everything else,
+     * under their own tag. Fail-soft on purpose: the service logs a real
+     * failure, and the person who typed their email gets a thank you rather
+     * than an error page for a marketing sync problem.
+     */
+    public function subscribe(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => ['required', 'email:rfc', 'max:255'],
+        ]);
+
+        // Same honeypot convention as every other public form: a field real
+        // people never see, answered as success so the bot learns nothing.
+        if (! filled($request->input('website'))) {
+            $this->emailOctopus->subscribe($validated['email'], [], ['blog']);
+        }
+
+        return back()
+            ->with('subscribed', 'You are on the list. New posts will come to your inbox.')
+            ->withFragment('subscribe');
     }
 
     /**

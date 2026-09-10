@@ -158,6 +158,59 @@ class BlogTest extends TestCase
             ->assertSee('/blog/tech-without-a-degree', false);
     }
 
+    /**
+     * The Substack borrowings: subscribing by email, sharing a post, and a
+     * finished article offering the next one instead of a dead end.
+     */
+    public function test_a_reader_can_subscribe_by_email(): void
+    {
+        \Illuminate\Support\Facades\Http::fake();
+        config(['services.emailoctopus.key' => 'test-key', 'services.emailoctopus.list_id' => 'list-1']);
+
+        $this->from('/blog')
+            ->post('/blog/subscribe', ['email' => 'reader@example.com'])
+            ->assertRedirect()
+            ->assertSessionHas('subscribed');
+
+        \Illuminate\Support\Facades\Http::assertSent(function ($request) {
+            return str_contains($request->url(), 'lists/list-1/contacts')
+                && $request['email_address'] === 'reader@example.com'
+                && in_array('blog', $request['tags']);
+        });
+    }
+
+    public function test_a_bot_filling_the_hidden_field_is_thanked_and_ignored(): void
+    {
+        \Illuminate\Support\Facades\Http::fake();
+        config(['services.emailoctopus.key' => 'test-key', 'services.emailoctopus.list_id' => 'list-1']);
+
+        $this->from('/blog')
+            ->post('/blog/subscribe', ['email' => 'bot@example.com', 'website' => 'spam'])
+            ->assertRedirect()
+            ->assertSessionHas('subscribed');
+
+        \Illuminate\Support\Facades\Http::assertNothingSent();
+    }
+
+    public function test_a_post_offers_sharing_and_the_next_read(): void
+    {
+        $this->makePost();
+        $this->makePost([
+            'title' => 'The next read',
+            'slug'  => 'the-next-read',
+            'published_at' => now()->subHours(2),
+        ]);
+
+        $this->get('/blog/tech-without-a-degree')
+            ->assertOk()
+            ->assertSee('facebook.com/sharer', false)
+            ->assertSee('linkedin.com/sharing', false)
+            ->assertSee('wa.me', false)
+            ->assertSee('Get new posts by email')
+            ->assertSee('More from the blog')
+            ->assertSee('The next read');
+    }
+
     public function test_the_admin_screens_are_admin_only(): void
     {
         $this->get('/admin/posts')->assertRedirect();
