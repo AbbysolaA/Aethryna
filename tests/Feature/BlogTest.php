@@ -70,6 +70,24 @@ class BlogTest extends TestCase
     }
 
     /**
+     * A post with an embedded video also declares it as a VideoObject, with
+     * the fields Search Console otherwise flags as missing.
+     */
+    public function test_an_embedded_video_gets_structured_data(): void
+    {
+        $this->makePost([
+            'slug' => 'video-schema-post',
+            'body' => "The recording:\n\nhttps://youtu.be/59o-BYdG22A\n\nThat was the day.",
+        ]);
+
+        $this->get('/blog/video-schema-post')
+            ->assertOk()
+            ->assertSee('VideoObject', false)
+            ->assertSee('uploadDate', false)
+            ->assertSee('i.ytimg.com/vi/59o-BYdG22A/hqdefault.jpg', false);
+    }
+
+    /**
      * Raw HTML in the body is stripped, not rendered. Admins write the posts
      * today, but the pipeline should be safe whoever writes tomorrow.
      */

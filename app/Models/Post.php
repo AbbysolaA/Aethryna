@@ -64,6 +64,33 @@ class Post extends Model
     }
 
     /**
+     * One VideoObject per embedded video, for the structured data block on
+     * the post page. Search Console reads the iframes as videos either way;
+     * this is what supplies the uploadDate, thumbnail and description it
+     * flags as missing otherwise.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function videoSchemas(): array
+    {
+        preg_match_all(self::YOUTUBE_LINE, $this->body, $matches);
+
+        return collect($matches[1] ?? [])
+            ->unique()
+            ->values()
+            ->map(fn ($id, $i) => array_filter([
+                '@context'     => 'https://schema.org',
+                '@type'        => 'VideoObject',
+                'name'         => $this->title.(count($matches[1]) > 1 ? ', video '.($i + 1) : ''),
+                'description'  => $this->standfirst,
+                'thumbnailUrl' => 'https://i.ytimg.com/vi/'.$id.'/hqdefault.jpg',
+                'uploadDate'   => $this->published_at?->toIso8601String(),
+                'embedUrl'     => 'https://www.youtube-nocookie.com/embed/'.$id,
+            ]))
+            ->all();
+    }
+
+    /**
      * Any YouTube URL variant, when it is the only thing on its line.
      * Inline links in a sentence are left alone: "as shown in this video"
      * should stay a link, not balloon into a player mid-paragraph.

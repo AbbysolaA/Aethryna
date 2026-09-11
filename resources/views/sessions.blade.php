@@ -5,6 +5,22 @@
 @section('meta_description', 'A free monthly panel series exploring AI, work, and inclusion. Honest conversations with practitioners, researchers, and industry leaders. No jargon walls, no gatekeeping.')
 @section('og_description', 'A free monthly panel series exploring AI, work, and inclusion. Honest conversations with practitioners, researchers, and industry leaders. No jargon walls, no gatekeeping.')
 
+@php
+    // One VideoObject per embedded recording. Search Console reads the
+    // iframes on this page as videos either way; this markup is what gives
+    // them the uploadDate, thumbnail and description it asks for.
+    $videoSchemas = $past->flatMap(
+        fn ($s) => $s->videos->map(fn ($v) => $v->toVideoSchema($s))
+    )->values();
+@endphp
+@if ($videoSchemas->isNotEmpty())
+    @push('scripts')
+        <script type="application/ld+json">
+{!! json_encode($videoSchemas->all(), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+        </script>
+    @endpush
+@endif
+
 @section('content')
 
 @php $nextSession = $upcoming->first(); @endphp

@@ -23,12 +23,56 @@ class PanelMedia extends Model
     // Handles: watch?v=ID, youtu.be/ID, /live/ID, /shorts/ID, /embed/ID.
     public function embedUrl(): string
     {
-        if ($this->type === 'video') {
-            $url = $this->url;
-            if (preg_match('#(?:youtube\.com/(?:watch\?v=|live/|shorts/|embed/)|youtu\.be/)([\w-]+)#', $url, $m)) {
-                return 'https://www.youtube-nocookie.com/embed/' . $m[1];
-            }
+        if ($this->type === 'video' && ($id = $this->youtubeId())) {
+            return 'https://www.youtube-nocookie.com/embed/' . $id;
         }
         return $this->url;
+    }
+
+    public function youtubeId(): ?string
+    {
+        if (preg_match('#(?:youtube\.com/(?:watch\?v=|live/|shorts/|embed/)|youtu\.be/)([\w-]+)#', $this->url, $m)) {
+            return $m[1];
+        }
+
+        return null;
+    }
+
+    /**
+     * A stored thumbnail wins; otherwise YouTube's own, which exists for
+     * every video without anyone maintaining a file.
+     */
+    public function thumbnailUrl(): ?string
+    {
+        if ($this->thumbnail_url) {
+            return $this->thumbnail_url;
+        }
+
+        return ($id = $this->youtubeId())
+            ? 'https://i.ytimg.com/vi/'.$id.'/hqdefault.jpg'
+            : null;
+    }
+
+    /**
+     * The VideoObject Search Console asks for: name, description,
+     * thumbnailUrl and uploadDate are what turn "video detected on page"
+     * warnings into an eligible video result.
+     *
+     * @return array<string, mixed>
+     */
+    public function toVideoSchema(PanelSession $session): array
+    {
+        return array_filter([
+            '@context'     => 'https://schema.org',
+            '@type'        => 'VideoObject',
+            'name'         => $this->caption ?: 'Recording: '.$session->tagline,
+            'description'  => $this->caption
+                ? $this->caption.'. '.str($session->description)->limit(160)
+                : str($session->description)->limit(200)->toString(),
+            'thumbnailUrl' => $this->thumbnailUrl(),
+            'uploadDate'   => ($session->event_date ?? $this->created_at)?->toIso8601String(),
+            'embedUrl'     => $this->embedUrl(),
+            'contentUrl'   => $this->url,
+        ]);
     }
 }

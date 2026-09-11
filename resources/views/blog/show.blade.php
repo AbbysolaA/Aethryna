@@ -100,6 +100,12 @@
 
 </div>
 
+@if ($post->isPublished() && $post->videoSchemas())
+<script type="application/ld+json">
+{!! json_encode($post->videoSchemas(), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+</script>
+@endif
+
 @if ($post->isPublished())
 <script type="application/ld+json">
 {!! json_encode([
