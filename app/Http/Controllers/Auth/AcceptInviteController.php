@@ -67,9 +67,20 @@ class AcceptInviteController extends Controller
         );
 
         if ($status !== Password::PasswordReset) {
+            // In invitation words, not password-reset words. The person on
+            // this page was invited; telling them a "reset token" is invalid
+            // describes the plumbing, not their situation. The commonest
+            // cause is holding an older email after a resend, because each
+            // new invite replaces the previous link.
+            $message = match ($status) {
+                Password::InvalidToken => 'This invitation link is no longer valid. If the invite was sent more than once, only the newest email works; otherwise ask for it to be resent.',
+                Password::InvalidUser  => 'That email address does not match the invitation. Use the address the invite was sent to.',
+                default                => __($status),
+            };
+
             return back()
                 ->withInput($request->only('email'))
-                ->withErrors(['email' => __($status)]);
+                ->withErrors(['email' => $message]);
         }
 
         // Sign them in and drop them where their role belongs, rather than at a
