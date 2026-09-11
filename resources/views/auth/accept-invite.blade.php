@@ -1,6 +1,7 @@
 @extends('layouts.guest')
 
-@section('auth-title', $user ? 'Welcome, ' . str($user->name)->before(' ') : 'Set your password')
+{{-- The whole name: first-word greetings turn "Mr Adeoba" into "Welcome, Mr". --}}
+@section('auth-title', $user ? 'Welcome, ' . $user->name : 'Set your password')
 @section('auth-subtitle', 'Choose a password and your account is ready to use.')
 
 @section('caption-title', 'Your account is waiting')
