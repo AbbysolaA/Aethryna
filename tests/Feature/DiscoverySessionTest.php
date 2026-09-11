@@ -480,6 +480,29 @@ class DiscoverySessionTest extends TestCase
     }
 
     /**
+     * Every embedded recording carries the VideoObject fields Search
+     * Console flags when absent: uploadDate, thumbnailUrl and description.
+     * The thumbnail comes from YouTube itself, so no file needs maintaining.
+     */
+    public function test_session_recordings_carry_full_video_structured_data(): void
+    {
+        $event = $this->event();
+        $event->update(['status' => 'past']);
+        $event->media()->create([
+            'type'    => 'video',
+            'url'     => 'https://youtu.be/59o-BYdG22A',
+            'caption' => 'Community Discovery Session, part one',
+        ]);
+
+        $html = $this->get('/sessions')->assertOk()->getContent();
+
+        $this->assertStringContainsString('"@type": "VideoObject"', str_replace('":"', '": "', $html));
+        $this->assertStringContainsString('uploadDate', $html);
+        $this->assertStringContainsString('i.ytimg.com/vi/59o-BYdG22A/hqdefault.jpg', $html);
+        $this->assertStringContainsString('Community Discovery Session, part one', $html);
+    }
+
+    /**
      * The letters with the QR code outlive the event: months on, people are
      * still scanning their way to /discovery-session. Once the day is over
      * the page sends them to the referral form instead of a poster for a

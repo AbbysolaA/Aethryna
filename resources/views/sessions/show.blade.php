@@ -54,16 +54,22 @@
             'name'     => $s->name,
             'jobTitle' => $s->title,
         ]))->all() ?: null,
-        'recordedIn' => $session->recording_url ? [
-            '@type'      => 'VideoObject',
-            'name'       => 'Recording: ' . $session->tagline,
-            'contentUrl' => $session->recording_url,
-        ] : null,
+        // Full VideoObject fields: Search Console flags name-and-url-only
+        // video markup as missing uploadDate, thumbnailUrl and description.
+        'recordedIn' => $session->recording_url
+            ? collect((new \App\Models\PanelMedia(['type' => 'video', 'url' => $session->recording_url]))
+                ->toVideoSchema($session))->except('@context')->all()
+            : null,
     ], fn ($v) => $v !== null && $v !== []);
 @endphp
 <script type="application/ld+json">
 {!! json_encode($eventSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
 </script>
+@if ($session->videos->isNotEmpty())
+<script type="application/ld+json">
+{!! json_encode($session->videos->map(fn ($v) => $v->toVideoSchema($session))->values()->all(), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+</script>
+@endif
 @endpush
 
 @section('content')
