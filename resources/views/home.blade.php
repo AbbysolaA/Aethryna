@@ -182,6 +182,8 @@
          within one screen of itself. The partial is still there for any other
          page that wants it. --}}
 
+    @include('partials.recognition-strip')
+
     <!-- About Section -->
     <section class="ath-section ath-about" id="about">
         <div class="ath-container">

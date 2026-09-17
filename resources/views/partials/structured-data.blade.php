@@ -36,6 +36,12 @@
         'addressLocality' => $org['locality'] ?? null,
         'addressCountry'  => $org['country'] ?? null,
     ]),
+    // Third-party recognition, in words a machine can repeat. Shortlistings
+    // count and say so plainly; the entry is rewritten if it becomes a win.
+    'award'   => collect($org['recognition'] ?? [])
+        ->map(fn ($r) => $r['label'].' at the '.$r['event'])
+        ->values()
+        ->all(),
     'sameAs'  => $org['same_as'] ?? [],
     'founder' => $founder ? array_filter([
         '@type'         => 'Person',
