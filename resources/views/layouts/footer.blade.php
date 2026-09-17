@@ -25,19 +25,30 @@
                     </div>
                 </div>
 
-                <!-- Quick Links -->
+                {{-- Two short groups rather than one Quick Links column that
+                     had grown to eleven and stopped being quick. Split the
+                     same way the header splits: pages you read, then ways to
+                     take part, so the footer and the nav teach the same map
+                     of the site. --}}
                 <div class="footer-links">
-                    <h4>Quick Links</h4>
+                    <h4>Explore</h4>
                     <ul>
                         <li><a href="{{ route('home') }}">Home</a></li>
                         <li><a href="{{ route('about') }}">About Us</a></li>
                         <li><a href="{{ route('pathway') }}">Transformation Pathway</a></li>
-                        <li><a href="{{ route('ai-labs') }}">AI Labs</a></li>
                         <li><a href="{{ route('impact') }}">Our Impact</a></li>
                         <li><a href="{{ route('stories') }}">Success Stories</a></li>
                         <li><a href="{{ route('sessions') }}">Sessions & Events</a></li>
                         <li><a href="{{ route('blog.index') }}">Blog</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Get Involved</h4>
+                    <ul>
+                        <li><a href="{{ route('partners') }}">Partner with Us</a></li>
                         <li><a href="{{ route('mentors') }}">Become a Mentor</a></li>
+                        <li><a href="{{ route('volunteer.apply') }}">Volunteer with Us</a></li>
                         <li><a href="{{ route('referral.create') }}">Refer Someone</a></li>
                         {{-- Footers are where people look for a jobs link, but
                              only worth showing while there is one to click. --}}
@@ -55,6 +66,10 @@
                         <li><a href="{{ route('programs') }}#data-ai">Data and AI Analytics</a></li>
                         <li><a href="{{ route('programs') }}#product-design">Product Design and Marketing</a></li>
                         <li><a href="{{ route('programs') }}#software-dev">Software Development</a></li>
+                        {{-- AI Labs sits with the learning rather than in
+                             Explore: it is a thing you do here, not a page
+                             about us. --}}
+                        <li><a href="{{ route('ai-labs') }}">AI Labs</a></li>
                     </ul>
                 </div>
 
@@ -157,8 +172,8 @@
 
     .footer-grid {
         display: grid;
-        grid-template-columns: 2fr 1fr 1fr 1.5fr;
-        gap: 4rem;
+        grid-template-columns: 1.8fr 1fr 1fr 1.1fr 1.3fr;
+        gap: 3rem;
         padding-bottom: 4rem;
     }
 
@@ -166,8 +181,8 @@
        longer track names wrapped onto three lines. */
     @media (max-width: 1280px) {
         .footer-grid {
-            gap: 2.5rem;
-            grid-template-columns: 1.6fr 1fr 1fr 1.4fr;
+            gap: 2rem;
+            grid-template-columns: 1.5fr 1fr 1fr 1.1fr 1.3fr;
         }
     }
 
