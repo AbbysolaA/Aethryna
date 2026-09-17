@@ -283,6 +283,8 @@
     </div>
 </section>
 
+@include('partials.recognition-strip')
+
 <!-- Impact Dashboard Navigation -->
 <div class="impact-nav-sticky">
     <div class="ath-container">

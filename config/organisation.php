@@ -46,6 +46,21 @@ return [
     'locality'    => 'Liverpool',
     'country'     => 'GB',
 
+    /**
+     * Public recognition worth naming.
+     *
+     * Drives the strip on the home and impact pages and the award property
+     * in the Organization structured data, so the next shortlisting or win
+     * is one entry here and nothing else.
+     */
+    'recognition' => [
+        [
+            'label' => 'Shortlisted for the Tech for Good Award, Skills and Employment',
+            'event' => 'Prolific North Tech Awards 2026',
+            'url'   => 'https://www.prolificnorth.co.uk/awards/tech-awards/tech-awards-2026-shortlist/',
+        ],
+    ],
+
     // Profiles that already represent the organisation elsewhere.
     'same_as' => [
         'https://www.linkedin.com/company/theskillscoop/',
