@@ -246,6 +246,18 @@
                     </div>
                     <button type="submit" class="ath-btn ath-btn-primary form-submit">Send enquiry</button>
                 </form>
+
+                {{-- Same line and same reasoning as the referral page: an
+                     organisation weighing us up can verify we are a real,
+                     findable local service where the council already lists
+                     them. Deliberately not in the recognition strip, which
+                     is for competitive recognition; a directory listing next
+                     to an award invites the reader to discount the award. --}}
+                <p class="pt-directory-note">
+                    Skills Co-op is listed on
+                    <a href="https://www.wirralinfobank.co.uk/Services/16439" target="_blank" rel="noopener">Wirral InfoBank</a>,
+                    Wirral Council's directory of local services and support.
+                </p>
             </div>
         </div>
     </div>
@@ -277,6 +289,8 @@
 
 /* Section layout */
 .partners-section { padding: 100px 0; border-bottom: 1px solid rgba(0,0,0,0.04); }
+.pt-directory-note { margin: 26px 0 0; text-align: center; font-size: 0.9rem; line-height: 1.65; color: var(--ath-muted, #667); }
+.pt-directory-note a { color: var(--ath-teal, #038b89); font-weight: 600; }
 .section-label { margin-bottom: 60px; }
 .section-label h2 { font-size: clamp(2rem, 4vw, 2.8rem); color: var(--ath-deep); font-weight: 800; font-family: 'Outfit', sans-serif; margin-top: 8px; }
 .how-intro { max-width: 820px; color: var(--ath-muted); line-height: 1.75; font-size: 1.05rem; margin-top: 18px; }

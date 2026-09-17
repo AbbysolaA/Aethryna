@@ -34,6 +34,22 @@ class RecognitionTest extends TestCase
             ->assertSee('Tech for Good Award', false);
     }
 
+    /**
+     * The directory listing lives on the pages whose readers use
+     * directories, and stays out of the award strip on purpose.
+     */
+    public function test_the_infobank_listing_sits_on_refer_and_partners_but_not_the_strip(): void
+    {
+        foreach (['/refer', '/partners'] as $page) {
+            $this->get($page)
+                ->assertOk()
+                ->assertSee('Wirral InfoBank')
+                ->assertSee('wirralinfobank.co.uk/Services/16439', false);
+        }
+
+        $this->get('/')->assertOk()->assertDontSee('Wirral InfoBank');
+    }
+
     public function test_an_empty_recognition_list_renders_no_strip(): void
     {
         config(['organisation.recognition' => []]);
