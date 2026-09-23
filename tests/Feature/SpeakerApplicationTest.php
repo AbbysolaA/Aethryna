@@ -238,6 +238,25 @@ class SpeakerApplicationTest extends TestCase
         Storage::disk('local')->assertMissing($path);
     }
 
+    /**
+     * The server sends from a noreply account, so the confirmation must
+     * carry a reply-to a person actually reads, and its copy must name the
+     * address rather than promising that "reply" works on its own.
+     */
+    public function test_the_confirmation_replies_reach_a_read_inbox(): void
+    {
+        $this->pitch();
+        $application = SpeakerApplication::firstOrFail();
+
+        $mail = new \App\Mail\SpeakerApplicationConfirmation($application);
+        $mail->build();
+
+        $this->assertTrue($mail->hasReplyTo(config('organisation.email')));
+        $this->assertStringContainsString('reply to', $mail->render());
+        $this->assertStringContainsString(config('organisation.email'), $mail->render());
+        $this->assertStringNotContainsString('reply to this email', $mail->render());
+    }
+
     public function test_the_speak_page_is_in_the_sitemap(): void
     {
         $this->get('/sitemap.xml')->assertOk()->assertSee('/apply-to-speak');

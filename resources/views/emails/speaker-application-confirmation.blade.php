@@ -43,7 +43,8 @@
     <tr>
         <td class="sc-pad" style="padding:24px 32px 40px 32px;">
             <p style="margin:0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:15px; line-height:25px; color:#8a8f86;">
-                Anything you want to add in the meantime, just reply to this email.
+                Anything you want to add in the meantime, reply to
+                <a href="mailto:{{ $supportEmail }}" style="color:#055860;">{{ $supportEmail }}</a>.
             </p>
         </td>
     </tr>

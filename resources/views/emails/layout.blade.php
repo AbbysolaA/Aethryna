@@ -103,6 +103,14 @@
                     <tr>
                         <td class="sc-pad" style="background-color:#f7f2e8; padding:24px 32px 28px 32px; border-top:1px solid #e6ddcd;">
                             <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                @isset($logoUrl)
+                                    <tr>
+                                        <td style="padding-bottom:14px;">
+                                            <img src="{{ $logoUrl }}" width="36" height="30" alt="Skills Co-op"
+                                                 style="display:block; width:36px; height:30px; border:0;" />
+                                        </td>
+                                    </tr>
+                                @endisset
                                 <tr>
                                     <td style="font-family:'Karla',Arial,Helvetica,sans-serif; font-size:13px; line-height:20px; color:#8a8f86;">
                                         <strong style="color:#055860;">Skills Co-op</strong><br />

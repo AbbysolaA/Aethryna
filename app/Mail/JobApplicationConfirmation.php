@@ -32,6 +32,11 @@ class JobApplicationConfirmation extends Mailable
 
         return $this
             ->subject($data['subject'])
+            // Replies must land somewhere a person reads, whatever the From
+            // address is. The server sends from a noreply account, and an
+            // email that says "just reply" while replies go nowhere is a
+            // broken promise.
+            ->replyTo(config('organisation.email'))
             ->view('emails.job-application-confirmation', $data)
             ->text('emails.job-application-confirmation-text', $data);
     }
