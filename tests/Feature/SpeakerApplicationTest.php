@@ -242,4 +242,36 @@ class SpeakerApplicationTest extends TestCase
     {
         $this->get('/sitemap.xml')->assertOk()->assertSee('/apply-to-speak');
     }
+
+    /**
+     * The flyers for each call point at this page, so it should greet
+     * arrivals with the panel currently being cast, and stop claiming one
+     * the moment nothing is scheduled.
+     */
+    public function test_the_page_announces_the_panel_being_cast(): void
+    {
+        \App\Models\PanelSession::create([
+            'title'      => 'The Skills Co-op Sessions: Panel 4',
+            'slug'       => 'panel-4',
+            'tagline'    => 'Panel 4 · Vibe coding: show and tell',
+            'description' => 'Real workflows, real prompts, real mistakes.',
+            'event_date' => '2026-10-20 18:30:00',
+            'format'     => 'Online',
+            'status'     => 'upcoming',
+            'sort_order' => 4,
+        ]);
+
+        $this->get('/apply-to-speak')
+            ->assertOk()
+            ->assertSee('Casting now')
+            ->assertSee('Vibe coding: show and tell')
+            ->assertSee('Tuesday 20 October 2026');
+    }
+
+    public function test_the_page_claims_no_panel_when_none_is_scheduled(): void
+    {
+        $this->get('/apply-to-speak')
+            ->assertOk()
+            ->assertDontSee('Casting now');
+    }
 }
