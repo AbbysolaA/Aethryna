@@ -117,7 +117,7 @@
                 <div class="vl-field">
                     <label for="location">Where you are based <span class="vl-opt">(optional)</span></label>
                     <input id="location" name="location" maxlength="255"
-                           placeholder="City and time zone is plenty" value="{{ old('location') }}">
+                           placeholder="City and time zone" value="{{ old('location') }}">
                     @error('location')<p class="vl-error">{{ $message }}</p>@enderror
                 </div>
 
