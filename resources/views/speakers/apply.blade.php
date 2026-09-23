@@ -25,6 +25,26 @@
 <section class="vl-apply">
     <div class="ath-container">
 
+        @if ($castingPanel)
+            <div class="sp-casting" role="note">
+                <span class="sp-casting-badge">Casting now</span>
+                <div>
+                    <p class="sp-casting-title">{{ $castingPanel->tagline }}</p>
+                    <p class="sp-casting-meta">
+                        {{ $castingPanel->event_date?->format('l j F Y, g.ia') }}
+                        @if ($castingPanel->format) &middot; {{ $castingPanel->format }} @endif
+                    </p>
+                    @if ($castingPanel->description)
+                        <p class="sp-casting-desc">{{ $castingPanel->description }}</p>
+                    @endif
+                    <p class="sp-casting-note">
+                        Pitches for this panel are read first. The form below also stands for
+                        any future session, so a pitch that misses this one is not wasted.
+                    </p>
+                </div>
+            </div>
+        @endif
+
         {{-- What makes a good pitch, above the form, so nobody writes into a
              void. The cards pull up over the hero, which would bury a visible
              heading beneath them, so the heading exists for the outline and
@@ -236,6 +256,57 @@
             padding: 0; overflow: hidden; clip: rect(0 0 0 0); border: 0;
         }
         .vl-apply { padding: 0 0 100px; background: var(--ath-light); }
+
+        /* The panel currently being cast. Sits above the pitch cards, amber
+           edge so it reads as the live notice it is. */
+        .sp-casting {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: flex-start;
+            background: #fff;
+            border: 1px solid rgba(3, 139, 137, 0.15);
+            border-left: 4px solid var(--ath-gold, #ee9d1d);
+            border-radius: 12px;
+            padding: 22px 26px;
+            /* The pitch cards below pull up by 40px over whatever precedes
+               them, so the bottom margin absorbs that as well as the gap. */
+            margin: 0 0 88px;
+            position: relative;
+            z-index: 2;
+        }
+        .sp-casting-badge {
+            flex: none;
+            font-family: var(--font-mono, ui-monospace, monospace);
+            font-size: 0.66rem;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+            color: #9a6510;
+            background: rgba(238, 157, 29, 0.14);
+            border-radius: 100px;
+            padding: 6px 12px;
+        }
+        .sp-casting-title {
+            margin: 0 0 4px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--ath-deep, #055860);
+        }
+        .sp-casting-meta {
+            margin: 0 0 10px;
+            font-size: 0.88rem;
+            color: #7a838b;
+        }
+        .sp-casting-desc {
+            margin: 0 0 10px;
+            line-height: 1.7;
+            color: #444d54;
+        }
+        .sp-casting-note {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #7a838b;
+        }
         .vl-section-title { font-family: 'Outfit', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--ath-deep); margin: 0 0 20px; }
         .vl-role-list { list-style: none; margin: -60px 0 44px; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; position: relative; z-index: 2; }
         .vl-role-card { background: #fff; border: 1px solid rgba(3,139,137,0.1); border-radius: 18px; padding: 26px 28px; box-shadow: 0 12px 40px rgba(0,0,0,0.05); }

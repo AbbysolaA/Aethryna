@@ -23,7 +23,14 @@ class SpeakerApplicationController extends Controller
 {
     public function create(): View
     {
-        return view('speakers.apply');
+        // The flyers and posts for each call point here, so the page should
+        // greet arrivals with the panel currently being cast rather than
+        // reading like a form that exists in general. Driven by the next
+        // upcoming panel, so it updates itself when a panel is announced and
+        // disappears when nothing is scheduled.
+        return view('speakers.apply', [
+            'castingPanel' => \App\Models\PanelSession::upcoming()->first(),
+        ]);
     }
 
     public function store(Request $request): RedirectResponse

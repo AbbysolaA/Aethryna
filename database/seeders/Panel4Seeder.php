@@ -7,24 +7,20 @@ use App\Models\PanelSpeaker;
 use Illuminate\Database\Seeder;
 
 /**
- * Panel 4 — date confirmed, topic and speakers still to come.
+ * Panel 4: Vibe coding, show and tell. Tuesday 20 October 2026, online.
  *
- * Keeps the sessions page pointing forward between panels. With Panel 3 in
- * the archive and nothing upcoming, the page reads as though the series has
- * finished, which is the opposite of what it should say.
+ * The September date this panel first carried never happened, so the same
+ * row moves to October rather than a cancelled one being left beside a new
+ * one: the URL keeps working and anyone already registered stays registered
+ * against the panel they will actually attend.
  *
- * 18:30 on a Tuesday, matching Panels 1, 2 and 3. A series people are meant
- * to keep turning up to is worth keeping predictable.
+ * 18:30 on a Tuesday, matching Panels 1, 2 and 3; the flyer names the date
+ * and not the time, so the series' own habit fills it in. Change it in the
+ * panels admin if the flyer's final version says otherwise.
  *
- * The card now leads with the date and says plainly that the topic is still
- * being confirmed, rather than claiming nothing is known. Somebody can put it
- * in their diary today and find out what it is about later; the reverse is no
- * use to anyone.
- *
- * When the rest is confirmed:
- *   1. Set the title, tagline and description below.
- *   2. Add the speakers to the $speakers array.
- *   3. php artisan db:seed --class=Panel4Seeder --force
+ * Speakers come through /apply-to-speak this time; add confirmed ones to the
+ * $speakers array and re-run:
+ *   php artisan db:seed --class=Panel4Seeder --force
  */
 class Panel4Seeder extends Seeder
 {
@@ -45,9 +41,9 @@ class Panel4Seeder extends Seeder
 
         $panel4Attributes = [
             'title'           => 'The Skills Co-op Sessions: Panel 4',
-            'tagline'         => 'Panel 4 · Tuesday 15 September',
-            'description'     => 'The next Skills Co-op Sessions panel is on Tuesday 15 September at 6:30pm. Topic and speakers are being confirmed — register below and we will email you the moment they are announced, along with the joining link.',
-            'event_date'      => '2026-09-15 18:30:00',
+            'tagline'         => 'Panel 4 · Vibe coding: show and tell',
+            'description'     => 'Practitioners who build with AI every day show their process live rather than talk about it. Real workflows, real prompts, real mistakes, with audience Q&A after. We are especially keen to hear from women building in AI. Tuesday 20 October at 6.30pm, online, recorded and shared publicly.',
+            'event_date'      => '2026-10-20 18:30:00',
             'duration'        => '60 minutes',
             'format'          => 'Online',
             'eventbrite_url'  => null,
