@@ -60,7 +60,7 @@
                         @else
                             <div class="text-center mb-6">
                                 <span class="bg-gray-500 text-white text-sm font-bold px-4 py-2 rounded-full uppercase">
-                                    Secondary Option
+                                    Also worth considering
                                 </span>
                             </div>
                         @endif

@@ -64,7 +64,7 @@
                     <tr>
                         <td style="padding:18px 22px;">
                             <p style="margin:0 0 6px 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:11px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:#8a8f86;">
-                                Also worth a look
+                                Also worth considering
                             </p>
                             <p style="margin:0 0 8px 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:17px; line-height:25px; font-weight:700; color:#2b333a;">
                                 {{ $secondary->pathway->name }}

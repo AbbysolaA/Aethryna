@@ -16,7 +16,7 @@
      * course results from it, and every field it wants was already on the
      * record.
      *
-     * hasCourseInstance is only claimed for the four tracks a cohort actually
+     * hasCourseInstance is only claimed for the five tracks a cohort actually
      * runs. Declaring a scheduled instance of a course nobody is teaching
      * would be a lie told to a search engine, which is still a lie.
      */
@@ -62,7 +62,7 @@
 
         <span class="cs-eyebrow">{{ ucfirst($pathway->category) }} pathway</span>
         <h1>{{ $pathway->name }}</h1>
-        <p class="cs-lede">{{ $pathway->description }}</p>
+        <p class="cs-lede">{{ $pathway->hero_promise ?: $pathway->description }}</p>
 
         <div class="cs-meta">
             <span><i class="fas fa-signal" aria-hidden="true"></i> {{ ucfirst($pathway->difficulty_level ?? 'Beginner') }}</span>
@@ -75,7 +75,7 @@
         {{--
             The honest difference between the two kinds of page.
 
-            Four tracks run in Cohort 1. The other thirteen are real
+            Five tracks run in Cohort 1. The other twelve are real
             directions the assessment can point somebody in, and saying so
             plainly is better than either hiding them or implying we teach
             them. Somebody who reads "not one of the four running now" and
@@ -86,7 +86,7 @@
                 <i class="fas fa-circle-check" aria-hidden="true"></i>
                 <div>
                     <strong>Running in {{ config('organisation.cohort.name') }}</strong>
-                    <span>Starts {{ config('organisation.cohort.starts') }} &middot; {{ config('organisation.cohort.places') }} places across all four tracks</span>
+                    <span>Starts {{ config('organisation.cohort.starts') }} &middot; {{ config('organisation.cohort.places') }} places across all five tracks</span>
                 </div>
             </div>
             <div class="cs-actions">
@@ -97,13 +97,17 @@
             <div class="cs-status cs-status-soon">
                 <i class="fas fa-compass" aria-hidden="true"></i>
                 <div>
-                    <strong>Not one of the four tracks running in {{ config('organisation.cohort.name') }}</strong>
+                    <strong>Not one of the five tracks running in {{ config('organisation.cohort.name') }}</strong>
                     <span>A direction we can point you in, and something we may run in a later cohort. The skills below still count.</span>
+                    @if ($pathway->slug === 'web-development')
+                        <span>For the founding cohort, this route runs as
+                            <a href="{{ route('programs.show', 'software-development-foundations') }}">Software Development</a>.</span>
+                    @endif
                 </div>
             </div>
             <div class="cs-actions">
                 <a href="{{ route('assessment.index') }}" class="ath-btn ath-btn-primary">Find the track that fits you</a>
-                <a href="{{ route('programs') }}" class="ath-btn ath-btn-outline">See the four we run</a>
+                <a href="{{ route('programs') }}" class="ath-btn ath-btn-outline">See the five we run</a>
             </div>
         @endif
     </div>
@@ -119,29 +123,60 @@
                 </div>
             @endif
 
-            @if ($pathway->skills)
+            @if ($pathway->learn_text || $pathway->skills)
                 <div class="cs-block">
-                    <h2>What you would learn</h2>
-                    <ul class="cs-skills">
-                        @foreach ($pathway->skills as $skill)
-                            <li>{{ $skill }}</li>
-                        @endforeach
-                    </ul>
+                    <h2>{{ $pathway->learn_text ? 'What you will learn' : 'What you would learn' }}</h2>
+                    @if ($pathway->learn_text)
+                        <p>{{ $pathway->learn_text }}</p>
+                    @endif
+                    @if ($pathway->skills)
+                        <ul class="cs-skills">
+                            @foreach ($pathway->skills as $skill)
+                                <li>{{ $skill }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
                 </div>
             @endif
 
-            @if ($pathway->career_paths)
+            @if ($pathway->make_text)
+                <div class="cs-block">
+                    <h2>What you will make</h2>
+                    <p>{{ $pathway->make_text }}</p>
+                </div>
+            @endif
+
+            @if ($pathway->career_paths || $pathway->leads_text)
                 <div class="cs-block">
                     <h2>Where it leads</h2>
-                    <ul class="cs-careers">
-                        @foreach ($pathway->career_paths as $career)
-                            <li>{{ $career }}</li>
-                        @endforeach
-                    </ul>
+                    @if ($pathway->leads_text)
+                        <p>{{ $pathway->leads_text }}</p>
+                    @endif
+                    @if ($pathway->career_paths)
+                        <ul class="cs-careers">
+                            @foreach ($pathway->career_paths as $career)
+                                <li>{{ $career }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
                     <p class="cs-note">
                         Job titles this track prepares you for. We do not promise a job, and anyone who does is
                         selling you something.
                     </p>
+                </div>
+            @endif
+
+            @if ($pathway->is_pilot)
+                {{-- Identical on all five founding track pages, by design:
+                     the programme is the same whichever door you come in. --}}
+                <div class="cs-block">
+                    <h2>How the programme works</h2>
+                    <p>Every track runs inside the same 25-week programme, free to learners. One On-Ramp week to settle in and set goals. Weeks 1 to 4: foundations, learned together across all tracks, including responsible AI skills you will use everywhere. Weeks 5 to 12: your track, taught in focused two-week sprints with real outputs every fortnight. Weeks 13 to 24: the Project Period, where cross-track teams launch a real venture, or deliver a real brief for an employer or community organisation. You earn a certificate at week 4, week 12 and week 24, so whatever life does, you leave with evidence. The commitment is two focused hours a day on weekdays. Your evenings and weekends are yours. Delivery is online, with optional in-person days in Merseyside. Tracks run with a minimum group size; if your track is under-subscribed for a cohort we will help you choose your second preference, and the first four weeks are shared either way.</p>
+                </div>
+
+                <div class="cs-block cs-closing-cta">
+                    <a href="{{ route('register') }}" class="ath-btn ath-btn-primary">Apply for January 2027</a>
+                    <a href="{{ route('assessment.index') }}" class="ath-btn ath-btn-outline">Not sure? Take the assessment</a>
                 </div>
             @endif
         </div>
@@ -150,7 +185,7 @@
             @unless ($pathway->is_pilot)
                 <div class="cs-card">
                     <h3>Running in {{ config('organisation.cohort.name') }}</h3>
-                    <p class="cs-card-note">The four tracks you can start in {{ config('organisation.cohort.starts') }}.</p>
+                    <p class="cs-card-note">The five tracks you can start in {{ config('organisation.cohort.starts') }}.</p>
                     <ul class="cs-list">
                         @foreach ($pilotTracks as $track)
                             <li><a href="{{ route('programs.show', $track) }}">{{ $track->name }}</a></li>
@@ -225,6 +260,7 @@
     .cs-block h2 { font-size: 1.35rem; font-weight: 800; color: var(--ath-deep, #055860); margin: 0 0 14px; }
     .cs-block p { line-height: 1.75; color: #404952; }
 
+    .cs-closing-cta { display: flex; flex-wrap: wrap; gap: 14px; }
     .cs-skills, .cs-careers { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 10px; }
     .cs-skills li, .cs-careers li {
         background: #fff; border: 1px solid rgba(3,139,137,0.18);

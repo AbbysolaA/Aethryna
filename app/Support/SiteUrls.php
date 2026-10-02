@@ -28,7 +28,7 @@ class SiteUrls
      *
      * Ordered deliberately: the fixed pages first, then panels, then courses
      * with the pilot tracks ahead of the rest. Crawlers work a budget, and the
-     * four tracks somebody can actually enrol on should be reached before the
+     * five tracks somebody can actually enrol on should be reached before the
      * thirteen they cannot.
      *
      * @return array<int, string>

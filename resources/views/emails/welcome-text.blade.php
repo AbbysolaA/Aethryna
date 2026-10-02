@@ -8,7 +8,7 @@ Thanks for signing up. Skills Co-op is a funded 25-week digital skills programme
 THREE THINGS TO DO FIRST
 
 1. Take the pathway assessment
-Fifteen questions, about two minutes. It matches you to one of our four pilot tracks based on how you actually like to work.
+Sixteen questions, about two minutes. It matches you to one of our five founding tracks based on how you actually like to work.
 {!! $assessmentUrl !!}
 
 2. Read how the 25 weeks work

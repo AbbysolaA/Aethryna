@@ -9,7 +9,7 @@
     <!-- Primary Meta Tags -->
     <title>@yield('title', 'Skills Co-op | Empowering Youth Through Digital Skills & Mentorship')</title>
     <meta name="title" content="@yield('meta_title', 'Skills Co-op | Empowering Youth Through Digital Skills & Mentorship')">
-    <meta name="description" content="@yield('meta_description', 'Skills Co-op is a funded 25-week digital skills programme for people facing barriers to employment. Four pilot tracks, three certificates, and a founding cohort of thirty places from January 2027.')">
+    <meta name="description" content="@yield('meta_description', 'Free AI-era digital skills training in Merseyside and online. Five tracks: project management, product management, data and AI analytics, product design and marketing, software development. Founding cohort January 2027.')">
     <meta name="keywords" content="@yield('meta_keywords', 'youth empowerment, digital skills training, tech mentorship, career development, nonprofit organization, coding bootcamp, web development, IT support, digital design')">
     <meta name="author" content="Skills Co-op">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">

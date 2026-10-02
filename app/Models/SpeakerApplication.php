@@ -42,7 +42,7 @@ class SpeakerApplication extends Model
         'Project management and delivery',
         'Product management',
         'Product design and marketing',
-        'Data and AI',
+        'Data and AI analytics',
         'Software development',
         'Routes into tech, any role',
     ];

@@ -182,14 +182,14 @@ class SpeakerApplicationTest extends TestCase
     {
         $this->pitch([
             'session_format' => 'pre-recorded',
-            'topic_areas'    => ['Data and AI', 'Routes into tech, any role'],
+            'topic_areas'    => ['Data and AI analytics', 'Routes into tech, any role'],
         ]);
 
         $application = SpeakerApplication::firstOrFail();
 
         $this->assertSame('pre-recorded', $application->session_format);
         $this->assertSame('A pre-recorded talk', $application->formatLabel());
-        $this->assertSame(['Data and AI', 'Routes into tech, any role'], $application->topic_areas);
+        $this->assertSame(['Data and AI analytics', 'Routes into tech, any role'], $application->topic_areas);
     }
 
     /** No preference is a fine answer and the default. */

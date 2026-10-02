@@ -39,7 +39,7 @@
                             1. Take the pathway assessment
                         </p>
                         <p style="margin:0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:15px; line-height:23px; color:#2b333a;">
-                            Fifteen questions, about two minutes. It matches you to one of our four pilot tracks based on how you actually like to work.
+                            Sixteen questions, about two minutes. It matches you to one of our five founding tracks based on how you actually like to work.
                         </p>
                     </td>
                 </tr>

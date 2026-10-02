@@ -115,7 +115,7 @@
                 <div class="ath-hero-content">
                     <div class="ath-hero-badge">Bridging the Tech Gap</div>
                     <h2 class="ath-title">Tech. Future. <span class="ath-gradient-text">Mastery.</span></h2>
-                    <p>Practical, funded digital skills programmes for people who have been locked out of the tech industry. Four pilot tracks, AI tools embedded throughout.</p>
+                    <p>Practical, funded digital skills programmes for people who have been locked out of the tech industry. Five pilot tracks, AI tools embedded throughout.</p>
                     <div class="ath-hero-btns">
                         <a href="{{ route('pathway') }}" class="ath-btn ath-btn-primary">Explore our pathway</a>
                         <a href="{{ route('programs') }}" class="ath-btn ath-btn-outline">See our tracks</a>
@@ -321,41 +321,48 @@
             <div class="ath-section-header reveal-fade-up">
                 <span class="ath-sub">Choose Your Path</span>
                 <h2>Our Pilot Tracks</h2>
-                <p>Four learning tracks for our first cohort, each designed for real entry-level digital roles. More tracks open with our second cohort in late 2027.</p>
+                <p>Five learning tracks for our founding cohort, each designed for real entry-level digital roles. More tracks open with our second cohort in late 2027.</p>
             </div>
             <div class="ath-grid-3" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
                 <div class="ath-prog-item reveal-fade-up" style="--delay: 1">
                     <div class="ath-prog-icon"><i class="fas fa-tasks"></i></div>
-                    <h3>Project and Product Delivery</h3>
-                    <p>Organise and deliver digital work. Stakeholder communication, requirements, planning, and AI-assisted delivery. Roles: Project Coordinator, Business Analyst, Junior PM.</p>
-                    <a href="{{ route('programs') }}#project-delivery" class="ath-link">Explore Track <i class="fas fa-arrow-right"></i></a>
+                    <h3>Project Management and Delivery</h3>
+                    <p>Organise and deliver digital work. Planning, stakeholder communication, requirements, risk and AI-assisted delivery with built-in verification. Roles: Project Coordinator, Junior Project Manager, Business Analyst.</p>
+                    <a href="{{ route('programs.show', 'project-management') }}" class="ath-link">Explore Track <i class="fas fa-arrow-right"></i></a>
                     <a href="{{ route('ai-labs') }}" class="ath-ai-link">AI is embedded throughout. See how &rarr;</a>
                 </div>
                 <div class="ath-prog-item reveal-fade-up" style="--delay: 2">
-                    <div class="ath-prog-icon"><i class="fas fa-chart-bar"></i></div>
-                    <h3>Data and AI Analytics</h3>
-                    <p>Work with numbers, evidence, and insight. SQL, spreadsheets, visualisation, and AI-assisted analysis with built-in verification. Roles: Data Analyst, Insight Analyst, AI Operations Analyst.</p>
-                    <a href="{{ route('programs') }}#data-analytics" class="ath-link">Explore Track <i class="fas fa-arrow-right"></i></a>
+                    <div class="ath-prog-icon"><i class="fas fa-bullseye"></i></div>
+                    <h3>Product Management</h3>
+                    <p>Decide what gets built and prove it worked. Customer evidence, prioritisation, roadmaps, a working prototype and a real launch story. Roles: Associate Product Manager, Product Analyst, Product Operations Assistant.</p>
+                    <a href="{{ route('programs.show', 'product-management') }}" class="ath-link">Explore Track <i class="fas fa-arrow-right"></i></a>
                     <a href="{{ route('ai-labs') }}" class="ath-ai-link">AI is embedded throughout. See how &rarr;</a>
                 </div>
                 <div class="ath-prog-item reveal-fade-up" style="--delay: 3">
-                    <div class="ath-prog-icon"><i class="fas fa-palette"></i></div>
-                    <h3>Product Design and Marketing</h3>
-                    <p>Design digital products and put them in front of an audience. Figma, UX fundamentals, prototyping, brand, content, social, and analytics. AI-assisted creative work, used responsibly. Roles: Junior Product Designer, UX Designer, Digital Marketer.</p>
-                    <a href="{{ route('programs') }}#product-design" class="ath-link">Explore Track <i class="fas fa-arrow-right"></i></a>
+                    <div class="ath-prog-icon"><i class="fas fa-chart-bar"></i></div>
+                    <h3>Data and AI Analytics</h3>
+                    <p>Work with numbers, evidence and insight. SQL, spreadsheets, visualisation and AI-assisted analysis with built-in verification. Roles: Data Analyst, Insight Analyst, AI Operations Analyst.</p>
+                    <a href="{{ route('programs.show', 'data-analytics') }}" class="ath-link">Explore Track <i class="fas fa-arrow-right"></i></a>
                     <a href="{{ route('ai-labs') }}" class="ath-ai-link">AI is embedded throughout. See how &rarr;</a>
                 </div>
                 <div class="ath-prog-item reveal-fade-up" style="--delay: 4">
+                    <div class="ath-prog-icon"><i class="fas fa-palette"></i></div>
+                    <h3>Product Design and Marketing</h3>
+                    <p>Create products people understand and want. User research, interface design, brand, content and launch marketing, with AI-assisted creative work used responsibly. Roles: Junior Product Designer, Digital Marketer, Content Producer.</p>
+                    <a href="{{ route('programs.show', 'ui-ux-design') }}" class="ath-link">Explore Track <i class="fas fa-arrow-right"></i></a>
+                    <a href="{{ route('ai-labs') }}" class="ath-ai-link">AI is embedded throughout. See how &rarr;</a>
+                </div>
+                <div class="ath-prog-item reveal-fade-up" style="--delay: 5">
                     <div class="ath-prog-icon"><i class="fas fa-code"></i></div>
                     <h3>Software Development</h3>
-                    <p>Build and ship working software. Web fundamentals, APIs, modern tooling, and AI-assisted development with verification built in. Roles: Junior Software Developer, Frontend Developer, Automation Developer.</p>
-                    <a href="{{ route('programs') }}#software-dev" class="ath-link">Explore Track <i class="fas fa-arrow-right"></i></a>
+                    <p>Build working software and prove it works. Web fundamentals, Git, testing and AI-assisted development where you can explain every line you ship. Roles: Junior Developer, QA and Test Analyst, Freelance Web Developer.</p>
+                    <a href="{{ route('programs.show', 'software-development-foundations') }}" class="ath-link">Explore Track <i class="fas fa-arrow-right"></i></a>
                     <a href="{{ route('ai-labs') }}" class="ath-ai-link">AI is embedded throughout. See how &rarr;</a>
                 </div>
             </div>
             <div class="ath-coming-soon-block reveal-fade-up" style="margin-top: 50px; text-align: center; background: #fff; padding: 35px 40px; border-radius: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.05); border: 1px solid rgba(3,139,137,0.1);">
                 <h4 style="color: var(--ath-deep); font-size: 1.2rem; margin-bottom: 10px;">More tracks coming with Cohort 2</h4>
-                <p style="color: var(--ath-muted); margin: 0;">IT Support and Operations, Cyber Security, Cloud and DevOps, and Tech Sales and Customer Success will launch with our second cohort.</p>
+                <p style="color: var(--ath-muted); margin: 0;">Cyber Security, Cloud and DevOps, Tech Sales and Customer Success and IT Support and Operations launch with our second cohort.</p>
             </div>
         </div>
     </section>
@@ -415,9 +422,9 @@
                         <div class="ath-stat-note">Free at the point of use for underserved learners</div>
                     </div>
                     <div class="ath-stat reveal-zoom" style="--delay: 3">
-                        <div class="ath-stat-val counter" data-target="4">0</div>
+                        <div class="ath-stat-val counter" data-target="5">0</div>
                         <div class="ath-stat-lab">Specialist tracks in our pilot cohort</div>
-                        <div class="ath-stat-note">Eight tracks at full launch, with two more in development</div>
+                        <div class="ath-stat-note">Eleven tracks in our full catalogue</div>
                     </div>
                     <div class="ath-stat reveal-zoom" style="--delay: 4">
                         <div class="ath-stat-val counter" data-target="30">0</div>

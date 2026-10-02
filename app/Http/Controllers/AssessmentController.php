@@ -196,10 +196,8 @@ class AssessmentController extends Controller
      */
     private function completeAssessment(Assessment $assessment)
     {
-        $scores = $assessment->scores;
-
         // Calculate results based on scoring logic
-        $results = $this->calculateResults($scores);
+        $results = $this->calculateResults($assessment);
 
         // Save results
         foreach ($results as $result) {
@@ -506,66 +504,150 @@ class AssessmentController extends Controller
     }
 
     /**
-     * Calculate pathway recommendations based on scores
+     * The final assessment question, whose answer names a founding track
+     * directly. Question 16 is seeded by AspirationQuestionSeeder; the labels
+     * here must match that seeder's answer order.
      */
-    private function calculateResults($scores)
+    private const ASPIRATION_QUESTION_NUMBER = 16;
+
+    private const ASPIRATION_TRACKS = [
+        'A' => 'project-management',
+        'B' => 'product-management',
+        'C' => 'data-analytics',
+        'D' => 'ui-ux-design',
+        'E' => 'software-development-foundations',
+    ];
+
+    /**
+     * Calculate pathway recommendations based on scores.
+     *
+     * Every recommendation is one of the five founding tracks. The old
+     * resolution took the first active pathway in the top cluster's category,
+     * which recommended Web Development to technical matches and Cybersecurity
+     * Foundations to security matches: tracks that do not run in January 2027,
+     * exactly the wrong-recommendation case a real applicant hit.
+     *
+     * Stated interest beats weighted familiarity (A4 point 3): where the
+     * aspiration answer names a track, that track is the primary
+     * recommendation and the cluster-derived pick becomes the secondary.
+     */
+    private function calculateResults(Assessment $assessment)
     {
-        // Sort scores in descending order
+        $scores = $assessment->scores ?? ['T' => 0, 'C' => 0, 'B' => 0, 'S' => 0, 'F' => 0];
         arsort($scores);
         $sortedClusters = array_keys($scores);
 
+        $primaryCluster   = $sortedClusters[0];
+        $secondaryCluster = $sortedClusters[1] ?? $primaryCluster;
+        $aspiration       = $this->aspirationSlug($assessment);
+
+        [$primarySlug, $secondarySlug, $note] = $this->foundingTracksFor(
+            $primaryCluster, $secondaryCluster, $aspiration
+        );
+
+        // The want wins. If the person named a track and the clusters picked
+        // another, theirs leads and the clusters' pick is still offered.
+        if ($aspiration && $aspiration !== $primarySlug) {
+            $secondarySlug = $primarySlug;
+            $primarySlug   = $aspiration;
+        }
+
+        if ($secondarySlug === $primarySlug) {
+            $secondarySlug = null;
+        }
+
         $results = [];
 
-        // Primary result
-        $primaryCluster = $sortedClusters[0];
-        $primaryPathways = $this->getPathwaysForCluster($primaryCluster);
-
-        if (!empty($primaryPathways)) {
+        if ($primary = Pathway::active()->where('slug', $primarySlug)->first()) {
             $results[] = [
-                'pathway_id' => $primaryPathways[0]['id'],
-                'type' => 'primary',
-                'score' => $scores[$primaryCluster],
-                'cluster' => $primaryCluster,
-                'recommendation' => $this->getRecommendationText($primaryCluster, 'primary')
+                'pathway_id'     => $primary->id,
+                'type'           => 'primary',
+                'score'          => $scores[$primaryCluster],
+                'cluster'        => $primaryCluster,
+                'recommendation' => trim($this->getRecommendationText($primaryCluster, 'primary').' '.$note),
             ];
         }
 
-        // Secondary result (if different from primary)
-        $secondaryCluster = $sortedClusters[1] ?? null;
-        if ($secondaryCluster && $secondaryCluster !== $primaryCluster) {
-            $secondaryPathways = $this->getPathwaysForCluster($secondaryCluster);
-
-            if (!empty($secondaryPathways)) {
-                $results[] = [
-                    'pathway_id' => $secondaryPathways[0]['id'],
-                    'type' => 'secondary',
-                    'score' => $scores[$secondaryCluster],
-                    'cluster' => $secondaryCluster,
-                    'recommendation' => $this->getRecommendationText($secondaryCluster, 'secondary')
-                ];
-            }
+        if ($secondarySlug && ($secondary = Pathway::active()->where('slug', $secondarySlug)->first())) {
+            $results[] = [
+                'pathway_id'     => $secondary->id,
+                'type'           => 'secondary',
+                'score'          => $scores[$secondaryCluster],
+                'cluster'        => $secondaryCluster,
+                'recommendation' => $this->getRecommendationText($secondaryCluster, 'secondary'),
+            ];
         }
 
         return $results;
     }
 
     /**
-     * Get pathways for a specific cluster
+     * The track the person said they would be most excited to learn, if they
+     * were asked and answered. Older completions predate question 16 and
+     * return null, falling back to the cluster table below.
      */
-    private function getPathwaysForCluster($cluster)
+    private function aspirationSlug(Assessment $assessment): ?string
     {
-        $clusterMap = [
-            'T' => 'technical',
-            'C' => 'creative',
-            'B' => 'business',
-            'S' => 'security',
-            'F' => 'foundation'
-        ];
+        $response = ($assessment->responses ?? [])[self::ASPIRATION_QUESTION_NUMBER]
+            ?? ($assessment->responses ?? [])[(string) self::ASPIRATION_QUESTION_NUMBER]
+            ?? null;
 
-        return Pathway::active()
-            ->where('category', $clusterMap[$cluster] ?? 'foundation')
-            ->get()
-            ->toArray();
+        if (! $response || empty($response['answer_id'])) {
+            return null;
+        }
+
+        $label = Answer::find($response['answer_id'])?->option_label;
+
+        return self::ASPIRATION_TRACKS[$label] ?? null;
+    }
+
+    /**
+     * Founding tracks for a cluster, per the five-track remap:
+     * [primary slug, secondary slug or null, note line appended to the
+     * primary recommendation or empty string].
+     *
+     * @return array{0: string, 1: ?string, 2: string}
+     */
+    private function foundingTracksFor(string $cluster, string $secondCluster, ?string $aspiration): array
+    {
+        $sd     = 'software-development-foundations';
+        $data   = 'data-analytics';
+        $design = 'ui-ux-design';
+        $pm     = 'project-management';
+        $prod   = 'product-management';
+
+        switch ($cluster) {
+            case 'T':
+                return $aspiration === $data ? [$data, $sd, ''] : [$sd, $data, ''];
+
+            case 'C':
+                return [$design, null, ''];
+
+            case 'B':
+                if (in_array($aspiration, [$pm, $prod], true)) {
+                    return [$aspiration, $aspiration === $pm ? $prod : $pm, ''];
+                }
+
+                return [$pm, $prod, ''];
+
+            case 'S':
+                return [$data, $sd, 'Cyber Security opens with our second cohort, and this founding track trains the same instincts in the meantime.'];
+
+            default: // F
+                $note = 'The first four weeks are shared across every track, so this is a starting point, not a commitment.';
+
+                if ($aspiration) {
+                    return [$aspiration, null, $note];
+                }
+
+                // No stated preference: borrow the second-strongest cluster's
+                // pick, guarding against F being both strongest and second.
+                $fallback = $secondCluster !== 'F'
+                    ? $this->foundingTracksFor($secondCluster, 'F', null)
+                    : [$pm, null, ''];
+
+                return [$fallback[0], $fallback[1], $note];
+        }
     }
 
     /**

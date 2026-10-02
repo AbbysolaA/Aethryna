@@ -15,7 +15,7 @@ CLOSEST MATCH
 @endif
 
 @if ($secondary && $secondary->pathway)
-ALSO WORTH A LOOK
+ALSO WORTH CONSIDERING
 {!! $secondary->pathway->name !!}
 @if ($secondary->recommendation_text)
 {!! $secondary->recommendation_text !!}

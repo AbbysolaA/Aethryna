@@ -271,7 +271,7 @@
                     </div>
                 </div>
                 <div class="floating-metric fm-1">
-                    <span class="fm-val">4</span>
+                    <span class="fm-val">5</span>
                     <span class="fm-sub">Skills Tracks</span>
                 </div>
                 <div class="floating-metric fm-2">
@@ -373,11 +373,11 @@
             <h2>Where Each Track Leads</h2>
         </div>
         <div class="analysis-grid analysis-grid-2">
-            <!-- Project and Product Delivery -->
+            <!-- Project Management and Delivery -->
             <div class="analysis-card">
                 <div class="a-track-head">
                     <i class="fas fa-project-diagram"></i>
-                    <h3>Project and Product Delivery</h3>
+                    <h3>Project Management and Delivery</h3>
                 </div>
                 <div class="a-track-body">
                     <div class="a-metric">
