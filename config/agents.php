@@ -32,7 +32,7 @@ return [
      */
     'facts' => [
         'Training is free to the learner. There are no course fees for eligible participants.',
-        'Four pathways: Project and Product Delivery, Data and AI Analytics, Product Design and Marketing, and Software Development.',
+        'Five pathways: Project Management and Delivery, Product Management, Data and AI Analytics, Product Design and Marketing and Software Development.',
         'AI tooling is taught inside every pathway rather than as a separate module, using a verification-first method.',
         'Delivery is online and UK-wide, with the organisation based in Liverpool.',
         'Skills Co-op is the trading name; Aethryna Digital Skills Co-op CIC is the registered legal entity.',

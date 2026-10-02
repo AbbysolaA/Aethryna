@@ -56,7 +56,7 @@
                 <span class="ath-sub" style="text-align: left; display: block;">The people behind the programme</span>
                 <h2>Building a network before building a cohort</h2>
                 <div class="story-text">
-                    <p>We did not start with a product. We started with relationships. Our adviser network includes practitioners from across the four pilot tracks, people with experience of trauma-informed education, and employers who want to be part of a different kind of talent pipeline.</p>
+                    <p>We did not start with a product. We started with relationships. Our adviser network includes practitioners from across the five pilot tracks, people with experience of trauma-informed education, and employers who want to be part of a different kind of talent pipeline.</p>
                     <p>These are the people who will mentor, guest-teach, and eventually recruit from our founding cohort. We are building the ecosystem before we recruit a single learner.</p>
                 </div>
                 <a href="{{ route('about') }}" class="story-link">Meet the team behind Skills Co-op <i class="fas fa-arrow-right"></i></a>

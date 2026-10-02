@@ -94,7 +94,7 @@
                         <div class="db-status-icon db-icon-gold"><i class="fas fa-compass"></i></div>
                         <div>
                             <h3>Find your pathway</h3>
-                            <p>A short assessment matches you to one of our four pilot tracks.</p>
+                            <p>A short assessment matches you to one of our five founding tracks.</p>
                         </div>
                     </div>
                     <div class="db-mini-grid">

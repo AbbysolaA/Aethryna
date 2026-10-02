@@ -219,7 +219,7 @@
             <li>
                 <span class="ab-time-tag">The Model</span>
                 <h3>Curriculum, pathways, and delivery architecture</h3>
-                <p>Founder Abisola Areola designed the whole model: 25 weeks, three certificates, four tracks, an operator core, and a project period that ends with a real venture or a real employer brief.</p>
+                <p>Founder Abisola Areola designed the whole model: 25 weeks, three certificates, five tracks, an operator core, and a project period that ends with a real venture or a real employer brief.</p>
             </li>
             <li>
                 <span class="ab-time-tag">The Team</span>
@@ -228,8 +228,8 @@
             </li>
             <li>
                 <span class="ab-time-tag">The Pathway</span>
-                <h3>Four pilot tracks, all fully funded</h3>
-                <p>Project and Product Delivery, Data and AI Analytics, Product Design and Marketing, and Software Development, each with AI embedded from week one and the operator core running through every module.</p>
+                <h3>Five pilot tracks, all fully funded</h3>
+                <p>Project Management and Delivery, Product Management, Data and AI Analytics, Product Design and Marketing and Software Development, each with AI embedded from week one and the operator core running through every module.</p>
             </li>
             <li>
                 <span class="ab-time-tag">Now</span>

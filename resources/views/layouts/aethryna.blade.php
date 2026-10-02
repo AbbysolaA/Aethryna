@@ -9,8 +9,8 @@
     <!-- Primary Meta Tags -->
     <title>@yield('title', 'Skills Co-op | Digital Skills for Real Careers')</title>
     <meta name="title" content="@yield('meta_title', 'Skills Co-op | Digital Skills for Real Careers')">
-    <meta name="description" content="@yield('meta_description', 'Skills Co-op is a funded 25-week digital skills programme for people facing barriers to employment. Four pilot tracks: Project and Product Delivery, Data and AI Analytics, Product Design and Marketing, and Software Development. Based in Liverpool, open across the UK.')">
-    <meta name="keywords" content="@yield('meta_keywords', 'digital skills training, funded programme, Liverpool, career change, NEET, IT support, digital design, data analytics, project management, AI skills, underserved communities')">
+    <meta name="description" content="@yield('meta_description', 'Free AI-era digital skills training in Merseyside and online. Five tracks: project management, product management, data and AI analytics, product design and marketing, software development. Founding cohort January 2027.')">
+    <meta name="keywords" content="@yield('meta_keywords', 'digital skills training, funded programme, Liverpool, career change, NEET, AI skills, project management, product management, data analytics, product design, digital marketing, software development, underserved communities')">
     <meta name="author" content="Skills Co-op">
     {{-- Overridable so pages reached only from a link in an email — an
          unsubscribe confirmation, say — can keep themselves out of the index
@@ -24,7 +24,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:title" content="@yield('og_title', 'Skills Co-op | Digital Skills for Real Careers')">
-    <meta property="og:description" content="@yield('og_description', 'A funded 25-week programme with AI tools embedded throughout. Four tracks, three certificates, one cohort. Applications open for January 2027.')">
+    <meta property="og:description" content="@yield('og_description', 'Free AI-era digital skills training in Merseyside and online. Five tracks: project management, product management, data and AI analytics, product design and marketing, software development. Founding cohort January 2027.')">
     <meta property="og:image" content="@yield('og_image', asset('images/og-image.png'))">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -35,7 +35,7 @@
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="{{ url()->current() }}">
     <meta property="twitter:title" content="@yield('twitter_title', 'Skills Co-op | Digital Skills for Real Careers')">
-    <meta property="twitter:description" content="@yield('twitter_description', 'A funded 25-week programme with AI tools embedded throughout. Four tracks, three certificates, one cohort. Applications open for January 2027.')">
+    <meta property="twitter:description" content="@yield('twitter_description', 'Free AI-era digital skills training in Merseyside and online. Five tracks: project management, product management, data and AI analytics, product design and marketing, software development. Founding cohort January 2027.')">
     <meta property="twitter:image" content="@yield('twitter_image', asset('images/og-image.png'))">
 
     <!-- Additional SEO Meta Tags -->

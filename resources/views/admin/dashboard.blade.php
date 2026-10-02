@@ -236,7 +236,7 @@
                     <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white mb-3">
                         <i class="fas fa-route"></i>
                     </div>
-                    {{-- Distinct from the four pilot tracks Cohort 1 delivers.
+                    {{-- Distinct from the five pilot tracks Cohort 1 delivers.
                          These are the career paths the assessment maps onto. --}}
                     <h3 class="text-lg font-semibold text-teal-700 mb-2">Assessment Pathways</h3>
                     <p class="text-2xl font-bold text-teal-600">{{ Pathway::count() }}</p>

@@ -2,8 +2,8 @@
 
 @section('title', 'Find Your Pathway | Skills Co-op Assessment')
 
-@section('meta_description', 'A two-minute assessment to match you with the Skills Co-op pilot track that fits you best: Project and Product Delivery, Data and AI Analytics, Product Design and Marketing, or Software Development.')
-@section('og_description', 'A two-minute assessment to match you with the Skills Co-op pilot track that fits you best: Project and Product Delivery, Data and AI Analytics, Product Design and Marketing, or Software Development.')
+@section('meta_description', 'A two-minute assessment to match you with the Skills Co-op pilot track that fits you best: Project Management and Delivery, Product Management, Data and AI Analytics, Product Design and Marketing or Software Development.')
+@section('og_description', 'A two-minute assessment to match you with the Skills Co-op pilot track that fits you best: Project Management and Delivery, Product Management, Data and AI Analytics, Product Design and Marketing or Software Development.')
 
 @section('content')
     {{-- A dead resume link lands here, so say why rather than dropping them on

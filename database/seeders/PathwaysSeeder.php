@@ -44,27 +44,29 @@ class PathwaysSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'name' => 'Software Development Foundations',
+                'name' => 'Software Development',
                 'slug' => 'software-development-foundations',
                 'category' => 'technical',
-                'description' => 'Learn core programming concepts, algorithms, and software development principles.',
-                'recommended_for' => 'You enjoy solving problems and figuring out how things work. You\'re motivated by building tools and systems people rely on.',
+                'description' => 'Build working software and prove it works. Web fundamentals, Git, testing and AI-assisted development where you can explain every line you ship. Roles: Junior Developer, QA and Test Analyst, Freelance Web Developer.',
+                'hero_promise' => 'Build working software. Be able to explain every line.',
+                'learn_text' => 'How the web works, then HTML, CSS and JavaScript by building real pages from week one. Git and GitHub as daily habits. Testing, debugging and reading error messages calmly. Then AI-assisted development done properly: early on, AI tutors you and you write the code; later, AI pairs with you at full speed and you review, test and explain everything you ship. We are honest that this is the discipline employers now hire for, and it is the one thing a folder of tutorial projects cannot show.',
+                'make_text' => 'A hand-built personal site, an interactive tool using live data, a deployed product of your own tested by real users, a documented repository and a recorded technical walkthrough.',
+                'leads_text' => 'Junior Developer, QA and Test Analyst and trainee roles, freelance web work for small businesses, or the builder seat every venture team needs in the Project Period.',
+                'recommended_for' => 'You want to make things that work, you enjoy solving problems and you are willing to learn the discipline of proving your code does what you claim. No prior coding needed.',
                 'skills' => [
-                    'Programming Fundamentals',
-                    'Data Structures & Algorithms',
-                    'Object-Oriented Programming',
-                    'Problem Solving',
-                    'Code Optimization',
-                    'Software Design Patterns',
+                    'How the Web Works',
+                    'HTML, CSS & JavaScript',
+                    'Git & GitHub',
                     'Testing & Debugging',
-                    'Version Control'
+                    'Reading Error Messages',
+                    'AI-Assisted Development',
+                    'Code Review',
+                    'Shipping & Deployment'
                 ],
                 'career_paths' => [
-                    'Software Developer',
-                    'Application Developer',
-                    'Systems Analyst',
-                    'Technical Consultant',
-                    'Software Engineer'
+                    'Junior Developer',
+                    'QA and Test Analyst',
+                    'Freelance Web Developer'
                 ],
                 'difficulty_level' => 'beginner',
                 'duration_months' => 8,
@@ -72,27 +74,29 @@ class PathwaysSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'name' => 'Data & Business Analytics',
+                'name' => 'Data and AI Analytics',
                 'slug' => 'data-analytics',
                 'category' => 'technical',
-                'description' => 'Master data analysis, visualization, and business intelligence tools.',
-                'recommended_for' => 'You enjoy solving problems and figuring out how things work. You\'re motivated by building tools and systems people rely on.',
+                'description' => 'Work with numbers, evidence and insight. SQL, spreadsheets, visualisation and AI-assisted analysis with built-in verification. Roles: Data Analyst, Insight Analyst, AI Operations Analyst.',
+                'hero_promise' => 'Turn numbers into decisions people trust.',
+                'learn_text' => 'Data thinking from first principles. Spreadsheets properly, then SQL. Cleaning messy real-world data, visualisation that communicates, dashboards and an introduction to Python for data work. AI runs through all of it: you will use it to accelerate analysis and you will be graded on catching its mistakes, because an analyst who cannot verify is not an analyst.',
+                'make_text' => 'A cleaned real dataset, a portfolio of SQL queries, a visualisation pack, an insight memo written for a decision-maker and a live dashboard.',
+                'leads_text' => 'Data Analyst, Insight Analyst and AI Operations Analyst roles, freelance analytics for small businesses, or the evidence seat on a venture team in the Project Period.',
+                'recommended_for' => 'You like evidence, patterns and getting to the truth of things. You want a skill set every organisation needs, and you are happy to let the data disagree with you.',
                 'skills' => [
-                    'SQL & Database Querying',
-                    'Python/R for Data Analysis',
-                    'Excel Advanced Functions',
-                    'Data Visualization (Tableau/Power BI)',
-                    'Statistical Analysis',
-                    'Business Intelligence',
-                    'Data Cleaning & Processing',
-                    'Reporting & Dashboards'
+                    'Data Thinking',
+                    'Spreadsheets',
+                    'SQL',
+                    'Data Cleaning',
+                    'Visualisation',
+                    'Dashboards',
+                    'Python for Data',
+                    'AI-Assisted Analysis'
                 ],
                 'career_paths' => [
                     'Data Analyst',
-                    'Business Intelligence Analyst',
-                    'Data Scientist',
-                    'Analytics Consultant',
-                    'Business Analyst'
+                    'Insight Analyst',
+                    'AI Operations Analyst'
                 ],
                 'difficulty_level' => 'intermediate',
                 'duration_months' => 6,
@@ -130,27 +134,29 @@ class PathwaysSeeder extends Seeder
 
             // Creative Pathways (C)
             [
-                'name' => 'UI/UX & Digital Design',
+                'name' => 'Product Design and Marketing',
                 'slug' => 'ui-ux-design',
                 'category' => 'creative',
-                'description' => 'Create beautiful, user-centered digital experiences and interfaces.',
-                'recommended_for' => 'You care about how things look, feel, and connect with people. You\'re drawn to visuals, experiences, and stories.',
+                'description' => 'Create products people understand and want. User research, interface design, brand, content and launch marketing, with AI-assisted creative work used responsibly. Roles: Junior Product Designer, Digital Marketer, Content Producer.',
+                'hero_promise' => 'Make things people understand, want and talk about.',
+                'learn_text' => 'User research that starts with real conversations, not guesses. Design principles, wireframing and interface craft in Figma, working from a professional design system. Brand, voice and content strategy. Social and email marketing with real tools, analytics you can read and explain, usability testing and launch planning. AI assists the creative work throughout, and you will be graded on judging what it produces against your brand and your evidence.',
+                'make_text' => 'A persona pack from five real conversations, a wireframed product flow, an interactive prototype, a branded content pack including a working email template, usability test results and a go-to-market plan.',
+                'leads_text' => 'Junior Product Designer, Digital Marketer and Content Producer roles, freelance design and marketing packages for small businesses, or the design and sales seat on a venture team in the Project Period.',
+                'recommended_for' => 'You notice when things are well made. You like words, visuals or both, and you want your taste to become a profession. You are willing to test your work on real people and change it when they are confused.',
                 'skills' => [
-                    'User Research & Analysis',
-                    'Wireframing & Prototyping',
-                    'UI Design Principles',
-                    'User Experience Design',
+                    'User Research',
+                    'Wireframing',
+                    'Interface Craft in Figma',
                     'Design Systems',
-                    'Figma/Adobe XD',
+                    'Brand & Content Strategy',
+                    'Social & Email Marketing',
                     'Usability Testing',
-                    'Visual Design Theory'
+                    'Launch Planning'
                 ],
                 'career_paths' => [
-                    'UI/UX Designer',
-                    'Product Designer',
-                    'Interaction Designer',
-                    'User Experience Researcher',
-                    'Design System Lead'
+                    'Junior Product Designer',
+                    'Digital Marketer',
+                    'Content Producer'
                 ],
                 'difficulty_level' => 'beginner',
                 'duration_months' => 6,
@@ -216,27 +222,29 @@ class PathwaysSeeder extends Seeder
 
             // Business Pathways (B)
             [
-                'name' => 'Project Management',
+                'name' => 'Project Management and Delivery',
                 'slug' => 'project-management',
                 'category' => 'business',
-                'description' => 'Learn to plan, execute, and deliver successful projects on time and within budget.',
-                'recommended_for' => 'You\'re a natural organiser, planner, or communicator. You enjoy bringing order to chaos and helping people work better together.',
+                'description' => 'Organise and deliver digital work. Planning, stakeholder communication, requirements, risk and AI-assisted delivery with built-in verification. Roles: Project Coordinator, Junior Project Manager, Business Analyst.',
+                'hero_promise' => 'Be the person who gets digital work delivered.',
+                'learn_text' => 'The delivery lifecycle from plan to retrospective. Stakeholder management, including how to work with people senior to you: asking for decisions, escalating without drama, saying no with options. Requirements and backlogs, agile in practice, risk and dependency management, and reporting that busy people actually read, including a one-page executive standard. AI runs through all of it: you will use it to draft, summarise and track, and you will be graded on verifying what it produces.',
+                'make_text' => 'A real project run end to end, a stakeholder map, status reports for three different audiences, a decision log and a portfolio that shows an employer you can be trusted with delivery.',
+                'leads_text' => 'Project Coordinator, Junior Project Manager, Business Analyst and delivery support roles, freelance delivery work, or the planning seat on a venture team in the Project Period.',
+                'recommended_for' => 'You like organising people and work, you communicate clearly and you want a route into tech that does not require writing code. You finish what you start, or you want to become someone who does.',
                 'skills' => [
-                    'Project Planning & Scheduling',
-                    'Risk Management',
-                    'Stakeholder Communication',
-                    'Agile & Scrum Methodologies',
-                    'Budget Management',
-                    'Team Leadership',
-                    'Quality Assurance',
-                    'Change Management'
+                    'Delivery Lifecycle',
+                    'Stakeholder Management',
+                    'Requirements & Backlogs',
+                    'Agile in Practice',
+                    'Risk & Dependency Management',
+                    'Executive Reporting',
+                    'AI-Assisted Delivery',
+                    'Verification'
                 ],
                 'career_paths' => [
-                    'Project Manager',
-                    'Program Manager',
-                    'Scrum Master',
                     'Project Coordinator',
-                    'Operations Manager'
+                    'Junior Project Manager',
+                    'Business Analyst'
                 ],
                 'difficulty_level' => 'intermediate',
                 'duration_months' => 6,
@@ -303,24 +311,26 @@ class PathwaysSeeder extends Seeder
                 'name' => 'Product Management',
                 'slug' => 'product-management',
                 'category' => 'business',
-                'description' => 'Learn to define, build, and launch successful digital products.',
-                'recommended_for' => 'You\'re a natural organiser, planner, or communicator. You enjoy bringing order to chaos and helping people work better together.',
+                'description' => 'Decide what gets built and prove it worked. Customer evidence, prioritisation, roadmaps, a working prototype and a real launch story. Roles: Associate Product Manager, Product Analyst, Product Operations Assistant.',
+                'hero_promise' => 'Decide what gets built. Prove it was worth building.',
+                'learn_text' => 'How to find a problem worth solving and prove it with real customer conversations. Prioritisation with real trade-offs, user stories, the one-page product requirements document, roadmaps that link to evidence. Simple product economics in plain language. How to work with designers and developers, define the metrics that matter, build a working prototype with AI assistance and test it on real users. You will present your product to a decision-making audience and take questions, because that is the job.',
+                'make_text' => 'An opportunity brief built on five real customer conversations, a product spec pack, a working prototype tested by real users, a go-to-market one-pager and a launch-ready case study.',
+                'leads_text' => 'Associate Product Manager, Product Analyst and Product Operations roles, product-adjacent moves from support and sales, or the product seat every venture team needs in the Project Period.',
+                'recommended_for' => 'You are curious about why products succeed, you like evidence and people in equal measure and you want to own outcomes, not just tasks. No technical background needed.',
                 'skills' => [
-                    'Product Strategy',
-                    'Market Research',
-                    'Roadmap Planning',
-                    'User Story Writing',
-                    'Prioritization Techniques',
-                    'Metrics & KPIs',
-                    'Cross-functional Leadership',
-                    'Product Launch Management'
+                    'Customer Evidence',
+                    'Prioritisation',
+                    'User Stories',
+                    'Product Requirements',
+                    'Roadmaps',
+                    'Product Economics',
+                    'Prototyping with AI',
+                    'Metrics that Matter'
                 ],
                 'career_paths' => [
-                    'Product Manager',
                     'Associate Product Manager',
-                    'Product Owner',
-                    'Growth Manager',
-                    'Product Marketing Manager'
+                    'Product Analyst',
+                    'Product Operations Assistant'
                 ],
                 'difficulty_level' => 'advanced',
                 'duration_months' => 8,
@@ -520,6 +530,7 @@ class PathwaysSeeder extends Seeder
          */
         $pilotSlugs = [
             'project-management',
+            'product-management',
             'data-analytics',
             'ui-ux-design',
             'software-development-foundations',

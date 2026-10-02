@@ -43,11 +43,11 @@
             <div class="section-title">
                 <span class="ath-sub">The Methodology</span>
                 <h2>Choose Your Path to Success</h2>
-                <p>Four specialised tracks designed for different career goals and interests</p>
+                <p>Five specialised tracks designed for different career goals and interests</p>
             </div>
             <div class="overview-content">
             <div class="overview-text">
-                <p>Our Skills Pathway offers four distinct tracks, each designed to provide practical, thorough training and real-world experience in high-demand digital careers. Whether you're creative, technical, or customer-focused, there's a track that matches your strengths and interests.</p>
+                <p>Our Skills Pathway offers five distinct tracks, each designed to provide practical, thorough training and real-world experience in high-demand digital careers. Whether you're creative, technical, or customer-focused, there's a track that matches your strengths and interests.</p>
                 <p>Each program combines classroom learning with hands-on projects, mentorship from industry professionals, and supported progression into employment assistance. You'll graduate with a portfolio of work, industry certifications, and the skills employers are looking for.</p>
             </div>
             <div class="overview-features">

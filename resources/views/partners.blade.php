@@ -126,7 +126,7 @@
         <div class="briefs-grid">
             <div class="brief-track">
                 <div class="bt-icon"><i class="fas fa-project-diagram"></i></div>
-                <h3>Project and Product Delivery</h3>
+                <h3>Project Management and Delivery</h3>
                 <p>Process documentation, project planning exercises, stakeholder mapping, workflow redesign, sprint planning simulations.</p>
             </div>
             <div class="brief-track">
@@ -233,7 +233,7 @@
                         <label for="brief_type">Which track does your brief best fit?</label>
                         <select id="brief_type" name="brief_type" required>
                             <option value="" disabled {{ old('brief_type') ? '' : 'selected' }}>Select a track</option>
-                            <option value="Project and Product Delivery" {{ old('brief_type') === 'Project and Product Delivery' ? 'selected' : '' }}>Project and Product Delivery</option>
+                            <option value="Project Management and Delivery" {{ old('brief_type') === 'Project Management and Delivery' ? 'selected' : '' }}>Project Management and Delivery</option>
                             <option value="Data and AI Analytics" {{ old('brief_type') === 'Data and AI Analytics' ? 'selected' : '' }}>Data and AI Analytics</option>
                             <option value="Product Design and Marketing" {{ old('brief_type') === 'Product Design and Marketing' ? 'selected' : '' }}>Product Design and Marketing</option>
                             <option value="Software Development" {{ old('brief_type') === 'Software Development' ? 'selected' : '' }}>Software Development</option>

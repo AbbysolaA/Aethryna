@@ -62,10 +62,14 @@
                 <div class="footer-links">
                     <h4>Learning Tracks</h4>
                     <ul>
-                        <li><a href="{{ route('programs') }}#project-product">Project and Product Delivery</a></li>
-                        <li><a href="{{ route('programs') }}#data-ai">Data and AI Analytics</a></li>
-                        <li><a href="{{ route('programs') }}#product-design">Product Design and Marketing</a></li>
-                        <li><a href="{{ route('programs') }}#software-dev">Software Development</a></li>
+                        {{-- The five founding tracks, each at its real page
+                             rather than the old #fragment anchors, which
+                             pointed at fragments that do not exist. --}}
+                        <li><a href="{{ route('programs.show', 'project-management') }}">Project Management and Delivery</a></li>
+                        <li><a href="{{ route('programs.show', 'product-management') }}">Product Management</a></li>
+                        <li><a href="{{ route('programs.show', 'data-analytics') }}">Data and AI Analytics</a></li>
+                        <li><a href="{{ route('programs.show', 'ui-ux-design') }}">Product Design and Marketing</a></li>
+                        <li><a href="{{ route('programs.show', 'software-development-foundations') }}">Software Development</a></li>
                         {{-- AI Labs sits with the learning rather than in
                              Explore: it is a thing you do here, not a page
                              about us. --}}

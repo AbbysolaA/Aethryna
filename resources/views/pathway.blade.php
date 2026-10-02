@@ -2,8 +2,8 @@
 
 @section('title', 'Pathways | Project Delivery, Data & AI, Design, and Software Development')
 
-@section('meta_description', 'Four free, AI-integrated learning pathways: Project and Product Delivery, Data and AI Analytics, Product Design and Marketing, and Software Development. Built around where the jobs are actually going.')
-@section('og_description', 'Four free, AI-integrated learning pathways: Project and Product Delivery, Data and AI Analytics, Product Design and Marketing, and Software Development. Built around where the jobs are actually going.')
+@section('meta_description', 'Five free, AI-integrated learning pathways: Project Management and Delivery, Product Management, Data and AI Analytics, Product Design and Marketing and Software Development. Built around where the jobs are actually going.')
+@section('og_description', 'Five free, AI-integrated learning pathways: Project Management and Delivery, Product Management, Data and AI Analytics, Product Design and Marketing and Software Development. Built around where the jobs are actually going.')
 
 @section('content')
 
@@ -282,7 +282,7 @@
                     <p>In this phase, you'll dive deep into your chosen specialization. Working with industry mentors, you'll complete real-world projects, build a professional portfolio, and gain hands-on experience that employers value.</p>
                     <div class="phase-tracks">
                         <div class="track">
-                            <h4>Project and Product Delivery</h4>
+                            <h4>Project Management and Delivery</h4>
                             <p>Organise and deliver digital work. Stakeholder communication, requirements, planning, and AI-assisted delivery.</p>
                             <div class="track-skills">
                                 <span>Planning</span>

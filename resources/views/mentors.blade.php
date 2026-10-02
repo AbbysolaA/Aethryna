@@ -66,7 +66,7 @@
         <div class="mt-track-grid">
             <div class="mt-track">
                 <div class="mt-track-icon"><i class="fas fa-tasks"></i></div>
-                <h3>Project and Product Delivery</h3>
+                <h3>Project Management and Delivery</h3>
                 <p>Project coordinators, business analysts, product and delivery managers, scrum practitioners.</p>
             </div>
             <div class="mt-track">
