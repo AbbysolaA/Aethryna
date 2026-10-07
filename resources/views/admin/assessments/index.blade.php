@@ -83,7 +83,7 @@
                 </div>
                 <button type="submit" class="vl-btn vl-btn-small">Search</button>
                 @if ($search !== '' || $status)
-                    <a href="{{ route('admin.assessments.index') }}" class="vl-back">Clear</a>
+                    <a href="{{ route('admin.assessments.index') }}" class="vl-btn vl-btn-quiet">Clear filters</a>
                 @endif
             </form>
         </div>

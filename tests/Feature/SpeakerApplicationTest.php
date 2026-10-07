@@ -319,6 +319,44 @@ class SpeakerApplicationTest extends TestCase
         Mail::assertSent(\App\Mail\SpeakerFutureSession::class, 1);
     }
 
+    /**
+     * Accepting can assign in the same motion: the speaker lands on the
+     * panel with their talk title as the pivot topic, nothing retyped, and
+     * accepting twice cannot double them onto it.
+     */
+    public function test_accepting_onto_a_panel_attaches_the_minted_speaker(): void
+    {
+        $panel = \App\Models\PanelSession::create([
+            'title' => 'Panel X', 'slug' => 'panel-x', 'tagline' => 'Panel X · Testing',
+            'event_date' => now()->addMonth(), 'status' => 'upcoming', 'sort_order' => 9,
+        ]);
+
+        $this->pitch();
+        $application = SpeakerApplication::firstOrFail();
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $this->actingAs($admin)->patch(route('admin.speaker-applications.update', $application), [
+            'status'           => 'accepted',
+            'panel_session_id' => $panel->id,
+        ])->assertSessionHas('status');
+
+        $application->refresh();
+        $speaker = PanelSpeaker::findOrFail($application->panel_speaker_id);
+
+        $this->assertSame('Sam Speaker', $speaker->name);
+        $this->assertTrue($panel->speakers()->whereKey($speaker->id)->exists());
+        $this->assertSame('From the phones to team lead', $panel->speakers()->first()->pivot->topic);
+
+        // A second accept with the same panel stays idempotent.
+        $this->actingAs($admin)->patch(route('admin.speaker-applications.update', $application), [
+            'status'           => 'accepted',
+            'panel_session_id' => $panel->id,
+        ]);
+
+        $this->assertSame(1, $panel->speakers()->count());
+        $this->assertSame(1, PanelSpeaker::where('name', 'Sam Speaker')->count());
+    }
+
     public function test_the_headshot_preview_renders_inline_for_admins_only(): void
     {
         $this->pitch(['headshot' => UploadedFile::fake()->create('sam.jpg', 300, 'image/jpeg')]);
