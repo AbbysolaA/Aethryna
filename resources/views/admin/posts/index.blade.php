@@ -22,7 +22,7 @@
             </div>
             <div class="vl-head-actions">
                 <a href="{{ route('admin.posts.create') }}" class="vl-btn vl-btn-primary">Write a post</a>
-                <a href="{{ route('blog.index') }}" class="vl-back">View the blog</a>
+                <a href="{{ route('blog.index') }}" class="vl-btn vl-btn-quiet">View the blog</a>
             </div>
         </header>
 

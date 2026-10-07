@@ -71,6 +71,18 @@
 
 /* ── Engagement + index ──────────────────────────────────────────────────── */
 .vl-engagement { padding: 140px 0 90px; background: var(--ath-light); min-height: 70vh; }
+/* Sideways navigation in admin headers. A button that says where it goes,
+   as opposed to .vl-back below, whose chevron promises to take you back and
+   must only ever do that. */
+.vl-btn-quiet {
+    display: inline-flex; align-items: center;
+    padding: 10px 18px; border-radius: 100px;
+    border: 1px solid rgba(3,139,137,0.3);
+    background: #fff; color: var(--ath-deep);
+    font-weight: 700; font-size: 0.88rem; text-decoration: none;
+    white-space: nowrap;
+}
+.vl-btn-quiet:hover { background: rgba(3,139,137,0.08); border-color: var(--ath-teal); color: var(--ath-deep); }
 .vl-back { display: inline-block; font-size: 0.9rem; font-weight: 700; color: var(--ath-teal); text-decoration: none; margin-bottom: 22px; }
 .vl-back::before { content: '\2039'; margin-right: 7px; }
 .vl-back:hover { color: var(--ath-gold); }

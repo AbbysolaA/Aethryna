@@ -16,7 +16,7 @@
             </div>
             <div class="vl-head-actions">
                 <a href="{{ route('admin.staff.create') }}" class="vl-btn vl-btn-primary">Invite someone</a>
-                <a href="{{ route('admin.dashboard') }}" class="vl-back">Admin dashboard</a>
+                <a href="{{ route('admin.dashboard') }}" class="vl-btn vl-btn-quiet">Dashboard</a>
             </div>
         </header>
 

@@ -23,8 +23,8 @@
             </div>
             <div class="vl-head-actions">
                 <a href="{{ route('admin.registrations.export', request()->query()) }}" class="vl-btn vl-btn-primary">Download CSV</a>
-                <a href="{{ route('admin.panels.index') }}" class="vl-back">Panels</a>
-                <a href="{{ route('admin.speakers.index') }}" class="vl-back">Speakers</a>
+                <a href="{{ route('admin.panels.index') }}" class="vl-btn vl-btn-quiet">Manage panels</a>
+                <a href="{{ route('admin.speakers.index') }}" class="vl-btn vl-btn-quiet">Manage speakers</a>
             </div>
         </header>
 
@@ -45,6 +45,14 @@
                     <input type="checkbox" name="speakers" value="1" @checked($speakersOnly) onchange="this.form.submit()">
                     <span>Only those offering to speak</span>
                 </label>
+                {{-- Two different speaker lists trip people up: this filter is
+                     registrants who ticked the box on a panel sign-up form.
+                     Full pitches from /apply-to-speak live on their own screen. --}}
+                <p class="vl-side-note vl-filter-note">
+                    This filter shows registrants who ticked "I would like to speak" when signing
+                    up. Full pitches from the apply to speak page are in
+                    <a href="{{ route('admin.speaker-applications.index') }}">Speaker pitches</a>.
+                </p>
                 <noscript><button type="submit" class="vl-btn vl-btn-small">Apply</button></noscript>
             </form>
         </div>
@@ -118,6 +126,7 @@
         .vl-speaker-check { display: flex; align-items: center; gap: 10px; cursor: pointer; }
         .vl-speaker-check input { width: 18px; height: 18px; accent-color: var(--ath-teal); }
         .vl-filter-check { padding-bottom: 10px; }
+        .vl-filter-note { flex-basis: 100%; margin: 0; }
         .vl-pagination { margin-top: 24px; }
     </style>
 @endpush
