@@ -154,10 +154,16 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
 
     Route::get('/speaker-applications', [\App\Http\Controllers\Admin\SpeakerApplicationAdminController::class, 'index'])
         ->name('speaker-applications.index');
+    Route::get('/speaker-applications/{application}', [\App\Http\Controllers\Admin\SpeakerApplicationAdminController::class, 'show'])
+        ->name('speaker-applications.show');
     Route::patch('/speaker-applications/{application}', [\App\Http\Controllers\Admin\SpeakerApplicationAdminController::class, 'update'])
         ->name('speaker-applications.update');
+    Route::get('/speaker-applications/{application}/pitch', [\App\Http\Controllers\Admin\SpeakerApplicationAdminController::class, 'downloadPitch'])
+        ->name('speaker-applications.pitch');
     Route::get('/speaker-applications/{application}/headshot', [\App\Http\Controllers\Admin\SpeakerApplicationAdminController::class, 'downloadHeadshot'])
         ->name('speaker-applications.headshot');
+    Route::get('/speaker-applications/{application}/headshot-preview', [\App\Http\Controllers\Admin\SpeakerApplicationAdminController::class, 'headshotPreview'])
+        ->name('speaker-applications.headshot-preview');
 
     Route::get('/volunteers/{engagement}/extend', [\App\Http\Controllers\Admin\VolunteerAdminController::class, 'extendForm'])
         ->name('volunteers.extend.form');
