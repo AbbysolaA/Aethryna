@@ -16,8 +16,8 @@
             </div>
             <div class="vl-head-actions">
                 <a href="{{ route('admin.panels.create') }}" class="vl-btn vl-btn-primary">Add a panel</a>
-                <a href="{{ route('admin.speakers.index') }}" class="vl-back">Speakers</a>
-                <a href="{{ route('admin.registrations.index') }}" class="vl-back">Registrations</a>
+                <a href="{{ route('admin.speakers.index') }}" class="vl-btn vl-btn-quiet">Manage speakers</a>
+                <a href="{{ route('admin.registrations.index') }}" class="vl-btn vl-btn-quiet">View registrations</a>
             </div>
         </header>
 

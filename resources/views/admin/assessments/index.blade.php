@@ -19,8 +19,8 @@
             </div>
             <div class="vl-head-actions">
                 <a href="{{ route('admin.assessments.export', request()->query()) }}" class="vl-btn vl-btn-primary">Download CSV</a>
-                <a href="{{ route('admin.content') }}" class="vl-back">Questions &amp; pathways</a>
-                <a href="{{ route('admin.dashboard') }}" class="vl-back">Dashboard</a>
+                <a href="{{ route('admin.content') }}" class="vl-btn vl-btn-quiet">Questions &amp; pathways</a>
+                <a href="{{ route('admin.dashboard') }}" class="vl-btn vl-btn-quiet">Dashboard</a>
             </div>
         </header>
 

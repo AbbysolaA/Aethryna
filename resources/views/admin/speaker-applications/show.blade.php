@@ -26,9 +26,9 @@
             <div class="vl-head-actions sp-no-print">
                 <a href="{{ route('admin.speaker-applications.pitch', $application) }}" class="vl-btn vl-btn-primary">Download the pitch</a>
                 @if ($application->hasHeadshot())
-                    <a href="{{ route('admin.speaker-applications.headshot', $application) }}" class="vl-back">Download headshot</a>
+                    <a href="{{ route('admin.speaker-applications.headshot', $application) }}" class="vl-btn vl-btn-quiet">Download headshot</a>
                 @endif
-                <button type="button" class="vl-back sp-print-btn" onclick="window.print()">Print</button>
+                <button type="button" class="vl-btn vl-btn-quiet sp-print-btn" onclick="window.print()">Print</button>
             </div>
         </header>
 

@@ -13,12 +13,16 @@
                 <span class="vl-eyebrow">Sessions</span>
                 <h1 class="vl-engagement-title">Speaker pitches</h1>
                 <p class="vl-side-note">
-                    Accepting a pitch adds the person to the speakers list; attaching them to a
+                    Pitches arrive from the public <a href="{{ route('speakers.apply') }}">apply to speak</a> page.
+                    Accepting one adds the person to the speakers list; attaching them to a
                     session happens in <a href="{{ route('admin.panels.index') }}">Panels</a> as usual.
+                    Registrants who ticked "I would like to speak" when signing up for a panel
+                    are a separate list, under Registrations with the speakers filter.
                 </p>
             </div>
             <div class="vl-head-actions">
-                <a href="{{ route('admin.speakers.index') }}" class="vl-back">Speakers</a>
+                <a href="{{ route('admin.speakers.index') }}" class="vl-btn vl-btn-quiet">Speakers list</a>
+                <a href="{{ route('admin.registrations.index') }}" class="vl-btn vl-btn-quiet">View registrations</a>
             </div>
         </header>
 

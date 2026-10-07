@@ -15,7 +15,7 @@
                 <p class="vl-side-note">Everyone who applied for a paid role through the site. CVs open from here and nowhere else.</p>
             </div>
             <div class="vl-head-actions">
-                <a href="{{ route('admin.volunteer-roles.index') }}" class="vl-back">Positions</a>
+                <a href="{{ route('admin.volunteer-roles.index') }}" class="vl-btn vl-btn-quiet">Manage positions</a>
             </div>
         </header>
 

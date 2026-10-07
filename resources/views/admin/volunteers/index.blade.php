@@ -16,9 +16,9 @@
             </div>
             <div class="vl-head-actions">
                 <a href="{{ route('admin.volunteers.create') }}" class="vl-btn vl-btn-primary">Extend an offer</a>
-                <a href="{{ route('admin.volunteer-roles.index') }}" class="vl-back">Positions</a>
-                <a href="{{ route('admin.volunteer-documents.index') }}" class="vl-back">Onboarding pack</a>
-                <a href="{{ route('admin.dashboard') }}" class="vl-back">Admin dashboard</a>
+                <a href="{{ route('admin.volunteer-roles.index') }}" class="vl-btn vl-btn-quiet">Positions</a>
+                <a href="{{ route('admin.volunteer-documents.index') }}" class="vl-btn vl-btn-quiet">Onboarding pack</a>
+                <a href="{{ route('admin.dashboard') }}" class="vl-btn vl-btn-quiet">Dashboard</a>
             </div>
         </header>
 

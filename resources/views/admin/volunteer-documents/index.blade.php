@@ -15,8 +15,8 @@
                 <p class="vl-side-note">Everything active here is listed in the welcome email, in the order shown. Files are stored privately and only reachable by signed-in volunteers.</p>
             </div>
             <div class="vl-head-actions">
-                <a href="{{ route('admin.volunteers.index') }}" class="vl-back">Volunteer roster</a>
-                <a href="{{ route('admin.volunteer-roles.index') }}" class="vl-back">Positions</a>
+                <a href="{{ route('admin.volunteers.index') }}" class="vl-btn vl-btn-quiet">Volunteer roster</a>
+                <a href="{{ route('admin.volunteer-roles.index') }}" class="vl-btn vl-btn-quiet">Positions</a>
             </div>
         </header>
 
