@@ -15,8 +15,9 @@
                 <p class="vl-side-note">Speakers live here rather than on a panel because people come back across panels. Add someone once, then tick them on whichever panels they speak at.</p>
             </div>
             <div class="vl-head-actions">
-                <a href="{{ route('admin.panels.index') }}" class="vl-back">Panels</a>
-                <a href="{{ route('admin.registrations.index') }}" class="vl-back">Registrations</a>
+                <a href="{{ route('admin.panels.index') }}" class="vl-btn vl-btn-quiet">Manage panels</a>
+                <a href="{{ route('admin.registrations.index') }}" class="vl-btn vl-btn-quiet">View registrations</a>
+                <a href="{{ route('admin.speaker-applications.index') }}" class="vl-btn vl-btn-quiet">Speaker pitches</a>
             </div>
         </header>
 

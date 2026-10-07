@@ -49,8 +49,8 @@
                 @endif
             </div>
             <div class="vl-head-actions">
-                <a href="{{ route('admin.assessments.index') }}" class="vl-back">All assessments</a>
-                <a href="{{ route('admin.content') }}" class="vl-back">Questions &amp; pathways</a>
+                <a href="{{ route('admin.assessments.index') }}" class="vl-back">Back to assessments</a>
+                <a href="{{ route('admin.content') }}" class="vl-btn vl-btn-quiet">Questions &amp; pathways</a>
             </div>
         </header>
 
