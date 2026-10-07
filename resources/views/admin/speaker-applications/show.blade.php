@@ -131,7 +131,34 @@
                 <div class="vl-panel sp-panel sp-no-print">
                     <h2>Decision</h2>
                     @if ($application->status === 'accepted')
-                        <p class="vl-side-note">Accepted and on the speakers list. Attach them to a session from the panels admin.</p>
+                        @php
+                            $assignedSessions = $application->panelSpeaker?->sessions ?? collect();
+                            $assignablePanels = $upcomingPanels->whereNotIn('id', $assignedSessions->pluck('id'));
+                        @endphp
+                        <p class="vl-side-note">
+                            Accepted and on the speakers list.
+                            @if ($assignedSessions->isNotEmpty())
+                                Speaking at {{ $assignedSessions->pluck('tagline')->join(' and ') }}.
+                            @else
+                                Not on a panel yet; they were told the session details follow.
+                            @endif
+                        </p>
+                        @if ($application->panelSpeaker && $assignablePanels->isNotEmpty())
+                            <form method="POST" action="{{ route('admin.speaker-applications.update', $application) }}" class="sp-decision" style="margin-top:12px;">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="status" value="accepted">
+                                <label for="panel_session_id" class="sp-panel-label">Add to a panel</label>
+                                <select id="panel_session_id" name="panel_session_id" required>
+                                    @foreach ($assignablePanels as $panel)
+                                        <option value="{{ $panel->id }}">{{ $panel->tagline }}</option>
+                                    @endforeach
+                                </select>
+                                <button type="submit" class="sp-decision-btn sp-decision-accept">
+                                    Add to this panel and email them the details
+                                </button>
+                            </form>
+                        @endif
                     @else
                         <form method="POST" action="{{ route('admin.speaker-applications.update', $application) }}" class="sp-decision">
                             @csrf
@@ -158,10 +185,12 @@
                             @endforeach
                         </form>
                         <p class="vl-side-note" style="margin-top:12px;">
-                            Accepting copies everything here onto the speakers list, nothing to
-                            retype, and adds them to the panel you choose above. Keeping a pitch
-                            for a future session emails the speaker to say so, once. Declining
-                            sends nothing; write to them yourself if a personal note is owed.
+                            Every decision emails the speaker, once, so nobody waits in
+                            silence. Accepting copies everything here onto the speakers list,
+                            nothing to retype, and sends the session details if you chose a
+                            panel above, or a note that the details follow if not. Keeping a
+                            pitch for a future session says exactly that. Declining says not
+                            this time, kindly, and invites another pitch.
                         </p>
                     @endif
                 </div>

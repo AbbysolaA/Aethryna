@@ -312,11 +312,129 @@ class SpeakerApplicationTest extends TestCase
 
         Mail::assertSent(\App\Mail\SpeakerFutureSession::class, 1);
 
-        // Declining sends nothing automatic.
+        // Declining afterwards sends the decline email, not another of these.
         $this->actingAs($admin)
             ->patch(route('admin.speaker-applications.update', $application), ['status' => 'declined']);
 
         Mail::assertSent(\App\Mail\SpeakerFutureSession::class, 1);
+        Mail::assertSent(\App\Mail\SpeakerDeclined::class, 1);
+    }
+
+    /**
+     * Every decision emails the speaker, so nobody waits in silence for a
+     * yes that was pressed weeks ago. Once per move into the status: saving
+     * the same decision again sends nothing.
+     */
+    public function test_accepting_emails_the_speaker_once(): void
+    {
+        $this->pitch();
+        $application = SpeakerApplication::firstOrFail();
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $this->actingAs($admin)
+            ->patch(route('admin.speaker-applications.update', $application), ['status' => 'accepted'])
+            ->assertSessionHas('status');
+
+        Mail::assertSent(\App\Mail\SpeakerAccepted::class, 1);
+        Mail::assertSent(\App\Mail\SpeakerAccepted::class, fn ($m) => $m->hasTo('sam@example.com'));
+
+        $this->actingAs($admin)
+            ->patch(route('admin.speaker-applications.update', $application), ['status' => 'accepted']);
+
+        Mail::assertSent(\App\Mail\SpeakerAccepted::class, 1);
+    }
+
+    public function test_declining_emails_the_speaker_once(): void
+    {
+        $this->pitch();
+        $application = SpeakerApplication::firstOrFail();
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $this->actingAs($admin)
+            ->patch(route('admin.speaker-applications.update', $application), ['status' => 'declined'])
+            ->assertSessionHas('status');
+
+        Mail::assertSent(\App\Mail\SpeakerDeclined::class, 1);
+        Mail::assertSent(\App\Mail\SpeakerDeclined::class, fn ($m) => $m->hasTo('sam@example.com'));
+
+        $this->actingAs($admin)
+            ->patch(route('admin.speaker-applications.update', $application), ['status' => 'declined']);
+
+        Mail::assertSent(\App\Mail\SpeakerDeclined::class, 1);
+    }
+
+    /**
+     * Assigning a panel to an already accepted speaker sends the email that
+     * carries the date, and only when the attachment is new.
+     */
+    public function test_assigning_a_panel_after_acceptance_emails_the_details(): void
+    {
+        $panel = \App\Models\PanelSession::create([
+            'title' => 'Panel X', 'slug' => 'panel-x', 'tagline' => 'Panel X · Testing',
+            'event_date' => '2026-10-20 18:30:00', 'format' => 'Online',
+            'status' => 'upcoming', 'sort_order' => 9,
+        ]);
+
+        $this->pitch();
+        $application = SpeakerApplication::firstOrFail();
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        // Accept without a panel: one email, the details-follow version.
+        $this->actingAs($admin)
+            ->patch(route('admin.speaker-applications.update', $application), ['status' => 'accepted']);
+        Mail::assertSent(\App\Mail\SpeakerAccepted::class, 1);
+
+        // Attach the panel later: the second email, the one with the date.
+        $this->actingAs($admin)->patch(route('admin.speaker-applications.update', $application), [
+            'status'           => 'accepted',
+            'panel_session_id' => $panel->id,
+        ]);
+
+        Mail::assertSent(\App\Mail\SpeakerAccepted::class, 2);
+        $this->assertSame(1, $panel->speakers()->count());
+
+        // Repeating the same assignment sends nothing more.
+        $this->actingAs($admin)->patch(route('admin.speaker-applications.update', $application), [
+            'status'           => 'accepted',
+            'panel_session_id' => $panel->id,
+        ]);
+
+        Mail::assertSent(\App\Mail\SpeakerAccepted::class, 2);
+    }
+
+    public function test_the_decision_emails_read_right(): void
+    {
+        $panel = \App\Models\PanelSession::create([
+            'title' => 'Panel X', 'slug' => 'panel-x', 'tagline' => 'Panel X · Testing',
+            'event_date' => '2026-10-20 18:30:00', 'format' => 'Online',
+            'status' => 'upcoming', 'sort_order' => 9,
+        ]);
+
+        $this->pitch();
+        $application = SpeakerApplication::firstOrFail();
+
+        $bare = (new \App\Mail\SpeakerAccepted($application))->build();
+        $this->assertTrue($bare->hasReplyTo(config('organisation.email')));
+        $bareHtml = $bare->render();
+        $this->assertStringContainsString('We want this talk', $bareHtml);
+        $this->assertStringContainsString('matching the talk to the right session', $bareHtml);
+        $this->assertStringContainsString('From the phones to team lead', $bareHtml);
+
+        $booked = (new \App\Mail\SpeakerAccepted($application, $panel))->build();
+        $this->assertSame('Your talk is booked: Panel X · Testing', $booked->subject);
+        $bookedHtml = $booked->render();
+        $this->assertStringContainsString('Panel X · Testing', $bookedHtml);
+        $this->assertStringContainsString('Tuesday 20 October 2026, 6.30pm', $bookedHtml);
+        $this->assertStringContainsString('Online', $bookedHtml);
+        $this->assertStringContainsString('find the talk another home', $bookedHtml);
+
+        $declined = (new \App\Mail\SpeakerDeclined($application))->build();
+        $this->assertTrue($declined->hasReplyTo(config('organisation.email')));
+        $declinedHtml = $declined->render();
+        $this->assertStringContainsString('Not this time', $declinedHtml);
+        $this->assertStringContainsString('not about you or the talk', $declinedHtml);
+        $this->assertStringContainsString('welcome another pitch', $declinedHtml);
+        $this->assertStringContainsString('apply-to-speak', $declinedHtml);
     }
 
     /**
