@@ -37,10 +37,13 @@ class VolunteerAdminController extends Controller
         ]);
     }
 
-    public function create(): View
+    public function create(Request $request): View
     {
         return view('admin.volunteers.create', [
             'roles' => VolunteerRole::where('is_open', true)->orderBy('title')->get(),
+            // The positions screen's "Assign someone" button lands here with
+            // the role already chosen, so the form opens mid-thought.
+            'preselectedRole' => $request->integer('role'),
         ]);
     }
 

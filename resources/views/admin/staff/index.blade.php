@@ -12,7 +12,12 @@
             <div>
                 <span class="vl-eyebrow">Access</span>
                 <h1 class="vl-engagement-title">Staff and access</h1>
-                <p class="vl-side-note">These roles reach other people's records, so nobody can sign up for one. Invite them here and they set their own password.</p>
+                <p class="vl-side-note">
+                    These roles reach other people's records, so nobody can sign up for one.
+                    Invite them here and they set their own password. This screen is only
+                    about who can sign in to the website: assigning someone to a volunteer
+                    position happens in <a href="{{ route('admin.volunteers.index') }}">Volunteers</a> instead.
+                </p>
             </div>
             <div class="vl-head-actions">
                 <a href="{{ route('admin.staff.create') }}" class="vl-btn vl-btn-primary">Invite someone</a>
