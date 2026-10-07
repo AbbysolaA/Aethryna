@@ -240,4 +240,17 @@
 
 </div>
 
+{{-- The outcome of a submission renders inside the apply section, which sits
+     below a long job description. Landing back at the top of the page made a
+     successful application look like nothing had happened, so bring the
+     person to their answer. --}}
+@if (session('success') || session('error') || $errors->any())
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var apply = document.getElementById('apply');
+            if (apply) { apply.scrollIntoView(); }
+        });
+    </script>
+@endif
+
 @endsection

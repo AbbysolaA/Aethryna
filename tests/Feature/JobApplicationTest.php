@@ -69,7 +69,10 @@ class JobApplicationTest extends TestCase
 
     public function test_an_application_lands_with_its_cv_on_the_private_disk(): void
     {
-        $this->apply()->assertRedirect('/careers/executive-assistant-content-lead');
+        // The fragment matters: the outcome message renders in the apply
+        // section at the bottom of a long page, so the redirect must land
+        // there rather than at the top looking like nothing happened.
+        $this->apply()->assertRedirect('/careers/executive-assistant-content-lead#apply');
 
         $application = JobApplication::firstOrFail();
 
@@ -153,7 +156,7 @@ class JobApplicationTest extends TestCase
     public function test_the_honeypot_swallows_bots(): void
     {
         $this->apply(['jb_reference' => 'https://spam.example'])
-            ->assertRedirect('/careers/executive-assistant-content-lead');
+            ->assertRedirect('/careers/executive-assistant-content-lead#apply');
 
         $this->assertDatabaseCount('job_applications', 0);
         Mail::assertNothingSent();
@@ -234,5 +237,45 @@ class JobApplicationTest extends TestCase
             ->assertRedirect(route('admin.volunteer-roles.index'));
 
         $this->assertDatabaseHas('volunteer_roles', ['id' => $this->role->id]);
+    }
+
+    /**
+     * The outcome of a submission renders at the bottom of a long job page,
+     * so the page scrolls the person to it. Without this a successful
+     * application looked like a page reload that did nothing.
+     */
+    public function test_the_page_scrolls_to_the_outcome_message(): void
+    {
+        $this->get('/careers/executive-assistant-content-lead')
+            ->assertOk()
+            ->assertDontSee('scrollIntoView');
+
+        $this->withSession(['success' => 'Your application is in.'])
+            ->get('/careers/executive-assistant-content-lead')
+            ->assertOk()
+            ->assertSee('scrollIntoView');
+    }
+
+    /**
+     * An attachment bigger than PHP's post_max_size dies before validation
+     * can say 5MB, and the stock answer was a bare 413 page that lost the
+     * application without a word. It now goes back to the form with a
+     * message a person can act on.
+     */
+    public function test_an_oversized_request_returns_to_the_form_with_an_explanation(): void
+    {
+        \Illuminate\Support\Facades\Route::middleware('web')->post('/_test/too-large', function () {
+            throw new \Illuminate\Http\Exceptions\PostTooLargeException();
+        });
+
+        $this->from('/careers/executive-assistant-content-lead')
+            ->post('/_test/too-large')
+            ->assertRedirect('/careers/executive-assistant-content-lead')
+            ->assertSessionHas('error');
+
+        // No referer to go back to: land somewhere real rather than a 413.
+        // from() left a default referer header behind, so clear it.
+        $this->flushHeaders()->flushSession();
+        $this->post('/_test/too-large')->assertRedirect('/');
     }
 }
