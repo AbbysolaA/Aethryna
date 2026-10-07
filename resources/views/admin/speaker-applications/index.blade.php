@@ -22,7 +22,6 @@
             </div>
             <div class="vl-head-actions">
                 <a href="{{ route('admin.speakers.index') }}" class="vl-btn vl-btn-quiet">Speakers list</a>
-                <a href="{{ route('admin.registrations.index') }}" class="vl-btn vl-btn-quiet">View registrations</a>
             </div>
         </header>
 
@@ -63,7 +62,7 @@
                                     <td>
                                         <strong><a href="{{ route('admin.speaker-applications.show', $application) }}">{{ $application->name }}</a></strong>
                                         <span class="vl-cell-sub">{{ $application->email }}</span>
-                                        <a class="vl-cell-sub" href="{{ route('admin.speaker-applications.show', $application) }}">Read the full pitch &rarr;</a>
+                                        <a class="vl-mini-btn" style="margin-top:8px; display:inline-block;" href="{{ route('admin.speaker-applications.show', $application) }}">Read the full pitch &rarr;</a>
                                         @if ($application->job_title || $application->organisation)
                                             <span class="vl-cell-sub">
                                                 {{ collect([$application->job_title, $application->organisation])->filter()->implode(', ') }}

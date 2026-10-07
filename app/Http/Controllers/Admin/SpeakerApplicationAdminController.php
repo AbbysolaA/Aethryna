@@ -45,13 +45,17 @@ class SpeakerApplicationAdminController extends Controller
     {
         return view('admin.speaker-applications.show', [
             'application' => $application->load('panelSpeaker'),
+            // For the accept-onto-a-panel select: the panels a new speaker
+            // could still actually appear on.
+            'upcomingPanels' => \App\Models\PanelSession::upcoming()->get(),
         ]);
     }
 
     public function update(Request $request, SpeakerApplication $application): RedirectResponse
     {
         $validated = $request->validate([
-            'status' => ['required', Rule::in(SpeakerApplication::STATUSES)],
+            'status'           => ['required', Rule::in(SpeakerApplication::STATUSES)],
+            'panel_session_id' => ['nullable', 'exists:panel_sessions,id'],
         ]);
 
         $back = $request->headers->get('referer')
@@ -59,9 +63,26 @@ class SpeakerApplicationAdminController extends Controller
             : redirect()->route('admin.speaker-applications.index');
 
         if ($validated['status'] === 'accepted') {
-            $application->accept();
+            $speaker = $application->accept();
 
-            return $back->with('status', $application->name.' accepted. They are now on the speakers list, ready to attach to a session.');
+            // Accept and assign in one motion. The pitch already names what
+            // they would speak to, so the pivot topic comes from the talk
+            // title rather than being retyped. syncWithoutDetaching, so
+            // accepting twice cannot double them onto a panel.
+            if (! empty($validated['panel_session_id'])) {
+                $panel = \App\Models\PanelSession::findOrFail($validated['panel_session_id']);
+
+                $panel->speakers()->syncWithoutDetaching([
+                    $speaker->id => [
+                        'topic'      => str($application->talk_title)->limit(250)->toString(),
+                        'sort_order' => ((int) $panel->speakers()->max('panel_session_speakers.sort_order')) + 1,
+                    ],
+                ]);
+
+                return $back->with('status', $application->name.' accepted and added to '.$panel->tagline.'. Their details are on the speakers list; adjust the running order in Panels.');
+            }
+
+            return $back->with('status', $application->name.' accepted. They are on the speakers list with everything from the pitch; attach them to a panel from Panels whenever you are ready.');
         }
 
         $wasFuture = $application->status === 'future';

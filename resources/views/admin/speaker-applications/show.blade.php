@@ -97,8 +97,21 @@
                         <form method="POST" action="{{ route('admin.speaker-applications.update', $application) }}" class="sp-decision">
                             @csrf
                             @method('PATCH')
-                            @foreach (\App\Models\SpeakerApplication::STATUSES as $status)
-                                @continue($status === 'new')
+
+                            @if ($upcomingPanels->isNotEmpty())
+                                <label for="panel_session_id" class="sp-panel-label">Accept onto a panel</label>
+                                <select id="panel_session_id" name="panel_session_id">
+                                    <option value="">Accept without assigning yet</option>
+                                    @foreach ($upcomingPanels as $panel)
+                                        <option value="{{ $panel->id }}">{{ $panel->tagline }}</option>
+                                    @endforeach
+                                </select>
+                            @endif
+
+                            <button type="submit" name="status" value="accepted" class="sp-decision-btn sp-decision-accept">
+                                Accept
+                            </button>
+                            @foreach (['future', 'declined'] as $status)
                                 <button type="submit" name="status" value="{{ $status }}"
                                         @class(['sp-decision-btn', 'is-current' => $application->status === $status])>
                                     {{ \App\Models\SpeakerApplication::STATUS_LABELS[$status] }}
@@ -106,9 +119,10 @@
                             @endforeach
                         </form>
                         <p class="vl-side-note" style="margin-top:12px;">
-                            Keeping a pitch for a future session emails the speaker to say so,
-                            once. Accepting mints them onto the speakers list. Declining sends
-                            nothing; write to them yourself if a personal note is owed.
+                            Accepting copies everything here onto the speakers list, nothing to
+                            retype, and adds them to the panel you choose above. Keeping a pitch
+                            for a future session emails the speaker to say so, once. Declining
+                            sends nothing; write to them yourself if a personal note is owed.
                         </p>
                     @endif
                 </div>
@@ -139,6 +153,17 @@
         .sp-headshot img { width: 100%; border-radius: 10px; display: block; }
         .sp-headshot .vl-side-note { margin-top: 8px; }
         .sp-decision { display: grid; gap: 8px; }
+        .sp-panel-label {
+            font-family: var(--font-mono, ui-monospace, monospace);
+            font-size: 0.62rem; letter-spacing: 1.3px; text-transform: uppercase;
+            color: #8a939c; margin-bottom: -2px;
+        }
+        .sp-decision select {
+            padding: 10px 12px; border-radius: 9px; font: inherit;
+            border: 1px solid rgba(3, 139, 137, 0.25); background: #fff; color: #2b333a;
+        }
+        .sp-decision-btn.sp-decision-accept { background: var(--ath-teal, #038b89); border-color: var(--ath-teal, #038b89); color: #fff; }
+        .sp-decision-btn.sp-decision-accept:hover { background: var(--ath-deep, #055860); }
         .sp-decision-btn {
             padding: 10px 14px; border-radius: 9px; font: inherit; font-weight: 600;
             border: 1px solid rgba(3, 139, 137, 0.25); background: #fff;
