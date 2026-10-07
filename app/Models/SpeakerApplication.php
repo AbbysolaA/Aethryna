@@ -105,6 +105,12 @@ class SpeakerApplication extends Model
         return $this->belongsTo(PanelSpeaker::class);
     }
 
+    /** Emails sent to this speaker from the pitch page, newest first. */
+    public function replies(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(SpeakerApplicationReply::class)->latest();
+    }
+
     /**
      * Pitches nobody has read yet. Named unread rather than fresh so it
      * cannot be misread as Eloquent's fresh(), which reloads a model.

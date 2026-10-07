@@ -44,7 +44,7 @@ class SpeakerApplicationAdminController extends Controller
     public function show(SpeakerApplication $application): View
     {
         return view('admin.speaker-applications.show', [
-            'application' => $application->load('panelSpeaker'),
+            'application' => $application->load(['panelSpeaker', 'replies.sender']),
             // For the accept-onto-a-panel select: the panels a new speaker
             // could still actually appear on.
             'upcomingPanels' => \App\Models\PanelSession::upcoming()->get(),
@@ -105,6 +105,43 @@ class SpeakerApplicationAdminController extends Controller
         }
 
         return $back->with('status', $application->name.' marked '.($application->statusLabel()).'.');
+    }
+
+    /**
+     * Email the speaker from their pitch page, exactly as written. The sent
+     * message is recorded on the pitch so the correspondence stays visible
+     * here rather than only in whoever's inbox pressed send.
+     */
+    public function reply(Request $request, SpeakerApplication $application): RedirectResponse
+    {
+        $validated = $request->validate([
+            'subject' => ['required', 'string', 'max:150'],
+            'message' => ['required', 'string', 'max:5000'],
+        ]);
+
+        try {
+            Mail::to($application->email)->send(
+                new \App\Mail\SpeakerPitchReply($application, $validated['subject'], $validated['message'])
+            );
+        } catch (\Throwable $e) {
+            Log::error('Speaker pitch reply failed to send', [
+                'application' => $application->id,
+                'error'       => $e->getMessage(),
+            ]);
+
+            return redirect()->route('admin.speaker-applications.show', $application)
+                ->withInput()
+                ->with('error', 'The email did not send, so nothing was recorded. Try again in a moment.');
+        }
+
+        $application->replies()->create([
+            'user_id' => $request->user()->id,
+            'subject' => $validated['subject'],
+            'body'    => $validated['message'],
+        ]);
+
+        return redirect()->route('admin.speaker-applications.show', $application)
+            ->with('status', 'Email sent to '.$application->name.'. It is recorded below, and a copy went to '.config('organisation.email').'.');
     }
 
     /**

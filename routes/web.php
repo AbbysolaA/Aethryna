@@ -158,6 +158,8 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
         ->name('speaker-applications.show');
     Route::patch('/speaker-applications/{application}', [\App\Http\Controllers\Admin\SpeakerApplicationAdminController::class, 'update'])
         ->name('speaker-applications.update');
+    Route::post('/speaker-applications/{application}/reply', [\App\Http\Controllers\Admin\SpeakerApplicationAdminController::class, 'reply'])
+        ->name('speaker-applications.reply');
     Route::get('/speaker-applications/{application}/pitch', [\App\Http\Controllers\Admin\SpeakerApplicationAdminController::class, 'downloadPitch'])
         ->name('speaker-applications.pitch');
     Route::get('/speaker-applications/{application}/headshot', [\App\Http\Controllers\Admin\SpeakerApplicationAdminController::class, 'downloadHeadshot'])

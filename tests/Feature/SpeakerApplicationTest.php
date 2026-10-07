@@ -407,4 +407,95 @@ class SpeakerApplicationTest extends TestCase
             ->assertOk()
             ->assertDontSee('Casting now');
     }
+
+    /**
+     * Replying to a pitch must not mean copying the address into a mail
+     * client: the page sends it, records what was said, and shows the
+     * correspondence under the form.
+     */
+    public function test_an_admin_can_email_the_speaker_from_the_pitch_page(): void
+    {
+        $this->pitch();
+        $application = SpeakerApplication::firstOrFail();
+        $admin = User::factory()->create(['role' => 'admin', 'name' => 'Abby Areola']);
+
+        $this->actingAs($admin)
+            ->post(route('admin.speaker-applications.reply', $application), [
+                'subject' => 'Your pitch: a quick question',
+                'message' => "Hi Sam,\n\nCould you do the 20th instead?\n\nWarm regards,\nAbby",
+            ])
+            ->assertRedirect(route('admin.speaker-applications.show', $application))
+            ->assertSessionHas('status');
+
+        Mail::assertSent(\App\Mail\SpeakerPitchReply::class, function ($mail) {
+            $mail->build();
+
+            return $mail->hasTo('sam@example.com')
+                && $mail->hasReplyTo(config('organisation.email'))
+                && $mail->hasBcc(config('organisation.email'));
+        });
+
+        $this->assertDatabaseHas('speaker_application_replies', [
+            'speaker_application_id' => $application->id,
+            'user_id'                => $admin->id,
+            'subject'                => 'Your pitch: a quick question',
+        ]);
+
+        $this->actingAs($admin)
+            ->get(route('admin.speaker-applications.show', $application))
+            ->assertOk()
+            ->assertSee('Sent so far')
+            ->assertSee('Could you do the 20th instead?')
+            ->assertSee('Abby Areola');
+    }
+
+    public function test_the_reply_email_carries_the_message_as_written(): void
+    {
+        $this->pitch();
+        $application = SpeakerApplication::firstOrFail();
+
+        $mail = new \App\Mail\SpeakerPitchReply(
+            $application,
+            'Your pitch: a quick question',
+            "Hi Sam,\n\nCould you do the 20th instead?\n\nWarm regards,\nAbby"
+        );
+
+        $html = $mail->build()->render();
+
+        $this->assertStringContainsString('Your pitch: a quick question', $html);
+        $this->assertStringContainsString('Could you do the 20th instead?', $html);
+        $this->assertStringContainsString('From the phones to team lead', $html);
+        $this->assertStringContainsString('reply to this email directly', $html);
+    }
+
+    public function test_a_reply_needs_a_subject_and_a_message(): void
+    {
+        $this->pitch();
+        $application = SpeakerApplication::firstOrFail();
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $this->actingAs($admin)
+            ->from(route('admin.speaker-applications.show', $application))
+            ->post(route('admin.speaker-applications.reply', $application), [
+                'subject' => '',
+                'message' => '',
+            ])
+            ->assertSessionHasErrors(['subject', 'message']);
+
+        Mail::assertNotSent(\App\Mail\SpeakerPitchReply::class);
+        $this->assertDatabaseCount('speaker_application_replies', 0);
+    }
+
+    public function test_guests_cannot_email_speakers(): void
+    {
+        $this->pitch();
+        $application = SpeakerApplication::firstOrFail();
+
+        $this->post(route('admin.speaker-applications.reply', $application), [
+            'subject' => 'Hello',
+            'message' => 'Hello',
+        ])->assertRedirect('/login');
+
+        Mail::assertNotSent(\App\Mail\SpeakerPitchReply::class);
+    }
 }

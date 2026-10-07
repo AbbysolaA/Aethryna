@@ -64,6 +64,45 @@
                         <p><strong>Video:</strong> <a href="{{ $application->video_url }}" target="_blank" rel="noopener">{{ $application->video_url }}</a></p>
                     @endif
                 </div>
+
+                <div class="vl-panel sp-panel sp-no-print">
+                    <h2>Write to {{ str($application->name)->before(' ') }}</h2>
+                    <p class="vl-side-note" style="margin-top:-4px;">
+                        Sends straight from this page, no copying addresses. It goes out from
+                        our no reply address, their replies land at {{ config('organisation.email') }},
+                        and a copy of what you send goes there too.
+                    </p>
+
+                    <form method="POST" action="{{ route('admin.speaker-applications.reply', $application) }}" class="sp-reply-form">
+                        @csrf
+                        <div class="vl-field">
+                            <label for="reply_subject">Subject</label>
+                            <input id="reply_subject" name="subject" required maxlength="150"
+                                   value="{{ old('subject', str('Your pitch: '.$application->talk_title)->limit(140, '')->toString()) }}">
+                            @error('subject')<p class="vl-error">{{ $message }}</p>@enderror
+                        </div>
+                        <div class="vl-field">
+                            <label for="reply_message">Message</label>
+                            <textarea id="reply_message" name="message" rows="9" required maxlength="5000">{{ old('message', 'Hi '.str($application->name)->before(' ').",\n\n\n\nWarm regards,\n".str(auth()->user()->name)->before(' ')."\nSkills Co-op") }}</textarea>
+                            @error('message')<p class="vl-error">{{ $message }}</p>@enderror
+                        </div>
+                        <button type="submit" class="vl-btn vl-btn-primary">Send email</button>
+                    </form>
+
+                    @if ($application->replies->isNotEmpty())
+                        <h3>Sent so far</h3>
+                        @foreach ($application->replies as $reply)
+                            <div class="sp-reply">
+                                <p class="sp-reply-meta">
+                                    {{ $reply->created_at->format('j F Y, g.ia') }}
+                                    &middot; {{ $reply->sender?->name ?? 'A former staff member' }}
+                                    &middot; {{ $reply->subject }}
+                                </p>
+                                <p class="sp-reply-body">{{ $reply->body }}</p>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
             </div>
 
             <aside>
@@ -172,6 +211,15 @@
         .sp-decision-btn:hover { background: rgba(3, 139, 137, 0.07); }
         .sp-decision-btn.is-current { background: var(--ath-teal, #038b89); border-color: var(--ath-teal, #038b89); color: #fff; }
         .sp-print-btn { background: none; border: none; font: inherit; cursor: pointer; }
+        .sp-reply-form { display: grid; gap: 4px; margin-top: 14px; }
+        .sp-reply-form textarea { resize: vertical; }
+        .sp-reply-form .vl-btn { justify-self: start; }
+        .sp-reply { border-top: 1px solid rgba(3, 139, 137, 0.15); padding: 14px 0 4px; }
+        .sp-reply-meta {
+            font-family: var(--font-mono, ui-monospace, monospace);
+            font-size: 0.68rem; letter-spacing: 0.6px; color: #8a939c; margin: 0 0 6px;
+        }
+        .sp-reply-body { line-height: 1.7; color: #2b333a; white-space: pre-wrap; margin: 0; }
         @media print {
             .sp-no-print, .ad-nav, nav, footer, #navbar { display: none !important; }
             .sp-detail-grid { grid-template-columns: 1fr; }
