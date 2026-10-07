@@ -29,7 +29,7 @@
                     <select id="volunteer_role_id" name="volunteer_role_id" required>
                         <option value="">Choose a role</option>
                         @foreach ($roles as $role)
-                            <option value="{{ $role->id }}" @selected(old('volunteer_role_id') == $role->id)>
+                            <option value="{{ $role->id }}" @selected(old('volunteer_role_id', $preselectedRole) == $role->id)>
                                 {{ $role->title }}@if ($role->grants_access === 'mentor') (grants mentor access)@endif
                             </option>
                         @endforeach

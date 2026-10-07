@@ -77,6 +77,9 @@
                                         @endif
                                     </td>
                                     <td class="vl-cell-actions">
+                                        @if ($role->is_open)
+                                            <a href="{{ route('admin.volunteers.create', ['role' => $role->id]) }}" class="vl-mini-btn">Assign someone</a>
+                                        @endif
                                         <a href="{{ route('admin.volunteer-roles.edit', $role) }}" class="vl-mini-btn">Edit</a>
                                         @if ($role->engagements_count === 0)
                                             <form method="POST" action="{{ route('admin.volunteer-roles.destroy', $role) }}"
