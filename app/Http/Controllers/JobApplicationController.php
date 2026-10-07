@@ -44,7 +44,7 @@ class JobApplicationController extends Controller
                 'user_agent' => substr((string) $request->userAgent(), 0, 120),
             ]);
 
-            return redirect($role->url())
+            return redirect($role->url().'#apply')
                 ->with('success', $this->thanksMessage());
         }
 
@@ -80,7 +80,7 @@ class JobApplicationController extends Controller
             ->exists();
 
         if ($alreadyInFlight) {
-            return redirect($role->url())->with('success', $this->thanksMessage());
+            return redirect($role->url().'#apply')->with('success', $this->thanksMessage());
         }
 
         $cv = $request->file('cv');
@@ -102,7 +102,7 @@ class JobApplicationController extends Controller
 
         $this->sendEmails($application, $role);
 
-        return redirect($role->url())->with('success', $this->thanksMessage());
+        return redirect($role->url().'#apply')->with('success', $this->thanksMessage());
     }
 
     /**

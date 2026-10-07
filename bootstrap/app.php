@@ -40,5 +40,14 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        // A CV or photo bigger than PHP's own post_max_size dies before any
+        // controller or validation rule runs, and the stock answer is a bare
+        // 413 page: application lost, nothing saved, no explanation. Turn it
+        // back into the form with a message a person can act on. Form input
+        // cannot be flashed back because the request was never parsed.
+        $exceptions->render(function (\Illuminate\Http\Exceptions\PostTooLargeException $e, \Illuminate\Http\Request $request) {
+            $target = $request->headers->get('referer') ? back() : redirect('/');
+
+            return $target->with('error', 'That did not go through: the attachment is larger than the server accepts. Please attach a file under 5MB and send it again.');
+        });
     })->create();
