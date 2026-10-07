@@ -257,6 +257,82 @@ class SpeakerApplicationTest extends TestCase
         $this->assertStringNotContainsString('reply to this email', $mail->render());
     }
 
+    /**
+     * A pitch has a page of its own: everything readable end to end, the
+     * decision buttons on it, and the whole thing downloadable as a file.
+     */
+    public function test_a_pitch_can_be_read_on_its_own_page_and_downloaded(): void
+    {
+        $this->pitch(['prior_speaking' => 'Two conference talks and a podcast.']);
+        $application = SpeakerApplication::firstOrFail();
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $this->actingAs($admin)
+            ->get(route('admin.speaker-applications.show', $application))
+            ->assertOk()
+            ->assertSee('From the phones to team lead')
+            ->assertSee('How a support role becomes a career')
+            ->assertSee('Ten years in tech support')
+            ->assertSee('Two conference talks and a podcast.')
+            ->assertSee('Keep for a future session')
+            ->assertSee('Download the pitch');
+
+        $download = $this->actingAs($admin)
+            ->get(route('admin.speaker-applications.pitch', $application))
+            ->assertOk()
+            ->assertHeader('Content-Type', 'text/plain; charset=UTF-8');
+
+        $content = $download->streamedContent();
+        $this->assertStringContainsString('From the phones to team lead', $content);
+        $this->assertStringContainsString('sam@example.com', $content);
+        $this->assertStringContainsString('PRIOR SPEAKING', $content);
+    }
+
+    /**
+     * The middle outcome: kept for a future session, and told so by email,
+     * once per move into the status rather than on every later save.
+     */
+    public function test_keeping_a_pitch_for_a_future_session_emails_the_speaker_once(): void
+    {
+        $this->pitch();
+        $application = SpeakerApplication::firstOrFail();
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $this->actingAs($admin)
+            ->patch(route('admin.speaker-applications.update', $application), ['status' => 'future'])
+            ->assertSessionHas('status');
+
+        $this->assertSame('future', $application->fresh()->status);
+        Mail::assertSent(\App\Mail\SpeakerFutureSession::class, 1);
+        Mail::assertSent(\App\Mail\SpeakerFutureSession::class, fn ($m) => $m->hasTo('sam@example.com'));
+
+        // Saving the same status again stays quiet.
+        $this->actingAs($admin)
+            ->patch(route('admin.speaker-applications.update', $application), ['status' => 'future']);
+
+        Mail::assertSent(\App\Mail\SpeakerFutureSession::class, 1);
+
+        // Declining sends nothing automatic.
+        $this->actingAs($admin)
+            ->patch(route('admin.speaker-applications.update', $application), ['status' => 'declined']);
+
+        Mail::assertSent(\App\Mail\SpeakerFutureSession::class, 1);
+    }
+
+    public function test_the_headshot_preview_renders_inline_for_admins_only(): void
+    {
+        $this->pitch(['headshot' => UploadedFile::fake()->create('sam.jpg', 300, 'image/jpeg')]);
+        $application = SpeakerApplication::firstOrFail();
+
+        $this->get(route('admin.speaker-applications.headshot-preview', $application))
+            ->assertRedirect();
+
+        $admin = User::factory()->create(['role' => 'admin']);
+        $this->actingAs($admin)
+            ->get(route('admin.speaker-applications.headshot-preview', $application))
+            ->assertOk();
+    }
+
     public function test_the_speak_page_is_in_the_sitemap(): void
     {
         $this->get('/sitemap.xml')->assertOk()->assertSee('/apply-to-speak');

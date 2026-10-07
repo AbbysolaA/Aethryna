@@ -18,7 +18,24 @@ class SpeakerApplication extends Model
     /** Private disk. A headshot only becomes public once accepted, on purpose. */
     public const HEADSHOT_DISK = 'local';
 
-    public const STATUSES = ['new', 'accepted', 'declined'];
+    /**
+     * 'future' is the honest middle outcome real triage needed: a strong
+     * speaker whose talk fits a different session than the one being cast.
+     * Setting it emails the person so they know they were not declined.
+     */
+    public const STATUSES = ['new', 'accepted', 'future', 'declined'];
+
+    public const STATUS_LABELS = [
+        'new'      => 'New',
+        'accepted' => 'Accepted',
+        'future'   => 'Keep for a future session',
+        'declined' => 'Declined',
+    ];
+
+    public function statusLabel(): string
+    {
+        return self::STATUS_LABELS[$this->status] ?? ucfirst((string) $this->status);
+    }
 
     /**
      * How they would rather deliver it. Absence means no preference.
@@ -100,6 +117,17 @@ class SpeakerApplication extends Model
     public function formatLabel(): ?string
     {
         return self::FORMATS[$this->session_format] ?? null;
+    }
+
+    public function headshotSizeForHumans(): ?string
+    {
+        if (! $this->headshot_size) {
+            return null;
+        }
+
+        return $this->headshot_size >= 1048576
+            ? round($this->headshot_size / 1048576, 1).' MB'
+            : max(1, (int) round($this->headshot_size / 1024)).' KB';
     }
 
     public function hasHeadshot(): bool

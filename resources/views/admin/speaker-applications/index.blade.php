@@ -51,13 +51,15 @@
                                     $badge = match ($application->status) {
                                         'new'      => ['New', 'vl-badge-open'],
                                         'accepted' => ['Accepted', 'vl-badge-done'],
+                                        'future'   => ['Future session', 'vl-badge-active'],
                                         default    => ['Declined', 'vl-badge-muted'],
                                     };
                                 @endphp
                                 <tr>
                                     <td>
-                                        <strong>{{ $application->name }}</strong>
+                                        <strong><a href="{{ route('admin.speaker-applications.show', $application) }}">{{ $application->name }}</a></strong>
                                         <span class="vl-cell-sub">{{ $application->email }}</span>
+                                        <a class="vl-cell-sub" href="{{ route('admin.speaker-applications.show', $application) }}">Read the full pitch &rarr;</a>
                                         @if ($application->job_title || $application->organisation)
                                             <span class="vl-cell-sub">
                                                 {{ collect([$application->job_title, $application->organisation])->filter()->implode(', ') }}
@@ -113,7 +115,7 @@
                                                 <select name="status" onchange="this.form.submit()" aria-label="Set status for {{ $application->name }}">
                                                     @foreach (\App\Models\SpeakerApplication::STATUSES as $status)
                                                         <option value="{{ $status }}" @selected($application->status === $status)>
-                                                            {{ ucfirst($status) }}
+                                                            {{ \App\Models\SpeakerApplication::STATUS_LABELS[$status] }}
                                                         </option>
                                                     @endforeach
                                                 </select>
