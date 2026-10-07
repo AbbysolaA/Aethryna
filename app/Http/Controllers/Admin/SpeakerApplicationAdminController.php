@@ -44,7 +44,7 @@ class SpeakerApplicationAdminController extends Controller
     public function show(SpeakerApplication $application): View
     {
         return view('admin.speaker-applications.show', [
-            'application' => $application->load(['panelSpeaker', 'replies.sender']),
+            'application' => $application->load(['panelSpeaker.sessions', 'replies.sender']),
             // For the accept-onto-a-panel select: the panels a new speaker
             // could still actually appear on.
             'upcomingPanels' => \App\Models\PanelSession::upcoming()->get(),
@@ -63,29 +63,53 @@ class SpeakerApplicationAdminController extends Controller
             : redirect()->route('admin.speaker-applications.index');
 
         if ($validated['status'] === 'accepted') {
+            $wasAccepted = $application->status === 'accepted';
             $speaker = $application->accept();
 
             // Accept and assign in one motion. The pitch already names what
             // they would speak to, so the pivot topic comes from the talk
             // title rather than being retyped. syncWithoutDetaching, so
             // accepting twice cannot double them onto a panel.
+            $panel = null;
+            $newlyAttached = false;
+
             if (! empty($validated['panel_session_id'])) {
                 $panel = \App\Models\PanelSession::findOrFail($validated['panel_session_id']);
 
-                $panel->speakers()->syncWithoutDetaching([
+                $changes = $panel->speakers()->syncWithoutDetaching([
                     $speaker->id => [
                         'topic'      => str($application->talk_title)->limit(250)->toString(),
                         'sort_order' => ((int) $panel->speakers()->max('panel_session_speakers.sort_order')) + 1,
                     ],
                 ]);
 
-                return $back->with('status', $application->name.' accepted and added to '.$panel->tagline.'. Their details are on the speakers list; adjust the running order in Panels.');
+                $newlyAttached = in_array($speaker->id, $changes['attached'] ?? []);
             }
 
-            return $back->with('status', $application->name.' accepted. They are on the speakers list with everything from the pitch; attach them to a panel from Panels whenever you are ready.');
+            // Emailed on the move into accepted, and again when a panel is
+            // attached to an already accepted speaker, because that later
+            // email is the one carrying the date. A repeat accept with the
+            // same panel sends nothing.
+            if (! $wasAccepted || ($panel && $newlyAttached)) {
+                try {
+                    Mail::to($application->email)->send(new \App\Mail\SpeakerAccepted($application, $panel));
+                } catch (\Throwable $e) {
+                    Log::error('Speaker accepted email failed', [
+                        'application' => $application->id,
+                        'error'       => $e->getMessage(),
+                    ]);
+                }
+            }
+
+            if ($panel) {
+                return $back->with('status', $application->name.' accepted and added to '.$panel->tagline.'. They have been emailed the session details; adjust the running order in Panels.');
+            }
+
+            return $back->with('status', $application->name.' accepted and emailed to say the session details follow. Attach them to a panel above or from Panels whenever you are ready.');
         }
 
         $wasFuture = $application->status === 'future';
+        $wasDeclined = $application->status === 'declined';
         $application->update($validated);
 
         // The status only means something if the speaker hears it: kept for
@@ -102,6 +126,21 @@ class SpeakerApplicationAdminController extends Controller
             }
 
             return $back->with('status', $application->name.' kept for a future session, and emailed to say so.');
+        }
+
+        // Declines are emailed too. An unsent no is experienced as weeks of
+        // waiting followed by nothing, which is crueller than the no.
+        if ($validated['status'] === 'declined' && ! $wasDeclined) {
+            try {
+                Mail::to($application->email)->send(new \App\Mail\SpeakerDeclined($application));
+            } catch (\Throwable $e) {
+                Log::error('Speaker declined email failed', [
+                    'application' => $application->id,
+                    'error'       => $e->getMessage(),
+                ]);
+            }
+
+            return $back->with('status', $application->name.' declined, and emailed kindly with an invitation to pitch again.');
         }
 
         return $back->with('status', $application->name.' marked '.($application->statusLabel()).'.');
