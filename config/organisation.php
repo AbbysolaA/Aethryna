@@ -62,9 +62,15 @@ return [
     ],
 
     // Profiles that already represent the organisation elsewhere.
+    // The one list every social link on the site derives from: the footer
+    // icons, the follow rows, the confirmation email and the structured
+    // data all read this. A new or renamed account is changed here only.
+    // Keep the URLs clean: no tracking or QR parameters.
     'same_as' => [
         'https://www.linkedin.com/company/theskillscoop/',
-        'https://www.instagram.com/aethrynafoundation',
+        'https://www.instagram.com/skillsco_op',
+        'https://www.tiktok.com/@skillsco_op',
+        'https://www.youtube.com/@TheSkillsCoOpSessions',
         'https://www.facebook.com/share/1VF3yxZ4dR/',
     ],
 

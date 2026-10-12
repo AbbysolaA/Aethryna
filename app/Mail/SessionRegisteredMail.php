@@ -92,6 +92,8 @@ class SessionRegisteredMail extends Mailable
                 ->mapWithKeys(fn ($url) => match (true) {
                     str_contains($url, 'linkedin.com')  => ['LinkedIn' => $url],
                     str_contains($url, 'instagram.com') => ['Instagram' => $url],
+                    str_contains($url, 'tiktok.com')    => ['TikTok' => $url],
+                    str_contains($url, 'youtube.com')   => ['YouTube' => $url],
                     str_contains($url, 'facebook.com')  => ['Facebook' => $url],
                     default                             => [],
                 })->all(),

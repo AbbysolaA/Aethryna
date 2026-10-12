@@ -11,17 +11,24 @@
                         Widening access to digital skills and meaningful career progression for underserved communities.
                         Join us in widening access to digital careers.
                     </p>
+                    {{-- Derived from organisation.same_as, not hard-coded:
+                         these icons had drifted onto dead handles while the
+                         config said something else again. One list now. --}}
                     <div class="social-links">
-                        <a href="https://www.facebook.com/share/1VF3yxZ4dR/?mibextid=wwXIfr" class="social-icon"><i
-                                class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.tiktok.com/@aethryna?_r=1&_t=ZN-96qSoF24sJ4" class="social-icon"><i
-                                class="fab fa-tiktok"></i></a>
-                        <a href="https://www.linkedin.com/company/theskillscoop/" class="social-icon"><i
-                                class="fab fa-linkedin-in"></i></a>
-                        <a href="https://www.youtube.com/@TheSkillsCoOpSessions" class="social-icon"
-                            aria-label="Skills Co-op Sessions on YouTube"><i class="fab fa-youtube"></i></a>
-                        <a href="https://www.instagram.com/aethrynafoundation?igsh=MWh1YmpwNGd6Nnc0NQ=="
-                            class="social-icon"><i class="fab fa-instagram"></i></a>
+                        @foreach (config('organisation.same_as', []) as $profileUrl)
+                            @php $network = match (true) {
+                                str_contains($profileUrl, 'linkedin.com')  => ['icon' => 'fab fa-linkedin-in', 'name' => 'LinkedIn'],
+                                str_contains($profileUrl, 'instagram.com') => ['icon' => 'fab fa-instagram', 'name' => 'Instagram'],
+                                str_contains($profileUrl, 'tiktok.com')    => ['icon' => 'fab fa-tiktok', 'name' => 'TikTok'],
+                                str_contains($profileUrl, 'youtube.com')   => ['icon' => 'fab fa-youtube', 'name' => 'YouTube'],
+                                str_contains($profileUrl, 'facebook.com')  => ['icon' => 'fab fa-facebook-f', 'name' => 'Facebook'],
+                                default => null,
+                            }; @endphp
+                            @if ($network)
+                                <a href="{{ $profileUrl }}" class="social-icon" target="_blank" rel="noopener"
+                                   aria-label="Skills Co-op on {{ $network['name'] }}"><i class="{{ $network['icon'] }}"></i></a>
+                            @endif
+                        @endforeach
                     </div>
                 </div>
 
