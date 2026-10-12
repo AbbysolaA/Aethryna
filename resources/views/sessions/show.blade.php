@@ -367,8 +367,12 @@
 @push('styles')
 <style>
     .ss-banner-wrap { padding: 34px 0 0; }
+    /* max-height, because a square flyer at container width would fill
+       two screens. Centred at its natural shape instead of cropped: the
+       flyer is typography, and object-fit cover would eat its edges. */
     .ss-banner {
-        display: block; width: 100%; border-radius: 16px;
+        display: block; max-width: 100%; max-height: 620px; width: auto;
+        margin: 0 auto; border-radius: 16px;
         box-shadow: 0 18px 40px rgba(5, 88, 96, 0.18);
     }
     /* Lives inside the dark featured section, so it keeps light text. */
