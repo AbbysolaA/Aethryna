@@ -138,4 +138,15 @@ class PanelEventPageTest extends TestCase
 
         $this->assertSame(['6.30pm | Welcome', '7pm | Q&A'], $panel->fresh()->itinerary);
     }
+    /**
+     * The committed Panel 4 banner is the landscape website version. The
+     * first attempt to ship it was lost in a branch reset and the square
+     * flyer quietly stayed in master, so the file's shape is now asserted.
+     */
+    public function test_the_committed_panel_4_banner_is_landscape(): void
+    {
+        [$width, $height] = getimagesize(public_path('images/panels/panel-4.jpg'));
+
+        $this->assertGreaterThan($height, $width);
+    }
 }
