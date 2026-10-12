@@ -69,7 +69,8 @@ class SessionRegisterPolishTest extends TestCase
             ->assertOk()
             ->assertSee('And follow us between sessions')
             ->assertSee('linkedin.com/company/theskillscoop', false)
-            ->assertSee('instagram.com', false);
+            ->assertSee('instagram.com/skillsco_op', false)
+            ->assertSee('tiktok.com/@skillsco_op', false);
     }
 
     public function test_the_confirmation_email_carries_the_follow_links(): void
@@ -80,7 +81,8 @@ class SessionRegisterPolishTest extends TestCase
 
         $this->assertStringContainsString('come and say hello', $html);
         $this->assertStringContainsString('linkedin.com/company/theskillscoop', $html);
-        $this->assertStringContainsString('instagram.com', $html);
+        $this->assertStringContainsString('instagram.com/skillsco_op', $html);
+        $this->assertStringContainsString('tiktok.com/@skillsco_op', $html);
     }
 
     public function test_every_layout_declares_the_favicon(): void
@@ -98,5 +100,19 @@ class SessionRegisterPolishTest extends TestCase
             ->get(route('admin.speaker-applications.index'))
             ->assertOk()
             ->assertSee('favicon-32x32.png', false);
+    }
+    /**
+     * The footer icons derive from the same config list, so a dead handle
+     * cannot linger there while the config says something else.
+     */
+    public function test_the_footer_carries_the_live_social_handles(): void
+    {
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('instagram.com/skillsco_op', false)
+            ->assertSee('tiktok.com/@skillsco_op', false)
+            ->assertSee('youtube.com/@TheSkillsCoOpSessions', false)
+            ->assertDontSee('aethrynafoundation')
+            ->assertDontSee('tiktok.com/@aethryna', false);
     }
 }
