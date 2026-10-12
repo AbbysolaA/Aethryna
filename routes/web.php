@@ -241,6 +241,8 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
         ->name('speakers.index');
     Route::post('/speakers', [\App\Http\Controllers\Admin\PanelAdminController::class, 'storeSpeaker'])
         ->name('speakers.store');
+    Route::post('/speakers/{speaker}/photo', [\App\Http\Controllers\Admin\PanelAdminController::class, 'speakerPhoto'])
+        ->name('speakers.photo');
     Route::delete('/speakers/{speaker}', [\App\Http\Controllers\Admin\PanelAdminController::class, 'destroySpeaker'])
         ->name('speakers.destroy');
 

@@ -12,6 +12,30 @@ class PanelSpeaker extends Model
         'linkedin_url', 'twitter_url',
     ];
 
+    /** The pitch this speaker arrived through, when there is one. */
+    public function application(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(\App\Models\SpeakerApplication::class, 'panel_speaker_id');
+    }
+
+    /** A photo that will actually render, not just a path in the column. */
+    public function hasPhotoFile(): bool
+    {
+        if (! $this->photo_path) {
+            return false;
+        }
+
+        // Published photos live on the speaker_images disk (checked through
+        // the disk so tests can fake it); hand-placed files anywhere else
+        // under public are honoured too.
+        if (str_starts_with($this->photo_path, 'images/speakers/')
+            && \Illuminate\Support\Facades\Storage::disk('speaker_images')->exists(basename($this->photo_path))) {
+            return true;
+        }
+
+        return file_exists(public_path($this->photo_path));
+    }
+
     public function sessions(): BelongsToMany
     {
         return $this->belongsToMany(

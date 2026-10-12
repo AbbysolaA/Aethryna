@@ -170,6 +170,28 @@ class SpeakerApplication extends Model
             'panel_speaker_id' => $speaker->id,
         ])->save();
 
+        // The pitch's headshot becomes the published photo, re-encoded and
+        // stripped on the way out of the private disk: nothing to re-upload.
+        // Never allowed to fail the acceptance, and never overwrites a photo
+        // someone already set.
+        if ($this->hasHeadshot() && ! $speaker->hasPhotoFile()) {
+            try {
+                $published = \App\Support\SpeakerPhotos::publish(
+                    (string) Storage::disk(self::HEADSHOT_DISK)->get($this->headshot_path),
+                    $this->name
+                );
+
+                if ($published) {
+                    $speaker->forceFill(['photo_path' => $published])->save();
+                }
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning('Publishing a pitch headshot failed', [
+                    'application' => $this->id,
+                    'error'       => $e->getMessage(),
+                ]);
+            }
+        }
+
         return $speaker;
     }
 
