@@ -128,7 +128,15 @@
 <!-- Event banner -->
 <section class="ss-banner-wrap">
     <div class="ath-container">
-        <img class="ss-banner" src="{{ $session->bannerUrl() }}" alt="{{ $session->tagline }}">
+        {{-- Intrinsic dimensions, so the page does not jump as the banner
+             loads. Read from the file because uploads vary in shape. Linked
+             to itself so the small print is a tap away on phones, where a
+             wide banner renders too small to read. --}}
+        @php [$bannerW, $bannerH] = @getimagesize(public_path('images/panels/'.$session->banner_path)) ?: [null, null]; @endphp
+        <a href="{{ $session->bannerUrl() }}" target="_blank" rel="noopener" aria-label="Open the event banner full size">
+            <img class="ss-banner" src="{{ $session->bannerUrl() }}" alt="{{ $session->tagline }}"
+                 @if($bannerW) width="{{ $bannerW }}" height="{{ $bannerH }}" @endif fetchpriority="high">
+        </a>
     </div>
 </section>
 @endif
