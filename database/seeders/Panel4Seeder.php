@@ -42,7 +42,8 @@ class Panel4Seeder extends Seeder
         $panel4Attributes = [
             'title'           => 'The Skills Co-op Sessions: Panel 4',
             'tagline'         => 'Panel 4 · Vibe coding: show and tell',
-            'description'     => 'Practitioners who build with AI every day show their process live rather than talk about it. Real workflows, real prompts, real mistakes, with audience Q&A after. We are especially keen to hear from women building in AI. Tuesday 20 October at 6.30pm, online, recorded and shared publicly.',
+            // The flyer's copy, so the page and the flyer say the same thing.
+            'description'     => 'Three practitioners. Three live builds. Watch them go from a real problem to a working AI-built solution on screen, with the prompts, wrong turns and judgement calls included, then put your questions to them. We are especially keen to hear from women building in AI. Tuesday 20 October at 6.30pm, online, recorded and shared publicly.',
             'event_date'      => '2026-10-20 18:30:00',
             'duration'        => '60 minutes',
             'format'          => 'Online',
@@ -50,6 +51,20 @@ class Panel4Seeder extends Seeder
             'recording_url'   => null,
             'status'          => 'upcoming',
             'sort_order'      => 4,
+            // The running order shown on the panel page. Editable in the
+            // panels admin; a line's "time |" prefix becomes the schedule
+            // column.
+            'itinerary'       => [
+                '6.30pm | Doors open and welcome',
+                '6.35pm | Live builds: the panel shows how they actually work with AI',
+                '7.10pm | Audience Q&A, hard questions welcome',
+                '7.25pm | What is next at Skills Co-op and goodnight',
+            ],
+            'accessibility_note' => 'Live captions are available throughout. If you need anything else to take part, email hello@skillscoop.org and we will sort it.',
+            // The flyer, committed to the repo so the page ships with it.
+            // Replacing it later goes through the panels admin, which writes
+            // its own file and updates this path.
+            'banner_path'        => 'panel-4.jpg',
         ];
 
         $session = PanelSession::updateOrCreate(

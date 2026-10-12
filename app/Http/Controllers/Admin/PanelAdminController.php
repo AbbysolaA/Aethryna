@@ -8,6 +8,7 @@ use App\Models\PanelSession;
 use App\Models\PanelSpeaker;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
@@ -166,11 +167,115 @@ class PanelAdminController extends Controller
             'recording_url'  => ['nullable', 'url', 'max:255'],
             'status'         => ['required', Rule::in(['upcoming', 'live', 'past'])],
             'sort_order'     => ['required', 'integer', 'min:1'],
+
+            // One agenda item per line; an optional "time |" prefix renders
+            // as the schedule column on the panel page.
+            'itinerary_text'     => ['nullable', 'string', 'max:2000'],
+            'accessibility_note' => ['nullable', 'string', 'max:500'],
+
+            'banner'        => ['nullable', 'file', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
+            'banner_remove' => ['nullable', 'boolean'],
         ], [
             'tagline.required' => 'The tagline is the topic shown as the headline on the page.',
+            'banner.max'       => 'Keep the banner under 8MB. It is resized on upload anyway.',
         ]);
 
+        $validated['itinerary'] = collect(preg_split('/\R/', (string) ($validated['itinerary_text'] ?? '')))
+            ->map(fn ($line) => trim($line))
+            ->filter()
+            ->values()
+            ->all() ?: null;
+
+        unset($validated['itinerary_text']);
+
+        if ($request->boolean('banner_remove') && $panel?->banner_path) {
+            Storage::disk('panel_images')->delete($panel->banner_path);
+            $validated['banner_path'] = null;
+        }
+
+        if ($request->hasFile('banner')) {
+            $stored = $this->storeBanner($request->file('banner'));
+
+            if ($stored) {
+                if ($panel?->banner_path) {
+                    Storage::disk('panel_images')->delete($panel->banner_path);
+                }
+
+                $validated['banner_path'] = $stored;
+            }
+        }
+
+        unset($validated['banner'], $validated['banner_remove']);
+
         return $validated;
+    }
+
+    /**
+     * Decode, shrink and write the banner as a fresh JPEG. Re-encoded, never
+     * trusted, same discipline as blog pictures: whatever arrives is decoded
+     * with GD and written back out, so a "picture" carrying anything else
+     * does not survive, and a 6MB flyer export comes out page-sized.
+     */
+    private function storeBanner(\Illuminate\Http\UploadedFile $upload): ?string
+    {
+        $info = @getimagesize($upload->getRealPath());
+
+        if (! $info) {
+            return null;
+        }
+
+        [$width, $height, $type] = $info;
+
+        $needed = (int) ($width * $height * 4 * 1.8) + memory_get_usage(true) + 32 * 1024 * 1024;
+        if ($needed > $this->memoryLimitBytes()) {
+            @ini_set('memory_limit', (string) ceil($needed / 1048576).'M');
+        }
+
+        $image = match ($type) {
+            IMAGETYPE_JPEG => @imagecreatefromjpeg($upload->getRealPath()),
+            IMAGETYPE_PNG  => @imagecreatefrompng($upload->getRealPath()),
+            IMAGETYPE_WEBP => @imagecreatefromwebp($upload->getRealPath()),
+            default        => null,
+        };
+
+        if (! $image) {
+            return null;
+        }
+
+        if ($width > 1600) {
+            $scaled = imagescale($image, 1600);
+            imagedestroy($image);
+            $image = $scaled;
+        }
+
+        $name = 'banner-'.Str::lower(Str::random(10)).'.jpg';
+
+        ob_start();
+        imagejpeg($image, null, 84);
+        $bytes = ob_get_clean();
+        imagedestroy($image);
+
+        Storage::disk('panel_images')->put($name, $bytes);
+
+        return $name;
+    }
+
+    private function memoryLimitBytes(): int
+    {
+        $limit = ini_get('memory_limit');
+
+        if ($limit === false || $limit === '-1') {
+            return PHP_INT_MAX;
+        }
+
+        $value = (int) $limit;
+
+        return match (strtoupper(substr($limit, -1))) {
+            'G'     => $value * 1073741824,
+            'M'     => $value * 1048576,
+            'K'     => $value * 1024,
+            default => $value,
+        };
     }
 
     /**

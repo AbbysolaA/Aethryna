@@ -13,7 +13,7 @@ class PanelSession extends Model
         'duration', 'format', 'eventbrite_url', 'recording_url',
         'status', 'sort_order',
         'venue_name', 'venue_address', 'accessibility_note',
-        'capacity', 'itinerary', 'landing_path',
+        'capacity', 'itinerary', 'landing_path', 'banner_path',
     ];
 
     protected $casts = [
@@ -176,6 +176,12 @@ class PanelSession extends Model
         return $this->landing_path
             ? url($this->landing_path)
             : route('sessions.show', $this);
+    }
+
+    /** The event banner's public URL, or null when none is uploaded. */
+    public function bannerUrl(): ?string
+    {
+        return $this->banner_path ? asset('images/panels/'.$this->banner_path) : null;
     }
 
     /**

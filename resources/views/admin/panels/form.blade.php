@@ -27,7 +27,7 @@
         @endif
 
         <div class="vl-panel vl-form-panel">
-            <form method="POST" action="{{ $editing ? route('admin.panels.update', $panel) : route('admin.panels.store') }}">
+            <form method="POST" action="{{ $editing ? route('admin.panels.update', $panel) : route('admin.panels.store') }}" enctype="multipart/form-data">
                 @csrf
                 @if ($editing)
                     @method('PATCH')
@@ -95,6 +95,38 @@
                                value="{{ old('sort_order', $panel->sort_order) }}">
                         @error('sort_order')<p class="vl-error">{{ $message }}</p>@enderror
                     </div>
+                </div>
+
+                <div class="vl-field">
+                    <label for="banner">Event banner <span class="vl-opt">(optional)</span></label>
+                    @if ($panel->bannerUrl())
+                        <p style="margin:0 0 10px;">
+                            <img src="{{ $panel->bannerUrl() }}" alt="Current banner" style="max-width:320px; border-radius:10px; display:block;">
+                        </p>
+                        <label class="vl-speaker-check" style="margin-bottom:10px;">
+                            <input type="checkbox" name="banner_remove" value="1">
+                            <span>Remove the current banner</span>
+                        </label>
+                    @endif
+                    <input id="banner" name="banner" type="file" accept=".jpg,.jpeg,.png,.webp">
+                    <p class="vl-side-note vl-hint">The flyer or artwork at the top of the panel page, and the image shown when the link is shared. Landscape works best; it is resized on upload.</p>
+                    @error('banner')<p class="vl-error">{{ $message }}</p>@enderror
+                </div>
+
+                <div class="vl-field">
+                    <label for="itinerary_text">Agenda <span class="vl-opt">(optional, one item per line)</span></label>
+                    <textarea id="itinerary_text" name="itinerary_text" rows="5" maxlength="2000"
+                              placeholder="6.30pm | Welcome and introductions&#10;6.40pm | Live demos from the panel&#10;7.10pm | Audience Q&amp;A">{{ old('itinerary_text', is_array($panel->itinerary) ? implode("\n", $panel->itinerary) : '') }}</textarea>
+                    <p class="vl-side-note vl-hint">Shown as the running order on the panel page. Start a line with a time and a pipe to put the time in its own column.</p>
+                    @error('itinerary_text')<p class="vl-error">{{ $message }}</p>@enderror
+                </div>
+
+                <div class="vl-field">
+                    <label for="accessibility_note">Accessibility note <span class="vl-opt">(optional)</span></label>
+                    <input id="accessibility_note" name="accessibility_note" maxlength="500"
+                           placeholder="Live captions are on throughout. Tell us what you need and we will sort it."
+                           value="{{ old('accessibility_note', $panel->accessibility_note) }}">
+                    @error('accessibility_note')<p class="vl-error">{{ $message }}</p>@enderror
                 </div>
 
                 <div class="vl-field">

@@ -44,6 +44,16 @@ return [
          * shared hosting and a missing symlink would 404 every picture while
          * looking fine locally. Everything on it is re-encoded on upload.
          */
+        // Event banners for panel pages. Same arrangement as blog_images:
+        // served straight from public, no storage symlink to forget.
+        'panel_images' => [
+            'driver' => 'local',
+            'root' => public_path('images/panels'),
+            'url' => env('APP_URL').'/images/panels',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         'blog_images' => [
             'driver' => 'local',
             'root' => public_path('images/blog'),
