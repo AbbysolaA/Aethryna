@@ -340,18 +340,25 @@
 @push('styles')
 <style>
     .ss-also { padding: 10px 0 40px; }
-    .ss-also-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 420px)); gap: 18px; margin-top: 14px; }
+    .ss-also-grid { display: grid; gap: 18px; margin-top: 14px; }
+    /* Full content width, same as the banner above it: one card per row,
+       details spread across it on desktop and stacked on phones. */
     .ss-also-card {
-        display: flex; flex-direction: column; gap: 8px;
-        padding: 22px 26px; border-radius: 14px; text-decoration: none;
+        display: flex; align-items: center; justify-content: space-between;
+        flex-wrap: wrap; gap: 14px 26px; width: 100%;
+        padding: 28px 34px; border-radius: 16px; text-decoration: none;
         background: #fff; border: 1px solid rgba(5, 88, 96, 0.14);
         box-shadow: 0 10px 28px rgba(5, 88, 96, 0.07);
         transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
     .ss-also-card:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(5, 88, 96, 0.12); }
-    .ss-also-topic { font-weight: 700; font-size: 1.1rem; color: var(--ath-deep, #055860); line-height: 1.4; }
-    .ss-also-date { color: #5a646c; font-size: 0.92rem; }
-    .ss-also-cta { color: var(--ath-teal, #038b89); font-weight: 600; font-size: 0.92rem; }
+    .ss-also-topic { font-weight: 700; font-size: 1.35rem; color: var(--ath-deep, #055860); line-height: 1.35; flex: 1 1 320px; }
+    .ss-also-date { color: #5a646c; font-size: 1rem; white-space: nowrap; }
+    .ss-also-cta { color: var(--ath-teal, #038b89); font-weight: 700; font-size: 1rem; white-space: nowrap; }
+    @media (max-width: 720px) {
+        .ss-also-card { flex-direction: column; align-items: flex-start; gap: 8px; }
+        .ss-also-date, .ss-also-cta { white-space: normal; }
+    }
 </style>
 @endpush
 
