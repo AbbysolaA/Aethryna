@@ -178,10 +178,25 @@ class PanelSession extends Model
             : route('sessions.show', $this);
     }
 
-    /** The event banner's public URL, or null when none is uploaded. */
+    /**
+     * The event banner's public URL, or null when none is uploaded.
+     *
+     * Versioned on the file's modification time, because the Panel 4 banner
+     * was replaced under the same filename and browsers and the Cloudflare
+     * edge kept serving the old image. A changed file changes the URL, which
+     * busts every cache at once; an unchanged file keeps its URL and stays
+     * cached, which is the point of the caches.
+     */
     public function bannerUrl(): ?string
     {
-        return $this->banner_path ? asset('images/panels/'.$this->banner_path) : null;
+        if (! $this->banner_path) {
+            return null;
+        }
+
+        $file = public_path('images/panels/'.$this->banner_path);
+
+        return asset('images/panels/'.$this->banner_path)
+            .(is_file($file) ? '?v='.filemtime($file) : '');
     }
 
     /**

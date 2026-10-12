@@ -115,4 +115,74 @@ class SessionRegisterPolishTest extends TestCase
             ->assertDontSee('aethrynafoundation')
             ->assertDontSee('tiktok.com/@aethryna', false);
     }
+    /**
+     * The team hears about each new registration, reply-to the registrant,
+     * and a re-submission updates quietly instead of announcing twice.
+     */
+    public function test_a_new_registration_notifies_the_team_once(): void
+    {
+        $panel = $this->panel();
+
+        $register = fn () => $this->post('/sessions/register', [
+            'name'             => 'Rae Registrant',
+            'email'            => 'rae@example.com',
+            'interest_type'    => 'attendee',
+            'referral_source'  => 'social_media',
+            'wants_to_speak'   => '1',
+            'speaker_topic'    => 'Shipping with AI on a team of one',
+            'panel_session_id' => $panel->id,
+        ]);
+
+        $register();
+
+        Mail::assertSent(\App\Mail\SessionRegistrationReceived::class, 1);
+        Mail::assertSent(\App\Mail\SessionRegistrationReceived::class, function ($mail) {
+            $mail->build();
+
+            return $mail->hasTo(config('organisation.email'))
+                && $mail->hasReplyTo('rae@example.com');
+        });
+
+        // Registering again updates the entry without a second announcement.
+        $register();
+        Mail::assertSent(\App\Mail\SessionRegistrationReceived::class, 1);
+    }
+
+    public function test_the_notification_carries_the_registration_details(): void
+    {
+        $panel = $this->panel();
+
+        $registration = \App\Models\SessionRegistration::create([
+            'panel_session_id' => $panel->id,
+            'name'             => 'Rae Registrant',
+            'email'            => 'rae@example.com',
+            'interest_type'    => 'attendee',
+            'referral_source'  => 'social_media',
+            'wants_to_speak'   => true,
+            'speaker_topic'    => 'Shipping with AI on a team of one',
+        ]);
+
+        $html = (new \App\Mail\SessionRegistrationReceived($registration))->build()->render();
+
+        $this->assertStringContainsString('Rae Registrant', $html);
+        $this->assertStringContainsString('Attendee', $html);
+        $this->assertStringContainsString('Social media', $html);
+        $this->assertStringContainsString('Offered to speak', $html);
+        $this->assertStringContainsString('Shipping with AI on a team of one', $html);
+        $this->assertStringContainsString('1 registration', $html);
+    }
+
+    /**
+     * A replaced banner must change its URL, or browsers and the Cloudflare
+     * edge keep serving the old image, which is exactly what happened when
+     * the landscape banner replaced the square one under the same name.
+     */
+    public function test_the_banner_url_is_versioned_by_file_change(): void
+    {
+        // panel-4.jpg is committed to the repo, so its mtime is real.
+        $panel = $this->panel();
+        $panel->forceFill(['banner_path' => 'panel-4.jpg'])->save();
+
+        $this->assertStringContainsString('?v=', $panel->bannerUrl());
+    }
 }

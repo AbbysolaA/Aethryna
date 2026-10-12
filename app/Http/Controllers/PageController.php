@@ -174,7 +174,7 @@ class PageController extends Controller
         // updates their entry instead of creating a duplicate.
         $wantsToSpeak = (bool) ($validated['wants_to_speak'] ?? false);
 
-        SessionRegistration::updateOrCreate(
+        $registration = SessionRegistration::updateOrCreate(
             [
                 'panel_session_id' => $nextSession?->id,
                 'email'            => $validated['email'],
@@ -190,6 +190,22 @@ class PageController extends Controller
                 'speaker_topic'   => $wantsToSpeak ? ($validated['speaker_topic'] ?? null) : null,
             ]
         );
+
+        // Tell the team, the way every other inbound pipeline already does.
+        // Only on a new registration: someone re-submitting updates their
+        // entry and does not need announcing twice. Never allowed to block
+        // the registration itself.
+        if ($registration->wasRecentlyCreated) {
+            try {
+                Mail::to(config('organisation.email'))
+                    ->send(new \App\Mail\SessionRegistrationReceived($registration));
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning('Session registration staff notification failed', [
+                    'registration' => $registration->id,
+                    'error'        => $e->getMessage(),
+                ]);
+            }
+        }
 
         if ($nextSession) {
             try {
