@@ -183,6 +183,7 @@ class SessionRegistration extends Model
     public function interestLabel(): string
     {
         return match ($this->interest_type) {
+            'attendee' => 'Attendee',
             'learner' => 'Learner or career changer',
             'mentor'  => 'Mentor or industry professional',
             'partner' => 'Partner or employer',

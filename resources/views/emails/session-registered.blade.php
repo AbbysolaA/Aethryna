@@ -152,6 +152,20 @@
         </tr>
     @endif
 
+    @if (! empty($followLinks))
+        <tr>
+            <td class="sc-pad" style="padding:24px 32px 0 32px;">
+                <p style="margin:0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:14px; line-height:23px; color:#6a737b;">
+                    Between sessions we share speaker announcements, community wins and what is
+                    coming next on
+                    @foreach ($followLinks as $name => $url)
+                        <a href="{{ $url }}" style="color:#055860;">{{ $name }}</a>@if (! $loop->last)@if ($loop->remaining === 1) and @else, @endif @endif
+                    @endforeach, so come and say hello.
+                </p>
+            </td>
+        </tr>
+    @endif
+
     {{-- Sign-off --}}
     <tr>
         <td class="sc-pad" style="padding:28px 32px 34px 32px;">
