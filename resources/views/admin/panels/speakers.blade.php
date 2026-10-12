@@ -98,17 +98,39 @@
                         <tbody>
                             @foreach ($speakers as $speaker)
                                 <tr>
-                                    <td><strong>{{ $speaker->name }}</strong></td>
+                                    <td>
+                                        @if ($speaker->application)
+                                            <a href="{{ route('admin.speaker-applications.show', $speaker->application) }}"><strong>{{ $speaker->name }}</strong></a>
+                                            <span class="vl-cell-sub">Arrived as a pitch, click for the full page</span>
+                                        @else
+                                            <strong>{{ $speaker->name }}</strong>
+                                        @endif
+                                    </td>
                                     <td>
                                         {{ $speaker->title }}
                                         @if ($speaker->company)<span class="vl-cell-sub">{{ $speaker->company }}</span>@endif
                                     </td>
                                     <td class="vl-cell-num">{{ $speaker->sessions_count }}</td>
                                     <td>
-                                        @if (str_contains($speaker->photoUrl(), 'ui-avatars'))
-                                            <span class="vl-cell-sub">Initials avatar</span>
+                                        @if ($speaker->hasPhotoFile())
+                                            <img src="{{ asset($speaker->photo_path) }}?v={{ @filemtime(public_path($speaker->photo_path)) ?: 0 }}"
+                                                 alt="{{ $speaker->name }}" class="sp-thumb">
                                         @else
-                                            <span class="vl-cell-sub">Photo set</span>
+                                            <span class="vl-cell-sub">Initials avatar</span>
+                                        @endif
+                                        <form method="POST" action="{{ route('admin.speakers.photo', $speaker) }}"
+                                              enctype="multipart/form-data" class="sp-photo-form">
+                                            @csrf
+                                            <input type="file" name="photo" accept=".jpg,.jpeg,.png,.webp" required>
+                                            <button type="submit" class="vl-mini-btn">{{ $speaker->hasPhotoFile() ? 'Replace photo' : 'Upload photo' }}</button>
+                                        </form>
+                                        @error('photo')<p class="vl-error">{{ $message }}</p>@enderror
+                                        @if (! $speaker->hasPhotoFile() && $speaker->application?->hasHeadshot())
+                                            <form method="POST" action="{{ route('admin.speakers.photo', $speaker) }}" class="sp-photo-form">
+                                                @csrf
+                                                <input type="hidden" name="from_pitch" value="1">
+                                                <button type="submit" class="vl-mini-btn">Use the headshot from their pitch</button>
+                                            </form>
                                         @endif
                                     </td>
                                     <td class="vl-cell-actions">
@@ -141,6 +163,9 @@
         .vl-field-row { display: flex; flex-wrap: wrap; gap: 20px; }
         .vl-field-row .vl-field { flex: 1 1 220px; }
         .vl-sub-heading { font-size: 1.15rem; font-weight: 800; margin-bottom: 18px; color: var(--ath-deep); }
+        .sp-thumb { width: 52px; height: 52px; border-radius: 10px; object-fit: cover; display: block; margin-bottom: 8px; }
+        .sp-photo-form { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 6px; }
+        .sp-photo-form input[type="file"] { max-width: 210px; font-size: 0.8rem; }
     </style>
 @endpush
 

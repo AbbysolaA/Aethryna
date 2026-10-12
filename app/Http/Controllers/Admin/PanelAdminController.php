@@ -143,8 +143,46 @@ class PanelAdminController extends Controller
     public function speakers(): View
     {
         return view('admin.panels.speakers', [
-            'speakers' => PanelSpeaker::withCount('sessions')->orderBy('name')->get(),
+            'speakers' => PanelSpeaker::withCount('sessions')->with('application')->orderBy('name')->get(),
         ]);
+    }
+
+    /**
+     * Set a speaker's published photo from the speakers screen: an upload,
+     * or one click to reuse the headshot from their pitch. Photos used to be
+     * SSH-only (the speakers:photo command plus a hand-typed path), which in
+     * practice meant initials avatars everywhere.
+     */
+    public function speakerPhoto(Request $request, PanelSpeaker $speaker): RedirectResponse
+    {
+        if ($request->boolean('from_pitch')) {
+            $application = $speaker->application;
+
+            abort_unless($application?->hasHeadshot(), 404);
+
+            $bytes = (string) Storage::disk(\App\Models\SpeakerApplication::HEADSHOT_DISK)
+                ->get($application->headshot_path);
+        } else {
+            $request->validate([
+                'photo' => ['required', 'file', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
+            ], [
+                'photo.max'   => 'Keep photos under 8MB. They are resized on upload anyway.',
+                'photo.mimes' => 'Use a JPEG, PNG or WebP.',
+            ]);
+
+            $bytes = (string) file_get_contents($request->file('photo')->getRealPath());
+        }
+
+        $published = \App\Support\SpeakerPhotos::publish($bytes, $speaker->name);
+
+        if (! $published) {
+            return back()->with('error', 'That file could not be read as a picture. Try exporting it as a JPEG and uploading again.');
+        }
+
+        \App\Support\SpeakerPhotos::delete($speaker->photo_path);
+        $speaker->forceFill(['photo_path' => $published])->save();
+
+        return back()->with('status', $speaker->name.'\'s photo is live on their panel pages.');
     }
 
     // ── Internals ────────────────────────────────────────────────────────────

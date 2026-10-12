@@ -44,6 +44,16 @@ return [
          * shared hosting and a missing symlink would 404 every picture while
          * looking fine locally. Everything on it is re-encoded on upload.
          */
+        // Published speaker headshots. Same arrangement as blog_images:
+        // served straight from public, no storage symlink to forget.
+        'speaker_images' => [
+            'driver' => 'local',
+            'root' => public_path('images/speakers'),
+            'url' => env('APP_URL').'/images/speakers',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         // Event banners for panel pages. Same arrangement as blog_images:
         // served straight from public, no storage symlink to forget.
         'panel_images' => [
