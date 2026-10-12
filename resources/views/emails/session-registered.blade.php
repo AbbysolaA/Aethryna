@@ -105,6 +105,28 @@
         </td>
     </tr>
 
+    @if ($calendarUrl)
+        <tr>
+            <td class="sc-pad" style="padding:28px 32px 0 32px;">
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="sc-btn">
+                    <tr>
+                        <td align="center" bgcolor="#ee9d1d" style="border-radius:6px;">
+                            <a href="{{ $calendarUrl }}" style="display:inline-block; padding:14px 30px; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:15px; font-weight:700; color:#1d2b2a; text-decoration:none; border-radius:6px; background-color:#ee9d1d;">
+                                Add to calendar
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                <p style="margin:12px 0 0 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:14px; line-height:23px; color:#6a737b;">
+                    The calendar file is attached to this email too. And the panel is free and
+                    open to everyone, so bring someone: send them
+                    <a href="{{ $panelUrl }}" style="color:#055860;">{{ $panelUrl }}</a>
+                    and they can register in a minute.
+                </p>
+            </td>
+        </tr>
+    @endif
+
     {{-- CTA (only when Eventbrite URL exists) --}}
     @if ($eventbriteUrl)
         <tr>

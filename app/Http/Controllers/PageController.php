@@ -127,6 +127,20 @@ class PageController extends Controller
         return view('sessions.show', ['session' => $panelSession]);
     }
 
+    /**
+     * The panel as an .ics download, for "Add to calendar". A calendar entry
+     * with a reminder of its own is most of what Eventbrite was doing for us.
+     */
+    public function sessionCalendar(\App\Models\PanelSession $panelSession)
+    {
+        abort_unless($panelSession->event_date, 404);
+
+        return response($panelSession->toIcs(), 200, [
+            'Content-Type'        => 'text/calendar; charset=utf-8',
+            'Content-Disposition' => 'attachment; filename="'.$panelSession->slug.'.ics"',
+        ]);
+    }
+
     public function registerSession(Request $request)
     {
         $validated = $request->validate([

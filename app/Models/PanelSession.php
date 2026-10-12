@@ -177,4 +177,64 @@ class PanelSession extends Model
             ? url($this->landing_path)
             : route('sessions.show', $this);
     }
+
+    /**
+     * The start in real time. event_date holds UK wall-clock time (the
+     * seeders write 18:30 meaning half six to the person attending), so the
+     * missing piece is the offset, not the reading: shiftTimezone pins the
+     * wall clock to Europe/London, then utc() converts honestly. The same
+     * reasoning as the Event JSON-LD on the panel page.
+     */
+    public function startsAtUtc(): ?\Illuminate\Support\Carbon
+    {
+        return $this->event_date?->copy()->shiftTimezone('Europe/London')->utc();
+    }
+
+    /** The stated duration as minutes, for calendar entries. */
+    public function durationMinutes(): int
+    {
+        return (int) (preg_match('/\d+/', (string) $this->duration, $m) ? $m[0] : 60) ?: 60;
+    }
+
+    /**
+     * The event as an iCalendar file: the thing "Add to calendar" downloads
+     * and the confirmation email attaches. One VEVENT, UID keyed on the slug
+     * so re-importing updates the entry instead of duplicating it.
+     */
+    public function toIcs(): string
+    {
+        $escape = fn (?string $v) => str_replace(
+            ["\\", ";", ",", "\n"],
+            ["\\\\", "\\;", "\\,", "\\n"],
+            trim((string) $v)
+        );
+
+        $start = $this->startsAtUtc();
+
+        if (! $start) {
+            throw new \LogicException('A panel without an event date has no calendar entry.');
+        }
+
+        $end = $start->copy()->addMinutes($this->durationMinutes());
+
+        $lines = [
+            'BEGIN:VCALENDAR',
+            'VERSION:2.0',
+            'PRODID:-//Skills Co-op//Sessions//EN',
+            'METHOD:PUBLISH',
+            'BEGIN:VEVENT',
+            'UID:'.$this->slug.'@skillscoop.org',
+            'DTSTAMP:'.now()->utc()->format('Ymd\THis\Z'),
+            'DTSTART:'.$start->format('Ymd\THis\Z'),
+            'DTEND:'.$end->format('Ymd\THis\Z'),
+            'SUMMARY:'.$escape($this->tagline ?: $this->title),
+            'DESCRIPTION:'.$escape(\Illuminate\Support\Str::limit(strip_tags((string) $this->description), 400).' Details: '.$this->url()),
+            'LOCATION:'.$escape($this->format ?: 'Online'),
+            'URL:'.$this->url(),
+            'END:VEVENT',
+            'END:VCALENDAR',
+        ];
+
+        return implode("\r\n", $lines)."\r\n";
+    }
 }

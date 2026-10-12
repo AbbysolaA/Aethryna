@@ -43,3 +43,12 @@ Schedule::command('assessments:remind')
 Schedule::command('blog:notify-subscribers')
     ->everyTenMinutes()
     ->withoutOverlapping();
+
+// Reminds panel registrants a week before the event and again the day before.
+// The command stamps each reminder on the registration, so the daily cadence
+// is about inbox politeness, not correctness: running it more often would
+// change nothing. Early evening UK, when event decisions get made.
+Schedule::command('sessions:remind')
+    ->dailyAt('17:40')
+    ->timezone('Europe/London')
+    ->withoutOverlapping();

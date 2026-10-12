@@ -28,6 +28,7 @@ Route::get('/stories', [PageController::class, 'stories'])->name('stories');
 // Sessions & Events
 Route::get('/sessions', [PageController::class, 'sessions'])->name('sessions');
 Route::post('/sessions/register', [PageController::class, 'registerSession'])->name('sessions.register');
+Route::get('/sessions/{panelSession}/calendar', [PageController::class, 'sessionCalendar'])->name('sessions.calendar');
 // Declared after /sessions/register so the literal path is matched first and
 // a panel can never be looked up by the slug "register".
 Route::get('/sessions/{panelSession}', [PageController::class, 'session'])->name('sessions.show');

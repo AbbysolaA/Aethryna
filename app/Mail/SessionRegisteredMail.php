@@ -22,7 +22,7 @@ class SessionRegisteredMail extends Mailable
     {
         $data = $this->messagePayload();
 
-        return $this
+        $mail = $this
             ->subject($data['subject'])
             // Replies must land somewhere a person reads, whatever the From
             // address is. The server sends from a noreply account, and an
@@ -31,6 +31,16 @@ class SessionRegisteredMail extends Mailable
             ->replyTo(config('organisation.email'))
             ->view('emails.session-registered', $data)
             ->text('emails.session-registered-text', $data);
+
+        // The calendar entry is the reminder the registrant sets for
+        // themselves; attach it rather than hoping they come back for it.
+        if ($this->session->event_date) {
+            $mail->attachData($this->session->toIcs(), $this->session->slug.'.ics', [
+                'mime' => 'text/calendar',
+            ]);
+        }
+
+        return $mail;
     }
 
     /**
@@ -56,7 +66,7 @@ class SessionRegisteredMail extends Mailable
 
         return [
             // Layout
-            'subject'      => 'You are registered — ' . $s->tagline,
+            'subject'      => 'You are registered: ' . $s->tagline,
             'preheader'    => $s->tagline . ' · ' . ($eventDate?->format('j F, g:ia') ?? 'date TBC') . ' UK',
             'logoUrl'      => 'https://skillscoop.org/email/skills-coop-mark.png',
             'supportEmail' => 'hello@skillscoop.org',
@@ -75,6 +85,8 @@ class SessionRegisteredMail extends Mailable
             'panelFormat'      => $s->format ?: 'Online',
             'eventbriteUrl'    => $s->eventbrite_url,
             'sessionsUrl'      => 'https://skillscoop.org/sessions',
+            'panelUrl'         => $s->url(),
+            'calendarUrl'      => $eventDate ? route('sessions.calendar', $s) : null,
             'speakers'         => $s->relationLoaded('speakers') ? $s->speakers : $s->speakers()->get(),
         ];
     }

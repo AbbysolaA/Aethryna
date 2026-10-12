@@ -47,7 +47,11 @@
                 </div>
                 <div class="ss-hero-actions">
                     @if($nextSession->event_date)
-                        <a href="#register-section" class="ss-btn ss-btn-primary"><i class="fas fa-user-plus"></i> Register for this panel</a>
+                        {{-- The panel's own page, not the anchor below: the URL
+                             people copy from here should be the one with the
+                             speakers on it, which keeps working as the archive
+                             after the event. --}}
+                        <a href="{{ $nextSession->url() }}" class="ss-btn ss-btn-primary"><i class="fas fa-user-plus"></i> Register for this panel</a>
                     @else
                         <a href="#register-section" class="ss-btn ss-btn-primary"><i class="fas fa-envelope"></i> Tell me when it is announced</a>
                     @endif
