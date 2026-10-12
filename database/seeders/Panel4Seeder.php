@@ -41,7 +41,9 @@ class Panel4Seeder extends Seeder
 
         $panel4Attributes = [
             'title'           => 'The Skills Co-op Sessions: Panel 4',
-            'tagline'         => 'Panel 4 · Vibe coding: show and tell',
+            // Retitled when Panel 4 split into two sessions. The founders
+            // session lives in Panel4SplitSeeder with its own slug.
+            'tagline'         => 'Vibe Coding: Live Builds',
             // The flyer's copy, so the page and the flyer say the same thing.
             'description'     => 'Three practitioners. Three live builds. Watch them go from a real problem to a working AI-built solution on screen, with the prompts, wrong turns and judgement calls included, then put your questions to them. We are especially keen to hear from women building in AI. Tuesday 20 October at 6.30pm, online, recorded and shared publicly.',
             'event_date'      => '2026-10-20 18:30:00',

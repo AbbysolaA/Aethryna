@@ -149,4 +149,53 @@ class PanelEventPageTest extends TestCase
 
         $this->assertGreaterThan($height, $width);
     }
+    /**
+     * Panel 4 is two sessions now, neither labelled A or B: the October
+     * live-builds session keeps its slug and registrations under the new
+     * name, and the November founders session gets its own page with Ayse
+     * listed and nobody unconfirmed published.
+     */
+    public function test_the_panel_4_split_seeds_both_sessions(): void
+    {
+        $this->seed(\Database\Seeders\Panel4Seeder::class);
+        $this->seed(\Database\Seeders\Panel4SplitSeeder::class);
+
+        $this->assertSame(
+            'Vibe Coding: Live Builds',
+            \App\Models\PanelSession::where('slug', 'panel-4')->value('tagline')
+        );
+
+        $this->get('/sessions/founders-build-live')
+            ->assertOk()
+            ->assertSee('Vibe Coding: Founders Build Live')
+            ->assertSee('10 November 2026')
+            ->assertSee('90 minutes')
+            ->assertSee('Ayse Basak Cinar')
+            ->assertSee('Leadership Consultant and AI Strategist')
+            ->assertSee('Adapting a custom GPT into a reusable AI skill, live')
+            ->assertSee('More speakers to be announced')
+            ->assertSee('Founders build live on screen')
+            // 6.30pm GMT for 90 minutes: the schema ends at 8pm with the
+            // winter offset, exactly as the listing spec asked.
+            ->assertSee('2026-11-10T18:30:00+00:00', false)
+            ->assertSee('2026-11-10T20:00:00+00:00', false)
+            ->assertDontSee('Adeyinka')
+            ->assertDontSee('Bola');
+
+        // Re-running cannot duplicate Ayse or the panel.
+        $this->seed(\Database\Seeders\Panel4SplitSeeder::class);
+        $this->assertSame(1, \App\Models\PanelSpeaker::where('name', 'Ayse Basak Cinar')->count());
+        $this->assertSame(1, \App\Models\PanelSession::where('slug', 'founders-build-live')->count());
+    }
+    public function test_the_sessions_index_lists_a_second_upcoming_panel(): void
+    {
+        $this->seed(\Database\Seeders\Panel4Seeder::class);
+        $this->seed(\Database\Seeders\Panel4SplitSeeder::class);
+
+        $this->get('/sessions')
+            ->assertOk()
+            ->assertSee('Also coming up')
+            ->assertSee('Vibe Coding: Founders Build Live')
+            ->assertSee('/sessions/founders-build-live', false);
+    }
 }
