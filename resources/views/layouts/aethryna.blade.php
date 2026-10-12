@@ -8,6 +8,10 @@
 
     <!-- Primary Meta Tags -->
     <title>@yield('title', 'Skills Co-op | Digital Skills for Real Careers')</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <meta name="title" content="@yield('meta_title', 'Skills Co-op | Digital Skills for Real Careers')">
     <meta name="description" content="@yield('meta_description', 'Free AI-era digital skills training in Merseyside and online. Five tracks: project management, product management, data and AI analytics, product design and marketing, software development. Founding cohort January 2027.')">
     <meta name="keywords" content="@yield('meta_keywords', 'digital skills training, funded programme, Liverpool, career change, NEET, AI skills, project management, product management, data analytics, product design, digital marketing, software development, underserved communities')">

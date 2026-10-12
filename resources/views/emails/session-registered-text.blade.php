@@ -37,6 +37,13 @@ The panel is free and open to everyone, so bring someone: send them {!! $panelUr
 Also add to Eventbrite: {!! $eventbriteUrl !!}
 
 @endif
+@if (! empty($followLinks))
+Between sessions we share speaker announcements, community wins and what is coming next here, so come and say hello:
+@foreach ($followLinks as $name => $url)
+- {!! $name !!}: {!! $url !!}
+@endforeach
+
+@endif
 Any questions before then, reply straight to this email or write to {!! $supportEmail ?? 'hello@skillscoop.org' !!}. See you soon.
 
 Abby

@@ -52,6 +52,7 @@
                         @if($session)
                             @include('sessions._share', ['label' => 'You are in. Bring someone:'])
                         @endif
+                        @include('sessions._follow', ['label' => 'And follow us between sessions'])
                     </div>
                 @else
                     <form action="{{ route('sessions.register') }}" method="POST" class="ss-form">
@@ -73,6 +74,7 @@
                             <label for="interest_type">I am joining as a</label>
                             <select id="interest_type" name="interest_type" required>
                                 <option value="">Select one</option>
+                                <option value="attendee" {{ old('interest_type') == 'attendee' ? 'selected' : '' }}>An attendee, here for the panel</option>
                                 <option value="learner" {{ old('interest_type') == 'learner' ? 'selected' : '' }}>A learner or career changer</option>
                                 <option value="mentor" {{ old('interest_type') == 'mentor' ? 'selected' : '' }}>A mentor or industry professional</option>
                                 <option value="partner" {{ old('interest_type') == 'partner' ? 'selected' : '' }}>A partner or employer</option>

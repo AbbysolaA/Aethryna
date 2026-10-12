@@ -87,6 +87,14 @@ class SessionRegisteredMail extends Mailable
             'sessionsUrl'      => 'https://skillscoop.org/sessions',
             'panelUrl'         => $s->url(),
             'calendarUrl'      => $eventDate ? route('sessions.calendar', $s) : null,
+            // Name => url, derived from the organisation's same_as profiles.
+            'followLinks'      => collect(config('organisation.same_as', []))
+                ->mapWithKeys(fn ($url) => match (true) {
+                    str_contains($url, 'linkedin.com')  => ['LinkedIn' => $url],
+                    str_contains($url, 'instagram.com') => ['Instagram' => $url],
+                    str_contains($url, 'facebook.com')  => ['Facebook' => $url],
+                    default                             => [],
+                })->all(),
             'speakers'         => $s->relationLoaded('speakers') ? $s->speakers : $s->speakers()->get(),
         ];
     }

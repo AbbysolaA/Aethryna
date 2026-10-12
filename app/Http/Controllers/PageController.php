@@ -146,7 +146,10 @@ class PageController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'interest_type' => 'required|in:learner,mentor,partner,curious',
+            // 'attendee' exists because the other four read as interest in
+            // the programme, and plenty of people are simply here for the
+            // panel. That answer must be available or it gets misfiled.
+            'interest_type' => 'required|in:attendee,learner,mentor,partner,curious',
             'referral_source' => 'nullable|string|max:255',
             'wants_to_speak' => 'nullable|boolean',
             'speaker_topic' => 'nullable|string|max:1000',
