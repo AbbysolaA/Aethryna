@@ -33,6 +33,8 @@ class SessionRegistration extends Model
         'waitlisted'     => 'boolean',
         'consented_at'   => 'datetime',
         'confirmation_sent_at' => 'datetime',
+        'reminded_week_at' => 'datetime',
+        'reminded_day_at'  => 'datetime',
     ];
 
     /**

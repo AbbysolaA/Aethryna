@@ -46,7 +46,12 @@
                         <i class="fas fa-check-circle"></i>
                         <h3>You are registered</h3>
                         <p>{{ session('success') }}</p>
-                        <a href="{{ route('home') }}" class="ss-btn ss-btn-primary">Back to home</a>
+                        @if($session && $session->event_date)
+                            <a href="{{ route('sessions.calendar', $session) }}" class="ss-btn ss-btn-primary"><i class="far fa-calendar-plus"></i> Add to calendar</a>
+                        @endif
+                        @if($session)
+                            @include('sessions._share', ['label' => 'You are in. Bring someone:'])
+                        @endif
                     </div>
                 @else
                     <form action="{{ route('sessions.register') }}" method="POST" class="ss-form">

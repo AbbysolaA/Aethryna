@@ -26,6 +26,13 @@ WHAT TO EXPECT
 - Honest Q&A, hard questions welcome
 - A community that keeps going after the session
 
+@if ($calendarUrl)
+Add it to your calendar: {!! $calendarUrl !!}
+(The calendar file is attached to this email too.)
+
+The panel is free and open to everyone, so bring someone: send them {!! $panelUrl !!} and they can register in a minute.
+
+@endif
 @if ($eventbriteUrl)
 Also add to Eventbrite: {!! $eventbriteUrl !!}
 

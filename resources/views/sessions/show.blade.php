@@ -105,6 +105,7 @@
                 @else
                     @if($session->event_date)
                         <a href="#register-section" class="ss-btn ss-btn-primary"><i class="fas fa-user-plus"></i> Register for this panel</a>
+                        <a href="{{ route('sessions.calendar', $session) }}" class="ss-btn ss-btn-ghost"><i class="far fa-calendar-plus"></i> Add to calendar</a>
                     @else
                         <a href="#register-section" class="ss-btn ss-btn-primary"><i class="fas fa-envelope"></i> Tell me when it is announced</a>
                     @endif
@@ -209,6 +210,16 @@
     </div>
 </section>
 @endif
+
+{{-- Shareable whichever side of the event we are on: before, it is the
+     registration link; after, it is the recording. --}}
+<section class="ss-share-strip">
+    <div class="ath-container">
+        @include('sessions._share', [
+            'label' => $session->isPast() ? 'Share the recording' : 'Know someone who should be in the room?',
+        ])
+    </div>
+</section>
 
 {{-- A past panel takes no registrations; the whole point of the page then is
      the recording and who spoke. --}}
