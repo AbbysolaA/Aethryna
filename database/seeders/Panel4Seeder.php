@@ -50,6 +50,16 @@ class Panel4Seeder extends Seeder
             'recording_url'   => null,
             'status'          => 'upcoming',
             'sort_order'      => 4,
+            // The running order shown on the panel page. Editable in the
+            // panels admin; a line's "time |" prefix becomes the schedule
+            // column.
+            'itinerary'       => [
+                '6.30pm | Doors open and welcome',
+                '6.35pm | Live builds: the panel shows how they actually work with AI',
+                '7.10pm | Audience Q&A, hard questions welcome',
+                '7.25pm | What is next at Skills Co-op and goodnight',
+            ],
+            'accessibility_note' => 'Live captions are available throughout. If you need anything else to take part, email hello@skillscoop.org and we will sort it.',
         ];
 
         $session = PanelSession::updateOrCreate(
