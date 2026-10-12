@@ -38,9 +38,9 @@
         'eventStatus'          => 'https://schema.org/EventScheduled',
         'eventAttendanceMode'  => 'https://schema.org/OnlineEventAttendanceMode',
         'startDate'            => $startsAt?->toIso8601String(),
-        // Panels run 60 minutes. Google wants an end time and will otherwise
-        // guess, usually badly.
-        'endDate'              => $startsAt?->copy()->addHour()->toIso8601String(),
+        // From the panel's stated duration: Google wants an end time and will
+        // otherwise guess, usually badly, and not every panel runs an hour.
+        'endDate'              => $startsAt?->copy()->addMinutes($session->durationMinutes())->toIso8601String(),
         'organizer'            => ['@id' => rtrim(url('/'), '/') . '/#organisation'],
         'inLanguage'           => 'en-GB',
         'isAccessibleForFree'  => true,
@@ -205,6 +205,12 @@
                 </article>
             @endforeach
         </div>
+        @unless($session->isPast())
+            <p class="ss-more-speakers">
+                More speakers to be announced. Building in this space yourself?
+                <a href="{{ route('speakers.apply') }}">Pitch your talk &rarr;</a>
+            </p>
+        @endunless
         @elseif(! $session->isPast())
             <div class="ss-soon-card">
                 <h3>Speakers announced soon</h3>
@@ -383,6 +389,8 @@
         margin: 0 auto; border-radius: 16px;
         box-shadow: 0 18px 40px rgba(5, 88, 96, 0.18);
     }
+    .ss-more-speakers { margin: 22px 0 0; color: rgba(255, 255, 255, 0.75); line-height: 1.6; }
+    .ss-more-speakers a { color: #f3b55c; font-weight: 600; }
     /* Lives inside the dark featured section, so it keeps light text. */
     .ss-soon-card {
         margin-top: 34px; padding: 26px 30px; border-radius: 14px;
