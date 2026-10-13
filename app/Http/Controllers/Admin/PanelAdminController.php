@@ -168,7 +168,8 @@ class PanelAdminController extends Controller
     public function editSpeaker(PanelSpeaker $speaker): View
     {
         return view('admin.panels.speaker-edit', [
-            'speaker' => $speaker->load(['sessions', 'application']),
+            'speaker'        => $speaker->load(['sessions', 'application']),
+            'upcomingPanels' => \App\Models\PanelSession::upcoming()->get(),
         ]);
     }
 
@@ -234,7 +235,22 @@ class PanelAdminController extends Controller
             ],
         ]);
 
-        return back()->with('status', $speaker->name.' added to '.$panel->tagline.'. Set their topic and running order in the panel form whenever you like.');
+        return back()->with('status', $speaker->name.' added to '.$panel->tagline
+            .(! empty($validated['topic'])
+                ? ' with the topic "'.$validated['topic'].'".'
+                : '. Set their topic and running order in the panel form whenever you like.'));
+    }
+
+    /**
+     * Take a speaker off a panel. The pairing of an add control with no
+     * remove control meant a mis-click was permanent, which is how Seun
+     * ended up on a session nobody could take him off.
+     */
+    public function detachSpeakerFromPanel(PanelSpeaker $speaker, \App\Models\PanelSession $panel): RedirectResponse
+    {
+        $panel->speakers()->detach($speaker->id);
+
+        return back()->with('status', $speaker->name.' removed from '.$panel->tagline.'. The speaker themselves is untouched.');
     }
 
     /**

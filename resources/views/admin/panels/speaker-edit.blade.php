@@ -77,6 +77,39 @@
         </div>
 
         <div class="vl-panel vl-form-panel">
+            <h2 class="vl-sub-heading">Panels</h2>
+            @if ($speaker->sessions->isNotEmpty())
+                @foreach ($speaker->sessions as $onPanel)
+                    <div class="sp-panel-chip">
+                        {{ $onPanel->tagline }}
+                        @if ($onPanel->pivot->topic)<span class="sp-chip-topic">&middot; {{ $onPanel->pivot->topic }}</span>@endif
+                        <form method="POST" action="{{ route('admin.speakers.detach', [$speaker, $onPanel]) }}"
+                              onsubmit="return confirm('Take {{ addslashes($speaker->name) }} off {{ addslashes($onPanel->tagline) }}? The speaker themselves is kept.');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="sp-chip-x" aria-label="Remove from {{ $onPanel->tagline }}">&times;</button>
+                        </form>
+                    </div>
+                @endforeach
+            @else
+                <p class="vl-side-note">Not on a panel yet.</p>
+            @endif
+            @php $attachable = $upcomingPanels->whereNotIn('id', $speaker->sessions->pluck('id')); @endphp
+            @if ($attachable->isNotEmpty())
+                <form method="POST" action="{{ route('admin.speakers.attach', $speaker) }}" class="sp-photo-form" style="margin-top:12px;">
+                    @csrf
+                    <select name="panel_session_id" required>
+                        @foreach ($attachable as $panel)
+                            <option value="{{ $panel->id }}">{{ $panel->tagline }}</option>
+                        @endforeach
+                    </select>
+                    <input type="text" name="topic" maxlength="255" placeholder="Session topic (optional)">
+                    <button type="submit" class="vl-btn vl-btn-primary">Add {{ str($speaker->name)->before(' ') }} to this panel</button>
+                </form>
+            @endif
+        </div>
+
+        <div class="vl-panel vl-form-panel">
             <h2 class="vl-sub-heading">Photo</h2>
             @if ($speaker->hasPhotoFile())
                 <p style="margin:0 0 12px;">
@@ -112,6 +145,18 @@
         .vl-field-row .vl-field { flex: 1 1 220px; }
         .vl-sub-heading { font-size: 1.15rem; font-weight: 800; margin-bottom: 18px; color: var(--ath-deep); }
         .sp-photo-form { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        .sp-panel-chip {
+            display: inline-flex; align-items: center; gap: 8px;
+            margin: 0 6px 8px 0; padding: 6px 12px; border-radius: 100px;
+            background: rgba(3, 139, 137, 0.08); border: 1px solid rgba(3, 139, 137, 0.25);
+            font-size: 0.88rem; color: var(--ath-deep, #055860); font-weight: 600;
+        }
+        .sp-chip-topic { font-weight: 400; color: #5a646c; }
+        .sp-panel-chip form { display: inline-flex; }
+        .sp-chip-x {
+            border: none; background: none; cursor: pointer; padding: 0 2px;
+            font-size: 1.05rem; line-height: 1; color: #9b2c1c; font-weight: 700;
+        }
     </style>
 @endpush
 

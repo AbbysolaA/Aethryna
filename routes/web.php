@@ -249,6 +249,8 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
         ->name('speakers.photo');
     Route::post('/speakers/{speaker}/panels', [\App\Http\Controllers\Admin\PanelAdminController::class, 'attachSpeakerToPanel'])
         ->name('speakers.attach');
+    Route::delete('/speakers/{speaker}/panels/{panel}', [\App\Http\Controllers\Admin\PanelAdminController::class, 'detachSpeakerFromPanel'])
+        ->name('speakers.detach');
     Route::delete('/speakers/{speaker}', [\App\Http\Controllers\Admin\PanelAdminController::class, 'destroySpeaker'])
         ->name('speakers.destroy');
 
