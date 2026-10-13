@@ -20,11 +20,14 @@ class SpeakerPhotos
     private const SIZE = 800;
 
     /**
-     * Decode, square-crop from the top (headshots lose feet, not faces),
-     * shrink and save. Returns the photo_path to store, or null when the
-     * bytes cannot be read as an image.
+     * Decode, square-crop, shrink and save. Returns the photo_path to
+     * store, or null when the bytes cannot be read as an image.
+     *
+     * $focus picks which band of a tall photo survives the square crop:
+     * 'middle' by default, because always keeping the top turned a
+     * portrait with headroom into a photo of someone's hair.
      */
-    public static function publish(string $bytes, string $nameHint): ?string
+    public static function publish(string $bytes, string $nameHint, string $focus = 'middle'): ?string
     {
         if (! extension_loaded('gd')) {
             return null;
@@ -39,10 +42,14 @@ class SpeakerPhotos
         $width  = imagesx($image);
         $height = imagesy($image);
 
-        // The largest square that fits, kept from the top.
+        // The largest square that fits, positioned by focus.
         $crop = min($width, $height);
         $srcX = intdiv($width - $crop, 2);
-        $srcY = 0;
+        $srcY = match ($focus) {
+            'top'    => 0,
+            'bottom' => $height - $crop,
+            default  => intdiv($height - $crop, 2),
+        };
 
         // Never upscale: a small source enlarged is a blurry file bigger and
         // worse than the original.

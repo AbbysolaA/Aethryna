@@ -80,14 +80,23 @@
             <h2 class="vl-sub-heading">Panels</h2>
             @if ($speaker->sessions->isNotEmpty())
                 @foreach ($speaker->sessions as $onPanel)
-                    <div class="sp-panel-chip">
-                        {{ $onPanel->tagline }}
-                        @if ($onPanel->pivot->topic)<span class="sp-chip-topic">&middot; {{ $onPanel->pivot->topic }}</span>@endif
-                        <form method="POST" action="{{ route('admin.speakers.detach', [$speaker, $onPanel]) }}"
-                              onsubmit="return confirm('Take {{ addslashes($speaker->name) }} off {{ addslashes($onPanel->tagline) }}? The speaker themselves is kept.');">
+                    <div class="sp-panel-row">
+                        <div class="sp-panel-chip">
+                            {{ $onPanel->tagline }}
+                            <form method="POST" action="{{ route('admin.speakers.detach', [$speaker, $onPanel]) }}"
+                                  onsubmit="return confirm('Take {{ addslashes($speaker->name) }} off {{ addslashes($onPanel->tagline) }}? The speaker themselves is kept.');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="sp-chip-x" aria-label="Remove from {{ $onPanel->tagline }}">&times;</button>
+                            </form>
+                        </div>
+                        {{-- Posting the attached pair again edits the topic in place. --}}
+                        <form method="POST" action="{{ route('admin.speakers.attach', $speaker) }}" class="sp-photo-form">
                             @csrf
-                            @method('DELETE')
-                            <button type="submit" class="sp-chip-x" aria-label="Remove from {{ $onPanel->tagline }}">&times;</button>
+                            <input type="hidden" name="panel_session_id" value="{{ $onPanel->id }}">
+                            <input type="text" name="topic" maxlength="255" value="{{ $onPanel->pivot->topic }}"
+                                   placeholder="Session topic, shown on the panel page">
+                            <button type="submit" class="vl-mini-btn">Save topic</button>
                         </form>
                     </div>
                 @endforeach
@@ -122,8 +131,18 @@
             <form method="POST" action="{{ route('admin.speakers.photo', $speaker) }}" enctype="multipart/form-data" class="sp-photo-form">
                 @csrf
                 <input type="file" name="photo" accept=".jpg,.jpeg,.png,.webp" required>
+                <label for="photo_focus" class="vl-side-note" style="margin:0;">Keep which part of a tall photo?</label>
+                <select id="photo_focus" name="photo_focus">
+                    <option value="middle">The middle (usual for portraits)</option>
+                    <option value="top">The top</option>
+                    <option value="bottom">The bottom</option>
+                </select>
                 <button type="submit" class="vl-btn vl-btn-primary">{{ $speaker->hasPhotoFile() ? 'Replace photo' : 'Upload photo' }}</button>
             </form>
+            <p class="vl-side-note vl-hint" style="margin-top:8px;">
+                Photos are cropped to a square. If a crop comes out wrong, upload the same
+                photo again with a different part kept.
+            </p>
             @error('photo', 'photo'.$speaker->id)<p class="vl-error">{{ $message }}</p>@enderror
             @if (! $speaker->hasPhotoFile() && $speaker->application?->hasHeadshot())
                 <form method="POST" action="{{ route('admin.speakers.photo', $speaker) }}" class="sp-photo-form" style="margin-top:10px;">
@@ -152,6 +171,8 @@
             font-size: 0.88rem; color: var(--ath-deep, #055860); font-weight: 600;
         }
         .sp-chip-topic { font-weight: 400; color: #5a646c; }
+        .sp-panel-row { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; margin-bottom: 12px; }
+        .sp-panel-row .sp-photo-form input[type="text"] { min-width: 300px; max-width: 100%; }
         .sp-panel-chip form { display: inline-flex; }
         .sp-chip-x {
             border: none; background: none; cursor: pointer; padding: 0 2px;

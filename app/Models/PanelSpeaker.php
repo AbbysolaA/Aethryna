@@ -12,6 +12,21 @@ class PanelSpeaker extends Model
         'linkedin_url', 'twitter_url',
     ];
 
+    /**
+     * Role and company for display. The company is skipped when the role
+     * text already names it: dual-role speakers write their employers into
+     * the role line, and printing the company again gave "Locaria; ... ·
+     * Locaria" on a live page.
+     */
+    public function roleLine(): string
+    {
+        if ($this->company && ! str_contains(mb_strtolower($this->title), mb_strtolower($this->company))) {
+            return $this->title.' · '.$this->company;
+        }
+
+        return (string) $this->title;
+    }
+
     /** The pitch this speaker arrived through, when there is one. */
     public function application(): \Illuminate\Database\Eloquent\Relations\HasOne
     {

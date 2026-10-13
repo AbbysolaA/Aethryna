@@ -228,12 +228,22 @@ class PanelAdminController extends Controller
 
         $panel = \App\Models\PanelSession::findOrFail($validated['panel_session_id']);
 
-        $panel->speakers()->syncWithoutDetaching([
-            $speaker->id => [
-                'topic'      => $validated['topic'] ?? null,
-                'sort_order' => ((int) $panel->speakers()->max('panel_session_speakers.sort_order')) + 1,
-            ],
-        ]);
+        // Posting an attached pair again is how the topic is edited: the
+        // sync updates the pivot in place rather than re-adding anyone.
+        $already = $panel->speakers()->whereKey($speaker->id)->exists();
+
+        $pivot = ['topic' => $validated['topic'] ?? null];
+
+        if (! $already) {
+            $pivot['sort_order'] = ((int) $panel->speakers()->max('panel_session_speakers.sort_order')) + 1;
+        }
+
+        $panel->speakers()->syncWithoutDetaching([$speaker->id => $pivot]);
+
+        if ($already) {
+            return back()->with('status', $speaker->name.'\'s topic on '.$panel->tagline
+                .(! empty($validated['topic']) ? ' is now "'.$validated['topic'].'".' : ' has been cleared.'));
+        }
 
         return back()->with('status', $speaker->name.' added to '.$panel->tagline
             .(! empty($validated['topic'])
@@ -285,7 +295,11 @@ class PanelAdminController extends Controller
             $bytes = (string) file_get_contents($request->file('photo')->getRealPath());
         }
 
-        $published = \App\Support\SpeakerPhotos::publish($bytes, $speaker->name);
+        $focus = in_array($request->input('photo_focus'), ['top', 'middle', 'bottom'], true)
+            ? $request->input('photo_focus')
+            : 'middle';
+
+        $published = \App\Support\SpeakerPhotos::publish($bytes, $speaker->name, $focus);
 
         if (! $published) {
             return back()->with('error', 'That file could not be read as a picture. Try exporting it as a JPEG and uploading again.');

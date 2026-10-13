@@ -337,4 +337,69 @@ class SpeakerPhotoAdminTest extends TestCase
             ])
             ->assertSessionHas('status', fn ($status) => str_contains($status, 'From Prompt to Product'));
     }
+    /**
+     * Re-posting an attached pair edits the topic in place: Ore and Abby
+     * were on the panel with no topic and no way to add one afterwards.
+     */
+    public function test_the_topic_can_be_edited_after_attachment(): void
+    {
+        $this->travelTo('2026-10-13 12:00:00');
+
+        $founders = \App\Models\PanelSession::create([
+            'title' => 'P4b', 'slug' => 'founders-build-live',
+            'tagline' => 'Vibe Coding: Founders Build Live', 'description' => 'D',
+            'event_date' => '2026-11-10 18:30:00', 'status' => 'upcoming', 'sort_order' => 4,
+        ]);
+        $ore = PanelSpeaker::create(['name' => 'Ore Badmus', 'title' => 'Marketing', 'bio' => 'M.']);
+        $founders->speakers()->attach($ore->id, ['sort_order' => 1]);
+
+        $this->actingAs($this->admin())
+            ->post(route('admin.speakers.attach', $ore), [
+                'panel_session_id' => $founders->id,
+                'topic'            => 'From Prompt to Product',
+            ])
+            ->assertSessionHas('status', fn ($m) => str_contains($m, 'is now "From Prompt to Product"'));
+
+        $pivot = $founders->speakers()->whereKey($ore->id)->first()->pivot;
+        $this->assertSame('From Prompt to Product', $pivot->topic);
+        $this->assertSame(1, (int) $pivot->sort_order, 'Editing the topic must not change the running order.');
+        $this->assertSame(1, $founders->speakers()->whereKey($ore->id)->count());
+
+        // The speaker page offers the inline topic form.
+        $this->actingAs($this->admin())
+            ->get(route('admin.speakers.edit', $ore))
+            ->assertOk()
+            ->assertSee('Save topic')
+            ->assertSee('From Prompt to Product');
+    }
+
+    /**
+     * A company already written into the role line is not printed twice:
+     * "Senior PMM, Locaria; Co-founder, TEMSI Africa · Locaria" was live.
+     */
+    public function test_the_company_is_not_printed_twice(): void
+    {
+        $this->travelTo('2026-10-13 12:00:00');
+
+        $panel = \App\Models\PanelSession::create([
+            'title' => 'P4b', 'slug' => 'founders-build-live',
+            'tagline' => 'Vibe Coding: Founders Build Live', 'description' => 'D',
+            'event_date' => '2026-11-10 18:30:00', 'status' => 'upcoming', 'sort_order' => 4,
+        ]);
+        $ore = PanelSpeaker::create([
+            'name'    => 'Ore Badmus',
+            'title'   => 'Senior Product Marketing Manager, Locaria; Co-founder, TEMSI Africa',
+            'company' => 'Locaria',
+            'bio'     => 'M.',
+        ]);
+        $panel->speakers()->attach($ore->id, ['sort_order' => 1]);
+
+        $html = $this->get('/sessions/founders-build-live')->assertOk()->getContent();
+
+        // The JSON-LD performer block also carries the title, so the text
+        // appears there too; what must not appear is the visible card adding
+        // the company again after the roles.
+        $this->assertStringNotContainsString('TEMSI Africa <span class="ss-role-sep">', $html);
+        $this->assertSame('Senior Product Marketing Manager, Locaria; Co-founder, TEMSI Africa', $ore->roleLine());
+    }
 }
