@@ -134,4 +134,45 @@ class SpeakerPhotoAdminTest extends TestCase
             ->assertSee('click for the full page')
             ->assertSee('No Pitch Speaker');
     }
+    /**
+     * Returning speakers are the series' model: Bola spoke at Panel 3 and
+     * joins the founders session too, from her row on the speakers screen.
+     */
+    public function test_a_speaker_can_be_added_to_another_panel_from_their_row(): void
+    {
+        $this->travelTo('2026-10-13 12:00:00');
+
+        $three = \App\Models\PanelSession::create([
+            'title' => 'The Skills Co-op Sessions: Panel 3', 'slug' => 'panel-3',
+            'tagline' => 'Panel 3 · The data skills gap', 'description' => 'D',
+            'event_date' => '2026-09-09 18:30:00', 'status' => 'past', 'sort_order' => 3,
+        ]);
+        $founders = \App\Models\PanelSession::create([
+            'title' => 'The Skills Co-op Sessions: Panel 4', 'slug' => 'founders-build-live',
+            'tagline' => 'Vibe Coding: Founders Build Live', 'description' => 'D',
+            'event_date' => '2026-11-10 18:30:00', 'status' => 'upcoming', 'sort_order' => 4,
+        ]);
+
+        $bola = PanelSpeaker::create(['name' => 'Bola Soko', 'title' => 'Engineer', 'bio' => 'B.']);
+        $three->speakers()->attach($bola->id, ['sort_order' => 1]);
+
+        // Her row offers the founders panel and labels the button honestly.
+        $this->actingAs($this->admin())
+            ->get(route('admin.speakers.index'))
+            ->assertOk()
+            ->assertSee('Panel 3 · The data skills gap')
+            ->assertSee('Add to another panel');
+
+        $this->actingAs($this->admin())
+            ->post(route('admin.speakers.attach', $bola), ['panel_session_id' => $founders->id])
+            ->assertSessionHas('status');
+
+        $this->assertTrue($founders->speakers()->whereKey($bola->id)->exists());
+        $this->assertTrue($three->speakers()->whereKey($bola->id)->exists());
+
+        // Pressing it twice cannot double her onto the panel.
+        $this->actingAs($this->admin())
+            ->post(route('admin.speakers.attach', $bola), ['panel_session_id' => $founders->id]);
+        $this->assertSame(1, $founders->speakers()->whereKey($bola->id)->count());
+    }
 }

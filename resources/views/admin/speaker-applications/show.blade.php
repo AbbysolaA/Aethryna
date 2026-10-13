@@ -148,7 +148,9 @@
                                 @csrf
                                 @method('PATCH')
                                 <input type="hidden" name="status" value="accepted">
-                                <label for="panel_session_id" class="sp-panel-label">Add to a panel</label>
+                                <label for="panel_session_id" class="sp-panel-label">
+                                    {{ $assignedSessions->isNotEmpty() ? 'Add to another panel' : 'Add to a panel' }}
+                                </label>
                                 <select id="panel_session_id" name="panel_session_id" required>
                                     @foreach ($assignablePanels as $panel)
                                         <option value="{{ $panel->id }}">{{ $panel->tagline }}</option>
