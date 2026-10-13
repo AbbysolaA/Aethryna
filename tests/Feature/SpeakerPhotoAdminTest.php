@@ -121,6 +121,23 @@ class SpeakerPhotoAdminTest extends TestCase
         $this->assertNull($speaker->fresh()->photo_path);
     }
 
+    /**
+     * Every row's upload shares a field name, so one speaker's validation
+     * error used to print under all of them. Errors are scoped per speaker.
+     */
+    public function test_an_upload_error_stays_on_its_own_row(): void
+    {
+        $speaker = PanelSpeaker::create(['name' => 'Ore Badmus', 'title' => 'Marketing', 'bio' => 'M.']);
+        $other = PanelSpeaker::create(['name' => 'Sean Adetule', 'title' => 'Partnerships', 'bio' => 'P.']);
+
+        $this->actingAs($this->admin())
+            ->post(route('admin.speakers.photo', $speaker), [
+                'photo' => UploadedFile::fake()->create('cv.pdf', 60, 'application/pdf'),
+            ])
+            ->assertSessionHasErrorsIn('photo'.$speaker->id, ['photo'])
+            ->assertSessionDoesntHaveErrors(['photo'], null, 'photo'.$other->id);
+    }
+
     public function test_speaker_names_link_to_their_pitch_page(): void
     {
         $application = $this->pitchWithHeadshot();
@@ -131,7 +148,7 @@ class SpeakerPhotoAdminTest extends TestCase
             ->get(route('admin.speakers.index'))
             ->assertOk()
             ->assertSee(route('admin.speaker-applications.show', $application), false)
-            ->assertSee('click for the full page')
+            ->assertSee('Arrived as a pitch, read it in full')
             ->assertSee('No Pitch Speaker');
     }
     /**
@@ -234,6 +251,37 @@ class SpeakerPhotoAdminTest extends TestCase
         $this->assertSame(
             'Building Skills Co-op with AI',
             $founders->speakers()->whereKey($speaker->id)->first()->pivot->topic
+        );
+    }
+    /**
+     * Every speaker has a page now, pitch or not, and their details are
+     * editable there: a typo in a hand-added bio used to be permanent.
+     */
+    public function test_every_speaker_name_opens_an_editable_page(): void
+    {
+        $ore = PanelSpeaker::create(['name' => 'Ore Badmus', 'title' => 'Marketing', 'bio' => 'M.']);
+
+        $this->actingAs($this->admin())
+            ->get(route('admin.speakers.index'))
+            ->assertOk()
+            ->assertSee(route('admin.speakers.edit', $ore), false)
+            ->assertSee('Click to edit their details');
+
+        $this->actingAs($this->admin())
+            ->get(route('admin.speakers.edit', $ore))
+            ->assertOk()
+            ->assertSee('Ore Badmus')
+            ->assertSee('Not on a panel yet');
+
+        $this->actingAs($this->admin())->patch(route('admin.speakers.update', $ore), [
+            'name'  => 'Ore Badmus',
+            'title' => 'Senior Product Marketing Manager, Locaria; Co-founder, TEMSI Africa',
+            'bio'   => 'Marketing leader and co-founder.',
+        ])->assertSessionHas('status');
+
+        $this->assertSame(
+            'Senior Product Marketing Manager, Locaria; Co-founder, TEMSI Africa',
+            $ore->fresh()->title
         );
     }
 }

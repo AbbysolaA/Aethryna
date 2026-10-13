@@ -241,6 +241,10 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
         ->name('speakers.index');
     Route::post('/speakers', [\App\Http\Controllers\Admin\PanelAdminController::class, 'storeSpeaker'])
         ->name('speakers.store');
+    Route::get('/speakers/{speaker}/edit', [\App\Http\Controllers\Admin\PanelAdminController::class, 'editSpeaker'])
+        ->name('speakers.edit');
+    Route::patch('/speakers/{speaker}', [\App\Http\Controllers\Admin\PanelAdminController::class, 'updateSpeaker'])
+        ->name('speakers.update');
     Route::post('/speakers/{speaker}/photo', [\App\Http\Controllers\Admin\PanelAdminController::class, 'speakerPhoto'])
         ->name('speakers.photo');
     Route::post('/speakers/{speaker}/panels', [\App\Http\Controllers\Admin\PanelAdminController::class, 'attachSpeakerToPanel'])

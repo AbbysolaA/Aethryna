@@ -124,8 +124,9 @@ class PanelAdminController extends Controller
             'topic'            => ['nullable', 'string', 'max:255'],
             'photo'            => ['nullable', 'file', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
         ], [
-            'name.unique' => 'There is already a speaker with that name. Add them to the panel from the list instead.',
-            'photo.max'   => 'Keep photos under 8MB. They are resized on upload anyway.',
+            'name.unique'    => 'There is already a speaker with that name. Add them to the panel from the list instead.',
+            'photo.max'      => 'Keep photos under 8MB. They are resized on upload anyway.',
+            'photo.uploaded' => 'The server refused that file before it arrived, usually because it is over the hosting upload limit ('.ini_get('upload_max_filesize').'). Export it smaller, or raise upload_max_filesize in the hosting panel.',
         ]);
 
         $speaker = PanelSpeaker::create(
@@ -157,6 +158,36 @@ class PanelAdminController extends Controller
         }
 
         return back()->with('status', 'Speaker added. Put them on a panel from their row below.');
+    }
+
+    /**
+     * One speaker's own page. A speaker who arrived as a pitch always had a
+     * page; one added by hand had none, and no way to fix a typo in their
+     * bio short of deleting and re-adding them.
+     */
+    public function editSpeaker(PanelSpeaker $speaker): View
+    {
+        return view('admin.panels.speaker-edit', [
+            'speaker' => $speaker->load(['sessions', 'application']),
+        ]);
+    }
+
+    public function updateSpeaker(Request $request, PanelSpeaker $speaker): RedirectResponse
+    {
+        $validated = $request->validate([
+            'name'         => ['required', 'string', 'max:255', Rule::unique('panel_speakers', 'name')->ignore($speaker->id)],
+            'title'        => ['required', 'string', 'max:255'],
+            'company'      => ['nullable', 'string', 'max:255'],
+            'bio'          => ['nullable', 'string', 'max:2000'],
+            'linkedin_url' => ['nullable', 'url', 'max:255'],
+        ], [
+            'name.unique' => 'There is already another speaker with that name.',
+        ]);
+
+        $speaker->update($validated);
+
+        return redirect()->route('admin.speakers.edit', $speaker)
+            ->with('status', 'Saved. The panel pages show the new details straight away.');
     }
 
     public function destroySpeaker(PanelSpeaker $speaker): RedirectResponse
@@ -222,11 +253,17 @@ class PanelAdminController extends Controller
             $bytes = (string) Storage::disk(\App\Models\SpeakerApplication::HEADSHOT_DISK)
                 ->get($application->headshot_path);
         } else {
-            $request->validate([
+            // Named error bag per speaker: every row's form shares the field
+            // name, so an unscoped error for one upload printed under every
+            // speaker on the screen.
+            $request->validateWithBag('photo'.$speaker->id, [
                 'photo' => ['required', 'file', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
             ], [
-                'photo.max'   => 'Keep photos under 8MB. They are resized on upload anyway.',
-                'photo.mimes' => 'Use a JPEG, PNG or WebP.',
+                'photo.max'      => 'Keep photos under 8MB. They are resized on upload anyway.',
+                'photo.mimes'    => 'Use a JPEG, PNG or WebP.',
+                // PHP refused the file before Laravel saw it, which is almost
+                // always its own per-file limit, stricter than ours.
+                'photo.uploaded' => 'The server refused that file before it arrived, usually because it is over the hosting upload limit ('.ini_get('upload_max_filesize').'). Export it smaller, or raise upload_max_filesize in the hosting panel.',
             ]);
 
             $bytes = (string) file_get_contents($request->file('photo')->getRealPath());

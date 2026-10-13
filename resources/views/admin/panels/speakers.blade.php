@@ -120,11 +120,13 @@
                             @foreach ($speakers as $speaker)
                                 <tr>
                                     <td>
+                                        <a href="{{ route('admin.speakers.edit', $speaker) }}"><strong>{{ $speaker->name }}</strong></a>
                                         @if ($speaker->application)
-                                            <a href="{{ route('admin.speaker-applications.show', $speaker->application) }}"><strong>{{ $speaker->name }}</strong></a>
-                                            <span class="vl-cell-sub">Arrived as a pitch, click for the full page</span>
+                                            <span class="vl-cell-sub">
+                                                <a href="{{ route('admin.speaker-applications.show', $speaker->application) }}">Arrived as a pitch, read it in full</a>
+                                            </span>
                                         @else
-                                            <strong>{{ $speaker->name }}</strong>
+                                            <span class="vl-cell-sub">Click to edit their details</span>
                                         @endif
                                     </td>
                                     <td>
@@ -164,7 +166,7 @@
                                             <input type="file" name="photo" accept=".jpg,.jpeg,.png,.webp" required>
                                             <button type="submit" class="vl-mini-btn">{{ $speaker->hasPhotoFile() ? 'Replace photo' : 'Upload photo' }}</button>
                                         </form>
-                                        @error('photo')<p class="vl-error">{{ $message }}</p>@enderror
+                                        @error('photo', 'photo'.$speaker->id)<p class="vl-error">{{ $message }}</p>@enderror
                                         @if (! $speaker->hasPhotoFile() && $speaker->application?->hasHeadshot())
                                             <form method="POST" action="{{ route('admin.speakers.photo', $speaker) }}" class="sp-photo-form">
                                                 @csrf
