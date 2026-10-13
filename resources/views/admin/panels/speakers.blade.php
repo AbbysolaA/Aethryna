@@ -110,7 +110,25 @@
                                         {{ $speaker->title }}
                                         @if ($speaker->company)<span class="vl-cell-sub">{{ $speaker->company }}</span>@endif
                                     </td>
-                                    <td class="vl-cell-num">{{ $speaker->sessions_count }}</td>
+                                    <td>
+                                        @if ($speaker->sessions->isNotEmpty())
+                                            <span class="vl-cell-sub" style="display:block; margin-bottom:6px;">{{ $speaker->sessions->pluck('tagline')->join(', ') }}</span>
+                                        @else
+                                            <span class="vl-cell-sub" style="display:block; margin-bottom:6px;">Not on a panel yet</span>
+                                        @endif
+                                        @php $attachable = $upcomingPanels->whereNotIn('id', $speaker->sessions->pluck('id')); @endphp
+                                        @if ($attachable->isNotEmpty())
+                                            <form method="POST" action="{{ route('admin.speakers.attach', $speaker) }}" class="sp-photo-form">
+                                                @csrf
+                                                <select name="panel_session_id" required>
+                                                    @foreach ($attachable as $panel)
+                                                        <option value="{{ $panel->id }}">{{ $panel->tagline }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <button type="submit" class="vl-mini-btn">{{ $speaker->sessions->isEmpty() ? 'Add to panel' : 'Add to another panel' }}</button>
+                                            </form>
+                                        @endif
+                                    </td>
                                     <td>
                                         @if ($speaker->hasPhotoFile())
                                             <img src="{{ asset($speaker->photo_path) }}?v={{ @filemtime(public_path($speaker->photo_path)) ?: 0 }}"

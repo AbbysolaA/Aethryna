@@ -143,8 +143,33 @@ class PanelAdminController extends Controller
     public function speakers(): View
     {
         return view('admin.panels.speakers', [
-            'speakers' => PanelSpeaker::withCount('sessions')->with('application')->orderBy('name')->get(),
+            'speakers'       => PanelSpeaker::withCount('sessions')->with(['application', 'sessions'])->orderBy('name')->get(),
+            // For each row's add-to-a-panel control: returning speakers are
+            // the series' whole model, so putting someone from Panel 3 onto
+            // the next panel must not mean hunting through the panel form.
+            'upcomingPanels' => \App\Models\PanelSession::upcoming()->get(),
         ]);
+    }
+
+    /**
+     * Put an existing speaker on a panel from their row on the speakers
+     * screen. syncWithoutDetaching, so pressing it twice cannot double them.
+     */
+    public function attachSpeakerToPanel(Request $request, PanelSpeaker $speaker): RedirectResponse
+    {
+        $validated = $request->validate([
+            'panel_session_id' => ['required', 'exists:panel_sessions,id'],
+        ]);
+
+        $panel = \App\Models\PanelSession::findOrFail($validated['panel_session_id']);
+
+        $panel->speakers()->syncWithoutDetaching([
+            $speaker->id => [
+                'sort_order' => ((int) $panel->speakers()->max('panel_session_speakers.sort_order')) + 1,
+            ],
+        ]);
+
+        return back()->with('status', $speaker->name.' added to '.$panel->tagline.'. Set their topic and running order in the panel form whenever you like.');
     }
 
     /**
