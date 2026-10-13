@@ -14,7 +14,7 @@ You are registered for "{!! $panelTitle !!}", one week from now. It is free, onl
 @if ($speakers->isNotEmpty())
 On the panel:
 @foreach ($speakers as $speaker)
-- {!! $speaker->name !!}@if ($speaker->title || $speaker->company) ({!! trim($speaker->title.($speaker->title && $speaker->company ? ', ' : '').$speaker->company) !!})@endif
+- {!! $speaker->name !!}@if ($speaker->roleLine()) ({!! $speaker->roleLine() !!})@endif
 
 @endforeach
 @endif

@@ -65,7 +65,7 @@
                 </p>
                 @foreach ($speakers as $speaker)
                     <p style="margin:0 0 6px 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:15px; line-height:23px; color:#2b333a;">
-                        <strong>{{ $speaker->name }}</strong>@if ($speaker->title || $speaker->company) &middot; {{ trim($speaker->title.($speaker->title && $speaker->company ? ', ' : '').$speaker->company) }}@endif
+                        <strong>{{ $speaker->name }}</strong>@if ($speaker->roleLine()) &middot; {{ $speaker->roleLine() }}@endif
                     </p>
                 @endforeach
             </td>

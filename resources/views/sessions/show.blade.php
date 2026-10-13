@@ -188,7 +188,7 @@
                         </div>
                         <h3 class="ss-speaker-name">{{ $speaker->name }}</h3>
                         <p class="ss-speaker-role">
-                            {{ $speaker->title }}@if($speaker->company) <span class="ss-role-sep">·</span> {{ $speaker->company }}@endif
+                            {{ $speaker->title }}@if($speaker->company && ! str_contains(mb_strtolower($speaker->title), mb_strtolower($speaker->company))) <span class="ss-role-sep">·</span> {{ $speaker->company }}@endif
                         </p>
                         @if($speaker->pivot->topic)
                             <p class="ss-speaker-topic"><i class="fas fa-comment-dots"></i> {{ $speaker->pivot->topic }}</p>
