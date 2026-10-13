@@ -175,4 +175,65 @@ class SpeakerPhotoAdminTest extends TestCase
             ->post(route('admin.speakers.attach', $bola), ['panel_session_id' => $founders->id]);
         $this->assertSame(1, $founders->speakers()->whereKey($bola->id)->count());
     }
+    /**
+     * The Ore case: added by hand with dual roles written as they should
+     * print, a session topic, a photo, and straight onto a panel, all from
+     * the one form.
+     */
+    public function test_a_speaker_can_be_added_with_dual_roles_topic_and_panel(): void
+    {
+        $this->travelTo('2026-10-13 12:00:00');
+
+        $founders = \App\Models\PanelSession::create([
+            'title' => 'The Skills Co-op Sessions: Panel 4', 'slug' => 'founders-build-live',
+            'tagline' => 'Vibe Coding: Founders Build Live', 'description' => 'D',
+            'event_date' => '2026-11-10 18:30:00', 'status' => 'upcoming', 'sort_order' => 4,
+        ]);
+
+        $this->actingAs($this->admin())->post(route('admin.speakers.store'), [
+            'name'             => 'Ore Badmus',
+            'title'            => 'Senior Product Marketing Manager, Locaria; Co-founder, TEMSI Africa',
+            'bio'              => 'Marketing and product.',
+            'panel_session_id' => $founders->id,
+            'topic'            => 'From Prompt to Product: Build a Research Analysis Tool with Claude',
+            'photo'            => UploadedFile::fake()->image('ore.jpg', 900, 900),
+        ])->assertSessionHas('status');
+
+        $ore = PanelSpeaker::where('name', 'Ore Badmus')->firstOrFail();
+
+        $this->assertSame('Senior Product Marketing Manager, Locaria; Co-founder, TEMSI Africa', $ore->title);
+        $this->assertNotNull($ore->photo_path);
+        Storage::disk('speaker_images')->assertExists(basename($ore->photo_path));
+
+        $pivot = $founders->speakers()->whereKey($ore->id)->first()->pivot;
+        $this->assertSame('From Prompt to Product: Build a Research Analysis Tool with Claude', $pivot->topic);
+
+        // And the panel page prints the slot title.
+        $this->get('/sessions/founders-build-live')
+            ->assertOk()
+            ->assertSee('Ore Badmus')
+            ->assertSee('From Prompt to Product');
+    }
+
+    public function test_the_row_attach_control_takes_a_topic(): void
+    {
+        $this->travelTo('2026-10-13 12:00:00');
+
+        $founders = \App\Models\PanelSession::create([
+            'title' => 'The Skills Co-op Sessions: Panel 4', 'slug' => 'founders-build-live',
+            'tagline' => 'Vibe Coding: Founders Build Live', 'description' => 'D',
+            'event_date' => '2026-11-10 18:30:00', 'status' => 'upcoming', 'sort_order' => 4,
+        ]);
+        $speaker = PanelSpeaker::create(['name' => 'Abby Areola', 'title' => 'Founder', 'bio' => 'F.']);
+
+        $this->actingAs($this->admin())->post(route('admin.speakers.attach', $speaker), [
+            'panel_session_id' => $founders->id,
+            'topic'            => 'Building Skills Co-op with AI',
+        ])->assertSessionHas('status');
+
+        $this->assertSame(
+            'Building Skills Co-op with AI',
+            $founders->speakers()->whereKey($speaker->id)->first()->pivot->topic
+        );
+    }
 }
