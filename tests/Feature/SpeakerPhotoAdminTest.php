@@ -178,7 +178,7 @@ class SpeakerPhotoAdminTest extends TestCase
             ->get(route('admin.speakers.index'))
             ->assertOk()
             ->assertSee('Panel 3 · The data skills gap')
-            ->assertSee('Add to another panel');
+            ->assertSee('Add Bola to this panel');
 
         $this->actingAs($this->admin())
             ->post(route('admin.speakers.attach', $bola), ['panel_session_id' => $founders->id])
@@ -283,5 +283,58 @@ class SpeakerPhotoAdminTest extends TestCase
             'Senior Product Marketing Manager, Locaria; Co-founder, TEMSI Africa',
             $ore->fresh()->title
         );
+    }
+    /**
+     * The add control has an undo now: a mis-click put Seun on a session
+     * with no way to take him off.
+     */
+    public function test_a_speaker_can_be_removed_from_a_panel(): void
+    {
+        $this->travelTo('2026-10-13 12:00:00');
+
+        $founders = \App\Models\PanelSession::create([
+            'title' => 'P4b', 'slug' => 'founders-build-live',
+            'tagline' => 'Vibe Coding: Founders Build Live', 'description' => 'D',
+            'event_date' => '2026-11-10 18:30:00', 'status' => 'upcoming', 'sort_order' => 4,
+        ]);
+        $seun = PanelSpeaker::create(['name' => 'Seun Adetule', 'title' => 'Partnerships', 'bio' => 'P.']);
+        $founders->speakers()->attach($seun->id, ['sort_order' => 1]);
+
+        // The list shows the chip with its remove control.
+        $this->actingAs($this->admin())
+            ->get(route('admin.speakers.index'))
+            ->assertOk()
+            ->assertSee(route('admin.speakers.detach', [$seun, $founders]), false);
+
+        $this->actingAs($this->admin())
+            ->delete(route('admin.speakers.detach', [$seun, $founders]))
+            ->assertSessionHas('status');
+
+        $this->assertFalse($founders->speakers()->whereKey($seun->id)->exists());
+        $this->assertNotNull($seun->fresh(), 'Removing from a panel must not delete the speaker.');
+
+        // Off the panel, his row offers to add him again.
+        $this->actingAs($this->admin())
+            ->get(route('admin.speakers.index'))
+            ->assertSee('Add Seun to this panel');
+    }
+
+    public function test_attaching_with_a_topic_confirms_the_topic(): void
+    {
+        $this->travelTo('2026-10-13 12:00:00');
+
+        $founders = \App\Models\PanelSession::create([
+            'title' => 'P4b', 'slug' => 'founders-build-live',
+            'tagline' => 'Vibe Coding: Founders Build Live', 'description' => 'D',
+            'event_date' => '2026-11-10 18:30:00', 'status' => 'upcoming', 'sort_order' => 4,
+        ]);
+        $ore = PanelSpeaker::create(['name' => 'Ore Badmus', 'title' => 'Marketing', 'bio' => 'M.']);
+
+        $this->actingAs($this->admin())
+            ->post(route('admin.speakers.attach', $ore), [
+                'panel_session_id' => $founders->id,
+                'topic'            => 'From Prompt to Product',
+            ])
+            ->assertSessionHas('status', fn ($status) => str_contains($status, 'From Prompt to Product'));
     }
 }

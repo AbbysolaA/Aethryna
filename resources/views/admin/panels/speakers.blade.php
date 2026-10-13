@@ -134,22 +134,35 @@
                                         @if ($speaker->company)<span class="vl-cell-sub">{{ $speaker->company }}</span>@endif
                                     </td>
                                     <td>
+                                        @php $firstName = str($speaker->name)->before(' '); @endphp
                                         @if ($speaker->sessions->isNotEmpty())
-                                            <span class="vl-cell-sub" style="display:block; margin-bottom:6px;">{{ $speaker->sessions->pluck('tagline')->join(', ') }}</span>
+                                            @foreach ($speaker->sessions as $onPanel)
+                                                <div class="sp-panel-chip">
+                                                    {{ $onPanel->tagline }}
+                                                    <form method="POST" action="{{ route('admin.speakers.detach', [$speaker, $onPanel]) }}"
+                                                          onsubmit="return confirm('Take {{ addslashes($speaker->name) }} off {{ addslashes($onPanel->tagline) }}? The speaker themselves is kept.');">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="sp-chip-x" aria-label="Remove {{ $speaker->name }} from {{ $onPanel->tagline }}">&times;</button>
+                                                    </form>
+                                                </div>
+                                            @endforeach
                                         @else
                                             <span class="vl-cell-sub" style="display:block; margin-bottom:6px;">Not on a panel yet</span>
                                         @endif
                                         @php $attachable = $upcomingPanels->whereNotIn('id', $speaker->sessions->pluck('id')); @endphp
                                         @if ($attachable->isNotEmpty())
-                                            <form method="POST" action="{{ route('admin.speakers.attach', $speaker) }}" class="sp-photo-form">
+                                            <form method="POST" action="{{ route('admin.speakers.attach', $speaker) }}" class="sp-attach-form">
                                                 @csrf
                                                 <select name="panel_session_id" required>
                                                     @foreach ($attachable as $panel)
                                                         <option value="{{ $panel->id }}">{{ $panel->tagline }}</option>
                                                     @endforeach
                                                 </select>
-                                                <input type="text" name="topic" maxlength="255" placeholder="Session topic (optional)">
-                                                <button type="submit" class="vl-mini-btn">{{ $speaker->sessions->isEmpty() ? 'Add to panel' : 'Add to another panel' }}</button>
+                                                <input type="text" name="topic" maxlength="255" placeholder="{{ $firstName }}'s session topic (optional)">
+                                                {{-- The speaker's own name on the button, so a tall table of
+                                                     similar rows cannot invite typing into the wrong one. --}}
+                                                <button type="submit" class="vl-mini-btn">Add {{ $firstName }} to this panel</button>
                                             </form>
                                         @endif
                                     </td>
@@ -206,6 +219,22 @@
         .vl-field-row .vl-field { flex: 1 1 220px; }
         .vl-sub-heading { font-size: 1.15rem; font-weight: 800; margin-bottom: 18px; color: var(--ath-deep); }
         .sp-thumb { width: 52px; height: 52px; border-radius: 10px; object-fit: cover; display: block; margin-bottom: 8px; }
+        .sp-panel-chip {
+            display: inline-flex; align-items: center; gap: 8px;
+            margin: 0 6px 8px 0; padding: 5px 10px 5px 12px; border-radius: 100px;
+            background: rgba(3, 139, 137, 0.08); border: 1px solid rgba(3, 139, 137, 0.25);
+            font-size: 0.82rem; color: var(--ath-deep, #055860); font-weight: 600;
+        }
+        .sp-panel-chip form { display: inline-flex; }
+        .sp-chip-x {
+            border: none; background: none; cursor: pointer; padding: 0 2px;
+            font-size: 1rem; line-height: 1; color: #9b2c1c; font-weight: 700;
+        }
+        .sp-attach-form {
+            display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+            margin-top: 8px; padding: 10px; border-radius: 10px;
+            border: 1px dashed rgba(3, 139, 137, 0.35);
+        }
         .sp-photo-form { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 6px; }
         .sp-photo-form input[type="file"] { max-width: 210px; font-size: 0.8rem; }
     </style>
