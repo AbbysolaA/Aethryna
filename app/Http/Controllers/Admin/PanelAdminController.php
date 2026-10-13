@@ -115,16 +115,48 @@ class PanelAdminController extends Controller
             'title'        => ['required', 'string', 'max:255'],
             'company'      => ['nullable', 'string', 'max:255'],
             'bio'          => ['nullable', 'string', 'max:2000'],
-            'photo_path'   => ['nullable', 'string', 'max:255'],
             'linkedin_url' => ['nullable', 'url', 'max:255'],
+
+            // A speaker added by hand usually arrives with a session in mind
+            // and a title for their slot, so both are captured here rather
+            // than on a second screen.
+            'panel_session_id' => ['nullable', 'exists:panel_sessions,id'],
+            'topic'            => ['nullable', 'string', 'max:255'],
+            'photo'            => ['nullable', 'file', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
         ], [
             'name.unique' => 'There is already a speaker with that name. Add them to the panel from the list instead.',
-            'title.required' => 'The job title only, without the employer — the company has its own field.',
+            'photo.max'   => 'Keep photos under 8MB. They are resized on upload anyway.',
         ]);
 
-        PanelSpeaker::create($validated);
+        $speaker = PanelSpeaker::create(
+            collect($validated)->only(['name', 'title', 'company', 'bio', 'linkedin_url'])->all()
+        );
 
-        return back()->with('status', 'Speaker added. Tick them on a panel to put them on the bill.');
+        if ($request->hasFile('photo')) {
+            $published = \App\Support\SpeakerPhotos::publish(
+                (string) file_get_contents($request->file('photo')->getRealPath()),
+                $speaker->name
+            );
+
+            if ($published) {
+                $speaker->forceFill(['photo_path' => $published])->save();
+            }
+        }
+
+        if (! empty($validated['panel_session_id'])) {
+            $panel = \App\Models\PanelSession::findOrFail($validated['panel_session_id']);
+
+            $panel->speakers()->syncWithoutDetaching([
+                $speaker->id => [
+                    'topic'      => $validated['topic'] ?? null,
+                    'sort_order' => ((int) $panel->speakers()->max('panel_session_speakers.sort_order')) + 1,
+                ],
+            ]);
+
+            return back()->with('status', $speaker->name.' added and on the bill for '.$panel->tagline.'.');
+        }
+
+        return back()->with('status', 'Speaker added. Put them on a panel from their row below.');
     }
 
     public function destroySpeaker(PanelSpeaker $speaker): RedirectResponse
@@ -159,12 +191,14 @@ class PanelAdminController extends Controller
     {
         $validated = $request->validate([
             'panel_session_id' => ['required', 'exists:panel_sessions,id'],
+            'topic'            => ['nullable', 'string', 'max:255'],
         ]);
 
         $panel = \App\Models\PanelSession::findOrFail($validated['panel_session_id']);
 
         $panel->speakers()->syncWithoutDetaching([
             $speaker->id => [
+                'topic'      => $validated['topic'] ?? null,
                 'sort_order' => ((int) $panel->speakers()->max('panel_session_speakers.sort_order')) + 1,
             ],
         ]);
