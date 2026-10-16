@@ -15,7 +15,7 @@
                 The Skills Co-op Sessions
             </p>
             <h1 class="sc-h1" style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:30px; line-height:38px; font-weight:400; color:#055860;">
-                {{ $stage === 'day' ? 'See you tomorrow' : 'One week to go' }}
+                {{ $stage === 'day' ? 'See you '.$when : 'One week to go' }}
             </h1>
             <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:18px 0 0 0;">
                 <tr><td width="64" height="4" style="width:64px; height:4px; background-color:#ee9d1d; font-size:0; line-height:0;">&nbsp;</td></tr>
@@ -30,7 +30,7 @@
             </p>
             <p style="margin:0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:16px; line-height:26px; color:#2b333a;">
                 @if ($stage === 'day')
-                    Your seat at <strong>{{ $panelTitle }}</strong> is booked for tomorrow.
+                    Your seat at <strong>{{ $panelTitle }}</strong> is booked for {{ $when }}.
                     It is free, online and starts on time.
                 @else
                     You are registered for <strong>{{ $panelTitle }}</strong>, one week from now.
@@ -72,6 +72,25 @@
         </tr>
     @endif
 
+    @if ($joinUrl)
+        <tr>
+            <td class="sc-pad" style="padding:28px 32px 0 32px;">
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="sc-btn">
+                    <tr>
+                        <td align="center" bgcolor="#ee9d1d" style="border-radius:6px;">
+                            <a href="{{ $joinUrl }}" style="display:inline-block; padding:16px 34px; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:16px; font-weight:700; color:#1d2b2a; text-decoration:none; border-radius:6px; background-color:#ee9d1d;">
+                                Join the session
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                <p style="margin:10px 0 0 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:14px; line-height:23px; color:#6a737b;">
+                    This is your link to watch: <a href="{{ $joinUrl }}" style="color:#055860;">{{ $joinUrl }}</a>
+                </p>
+            </td>
+        </tr>
+    @endif
+
     <tr>
         <td class="sc-pad" style="padding:28px 32px 0 32px;">
             <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="sc-btn">
@@ -95,7 +114,7 @@
         <td class="sc-pad" style="padding:24px 32px 40px 32px;">
             <p style="margin:0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:15px; line-height:24px; color:#2b333a;">
                 Can no longer make it? No need to do anything, the recording lands on the same
-                page afterwards. See you {{ $stage === 'day' ? 'tomorrow' : 'there' }}.
+                page afterwards. See you {{ $stage === 'day' ? $when : 'there' }}.
             </p>
         </td>
     </tr>

@@ -1,9 +1,9 @@
-{!! $stage === 'day' ? 'SEE YOU TOMORROW' : 'ONE WEEK TO GO' !!}
+{!! $stage === 'day' ? 'SEE YOU '.strtoupper($when) : 'ONE WEEK TO GO' !!}
 
 Hi {!! $firstName !!},
 
 @if ($stage === 'day')
-Your seat at "{!! $panelTitle !!}" is booked for tomorrow. It is free, online and starts on time.
+Your seat at "{!! $panelTitle !!}" is booked for {!! $when !!}. It is free, online and starts on time.
 @else
 You are registered for "{!! $panelTitle !!}", one week from now. It is free, online and open to everyone, so feel welcome to bring someone along.
 @endif
@@ -19,6 +19,10 @@ On the panel:
 @endforeach
 @endif
 
+@if ($joinUrl)
+JOIN THE SESSION: {!! $joinUrl !!}
+
+@endif
 Add it to your calendar: {!! $calendarUrl !!}
 (The calendar file is attached to this email too.)
 

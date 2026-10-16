@@ -26,7 +26,10 @@ class Panel4SplitSeeder extends Seeder
     {
         // The October session keeps everything, under its new name.
         PanelSession::where('slug', 'panel-4')->update([
-            'tagline' => 'Vibe Coding: Live Builds',
+            'tagline'  => 'Vibe Coding: Live Builds',
+            // The StreamYard watch link for 20 October, delivered by the
+            // day-before reminder and the confirmation email.
+            'join_url' => 'https://streamyard.com/watch/DeQpDvThNZnq',
         ]);
 
         // The November founders session. 6.30pm to 8pm UK time; the clocks
