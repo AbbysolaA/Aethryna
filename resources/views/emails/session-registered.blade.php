@@ -24,7 +24,12 @@
                 Hi {{ $firstName }},
             </p>
             <p style="margin:14px 0 0 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:16px; line-height:26px; color:#2b333a;">
-                Thanks for signing up for the next Skills Co-op Sessions panel. Save the date, and we will email you closer to the time with the join link.
+                Thanks for signing up for the next Skills Co-op Sessions panel.
+                @if ($joinUrl)
+                    Your joining link is below; keep this email and use it on the night.
+                @else
+                    Save the date, and we will email you closer to the time with the join link.
+                @endif
             </p>
         </td>
     </tr>
@@ -104,6 +109,25 @@
             </table>
         </td>
     </tr>
+
+    @if ($joinUrl)
+        <tr>
+            <td class="sc-pad" style="padding:28px 32px 0 32px;">
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="sc-btn">
+                    <tr>
+                        <td align="center" bgcolor="#055860" style="border-radius:6px;">
+                            <a href="{{ $joinUrl }}" style="display:inline-block; padding:16px 34px; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:16px; font-weight:700; color:#ffffff; text-decoration:none; border-radius:6px; background-color:#055860;">
+                                Join the session
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                <p style="margin:10px 0 0 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:14px; line-height:23px; color:#6a737b;">
+                    Your link to watch on the night: <a href="{{ $joinUrl }}" style="color:#055860;">{{ $joinUrl }}</a>
+                </p>
+            </td>
+        </tr>
+    @endif
 
     @if ($calendarUrl)
         <tr>

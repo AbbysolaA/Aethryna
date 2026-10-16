@@ -130,6 +130,15 @@
                 </div>
 
                 <div class="vl-field">
+                    <label for="join_url">Joining link <span class="vl-opt">(optional)</span></label>
+                    <input id="join_url" name="join_url" type="url" maxlength="255"
+                           placeholder="https://streamyard.com/watch/..."
+                           value="{{ old('join_url', $panel->join_url) }}">
+                    <p class="vl-side-note vl-hint">Where attendees watch. Sent automatically in the day-before reminder and the confirmation email, and used as the calendar entry's link. Set it as soon as you have it.</p>
+                    @error('join_url')<p class="vl-error">{{ $message }}</p>@enderror
+                </div>
+
+                <div class="vl-field">
                     <label for="eventbrite_url">Eventbrite URL <span class="vl-opt">(optional)</span></label>
                     <input id="eventbrite_url" name="eventbrite_url" type="url" maxlength="255"
                            placeholder="https://www.eventbrite.co.uk/e/..."

@@ -10,7 +10,7 @@ class PanelSession extends Model
 {
     protected $fillable = [
         'title', 'slug', 'description', 'tagline', 'event_date',
-        'duration', 'format', 'eventbrite_url', 'recording_url',
+        'duration', 'format', 'eventbrite_url', 'join_url', 'recording_url',
         'status', 'sort_order',
         'venue_name', 'venue_address', 'accessibility_note',
         'capacity', 'itinerary', 'landing_path', 'banner_path',
@@ -251,7 +251,9 @@ class PanelSession extends Model
             'SUMMARY:'.$escape($this->tagline ?: $this->title),
             'DESCRIPTION:'.$escape(\Illuminate\Support\Str::limit(strip_tags((string) $this->description), 400).' Details: '.$this->url()),
             'LOCATION:'.$escape($this->format ?: 'Online'),
-            'URL:'.$this->url(),
+            // The place a calendar click should land: the stream itself once
+            // a joining link exists, the event page until then.
+            'URL:'.($this->join_url ?: $this->url()),
             'END:VEVENT',
             'END:VCALENDAR',
         ];

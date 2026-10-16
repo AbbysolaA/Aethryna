@@ -86,6 +86,7 @@ class SessionRegisteredMail extends Mailable
             'eventbriteUrl'    => $s->eventbrite_url,
             'sessionsUrl'      => 'https://skillscoop.org/sessions',
             'panelUrl'         => $s->url(),
+            'joinUrl'          => $s->join_url,
             'calendarUrl'      => $eventDate ? route('sessions.calendar', $s) : null,
             // Name => url, derived from the organisation's same_as profiles.
             'followLinks'      => collect(config('organisation.same_as', []))

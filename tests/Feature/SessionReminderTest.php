@@ -189,4 +189,45 @@ class SessionReminderTest extends TestCase
             ->assertOk()
             ->assertSee(route('sessions.show', $panel), false);
     }
+    /**
+     * The joining link rides every email once it is set: the day reminder,
+     * the confirmation and the calendar entry all point at the stream.
+     */
+    public function test_the_joining_link_reaches_every_email_and_the_calendar(): void
+    {
+        $panel = $this->panel();
+        $panel->update(['join_url' => 'https://streamyard.com/watch/DeQpDvThNZnq']);
+
+        $day = (new SessionReminder($panel, 'Rae Registrant', 'day'))->build();
+        $dayHtml = $day->render();
+        $this->assertStringContainsString('Join the session', $dayHtml);
+        $this->assertStringContainsString('streamyard.com/watch/DeQpDvThNZnq', $dayHtml);
+
+        $confirmation = (new SessionRegisteredMail($panel, 'Rae Registrant'))->build()->render();
+        $this->assertStringContainsString('Join the session', $confirmation);
+        $this->assertStringContainsString('streamyard.com/watch/DeQpDvThNZnq', $confirmation);
+        $this->assertStringContainsString('keep this email', $confirmation);
+
+        $this->assertStringContainsString('URL:https://streamyard.com/watch/DeQpDvThNZnq', $panel->toIcs());
+
+        // And the event page's schema names the stream as the location.
+        $this->get('/sessions/panel-4')
+            ->assertOk()
+            ->assertSee('"url":"https://streamyard.com/watch/DeQpDvThNZnq"', false);
+    }
+
+    /**
+     * A day-stage reminder sent on the event day itself says today, not
+     * tomorrow: late registrants are caught by the same daily run.
+     */
+    public function test_the_day_reminder_says_today_on_the_day(): void
+    {
+        $panel = $this->panel();
+
+        $this->travelTo('2026-10-20 12:00:00');
+        $built = (new SessionReminder($panel, 'Rae Registrant', 'day'))->build();
+
+        $this->assertSame('Today: Panel 4 · Vibe coding: show and tell', $built->subject);
+        $this->assertStringContainsString('See you today', $built->render());
+    }
 }

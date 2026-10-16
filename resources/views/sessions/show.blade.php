@@ -46,7 +46,9 @@
         'isAccessibleForFree'  => true,
         'location'             => [
             '@type' => 'VirtualLocation',
-            'url'   => $session->eventbrite_url ?: route('sessions.show', $session),
+            // The stream itself once a joining link exists; Google treats
+            // this as where the online event actually happens.
+            'url'   => $session->join_url ?: ($session->eventbrite_url ?: route('sessions.show', $session)),
         ],
         'offers' => [
             '@type'        => 'Offer',

@@ -328,6 +328,7 @@ class PanelAdminController extends Controller
             'duration'       => ['nullable', 'string', 'max:100'],
             'format'         => ['nullable', 'string', 'max:100'],
             'eventbrite_url' => ['nullable', 'url', 'max:255'],
+            'join_url'       => ['nullable', 'url', 'max:255'],
             'recording_url'  => ['nullable', 'url', 'max:255'],
             'status'         => ['required', Rule::in(['upcoming', 'live', 'past'])],
             'sort_order'     => ['required', 'integer', 'min:1'],

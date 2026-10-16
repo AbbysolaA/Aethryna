@@ -56,9 +56,14 @@ class SessionReminder extends Mailable
         // time, the reading everyone was shown when they registered.
         $eventDate = $s->event_date;
 
+        // The day stage can fire on the event day itself for late
+        // registrants, and an email saying tomorrow on the day is worse
+        // than no reminder.
+        $when = $eventDate?->isToday() ? 'today' : 'tomorrow';
+
         return [
             'subject'      => $this->stage === 'day'
-                ? 'Tomorrow: '.$s->tagline
+                ? ucfirst($when).': '.$s->tagline
                 : 'One week to go: '.$s->tagline,
             'preheader'    => ($eventDate?->format('l j F, g.ia') ?? '').' UK. Free and online, your seat is booked.',
             'logoUrl'      => 'https://skillscoop.org/email/skills-coop-mark.png',
@@ -67,6 +72,8 @@ class SessionReminder extends Mailable
             'year'         => date('Y'),
 
             'stage'       => $this->stage,
+            'when'        => $when,
+            'joinUrl'     => $s->join_url,
             'firstName'   => trim(explode(' ', trim($this->name))[0]) ?: $this->name,
             'panelTitle'  => $s->tagline,
             'panelDate'   => $eventDate?->format('l j F Y'),

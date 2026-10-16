@@ -3,7 +3,7 @@ YOU ARE REGISTERED
 
 Hi {!! $firstName !!},
 
-Thanks for signing up for the next Skills Co-op Sessions panel. Save the date, and we will email you closer to the time with the join link.
+Thanks for signing up for the next Skills Co-op Sessions panel.@if ($joinUrl) Your joining link is below; keep this email and use it on the night.@else Save the date, and we will email you closer to the time with the join link.@endif
 
 PANEL
 {!! $panelTitle !!}
@@ -26,6 +26,10 @@ WHAT TO EXPECT
 - Honest Q&A, hard questions welcome
 - A community that keeps going after the session
 
+@if ($joinUrl)
+JOIN THE SESSION: {!! $joinUrl !!}
+
+@endif
 @if ($calendarUrl)
 Add it to your calendar: {!! $calendarUrl !!}
 (The calendar file is attached to this email too.)
