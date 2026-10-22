@@ -257,6 +257,8 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     // Who registered for which panel, and who offered to speak.
     Route::get('/registrations', [\App\Http\Controllers\Admin\SessionRegistrationAdminController::class, 'index'])
         ->name('registrations.index');
+    Route::post('/registrations/import', [\App\Http\Controllers\Admin\SessionRegistrationAdminController::class, 'import'])
+        ->name('registrations.import');
     Route::get('/registrations/export', [\App\Http\Controllers\Admin\SessionRegistrationAdminController::class, 'export'])
         ->name('registrations.export');
 
