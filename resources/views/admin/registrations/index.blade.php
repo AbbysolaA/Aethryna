@@ -22,6 +22,12 @@
                 </p>
             </div>
             <div class="vl-head-actions">
+                <form method="POST" action="{{ route('admin.registrations.import') }}" enctype="multipart/form-data" class="rg-import">
+                    @csrf
+                    <input type="file" name="contacts" accept=".csv,.txt" required>
+                    <button type="submit" class="vl-btn vl-btn-quiet">Import EmailOctopus CSV</button>
+                    @error('contacts')<p class="vl-error" style="flex-basis:100%;">{{ $message }}</p>@enderror
+                </form>
                 <a href="{{ route('admin.registrations.export', request()->query()) }}" class="vl-btn vl-btn-primary">Download CSV</a>
                 <a href="{{ route('admin.panels.index') }}" class="vl-btn vl-btn-quiet">Manage panels</a>
                 <a href="{{ route('admin.speakers.index') }}" class="vl-btn vl-btn-quiet">Manage speakers</a>
@@ -121,6 +127,8 @@
     @include('admin.volunteer-roles._admin-styles')
     <style>
         .vl-filter-panel { margin-bottom: 20px; }
+        .rg-import { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+        .rg-import input[type="file"] { max-width: 220px; font-size: 0.82rem; }
         .vl-filters { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-end; }
         .vl-filters .vl-field { margin-bottom: 0; flex: 0 1 320px; }
         .vl-speaker-check { display: flex; align-items: center; gap: 10px; cursor: pointer; }

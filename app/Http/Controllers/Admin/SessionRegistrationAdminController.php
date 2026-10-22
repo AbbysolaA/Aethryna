@@ -51,6 +51,79 @@ class SessionRegistrationAdminController extends Controller
      * Streamed rather than built in memory: this list only grows, and a CSV
      * download should not depend on how big it has got.
      */
+    /**
+     * Bank contacts from an EmailOctopus export, so registrations taken
+     * before this screen existed live in the database like everyone since.
+     * Keyed on email: an address already known anywhere is left untouched,
+     * so re-importing the same file cannot duplicate or overwrite anyone.
+     */
+    public function import(Request $request): \Illuminate\Http\RedirectResponse
+    {
+        $request->validate([
+            'contacts' => ['required', 'file', 'mimes:csv,txt', 'max:2048'],
+        ], [
+            'contacts.mimes' => 'Upload the CSV exactly as EmailOctopus exported it.',
+        ]);
+
+        $handle = fopen($request->file('contacts')->getRealPath(), 'r');
+        $header = array_map(fn ($h) => strtolower(trim($h)), fgetcsv($handle) ?: []);
+
+        $emailCol = array_search('email address', $header);
+        $firstCol = array_search('first name', $header);
+        $lastCol  = array_search('last name', $header);
+        $dateCol  = array_search('created', $header);
+
+        if ($emailCol === false) {
+            fclose($handle);
+
+            return back()->with('error', 'That file has no "Email address" column. Export the list from EmailOctopus as CSV and upload that file.');
+        }
+
+        $imported = 0;
+        $skipped = 0;
+
+        while (($row = fgetcsv($handle)) !== false) {
+            $email = strtolower(trim($row[$emailCol] ?? ''));
+
+            if (! filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $skipped++;
+
+                continue;
+            }
+
+            if (SessionRegistration::where('email', $email)->exists()) {
+                $skipped++;
+
+                continue;
+            }
+
+            $name = trim(($firstCol !== false ? ($row[$firstCol] ?? '') : '').' '.($lastCol !== false ? ($row[$lastCol] ?? '') : ''));
+
+            $registration = SessionRegistration::create([
+                'panel_session_id' => null,
+                'name'             => $name ?: $email,
+                'email'            => $email,
+                'interest_type'    => 'curious',
+                'notes'            => 'Imported from EmailOctopus',
+            ]);
+
+            // Keep the original signup date, so the bank reads honestly.
+            if ($dateCol !== false && ! empty($row[$dateCol])) {
+                try {
+                    $registration->forceFill(['created_at' => \Illuminate\Support\Carbon::parse($row[$dateCol])])->save();
+                } catch (\Throwable) {
+                    // An unparseable date keeps the import time.
+                }
+            }
+
+            $imported++;
+        }
+
+        fclose($handle);
+
+        return back()->with('status', $imported.' contact'.($imported === 1 ? '' : 's').' banked, '.$skipped.' skipped (already known or not a valid address).');
+    }
+
     public function export(Request $request): StreamedResponse
     {
         $panelId = $request->query('panel');
