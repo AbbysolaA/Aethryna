@@ -145,6 +145,13 @@ class PanelRecapTest extends TestCase
         $this->assertStringContainsString('youtube.com/@TheSkillsCoOpSessions', $html);
         $this->assertStringContainsString('Vibe Coding: Founders Build Live', $html);
         $this->assertStringContainsString('rather not hear about future sessions', $html);
+        $this->assertStringContainsString('the AI does the work, you own the output', $html);
+        $this->assertStringContainsString('Founder and Executive Director, Skills Co-op', $html);
+        // Pinned to the public domain whatever the rendering machine's
+        // APP_URL is: a registrant was shown localhost in a preview once.
+        $this->assertStringContainsString('https://skillscoop.org/sessions/panel-4', $html);
+        $this->assertStringContainsString('https://skillscoop.org/sessions/founders-build-live', $html);
+        $this->assertStringNotContainsString('localhost', $html);
     }
 
     public function test_the_recap_refuses_a_panel_without_a_recording(): void

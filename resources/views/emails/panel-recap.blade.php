@@ -30,8 +30,8 @@
             </p>
             <p style="margin:0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:16px; line-height:26px; color:#2b333a;">
                 <strong>{{ $panelTitle }}</strong> happened{{ $panelDate ? ' on '.$panelDate : '' }},
-                and it did what it said: real builds with AI on screen, prompts, wrong turns
-                and judgement calls included, then an honest Q&amp;A. If you were in the room,
+                and it did what it said: {{ $buildCount }} real builds with AI on screen, prompts, wrong
+                turns and judgement calls included, then an honest Q&amp;A. If you were in the room,
                 thank you for coming. If you missed it, the whole thing is up now.
             </p>
         </td>
@@ -69,6 +69,16 @@
         </tr>
     @endif
 
+    @if ($closingNote)
+        <tr>
+            <td class="sc-pad" style="padding:20px 32px 0 32px;">
+                <p style="margin:0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:16px; line-height:26px; color:#2b333a;">
+                    {{ $closingNote }}
+                </p>
+            </td>
+        </tr>
+    @endif
+
     @if ($youtubeUrl)
         <tr>
             <td class="sc-pad" style="padding:24px 32px 0 32px;">
@@ -76,8 +86,7 @@
                     <tr>
                         <td style="padding:18px 22px;">
                             <p style="margin:0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:15px; line-height:25px; color:#2b333a;">
-                                <strong>The full demo videos are going up on YouTube</strong>, each build
-                                as its own video.
+                                <strong>Each build is also going up on YouTube as its own video.</strong>
                                 <a href="{{ $youtubeUrl }}" style="color:#055860; font-weight:700;">Subscribe to the channel</a>
                                 and you will get an alert the moment they land.
                             </p>
@@ -102,9 +111,13 @@
 
     <tr>
         <td class="sc-pad" style="padding:24px 32px 40px 32px;">
-            <p style="margin:0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:14px; line-height:23px; color:#6a737b;">
+            <p style="margin:0 0 18px 0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:14px; line-height:23px; color:#6a737b;">
                 The recording also lives at <a href="{{ $panelUrl }}" style="color:#055860;">{{ $panelUrl }}</a>,
                 speakers and all, if you want to send it to someone.
+            </p>
+            <p style="margin:0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:15px; line-height:24px; color:#2b333a;">
+                Abisola Areola<br>
+                <span style="color:#8a8f86;">Founder and Executive Director, Skills Co-op</span>
             </p>
         </td>
     </tr>

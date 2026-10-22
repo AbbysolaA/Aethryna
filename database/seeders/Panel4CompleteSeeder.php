@@ -51,5 +51,30 @@ class Panel4CompleteSeeder extends Seeder
                 'sort_order' => 1,
             ]
         );
+
+        /*
+         * The founder's write-ups of what each person actually built, shown
+         * under their card on the archive page and in the recap email. Set
+         * by name and only for speakers attached to this panel, so a missing
+         * speaker is skipped rather than invented.
+         */
+        $blurbs = [
+            'Omonigho Okome' => 'From Prompting to Context Engineering: Building an AI that knows your product. The same product request, twice: once as a simple prompt, once with her context loaded. Watch how much changes.',
+            'Ore Badmus'     => 'Building a research analysis tool with Claude, with no code. A work problem turned into a working tool, one stage at a time, with a scoring framework she wrote herself.',
+            'Abisola Areola' => 'Building an AI job application assistant. Turn a resume into an evidence bank, match it to a job advert, and write a tailored resume and cover letter where every claim traces back to evidence.',
+        ];
+
+        foreach ($blurbs as $name => $blurb) {
+            $speaker = $panel->speakers()->where('name', $name)->first();
+
+            if ($speaker) {
+                $panel->speakers()->updateExistingPivot($speaker->id, ['topic' => $blurb]);
+            }
+        }
+
+        // Her own wording for the role, from the recap copy.
+        \App\Models\PanelSpeaker::where('name', 'Omonigho Okome')
+            ->where('title', 'Product Manager')
+            ->update(['title' => 'Fintech Product Manager']);
     }
 }
