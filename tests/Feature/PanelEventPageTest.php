@@ -198,4 +198,11 @@ class PanelEventPageTest extends TestCase
             ->assertSee('Vibe Coding: Founders Build Live')
             ->assertSee('/sessions/founders-build-live', false);
     }
+    /** Both committed banners are the landscape website versions. */
+    public function test_the_committed_founders_banner_is_landscape(): void
+    {
+        [$width, $height] = getimagesize(public_path('images/panels/founders-build-live.jpg'));
+
+        $this->assertGreaterThan($height, $width);
+    }
 }

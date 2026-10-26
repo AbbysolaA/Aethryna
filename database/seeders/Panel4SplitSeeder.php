@@ -53,6 +53,10 @@ class Panel4SplitSeeder extends Seeder
                     '7.55pm | What is next at Skills Co-op and goodnight',
                 ],
                 'accessibility_note' => 'Live captions are available throughout. If you need anything else to take part, email hello@skillscoop.org and we will sort it.',
+                // The flyer, committed to the repo so the page and its link
+                // previews ship with it. Replace it any time in the panels
+                // admin, which writes its own file and updates this path.
+                'banner_path' => 'founders-build-live.jpg',
             ]
         );
 
