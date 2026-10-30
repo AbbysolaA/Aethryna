@@ -108,7 +108,10 @@
         <div class="ss-speakers-grid">
             @foreach($nextSession->speakers as $speaker)
                 <article class="ss-speaker-card">
-                    <div class="ss-speaker-portrait" style="background-image:url('{{ $speaker->photoUrl() }}');">
+                    <div class="ss-speaker-portrait">
+                        {{-- A real img, not a CSS background: a background is
+                             invisible to image search and carries no alt. --}}
+                        <img src="{{ $speaker->photoUrl() }}" alt="{{ $speaker->name }}" loading="lazy">
                         <div class="ss-portrait-gradient"></div>
                     </div>
                     <div class="ss-speaker-body">

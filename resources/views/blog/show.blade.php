@@ -5,6 +5,11 @@
 @section('meta_description', $post->standfirst)
 @section('og_title', $post->title)
 @section('og_description', $post->standfirst)
+
+@if ($post->coverImageUrl())
+    @section('og_image', $post->coverImageUrl())
+    @section('twitter_image', $post->coverImageUrl())
+@endif
 {{-- A draft has no business in an index while it is being proofread. --}}
 @unless ($post->isPublished())
     @section('meta_robots', 'noindex, nofollow')
@@ -108,11 +113,12 @@
 
 @if ($post->isPublished())
 <script type="application/ld+json">
-{!! json_encode([
+{!! json_encode(array_filter([
     '@context'      => 'https://schema.org',
     '@type'         => 'BlogPosting',
     'headline'      => $post->title,
     'description'   => $post->standfirst,
+    'image'         => $post->coverImageUrl(),
     'datePublished' => $post->published_at->toIso8601String(),
     'dateModified'  => $post->updated_at->toIso8601String(),
     'url'           => $post->url(),
@@ -126,7 +132,7 @@
         'url'   => url('/'),
     ],
     'mainEntityOfPage' => $post->url(),
-], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+], fn ($v) => $v !== null), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
 </script>
 @endif
 

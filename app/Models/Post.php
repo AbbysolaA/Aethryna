@@ -58,6 +58,23 @@ class Post extends Model
         return $query->whereNull('published_at')->whereNotNull('review_requested_at');
     }
 
+    /**
+     * The first picture in the post, as an absolute URL, for the share
+     * image and the article markup. A post shared without one falls back
+     * to the site-wide image; with one, WhatsApp, LinkedIn and Google's
+     * article results all show the post's own picture.
+     */
+    public function coverImageUrl(): ?string
+    {
+        if (! preg_match('/!\[[^\]]*\]\(([^)\s]+)/', (string) $this->body, $m)) {
+            return null;
+        }
+
+        $src = $m[1];
+
+        return str_starts_with($src, 'http') ? $src : url($src);
+    }
+
     public function url(): string
     {
         return route('blog.show', $this);
