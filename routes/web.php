@@ -503,17 +503,19 @@ Route::get('/sitemap.xml', function () {
     // One list, shared with the IndexNow command. It used to be built here and
     // separately in the command, and the two had drifted: every panel and every
     // course was in the sitemap and in nothing the command ever submitted.
-    $paths = \App\Support\SiteUrls::all();
+    $dated = \App\Support\SiteUrls::allWithDates();
     $host  = config('services.indexnow.host', 'skillscoop.org');
-    // Deploy time as the sitemap-wide lastmod — good enough for a small site
-    // and honest (changes every deploy, stable between deploys).
-    $lastmod = date('c', @filemtime(base_path('routes/web.php')) ?: time());
+    // Deploy time for pages that keep no record of their own changes; posts,
+    // panels, courses and vacancies carry their real dates, so crawlers
+    // recrawl what actually moved instead of everything on every deploy.
+    $deploy = date('c', @filemtime(base_path('routes/web.php')) ?: time());
 
     $xml  = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
     $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
-    foreach ($paths as $path) {
+    foreach ($dated as $path => $modified) {
         $url = 'https://' . $host . '/' . ltrim($path, '/');
         $url = $path === '/' ? 'https://' . $host . '/' : rtrim($url, '/');
+        $lastmod = $modified?->toIso8601String() ?: $deploy;
         $xml .= "  <url>\n";
         $xml .= "    <loc>" . htmlspecialchars($url, ENT_XML1) . "</loc>\n";
         $xml .= "    <lastmod>{$lastmod}</lastmod>\n";

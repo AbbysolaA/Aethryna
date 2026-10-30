@@ -35,13 +35,61 @@ class SiteUrls
      */
     public static function all(): array
     {
-        return array_values(array_unique(array_merge(
-            config('services.indexnow.urls', []),
-            self::panels(),
-            self::courses(),
-            self::vacancies(),
-            self::posts(),
-        )));
+        return array_keys(self::allWithDates());
+    }
+
+    /**
+     * The same URLs with the honest last-modified date for each, for the
+     * sitemap. The old sitemap stamped every URL with the deploy time, which
+     * told crawlers everything changed on every deploy and nothing between
+     * deploys; a blog post or panel knows when it really changed. A null
+     * date means the page has no record of its own (the static pages) and
+     * the sitemap falls back to deploy time for it.
+     *
+     * Built as one ordered map so all() cannot drift from the dated list.
+     *
+     * @return array<string, \Illuminate\Support\Carbon|null>
+     */
+    public static function allWithDates(): array
+    {
+        $dated = [];
+
+        foreach (config('services.indexnow.urls', []) as $path) {
+            $dated[$path] = $dated[$path] ?? null;
+        }
+
+        foreach (PanelSession::orderBy('sort_order')->get() as $panel) {
+            $path = $panel->landing_path
+                ? ($panel->hasHappened() ? null : $panel->landing_path)
+                : '/sessions/'.$panel->slug;
+
+            if ($path !== null && ! array_key_exists($path, $dated)) {
+                $dated[$path] = $panel->updated_at;
+            }
+        }
+
+        foreach (Pathway::active()->orderByDesc('is_pilot')->orderBy('name')->get() as $pathway) {
+            $dated['/programs/'.$pathway->slug] ??= $pathway->updated_at;
+        }
+
+        foreach (self::vacancies() as $path) {
+            $dated[$path] = $dated[$path] ?? null;
+        }
+
+        foreach (VolunteerRole::paid()->acceptingApplications()->get() as $role) {
+            $dated['/careers/'.$role->slug] = $role->updated_at;
+        }
+
+        $latestPost = null;
+
+        foreach (Post::published()->orderByDesc('published_at')->get() as $post) {
+            $dated['/blog/'.$post->slug] ??= $post->updated_at;
+            $latestPost = $latestPost && $latestPost->gt($post->updated_at) ? $latestPost : $post->updated_at;
+        }
+
+        $dated['/blog'] = $dated['/blog'] ?? $latestPost;
+
+        return $dated;
     }
 
     /** @return array<int, string> */
