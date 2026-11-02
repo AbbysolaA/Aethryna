@@ -207,6 +207,29 @@ class PageController extends Controller
             }
         }
 
+        // Someone who offered to speak gets pointed at the pitch form, which
+        // is the path from "tick in a table" to an actual booking. Once per
+        // address ever, however many panels they register for: the tick is
+        // the same offer each time. Stamped before sending, same as every
+        // other once-only email here.
+        if ($wantsToSpeak && ! SessionRegistration::whereRaw('lower(email) = ?', [strtolower($validated['email'])])
+            ->whereNotNull('speaker_invite_sent_at')->exists()) {
+            SessionRegistration::whereRaw('lower(email) = ?', [strtolower($validated['email'])])
+                ->update(['speaker_invite_sent_at' => now()]);
+
+            try {
+                Mail::to($validated['email'])->send(new \App\Mail\SpeakerPitchInvite(
+                    $validated['name'],
+                    $registration->speaker_topic,
+                ));
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning('Speaker pitch invite failed', [
+                    'email' => $validated['email'],
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
+
         if ($nextSession) {
             try {
                 Mail::to($validated['email'])->send(new \App\Mail\SessionRegisteredMail(

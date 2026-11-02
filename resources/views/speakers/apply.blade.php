@@ -143,6 +143,15 @@
                 </div>
 
                 <div class="vl-field">
+                    <label for="social_handles">Social media <span class="vl-opt">(optional)</span></label>
+                    <input id="social_handles" name="social_handles" type="text" maxlength="500"
+                           placeholder="Instagram, TikTok, X or anywhere else you post, so we can tag you"
+                           value="{{ old('social_handles') }}">
+                    <p class="vl-side-note vl-hint">When we announce the lineup on social media we tag the speakers. Handles or links, separated however you like.</p>
+                    @error('social_handles')<p class="vl-error">{{ $message }}</p>@enderror
+                </div>
+
+                <div class="vl-field">
                     <label for="talk_title">Working title of your talk</label>
                     <input id="talk_title" name="talk_title" required maxlength="255"
                            placeholder="It can change. We just need the shape of it."

@@ -92,6 +92,9 @@
                                             @if ($application->prior_speaking)
                                                 <p><strong>Spoken before:</strong> {{ $application->prior_speaking }}</p>
                                             @endif
+                                            @if ($application->social_handles)
+                                                <p><strong>Socials:</strong> {{ $application->social_handles }}</p>
+                                            @endif
                                         </details>
                                         <span class="vl-cell-sub">
                                             @if ($application->linkedin_url)
