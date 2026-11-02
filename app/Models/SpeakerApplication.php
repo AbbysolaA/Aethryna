@@ -74,6 +74,7 @@ class SpeakerApplication extends Model
         'bio',
         'linkedin_url',
         'website_url',
+        'social_handles',
         'talk_title',
         'talk_summary',
         'session_format',

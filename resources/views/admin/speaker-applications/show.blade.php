@@ -124,6 +124,7 @@
                         @if ($application->location)<div><dt>Based in</dt><dd>{{ $application->location }}</dd></div>@endif
                         @if ($application->linkedin_url)<div><dt>LinkedIn</dt><dd><a href="{{ $application->linkedin_url }}" target="_blank" rel="noopener">Profile</a></dd></div>@endif
                         @if ($application->website_url)<div><dt>Website</dt><dd><a href="{{ $application->website_url }}" target="_blank" rel="noopener">{{ str($application->website_url)->after('//')->before('/') }}</a></dd></div>@endif
+                        @if ($application->social_handles)<div><dt>Socials</dt><dd>{{ $application->social_handles }}</dd></div>@endif
                         <div><dt>Recording consent</dt><dd>{{ $application->recording_consented_at ? 'Given '.$application->recording_consented_at->format('j M Y') : 'Not recorded' }}</dd></div>
                     </dl>
                 </div>

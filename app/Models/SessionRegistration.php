@@ -26,6 +26,7 @@ class SessionRegistration extends Model
         'utm_campaign',
         'wants_to_speak',
         'speaker_topic',
+        'speaker_invite_sent_at',
     ];
 
     protected $casts = [
@@ -35,6 +36,7 @@ class SessionRegistration extends Model
         'confirmation_sent_at' => 'datetime',
         'reminded_week_at' => 'datetime',
         'reminded_day_at'  => 'datetime',
+        'speaker_invite_sent_at' => 'datetime',
     ];
 
     /**

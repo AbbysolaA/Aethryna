@@ -56,6 +56,9 @@ class SpeakerApplicationController extends Controller
             'bio'            => ['required', 'string', 'max:2000'],
             'linkedin_url'   => ['nullable', 'url', 'max:255'],
             'website_url'    => ['nullable', 'url', 'max:255'],
+            // Free text, not a URL: "insta @skillsco_op, tiktok same" is a
+            // perfectly useful answer and a url rule would reject it.
+            'social_handles' => ['nullable', 'string', 'max:500'],
 
             'talk_title'     => ['required', 'string', 'max:255'],
             'talk_summary'   => ['required', 'string', 'max:4000'],
