@@ -187,6 +187,36 @@ class PanelEventPageTest extends TestCase
         $this->assertSame(1, \App\Models\PanelSpeaker::where('name', 'Ayse Basak Cinar')->count());
         $this->assertSame(1, \App\Models\PanelSession::where('slug', 'founders-build-live')->count());
     }
+
+    public function test_adeyinka_joins_the_founders_lineup_once_confirmed(): void
+    {
+        $this->seed(\Database\Seeders\Panel4Seeder::class);
+        $this->seed(\Database\Seeders\Panel4SplitSeeder::class);
+        $this->seed(\Database\Seeders\AdeyinkaPrimeSeeder::class);
+
+        $html = $this->get('/sessions/founders-build-live')->assertOk()->getContent();
+
+        $this->assertStringContainsString('Adeyinka Prime', $html);
+        $this->assertStringContainsString('Team Lead <span class="ss-role-sep">·</span> Distro', $html);
+        $this->assertStringContainsString('WorkProof AI: Your Experience, Your Skills, Your Next Opportunity', $html);
+        $this->assertStringContainsString('alt="Adeyinka Prime"', $html);
+        $this->assertStringContainsString('images/speakers/adeyinka-prime.jpg', $html);
+        // Ayse stays first and untouched.
+        $this->assertStringContainsString('Ayse Basak Cinar', $html);
+
+        // Re-running cannot duplicate him or his seat on the panel.
+        $this->seed(\Database\Seeders\AdeyinkaPrimeSeeder::class);
+        $this->assertSame(1, \App\Models\PanelSpeaker::where('name', 'Adeyinka Prime')->count());
+        $this->assertSame(
+            2,
+            \App\Models\PanelSession::where('slug', 'founders-build-live')->first()->speakers()->count()
+        );
+
+        // The committed headshot is the web-sized square, not a phone original.
+        [$width, $height] = getimagesize(public_path('images/speakers/adeyinka-prime.jpg'));
+        $this->assertSame($width, $height);
+        $this->assertLessThan(150 * 1024, filesize(public_path('images/speakers/adeyinka-prime.jpg')));
+    }
     public function test_the_sessions_index_lists_a_second_upcoming_panel(): void
     {
         $this->seed(\Database\Seeders\Panel4Seeder::class);
