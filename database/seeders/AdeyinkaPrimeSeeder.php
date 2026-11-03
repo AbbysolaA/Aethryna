@@ -37,7 +37,8 @@ class AdeyinkaPrimeSeeder extends Seeder
         $adeyinka->update([
             'title'        => 'Team Lead',
             'company'      => 'Distro',
-            'bio'          => 'Adeyinka leads the team at Distro. At this session he is building WorkProof AI, an AI career agent that reads a CV, maps the skills in it including the transferable ones, and recommends jobs that match what someone can actually do rather than the titles they have held.',
+            // His own bio, from his message, lightly condensed for the card.
+            'bio'          => 'Adeyinka Prime is a product builder, sales and product marketing professional, and the founder of Distro, an AI-powered distribution and growth platform. He is also building Rydya, a healthcare operations platform that helps medical facilities reduce equipment downtime and protect revenue. His work sits at the intersection of product, AI, sales and growth, turning ideas into practical solutions people adopt and pay for.',
             'linkedin_url' => 'https://www.linkedin.com/in/adefila-adeyinka/',
             // Committed to the repo alongside this seeder, already web-sized.
             'photo_path'   => 'images/speakers/adeyinka-prime.jpg',
