@@ -168,7 +168,7 @@ class PanelEventPageTest extends TestCase
         $this->get('/sessions/founders-build-live')
             ->assertOk()
             ->assertSee('Vibe Coding: Founders Build Live')
-            ->assertSee('10 November 2026')
+            ->assertSee('18 November 2026')
             ->assertSee('90 minutes')
             ->assertSee('Ayse Basak Cinar')
             ->assertSee('Leadership Consultant and AI Strategist')
@@ -177,8 +177,8 @@ class PanelEventPageTest extends TestCase
             ->assertSee('Founders build live on screen')
             // 6.30pm GMT for 90 minutes: the schema ends at 8pm with the
             // winter offset, exactly as the listing spec asked.
-            ->assertSee('2026-11-10T18:30:00+00:00', false)
-            ->assertSee('2026-11-10T20:00:00+00:00', false)
+            ->assertSee('2026-11-18T18:30:00+00:00', false)
+            ->assertSee('2026-11-18T20:00:00+00:00', false)
             ->assertDontSee('Adeyinka')
             ->assertDontSee('Bola');
 
@@ -216,6 +216,40 @@ class PanelEventPageTest extends TestCase
         [$width, $height] = getimagesize(public_path('images/speakers/adeyinka-prime.jpg'));
         $this->assertSame($width, $height);
         $this->assertLessThan(150 * 1024, filesize(public_path('images/speakers/adeyinka-prime.jpg')));
+    }
+
+    public function test_the_reschedule_moves_the_date_and_rearms_the_reminders(): void
+    {
+        $this->seed(\Database\Seeders\Panel4Seeder::class);
+        $this->seed(\Database\Seeders\Panel4SplitSeeder::class);
+
+        $founders = \App\Models\PanelSession::where('slug', 'founders-build-live')->first();
+
+        // Reminded for the original date; the stamps are once-ever.
+        $registration = \App\Models\SessionRegistration::create([
+            'panel_session_id' => $founders->id,
+            'name'             => 'Leila Boughadou',
+            'email'            => 'leila@example.com',
+            'interest_type'    => 'learner',
+            'reminded_week_at' => now()->subDays(5),
+            'reminded_day_at'  => now()->subDays(2),
+        ]);
+
+        $this->seed(\Database\Seeders\FoundersRescheduleSeeder::class);
+
+        $this->assertSame(
+            '2026-11-18 18:30:00',
+            $founders->fresh()->event_date->format('Y-m-d H:i:s')
+        );
+
+        $registration->refresh();
+        $this->assertNull($registration->reminded_week_at);
+        $this->assertNull($registration->reminded_day_at);
+
+        $this->get('/sessions/founders-build-live')
+            ->assertOk()
+            ->assertSee('18 November 2026')
+            ->assertSee('2026-11-18T18:30:00+00:00', false);
     }
     public function test_the_sessions_index_lists_a_second_upcoming_panel(): void
     {

@@ -7,7 +7,7 @@ use App\Models\PanelSpeaker;
 use Illuminate\Database\Seeder;
 
 /**
- * Adeyinka Prime confirmed for Founders Build Live (10 November 2026), so
+ * Adeyinka Prime confirmed for Founders Build Live (18 November 2026), so
  * he joins the published lineup. Panel4SplitSeeder deliberately left him
  * off while his confirmation was outstanding.
  *
