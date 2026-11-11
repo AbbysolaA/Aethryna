@@ -10,7 +10,7 @@ use Illuminate\Database\Seeder;
  * Panel 4 split into two sessions, neither labelled A or B publicly:
  *
  *   Vibe Coding: Live Builds          Tuesday 20 October 2026  (slug panel-4)
- *   Vibe Coding: Founders Build Live  Tuesday 10 November 2026 (slug founders-build-live)
+ *   Vibe Coding: Founders Build Live  Wednesday 18 November 2026 (slug founders-build-live)
  *
  * The existing panel-4 row is retitled rather than replaced, so its
  * registrations, printed links and banner all survive. Both carry
@@ -41,7 +41,7 @@ class Panel4SplitSeeder extends Seeder
                 'title'       => 'The Skills Co-op Sessions: Panel 4',
                 'tagline'     => 'Vibe Coding: Founders Build Live',
                 'description' => "Panel 4 is a live-build session. Instead of talking about AI, founders build with it on screen, going from a real problem to a working solution in front of you. You'll see the prompts, the wrong turns and the judgement calls, not a polished demo. After the builds, put your questions to the speakers. The session is free, online, and recorded and shared publicly afterwards.",
-                'event_date'  => '2026-11-10 18:30:00',
+                'event_date'  => '2026-11-18 18:30:00',
                 'duration'    => '90 minutes',
                 'format'      => 'Online',
                 'status'      => 'upcoming',
