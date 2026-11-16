@@ -69,18 +69,22 @@ class Panel4SplitSeeder extends Seeder
          * firstOrCreate by name, because accepting her pitch from the admin
          * also mints a PanelSpeaker and this must not create a twin.
          */
-        $ayse = PanelSpeaker::firstOrCreate(
-            ['name' => 'Ayse Basak Cinar'],
-            [
-                'title'   => 'Leadership Consultant and AI Strategist',
-                'company' => 'ABC I To Be the One Consulting',
+        // Looked up under both spellings so a rerun after the lineup
+        // seeder's rename cannot mint a twin.
+        $ayse = PanelSpeaker::whereIn('name', ['Dr Ayse Basak Cinar', 'Ayse Basak Cinar'])->first();
+
+        if (! $ayse) {
+            $ayse = PanelSpeaker::create([
+                'name'    => 'Dr Ayse Basak Cinar',
+                'title'   => 'Founder, ABC Consulting; International Leadership Development Consultant and EQAI Strategist',
+                'company' => 'ABC Consulting',
                 'bio'     => 'Leadership consultant and AI strategist helping people turn AI from a buzzword into a working tool.',
-            ]
-        );
+            ]);
+        }
 
         $founders->speakers()->syncWithoutDetaching([
             $ayse->id => [
-                'topic'      => 'Adapting a custom GPT into a reusable AI skill, live',
+                'topic'      => 'Building Emotional UX: From AI Companion to Reusable AI Skills',
                 'sort_order' => 1,
             ],
         ]);

@@ -46,7 +46,7 @@ class PanelSession extends Model
             'panel_session_speakers',
             'panel_session_id',
             'panel_speaker_id'
-        )->withPivot('topic', 'sort_order')
+        )->withPivot('topic', 'build_note', 'sort_order')
          ->orderByPivot('sort_order');
     }
 

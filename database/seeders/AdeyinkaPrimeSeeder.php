@@ -47,7 +47,7 @@ class AdeyinkaPrimeSeeder extends Seeder
         $founders->speakers()->syncWithoutDetaching([
             $adeyinka->id => [
                 'topic'      => 'WorkProof AI: Your Experience, Your Skills, Your Next Opportunity',
-                'sort_order' => 2,
+                'sort_order' => 3,
             ],
         ]);
     }
