@@ -58,7 +58,7 @@ class PanelSpeaker extends Model
             'panel_session_speakers',
             'panel_speaker_id',
             'panel_session_id'
-        )->withPivot('topic', 'sort_order');
+        )->withPivot('topic', 'build_note', 'sort_order');
     }
 
     /**

@@ -198,6 +198,9 @@
                         @if($speaker->pivot->topic)
                             <p class="ss-speaker-topic"><i class="fas fa-comment-dots"></i> {{ $speaker->pivot->topic }}</p>
                         @endif
+                        @if($speaker->pivot->build_note)
+                            <p class="ss-speaker-bio">{{ $speaker->pivot->build_note }}</p>
+                        @endif
                         @if($speaker->bio)
                             <p class="ss-speaker-bio">{{ $speaker->bio }}</p>
                         @endif
@@ -290,6 +293,7 @@
                 <span class="ath-sub">Hosted by</span>
                 <h2 class="ss-info-title">Skills Co-op</h2>
                 <p class="ss-organiser-text">
+                    Your host on the night is Abisola Areola, founder of Skills Co-op.
                     The Skills Co-op Sessions are a monthly panel series from Aethryna Digital
                     Skills Co-op CIC, the community interest company widening access to digital
                     skills and meaningful career progression for underserved communities.

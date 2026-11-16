@@ -125,6 +125,9 @@
                         @if($speaker->pivot->topic)
                             <p class="ss-speaker-topic"><i class="fas fa-comment-dots"></i> {{ $speaker->pivot->topic }}</p>
                         @endif
+                        @if($speaker->pivot->build_note)
+                            <p class="ss-speaker-bio">{{ $speaker->pivot->build_note }}</p>
+                        @endif
                         @if($speaker->bio)
                             <p class="ss-speaker-bio">{{ $speaker->bio }}</p>
                         @endif

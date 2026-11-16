@@ -171,8 +171,7 @@ class PanelEventPageTest extends TestCase
             ->assertSee('18 November 2026')
             ->assertSee('90 minutes')
             ->assertSee('Ayse Basak Cinar')
-            ->assertSee('Leadership Consultant and AI Strategist')
-            ->assertSee('Adapting a custom GPT into a reusable AI skill, live')
+            ->assertSee('Building Emotional UX: From AI Companion to Reusable AI Skills')
             ->assertSee('More speakers to be announced')
             ->assertSee('Founders build live on screen')
             // 6.30pm GMT for 90 minutes: the schema ends at 8pm with the
@@ -184,7 +183,7 @@ class PanelEventPageTest extends TestCase
 
         // Re-running cannot duplicate Ayse or the panel.
         $this->seed(\Database\Seeders\Panel4SplitSeeder::class);
-        $this->assertSame(1, \App\Models\PanelSpeaker::where('name', 'Ayse Basak Cinar')->count());
+        $this->assertSame(1, \App\Models\PanelSpeaker::whereIn('name', ['Dr Ayse Basak Cinar', 'Ayse Basak Cinar'])->count());
         $this->assertSame(1, \App\Models\PanelSession::where('slug', 'founders-build-live')->count());
     }
 
@@ -250,6 +249,54 @@ class PanelEventPageTest extends TestCase
             ->assertOk()
             ->assertSee('18 November 2026')
             ->assertSee('2026-11-18T18:30:00+00:00', false);
+    }
+
+    public function test_the_confirmed_lineup_renders_in_running_order(): void
+    {
+        $this->seed(\Database\Seeders\Panel3Seeder::class);
+        $this->seed(\Database\Seeders\Panel4Seeder::class);
+        $this->seed(\Database\Seeders\Panel4SplitSeeder::class);
+        $this->seed(\Database\Seeders\AdeyinkaPrimeSeeder::class);
+        $this->seed(\Database\Seeders\Panel4LineupSeeder::class);
+
+        $html = $this->get('/sessions/founders-build-live')->assertOk()->getContent();
+
+        // All three, in the order of the night.
+        foreach (['Dr Ayse Basak Cinar', 'Bola Naomi Soko', 'Adeyinka Prime'] as $name) {
+            $this->assertStringContainsString($name, $html);
+        }
+        $this->assertLessThan(strpos($html, 'ss-speaker-name">Bola'), strpos($html, 'ss-speaker-name">Dr Ayse'));
+        $this->assertLessThan(strpos($html, 'ss-speaker-name">Adeyinka'), strpos($html, 'ss-speaker-name">Bola'));
+
+        // Session titles and the speakers' own build copy.
+        $this->assertStringContainsString('Building Emotional UX: From AI Companion to Reusable AI Skills', $html);
+        $this->assertStringContainsString('fictional workplace scenario', $html);
+        $this->assertStringContainsString('App Development for Personal Effectiveness', $html);
+        $this->assertStringContainsString('certificate generator in Google AI Studio', $html);
+        $this->assertStringContainsString('Covid Vaccine Taskforce', $html);
+        $this->assertStringContainsString('Founder <span class="ss-role-sep">·</span> Women in AI &amp; Automation', $html);
+        $this->assertStringContainsString('uploads a fictional CV', $html);
+
+        // Running order, host line and the reschedule reassurance.
+        $this->assertStringContainsString('7.25pm', $html);
+        $this->assertStringContainsString('Your host on the night is Abisola Areola', $html);
+        $this->assertStringContainsString('Anyone registered for the earlier date is still registered.', $html);
+        $this->assertStringContainsString('fictional or sample data only', $html);
+
+        // His name is Adeyinka Prime; Adefila appears only inside his
+        // LinkedIn URL, never as display text.
+        $this->assertStringNotContainsString('Adefila', $html);
+
+        // The rename did not strand her Panel 3 appearance or mint twins.
+        $this->assertSame(1, \App\Models\PanelSpeaker::whereIn('name', ['Dr Ayse Basak Cinar', 'Ayse Basak Cinar'])->count());
+        $this->assertSame(1, \App\Models\PanelSpeaker::whereIn('name', ['Bola Naomi Soko', 'Bola Soko'])->count());
+        $this->assertSame(3, \App\Models\PanelSession::where('slug', 'founders-build-live')->first()->speakers()->count());
+
+        // Reruns of any seeder in any order stay idempotent.
+        $this->seed(\Database\Seeders\Panel4SplitSeeder::class);
+        $this->seed(\Database\Seeders\Panel4LineupSeeder::class);
+        $this->assertSame(1, \App\Models\PanelSpeaker::whereIn('name', ['Dr Ayse Basak Cinar', 'Ayse Basak Cinar'])->count());
+        $this->assertSame(3, \App\Models\PanelSession::where('slug', 'founders-build-live')->first()->speakers()->count());
     }
     public function test_the_sessions_index_lists_a_second_upcoming_panel(): void
     {
