@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Mail\PanelRecap;
+use App\Models\PanelRecapSend;
 use App\Models\PanelSession;
 use App\Models\SessionRegistration;
 use Illuminate\Console\Command;
@@ -15,9 +16,10 @@ use Illuminate\Support\Facades\Mail;
  *
  * Deliberately a command rather than a schedule: a broadcast to every
  * contact is a decision someone takes, with --dry-run to read the list
- * first. The recap stamp is per registration and checked per email, so
- * running it twice, or importing more contacts and running it again,
- * only ever reaches people who have not had it.
+ * first. Sends are recorded per panel and address, so running it twice,
+ * or importing more contacts and running it again, only ever reaches
+ * people who have not had this panel's recap, and having one panel's
+ * recap never blocks the next.
  */
 class SendPanelRecapCommand extends Command
 {
@@ -43,12 +45,16 @@ class SendPanelRecapCommand extends Command
 
         $nextPanel = PanelSession::upcoming()->whereNotNull('event_date')->first();
 
-        // One email per address, newest name wins, nobody twice: the stamp
-        // lives on every registration row sharing the address.
-        $recipients = SessionRegistration::whereNull('recap_sent_at')
-            ->orderByDesc('created_at')
+        $alreadySent = PanelRecapSend::where('panel_session_id', $panel->id)
+            ->pluck('email')
+            ->flip();
+
+        // One email per address, newest name wins, nobody twice for the
+        // same panel.
+        $recipients = SessionRegistration::orderByDesc('created_at')
             ->get()
-            ->unique(fn ($r) => strtolower($r->email));
+            ->unique(fn ($r) => strtolower($r->email))
+            ->reject(fn ($r) => $alreadySent->has(strtolower($r->email)));
 
         if ($recipients->isEmpty()) {
             $this->info('Everyone in the bank has already had this recap.');
@@ -65,10 +71,12 @@ class SendPanelRecapCommand extends Command
                 continue;
             }
 
-            // Stamped before sending, across every row with this address: a
-            // crash mid-run must not re-email the people already covered.
-            SessionRegistration::whereRaw('lower(email) = ?', [strtolower($registration->email)])
-                ->update(['recap_sent_at' => now()]);
+            // Recorded before sending: a crash mid-run must not re-email the
+            // people already covered.
+            PanelRecapSend::firstOrCreate([
+                'panel_session_id' => $panel->id,
+                'email'            => strtolower($registration->email),
+            ]);
 
             try {
                 Mail::to($registration->email)->send(new PanelRecap($panel, $registration->name ?? '', $nextPanel));

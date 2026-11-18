@@ -28,6 +28,8 @@
             <div class="vl-flash vl-flash-err" role="alert">{{ session('error') }}</div>
         @endif
 
+        @include('admin.panels._join-link-warning')
+
         @if ($panels->isEmpty())
             <div class="vl-panel vl-empty">
                 <p>No panels yet. Add one and it appears on the sessions page straight away.</p>

@@ -6,6 +6,7 @@
 
 @include('admin._nav')
 @include('admin._flash')
+<div class="ath-container">@include('admin.panels._join-link-warning')</div>
     @php
         use App\Models\User;
         use App\Models\Assessment;
