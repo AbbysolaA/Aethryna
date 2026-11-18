@@ -114,7 +114,7 @@ class PanelRecapTest extends TestCase
 
         Mail::assertSent(PanelRecap::class, 2);
         Mail::assertSent(PanelRecap::class, fn ($m) => $m->hasTo('janet@example.com'));
-        $this->assertSame(0, SessionRegistration::whereNull('recap_sent_at')->count());
+        $this->assertSame(2, \App\Models\PanelRecapSend::where('panel_session_id', $panel->id)->count());
 
         // Running again reaches nobody twice.
         $this->artisan('panels:recap', ['slug' => 'panel-4'])->assertSuccessful();
@@ -164,5 +164,57 @@ class PanelRecapTest extends TestCase
 
         $this->artisan('panels:recap', ['slug' => 'panel-5'])->assertFailed();
         Mail::assertNothingSent();
+    }
+
+    /** Having one panel's recap must never block the next one's. */
+    public function test_each_panel_gets_its_own_recap_round(): void
+    {
+        $panel4 = $this->finishedPanel();
+        $founders = PanelSession::create([
+            'title' => 'P4b', 'slug' => 'founders-build-live', 'tagline' => 'Vibe Coding: Founders Build Live',
+            'description' => 'D', 'event_date' => '2026-11-18 18:30:00', 'status' => 'past', 'sort_order' => 4,
+            'recording_url' => 'https://www.youtube.com/live/rhL-iNy403s',
+        ]);
+
+        SessionRegistration::create(['name' => 'Rae', 'email' => 'rae@example.com', 'interest_type' => 'curious']);
+        SessionRegistration::create(['name' => 'Janet', 'email' => 'janet@example.com', 'interest_type' => 'curious', 'panel_session_id' => $founders->id]);
+
+        $this->artisan('panels:recap', ['slug' => 'panel-4'])->assertSuccessful();
+        Mail::assertSent(PanelRecap::class, 2);
+
+        // The founders recap still reaches both, once each.
+        $this->artisan('panels:recap', ['slug' => 'founders-build-live'])->assertSuccessful();
+        Mail::assertSent(PanelRecap::class, 4);
+        Mail::assertSent(PanelRecap::class, fn ($m) => $m->panel->is($founders) && $m->hasTo('rae@example.com'));
+
+        $this->artisan('panels:recap', ['slug' => 'founders-build-live'])->assertSuccessful();
+        Mail::assertSent(PanelRecap::class, 4);
+    }
+
+    public function test_the_founders_close_out_embeds_tonights_recording(): void
+    {
+        $this->seed(\Database\Seeders\Panel4Seeder::class);
+        $this->seed(\Database\Seeders\Panel4SplitSeeder::class);
+        $this->seed(\Database\Seeders\Panel4LineupSeeder::class);
+        $this->seed(\Database\Seeders\FoundersCompleteSeeder::class);
+        $this->seed(\Database\Seeders\FoundersCompleteSeeder::class);
+
+        $founders = PanelSession::where('slug', 'founders-build-live')->first();
+
+        $this->assertSame('past', $founders->status);
+        $this->assertSame('https://www.youtube.com/live/rhL-iNy403s', $founders->recording_url);
+        $this->assertSame(1, $founders->media()->where('type', 'video')->count());
+
+        $this->get('/sessions/founders-build-live')
+            ->assertOk()
+            ->assertSee('youtube-nocookie.com/embed/rhL-iNy403s', false);
+
+        // The recap reads right for a session with no Panel 4 assumptions.
+        $html = (new PanelRecap($founders->load('speakers'), 'Rae Smith'))->build()->render();
+        $this->assertStringContainsString('three real builds', $html);
+        $this->assertStringContainsString('Bola Naomi Soko', $html);
+        $this->assertStringContainsString('youtube.com/live/rhL-iNy403s', $html);
+        $this->assertStringNotContainsString('Panel 4 is not finished', $html);
+        $this->assertStringNotContainsString('localhost', $html);
     }
 }

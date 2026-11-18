@@ -115,6 +115,34 @@ class PanelSession extends Model
     }
 
     /**
+     * Online sessions starting within three days that still have no joining
+     * link.
+     *
+     * The day-before reminder is the email that carries the link, and it
+     * goes whether or not one has been set: an empty link sends a reminder
+     * with no way in. That is how Founders Build Live went out. Three days
+     * leaves time to notice before the reminder fires.
+     */
+    public static function missingJoinLinkSoon(): \Illuminate\Support\Collection
+    {
+        return static::upcoming()
+            ->whereNotNull('event_date')
+            ->whereBetween('event_date', [now(), now()->addDays(3)])
+            ->where(fn ($q) => $q->whereNull('join_url')->orWhere('join_url', ''))
+            ->whereNull('venue_name')
+            ->get();
+    }
+
+    public function needsJoinLinkSoon(): bool
+    {
+        return ! $this->join_url
+            && ! $this->venue_name
+            && in_array($this->status, ['upcoming', 'live'], true)
+            && $this->event_date
+            && $this->event_date->between(now(), now()->addDays(3));
+    }
+
+    /**
      * The event's day is over, by the calendar or by an admin marking it
      * past. Date first: nobody remembers to flip a status flag the morning
      * after, and the carousel already trusts the date for the same reason.

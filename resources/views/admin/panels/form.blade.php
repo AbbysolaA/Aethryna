@@ -136,6 +136,9 @@
                            value="{{ old('join_url', $panel->join_url) }}">
                     <p class="vl-side-note vl-hint">Where attendees watch. Sent automatically in the day-before reminder and the confirmation email, and used as the calendar entry's link. Set it as soon as you have it.</p>
                     @error('join_url')<p class="vl-error">{{ $message }}</p>@enderror
+                    @if ($panel->exists && $panel->needsJoinLinkSoon())
+                        <p class="vl-error" role="alert">This session starts {{ $panel->event_date->format('l j F, g.ia') }} and the day-before reminder will go out without a link unless you add one here.</p>
+                    @endif
                 </div>
 
                 <div class="vl-field">

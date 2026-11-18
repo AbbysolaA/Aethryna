@@ -101,7 +101,7 @@
         <tr>
             <td class="sc-pad" style="padding:24px 32px 0 32px;">
                 <p style="margin:0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:15px; line-height:25px; color:#2b333a;">
-                    And Panel 4 is not finished: <strong>{{ $nextTagline }}</strong>{{ $nextDate ? ', '.$nextDate.' UK' : '' }},
+                    Next up: <strong>{{ $nextTagline }}</strong>{{ $nextDate ? ', '.$nextDate.' UK' : '' }},
                     free and online as always.
                     <a href="{{ $nextUrl }}" style="color:#055860; font-weight:700;">See the lineup and register &rarr;</a>
                 </p>

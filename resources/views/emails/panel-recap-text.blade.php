@@ -24,7 +24,7 @@ Each build is also going up on YouTube as its own video. Subscribe to the channe
 
 @endif
 @if ($nextTagline)
-And Panel 4 is not finished: {!! $nextTagline !!}{!! $nextDate ? ', '.$nextDate.' UK' : '' !!}, free and online as always. See the lineup and register: {!! $nextUrl !!}
+Next up: {!! $nextTagline !!}{!! $nextDate ? ', '.$nextDate.' UK' : '' !!}, free and online as always. See the lineup and register: {!! $nextUrl !!}
 
 @endif
 The recording also lives at {!! $panelUrl !!}, speakers and all, if you want to send it to someone.
