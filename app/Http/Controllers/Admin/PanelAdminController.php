@@ -318,6 +318,12 @@ class PanelAdminController extends Controller
      */
     private function validated(Request $request, ?PanelSession $panel = null): array
     {
+        // StreamYard hands out a whole <iframe> snippet rather than a link.
+        // Pasted as-is, keep just its address so the URL rule passes.
+        if (preg_match('/<iframe[^>]+src=["\']([^"\']+)["\']/i', (string) $request->input('recording_url'), $m)) {
+            $request->merge(['recording_url' => html_entity_decode($m[1])]);
+        }
+
         $validated = $request->validate([
             'title'          => ['required', 'string', 'max:255'],
             'tagline'        => ['required', 'string', 'max:255'],
