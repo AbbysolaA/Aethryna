@@ -1,0 +1,1303 @@
+You are an experienced full-stack software engineer, UI/UX designer, and deployment engineer.
+
+Build a complete, functional web application called:
+
+**WorkProof AI — Personal Job Alert Agent**
+
+Tagline: **Your Experience. Your Skills. Your Next Opportunity.**
+
+The application helps users discover job opportunities relevant to their CV, skills, experience, and career interests.
+
+This project is part of an AI-assisted live development workshop.
+
+If a WorkProof AI PRD is provided, use it as the product reference. The requirements below define the implementation and deployment expectations.
+
+## 1. Implementation Instructions
+
+Build the entire application in one execution of this prompt.
+
+You must:
+
+- Create the frontend and backend.
+- Implement every core feature.
+- Create a clean, responsive UI.
+- Integrate Serper for Google-powered job discovery.
+- Support optional Gemini-powered CV analysis and job matching.
+- Implement local JSON persistence.
+- Implement private GitHub JSON persistence for hosted deployments.
+- Support Telegram, Gmail, and on-app-only notifications.
+- Implement manual searches and daily scheduling.
+- Prepare the application for Vercel.
+- Install dependencies.
+- Run tests and resolve errors.
+- Generate complete setup documentation.
+- Explain how to deploy the application.
+
+Do not stop after creating a plan.
+
+Do not deliver a static mockup.
+
+Do not require a traditional database.
+
+Do not require a paid AI API.
+
+Do not ask unnecessary clarification questions.
+
+Use sensible defaults and complete the implementation.
+
+When credentials are missing, implement and test a clearly labelled demonstration mode.
+
+Never claim an external integration has been tested unless a real successful request was performed.
+
+Do not reveal API keys, credentials, or private CV information in your final output.
+
+The application is intended as a single-user personal application, not a public multi-user SaaS.
+
+## 2. Technology Stack
+
+Use the following technologies.
+
+| Component | Required Technology |
+| --- | --- |
+| Framework | Next.js App Router |
+| Language | TypeScript |
+| Frontend | React |
+| Styling | Tailwind CSS |
+| Icons | Lucide React |
+| Job Search | Serper Google Search API |
+| Optional AI | Google Gemini API |
+| CV Processing | Server-side PDF/DOCX/text extraction |
+| Standard Matching | TypeScript-based relevance scoring |
+| Notifications | Telegram Bot API / Gmail Apps Script |
+| Local Storage | Local JSON files |
+| Production Storage | Private GitHub JSON files |
+| Automation | Vercel Cron |
+| Hosting | Vercel |
+| Package Manager | npm |
+
+Do not use PostgreSQL, MySQL, MongoDB, Supabase, Firebase, Prisma, or Redis.
+
+Avoid unnecessary external services and complex dependencies.
+
+Use current stable versions compatible with Vercel.
+
+## 3. User Interface Requirements
+
+Build a simple, professional, mobile-responsive dashboard.
+
+### Visual Style
+
+- White background.
+- Primary purple: #5B35D5.
+- Dark purple: #3D249F.
+- Light purple: #F2EEFF.
+- Dark text: #15152F.
+- Secondary text: #64748B.
+- Light gray borders.
+- Rounded cards.
+- Subtle shadows.
+- Clean typography.
+- Minimal animations.
+- Generous spacing.
+
+The interface must be functional, not decorative.
+
+### Navigation
+
+Create four main sections:
+
+**Home | Alerts | Results | Settings**
+
+On mobile, use a compact navigation layout.
+
+### Home Dashboard
+
+Include:
+
+**A. CV Profile**
+
+- Upload CV.
+- Paste CV text.
+- Analyse profile.
+- View extracted skills.
+- Edit profile.
+- Replace/remove CV.
+
+**B. Job Alert Overview**
+
+- Add Alert.
+- Run All Now.
+- Active alerts.
+- Paused alerts.
+- Last run information.
+
+**C. Recent Job Matches**
+
+- Job title.
+- Company.
+- Location.
+- Match score.
+- Match explanation.
+- View Details.
+- Apply/Open Job.
+
+**D. Recent Runs**
+
+Show the latest search executions and allow users to open their results.
+
+### Alert Cards
+
+Each alert must display:
+
+- Alert name.
+- Search keywords.
+- Country/location.
+- Remote preference.
+- Experience level.
+- Active/paused status.
+- Last search date.
+- Recent results count.
+
+Actions:
+
+**Run Now | View Results | Edit | Pause/Resume | Delete**
+
+### Settings
+
+Include:
+
+- Default job preferences.
+- Notification channel selection.
+- Notification status.
+- Matching mode.
+- Automatic check preferences.
+- Local/production status.
+- API configuration status.
+- Clear history.
+- Delete CV/profile.
+
+Never expose complete API keys in the interface.
+
+Every button, form, toggle, and navigation item must function.
+
+Include appropriate loading, empty, error, and success states.
+
+## 4. CV Upload and Profile Analysis
+
+Support three file formats:
+
+- PDF.
+- DOCX.
+- TXT.
+
+Also support directly pasting CV text into a large text field.
+
+Perform document extraction server-side.
+
+Reject unsupported, empty, or excessively large documents.
+
+Do not require OCR. When text extraction fails for a scanned document, explain the limitation and suggest pasting the text.
+
+### Extracted Profile
+
+Identify possible:
+
+- Skills.
+- Previous job titles.
+- Work experience.
+- Relevant job categories.
+- Transferable skills.
+- Experience level.
+
+Let the user edit extracted information before saving.
+
+Allow users to add and remove skills manually.
+
+### Standard Mode
+
+Implement CV analysis using lightweight text extraction, skill dictionaries, and rule-based logic.
+
+This mode must work without Gemini.
+
+### Gemini Mode — Optional
+
+Integrate Google Gemini as an optional enhancement.
+
+Environment variable:
+
+GEMINI_API_KEY
+
+When enabled, Gemini may:
+
+- Interpret work experience.
+- Identify transferable skills.
+- Suggest relevant job categories.
+- Improve match explanations.
+- Analyse job descriptions when sufficient source information exists.
+
+Use a compatible documented Gemini model and the official Google Gen AI SDK.
+
+Do not invent qualifications or job details.
+
+Use structured responses where practical and validate AI output.
+
+If Gemini credentials are absent, invalid, or quota-limited, automatically fall back to Standard Mode.
+
+Display the active matching mode clearly.
+
+Gemini is not the job search provider.
+
+Do not silently send a user's CV content to Gemini. Require explicit opt-in and explain the data-sharing implications.
+
+Gemini Mode must be off by default. A GEMINI_API_KEY alone must not switch it on: the user turns on Gemini Mode in Settings after reading what is sent to Google. Show the active mode (Standard Mode or Gemini Mode) in the header and on each run.
+
+## 5. Job Alert Management
+
+Support multiple independently configurable alerts.
+
+Each alert should have:
+
+- Unique ID.
+- Alert name.
+- Search keywords or target role.
+- Preferred country.
+- Preferred location.
+- Remote-work preference.
+- Experience level.
+- Posting freshness.
+- Minimum relevance threshold.
+- Active/paused status.
+- Last run timestamp.
+
+Experience levels:
+
+Internship, Entry Level, Junior, Mid-Level, Senior, Any.
+
+Remote options:
+
+Remote, Hybrid, On-site, Any.
+
+Freshness preferences:
+
+Last 24 hours, Last 3 days, Last 7 days, Any.
+
+### Required Operations
+
+- Create alert.
+- Edit alert.
+- Delete alert with confirmation.
+- Pause alert.
+- Resume alert.
+- Run individual alert immediately.
+- Run all active alerts.
+- View previous results.
+
+Pausing an alert must disable automatic execution and notifications without deleting its history.
+
+An explicitly initiated manual search may run a paused alert without automatically reactivating it.
+
+Avoid duplicate or overlapping execution.
+
+## 6. Serper Google Search Integration
+
+Use Serper as the primary live job discovery provider.
+
+Website:
+
+https://serper.dev
+
+Environment variable:
+
+SERPER_API_KEY
+
+Use the documented Serper Google Search endpoint and required request headers.
+
+Keep the API key on the server.
+
+Never expose it in client-side code.
+
+### Job Search Strategy
+
+Search Google-indexed opportunities using combinations of:
+
+- Job title.
+- Related keywords.
+- Country/location.
+- Remote preferences.
+- Job platforms.
+- Career pages.
+
+Example searches:
+
+"Customer Success" "Nigeria" jobs
+
+site:linkedin.com/jobs/view/ "Operations Coordinator" "Lagos"
+
+site:greenhouse.io "Customer Support" remote
+
+"Business Development Representative" "United Kingdom" hiring
+
+Use a variety of relevant search patterns rather than relying on only one domain.
+
+Each Google query costs one Serper credit. Send at most SERPER_QUERIES_PER_RUN queries per alert run (default 2, maximum 3), one after another rather than in parallel, and store the queries used in each run record.
+
+Serper's free credits are a one-off allowance rather than a monthly one. Keep usage conservative and stop with a clear message when credits run out.
+
+Prefer company career pages and genuine job postings.
+
+Avoid assuming every search result represents an active vacancy.
+
+### Normalised Job Data
+
+Create a standard job record containing:
+
+- ID.
+- Title.
+- Company, when identifiable.
+- Location, when available.
+- Source.
+- URL.
+- Description or available snippet.
+- Posting date, when verifiable.
+- Remote status, when supported.
+- Search timestamp.
+- Verification status.
+
+### Critical Data Accuracy Rules
+
+Serper returns Google search results, not guaranteed structured job records.
+
+Therefore:
+
+- Do not invent missing companies.
+- Do not fabricate salaries.
+- Do not fabricate posting dates.
+- Do not assume an indexed job is still open.
+- Do not treat Google's snippet date as verified job publication time without sufficient evidence.
+- Do not guarantee that a job accepts applicants.
+- Do not describe every result as an active opening.
+
+Label uncertain details appropriately.
+
+Where reliable posting dates are unavailable, show **Date not verified**.
+
+### Result Processing
+
+Implement:
+
+- Search query generation.
+- API requests with timeouts.
+- Error handling.
+- Result normalisation.
+- URL validation.
+- Duplicate removal.
+- Basic job-page relevance filtering.
+- Search query limits.
+- Configurable result limits.
+- Quota-aware operation.
+
+When possible, prefer original employer application URLs.
+
+Do not scrape restricted pages or bypass access controls.
+
+Do not depend on LinkedIn pages always being accessible.
+
+Job searches must work even when a particular job-board domain returns no results.
+
+## 7. Job Relevance Matching
+
+Match discovered opportunities against the saved CV profile and alert preferences.
+
+### Standard Mode
+
+Implement transparent relevance scoring using:
+
+- Job title similarity.
+- Relevant skills.
+- Transferable skills.
+- Experience level.
+- Preferred location.
+- Remote preference.
+- Available job description information.
+
+Generate a score between 0 and 100.
+
+The score represents estimated relevance, not employment probability.
+
+### Gemini Mode
+
+When enabled, use Gemini to improve relevance explanations and interpretation.
+
+Provide only necessary job data and user-approved profile information.
+
+Use validated structured output.
+
+Never allow Gemini to invent missing job information.
+
+### Example Explanation
+
+"This opportunity appears relevant because your experience includes customer communication, CRM tools, and client relationship management."
+
+### Important
+
+If search results contain only limited snippets, reduce confidence in the match explanation.
+
+Do not pretend that a full job description was analysed when only a snippet was available.
+
+Allow users to view lower-scoring results.
+
+## 8. Job Results and Run History
+
+Every manual and scheduled search must generate a run record.
+
+Include:
+
+- Run ID.
+- Alert ID.
+- Alert name.
+- Date/time.
+- Manual or automatic trigger.
+- Search queries used.
+- Number of search results.
+- Relevant matches.
+- New results.
+- Run status.
+- Notification status.
+- Error details, if applicable.
+
+### Results Interface
+
+Users must be able to:
+
+- View current job results.
+- Open previous runs.
+- Select individual jobs.
+- Read match explanations.
+- Open the original listing URL.
+- Sort by relevance.
+- Filter by alert.
+- View available posting dates.
+
+Provide bounded storage.
+
+Recommended defaults:
+
+- Last 30 runs.
+- Up to 100 retained job result records, configurable.
+
+Keep historical result snapshots available within retention limits.
+
+Do not invent previous runs.
+
+## 9. Notifications
+
+Provide three options:
+
+1. Telegram.
+2. Gmail.
+3. On-app only.
+
+Notifications must be optional.
+
+### Telegram
+
+Use the official Telegram Bot API.
+
+Setup:
+
+https://t.me/BotFather
+
+Required environment variables when enabled:
+
+TELEGRAM_BOT_TOKEN
+
+TELEGRAM_CHAT_ID
+
+Implement:
+
+- Test message.
+- New job notification.
+- API error handling.
+- Duplicate suppression.
+- Connection status.
+
+### Gmail
+
+Use Google Apps Script.
+
+Setup:
+
+https://script.google.com
+
+Generate the required Apps Script source file:
+
+docs/gmail-apps-script.gs
+
+Environment variables:
+
+GMAIL_SCRIPT_URL
+
+GMAIL_SCRIPT_SECRET
+
+NOTIFICATION_EMAIL
+
+The script must restrict recipients, authenticate requests where supported securely, and prevent an unrestricted email relay.
+
+Document deployment and authorisation.
+
+If secure authentication cannot be achieved with the selected Apps Script implementation, disclose the limitation rather than presenting it as secure.
+
+### On-App Only
+
+Users can view all results without Telegram or Gmail.
+
+### Notification Format
+
+Each notification should include:
+
+- Alert name.
+- Job title.
+- Company, when available.
+- Location, when available.
+- Match explanation.
+- Original listing URL.
+
+Do not repeatedly notify users about the same previously notified result.
+
+Do not send complete CV content in job notifications.
+
+A provider accepting a message is not proof that the recipient received it.
+
+## 10. Scheduling and Automation
+
+Support:
+
+- Run Now per alert.
+- Run All Now.
+- Automatic daily checks.
+- Pause/resume.
+- Automatic checks on/off.
+
+Use Vercel Cron for the hosted daily schedule.
+
+Protect scheduled endpoints using:
+
+CRON_SECRET
+
+The scheduled process must:
+
+1. Load saved alerts.
+2. Skip paused or disabled alerts.
+3. Respect API request limits.
+4. Search for opportunities.
+5. Rank and deduplicate results.
+6. Save run history.
+7. Send permitted notifications.
+8. Record errors.
+
+Make execution idempotent where practical.
+
+Avoid duplicate notifications from retries.
+
+Respect Vercel serverless runtime limits.
+
+### Scheduling Limitations
+
+Use a Vercel Hobby-compatible daily Cron configuration.
+
+Do not configure unsupported twice-daily Cron schedules.
+
+If the UI presents more frequent scheduling, explain that it requires a compatible external scheduler or hosting plan.
+
+Do not claim that changing a dropdown automatically changes a deployed Cron expression.
+
+Display the actual effective schedule.
+
+Manual searches must work regardless of automatic scheduling.
+
+## 11. Storage — No Database
+
+Implement two storage modes.
+
+### Local Storage
+
+Use:
+
+STORAGE_MODE=local
+
+Save data to a local .data/ directory using JSON files.
+
+Store:
+
+- Profile.
+- Alerts.
+- Run history.
+- Result snapshots.
+- Notification deduplication IDs.
+- Preferences.
+
+Create missing files when necessary.
+
+Use safe file operations and exclude .data/ from Git.
+
+Local mode must not require GitHub storage credentials.
+
+### Production Storage
+
+Use:
+
+STORAGE_MODE=github
+
+Store persistent data in a separate private GitHub repository using its authenticated API.
+
+Environment variables:
+
+GITHUB_TOKEN
+
+GITHUB_OWNER
+
+GITHUB_REPO
+
+GITHUB_BRANCH
+
+Implement:
+
+- Authenticated reads and writes.
+- Missing-file handling.
+- Schema validation.
+- SHA-based updates.
+- Conflict detection.
+- Bounded retries.
+- Error reporting.
+- Storage limits.
+- Deduplication records.
+
+Never rely on Vercel's temporary filesystem for persistent data.
+
+Never expose GitHub tokens in the browser.
+
+Keep source code and private data in separate repositories where possible.
+
+If production storage is not configured, show a setup-required state instead of silently losing user data.
+
+## 12. Authentication and Security
+
+Do not build user registration or a multi-user login system.
+
+For hosted personal deployments, implement simple access-password protection.
+
+Use:
+
+APP_ACCESS_PASSWORD
+
+SESSION_SECRET
+
+Requirements:
+
+- Secure HTTP-only cookies.
+- Session validation.
+- Protected private routes.
+- Protected state-changing actions.
+- Brute-force protection appropriate to the deployment.
+- Secure server-side password handling.
+- Logout/lock action.
+- Input validation.
+- Secret protection.
+
+Protect Cron endpoints independently.
+
+Keep all API credentials server-side.
+
+Do not expose CV contents publicly.
+
+Use fictional CVs for demonstrations.
+
+Do not print secrets in logs.
+
+## 13. Settings Page
+
+Implement a functional Settings page with:
+
+### General
+
+- Default location.
+- Default experience level.
+- Profile preferences.
+
+### Search
+
+- Serper connection status.
+- Matching mode: Standard/Gemini.
+- Search usage estimates.
+- Search preferences.
+
+### Notifications
+
+- Telegram.
+- Gmail.
+- On-app only.
+- Test notification.
+- Connection status.
+
+### Automation
+
+- Automatic checks on/off.
+- Effective frequency.
+- Last run.
+- Next expected check window.
+- Run Now.
+
+### Data
+
+- Saved profile.
+- Alert count.
+- History count.
+- Clear history.
+- Delete profile.
+
+### System
+
+- Local or deployed mode.
+- Storage status.
+- Search API status.
+- Gemini status.
+- Notification status.
+- Scheduler status.
+
+Never display API secrets.
+
+## 14. Environment Configuration
+
+Create a complete .env.example.
+
+Include:
+
+STORAGE_MODE=local
+DEMO_MODE=auto
+
+APP_ACCESS_PASSWORD=
+SESSION_SECRET=
+CRON_SECRET=
+
+SERPER_API_KEY=
+SEARCH_MONTHLY_REQUEST_LIMIT=300
+SERPER_QUERIES_PER_RUN=2
+
+GEMINI_API_KEY=
+GEMINI_MODEL=
+GEMINI_FALLBACK_MODEL=
+
+GITHUB_TOKEN=
+GITHUB_OWNER=
+GITHUB_REPO=
+GITHUB_BRANCH=main
+
+TELEGRAM_BOT_TOKEN=
+TELEGRAM_CHAT_ID=
+
+GMAIL_SCRIPT_URL=
+GMAIL_SCRIPT_SECRET=
+NOTIFICATION_EMAIL=
+
+APP_TIMEZONE=Africa/Lagos
+
+These are example configuration names. Implement consistent environment-variable handling throughout the application.
+
+The search request limit is an application-configured safety cap, not a claim about the participant's actual provider allowance. Because Serper's free credits are a one-off allowance, keep the default low.
+
+DEMO_MODE=auto means: show labelled demo data while no SERPER_API_KEY is set, and switch to live searches automatically as soon as one is. DEMO_MODE=true always shows demo data, which is useful when screen-sharing.
+
+Create a secure .gitignore.
+
+Exclude:
+
+- .env.local
+- Other secret-filled environment files.
+- .data/
+- Build output.
+- Dependencies.
+- Logs.
+
+Never commit credentials.
+
+### Local Configuration
+
+The application must support copying .env.example to .env.local.
+
+Allow demo mode without API credentials.
+
+Allow live searches once Serper is configured, without the user having to change DEMO_MODE.
+
+Gemini must remain optional.
+
+Only require Telegram or Gmail credentials when those channels are enabled.
+
+## 15. Localhost Requirements
+
+The application must run locally using:
+
+npm install
+
+npm run dev
+
+Expected address:
+
+http://localhost:3000
+
+Localhost must support:
+
+- CV upload.
+- CV paste.
+- Profile editing.
+- Alerts.
+- Manual searches.
+- Search results.
+- Run history.
+- Demo mode.
+- Real Serper searches when configured.
+- Gemini when configured.
+- Telegram and Gmail notifications when configured.
+- Local JSON persistence.
+
+Automatic Vercel Cron execution is not required to operate on localhost.
+
+The application must not require Vercel deployment to function locally.
+
+Require Node.js 22 or newer. State this at the top of the README, and give both Windows PowerShell (Copy-Item .env.example .env.local) and macOS/Linux (cp .env.example .env.local) commands.
+
+## 16. GitHub Preparation
+
+Prepare the application for GitHub.
+
+Create or verify:
+
+- .gitignore.
+- README.md.
+- Environment examples.
+- Appropriate project structure.
+- Clean repository state.
+
+Check whether Git and GitHub CLI are installed.
+
+If an authenticated GitHub connection exists and permission has been granted, help create and push the repository.
+
+Otherwise provide exact commands and steps.
+
+Do not force-push or overwrite existing repositories.
+
+Clearly distinguish:
+
+**Application Repository:** Contains source code.
+
+**Private Data Repository:** Contains persistent runtime JSON data.
+
+Never commit actual environment secrets or private local profile data.
+
+## 17. Vercel Deployment
+
+Prepare the application for Vercel Hobby.
+
+Create an appropriate vercel.json, including a compatible daily Cron configuration.
+
+Use supported Node.js runtimes and deployment settings.
+
+The deployed application must function with GitHub-backed persistent data.
+
+### Deployment Instructions
+
+At the end of implementation, explain how to:
+
+1. Create a GitHub repository.
+2. Push the application source.
+3. Create a private data repository.
+4. Generate a restricted GitHub token.
+5. Create a free Vercel account.
+6. Connect GitHub.
+7. Import the WorkProof AI application repository.
+8. Configure the Next.js project.
+9. Add production environment variables.
+10. Set STORAGE_MODE=github.
+11. Configure Serper.
+12. Optionally configure Gemini.
+13. Configure Telegram or Gmail if needed.
+14. Set access and scheduler secrets.
+15. Deploy the application.
+16. Open the assigned vercel.app URL.
+17. Verify persistent storage.
+18. Test manual job discovery.
+19. Test notifications.
+20. Verify scheduled checks.
+
+Important:
+
+Never tell users to commit a populated .env.local file.
+
+Explain how to enter the real secret values through Vercel's protected environment-variable settings.
+
+Do not claim that Vercel deployment succeeded unless actually verified.
+
+## 18. Demo Mode
+
+Provide a complete demonstration mode.
+
+Include:
+
+- Fictional CV.
+- Fictional job listings.
+- Sample alerts.
+- Sample match scores.
+- Sample run history.
+
+All demonstration data must be clearly labelled.
+
+Users should be able to test the interface without any API credentials.
+
+Do not mix fictional jobs with real results without distinguishing them.
+
+Do not send automated external notifications based on sample data.
+
+Allow explicit notification test messages.
+
+## 19. Testing and Verification
+
+Run the following checks or equivalent project scripts:
+
+npm install
+
+npm run lint
+
+npx tsc --noEmit
+
+npm run build
+
+npm test
+
+Create and run tests covering:
+
+### CV
+
+- Text input.
+- PDF extraction.
+- DOCX extraction.
+- Profile editing.
+- Invalid documents.
+
+### Job Search
+
+- Serper request formation.
+- Result normalisation.
+- Missing fields.
+- Deduplication.
+- Invalid URLs.
+- Empty results.
+- API errors.
+- Rate limits.
+
+### Matching
+
+- Role relevance.
+- Skills relevance.
+- Location matching.
+- Experience matching.
+- Standard Mode.
+- Gemini fallback.
+- Match explanations.
+
+### Alerts
+
+- Create.
+- Edit.
+- Pause.
+- Resume.
+- Delete.
+- Run Now.
+- Run All.
+
+### Storage
+
+- Local JSON operations.
+- GitHub API errors.
+- Conflicting updates.
+- History retention.
+
+### Notifications
+
+- Telegram payload.
+- Gmail payload.
+- On-app only.
+- Duplicate suppression.
+- Error handling.
+
+### Security and Scheduling
+
+- Protected dashboard.
+- Session validation.
+- Protected API routes.
+- Cron authentication.
+- Paused alerts.
+- Repeated execution handling.
+
+Fix detected errors.
+
+If live API credentials are unavailable, test external integrations with mocked responses and report that they remain unverified.
+
+Never report an untested integration as successful.
+
+## 20. Required Documentation
+
+Generate:
+
+- README.md
+- docs/API_SETUP.md
+- docs/DEPLOYMENT.md
+- docs/TROUBLESHOOTING.md
+- .env.example
+
+### README
+
+Explain:
+
+- What WorkProof AI does.
+- Features.
+- Technology stack.
+- How to install.
+- How to start localhost.
+- How to use demo mode.
+- How to enable live searches.
+
+### API_SETUP
+
+Provide step-by-step instructions for:
+
+**Serper:** https://serper.dev
+
+**Gemini (Optional):** https://aistudio.google.com
+
+**Telegram:** https://t.me/BotFather
+
+**Gmail Apps Script:** https://script.google.com
+
+**GitHub:** https://github.com
+
+**Vercel:** https://vercel.com
+
+Explain which services are mandatory and which are optional.
+
+### DEPLOYMENT
+
+Include:
+
+- GitHub repository setup.
+- Git commands.
+- Private data repository setup.
+- GitHub token permissions.
+- Vercel import.
+- Environment-variable setup.
+- Deployment steps.
+- Daily scheduling.
+- Final verification.
+
+### TROUBLESHOOTING
+
+Cover:
+
+- Localhost errors.
+- Missing environment variables.
+- Serper API errors.
+- No results.
+- Unverified job details.
+- Gemini errors.
+- Telegram issues.
+- Gmail Apps Script issues.
+- GitHub token and storage errors.
+- Vercel deployment failures.
+- Cron failures.
+- Missing saved data.
+
+Use beginner-friendly instructions.
+
+## 21. Suggested Project Structure
+
+Create a maintainable structure such as:
+
+app/
+  page.tsx
+  alerts/
+  results/
+  settings/
+  api/
+    profile/
+    alerts/
+    search/
+    runs/
+    notifications/
+    cron/
+
+components/
+  dashboard/
+  profile/
+  alerts/
+  results/
+  settings/
+
+lib/
+  cv/
+  search/
+    serper.ts
+  matching/
+    standard.ts
+    gemini.ts
+  storage/
+    local.ts
+    github.ts
+  notifications/
+    telegram.ts
+    gmail.ts
+  auth/
+  scheduling/
+
+types/
+tests/
+samples/
+docs/
+  gmail-apps-script.gs
+  API_SETUP.md
+  DEPLOYMENT.md
+  TROUBLESHOOTING.md
+
+.env.example
+.gitignore
+README.md
+vercel.json
+
+You may improve the structure where necessary.
+
+Keep it simple and modular.
+
+## 22. Functional Acceptance Criteria
+
+The application is complete only when:
+
+- The dashboard loads on localhost.
+- The UI works on desktop and mobile.
+- Users can upload a CV.
+- Users can paste CV text.
+- Extracted profile information can be edited.
+- Multiple alerts can be created.
+- Alerts can be edited, paused, resumed, and deleted.
+- Each alert has a working Run Now button.
+- Run All Now works.
+- Serper integration retrieves real results when configured.
+- Demo mode works without API keys.
+- Standard matching works.
+- Gemini matching is optional.
+- Matching explanations are visible.
+- Job links open original sources.
+- Previous search runs can be opened.
+- Results persist after restart.
+- Telegram notifications work when configured.
+- Gmail notifications work when configured.
+- On-app-only mode works.
+- Duplicate notifications are suppressed.
+- Local JSON storage works.
+- GitHub production storage works when configured.
+- Dashboard access is protected online.
+- Cron endpoint is protected.
+- Daily scheduling is configured correctly.
+- Production build passes.
+- No credentials are committed to Git.
+- Setup and deployment instructions are complete.
+
+For integrations that cannot be live-tested without credentials, report the verification limitation explicitly.
+
+## 23. Final Delivery Requirements
+
+After implementation, provide the user with:
+
+### A. Build Summary
+
+Explain what was implemented.
+
+### B. Localhost Instructions
+
+Show the exact commands needed to run the application locally.
+
+### C. API Configuration
+
+For every required or optional API, explain:
+
+- Where to sign up.
+- How to obtain credentials.
+- Where to put them.
+- How to test them.
+
+### D. GitHub Instructions
+
+Show how to commit and push the application, and configure the separate private data repository.
+
+### E. Vercel Instructions
+
+Explain how to import the GitHub project, fill environment variables securely, deploy, and open the free Vercel URL.
+
+### F. Notification Instructions
+
+Explain how to enable Telegram, Gmail, or on-app-only notifications.
+
+### G. Scheduling Instructions
+
+Explain how manual searches and daily automatic checks work.
+
+### H. Test Report
+
+List:
+
+- Tests passed.
+- Tests failed.
+- Build status.
+- Verified external integrations.
+- Unverified external integrations.
+- Outstanding configuration.
+
+### I. Go-Live Checklist
+
+Show the remaining steps needed before the application is fully operational.
+
+### J. Final Status
+
+Select one:
+
+- READY FOR LOCAL TESTING
+- READY FOR DEPLOYMENT
+- DEPLOYED — REQUIRES CONFIGURATION
+- LIVE AND VERIFIED
+- BLOCKED — WITH REASONS
+
+Only use **LIVE AND VERIFIED** when the deployed application and required external services have actually been tested.
+
+# FINAL DIRECTIVE
+
+Begin implementation immediately.
+
+Build a complete WorkProof AI application, not a mockup.
+
+Implement the frontend, backend, CV processing, Serper integration, optional Gemini integration, job matching, alerts, results, notifications, persistence, scheduling, security, and deployment preparation.
+
+Install dependencies and run verification checks.
+
+Fix failures where possible.
+
+Provide a functional localhost application, deployment-ready code, and clear instructions for completing any remaining external setup.
+
+Do not stop after planning or scaffolding.
+
+Do not require a database.
+
+Do not require a paid AI API.
+
+Do not invent credentials or API results.
+
+Do not claim that unverified integrations work.
+
+The final result must be a practical personal job discovery application that can run locally or be deployed to Vercel using GitHub-backed persistence, with no traditional database.
+
+**START IMPLEMENTATION NOW.**

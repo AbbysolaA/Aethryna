@@ -45,7 +45,8 @@ class SessionPromptAdminController extends Controller
     {
         return $request->validateWithBag($bag, [
             'title'            => ['required', 'string', 'max:255'],
-            'body'             => ['required', 'string', 'max:20000'],
+            'note'             => ['nullable', 'string', 'max:2000'],
+            'body'             => ['required', 'string', 'max:60000'],
             'panel_speaker_id' => ['nullable', Rule::in($panel->speakers()->pluck('panel_speakers.id')->all())],
             'sort_order'       => ['nullable', 'integer', 'min:1', 'max:999'],
         ], [

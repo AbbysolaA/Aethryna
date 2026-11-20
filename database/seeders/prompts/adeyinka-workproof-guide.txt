@@ -1,0 +1,162 @@
+WorkProof AI
+Participant Guide: build and run your own AI job alert agent
+The Skills Co-op | Vibe Coding: Founders Build Live | November 2026 | Version 1.2
+
+1. WHAT YOU WILL BUILD
+
+WorkProof AI is a personal job-search agent. You give it your CV, tell it what work you want, and it searches Google for matching vacancies, scores each one against your experience, and explains why it fits.
+
+- Reads your CV (PDF, Word or text) and pulls out your skills, past job titles and experience level.
+- Searches for jobs with Serper, which runs Google searches across LinkedIn, Greenhouse, Lever, Workable and company career pages.
+- Scores every job from 0 to 100 and explains the match. With the optional Gemini Mode, Google's Gemini AI reviews your top matches as well.
+- Remembers your searches and can send new matches to Telegram or email.
+- Runs on your laptop, and can be put online for free later.
+
+Two ways to take part: Path A builds the app from scratch with an AI coding agent and the build prompt. Path B runs the finished app your facilitator shares. Both end with the same working app, and you can switch to Path B at any time.
+
+2. BEFORE THE SESSION
+
+Install these
+- Node.js 22 or newer: runs the app. Check: node -v shows v22 or higher.
+- Git: downloads and saves code. Check: git --version shows a version.
+- An AI coding agent: builds the app (Path A only). Claude Code, OpenAI Codex, Cursor or Google Antigravity.
+
+Get Node.js from nodejs.org (choose the LTS version) and Git from git-scm.com. Restart your terminal after installing.
+
+Create these accounts (free)
+- Serper (serper.dev): real job searches. Yes, for real jobs. Demo mode works without it.
+- Google AI Studio (aistudio.google.com): Gemini Mode, the AI matching. Optional.
+- Telegram: job alerts on your phone. Optional.
+- GitHub and Vercel: putting the app online. Optional, for after the session.
+
+Free tiers change. Serper has given new accounts free search credits without a card, and Gemini has a free tier. Check each website for the current offer. Never share your keys with anyone, including on screen.
+
+3. PATH A: BUILD IT WITH THE PROMPT
+
+1. Create an empty folder called workproof-ai on your computer.
+2. Open that folder in your AI coding agent.
+3. Attach the file WorkProof AI PRD if your agent accepts attachments.
+4. Open WorkProof AI - Build Prompt v1.2, copy everything between BEGIN BUILD PROMPT and END BUILD PROMPT, paste it into your agent and send it.
+5. Let it work. A full build with tests usually takes 30 to 90 minutes. Approve the commands it asks to run. If it stops part-way, reply continue.
+6. When it says it has finished, go to section 5 to start the app.
+
+Your app will not be identical to the facilitator's. AI agents write slightly different code each time. That is normal. If something does not work, paste the exact error message back into your agent and ask it to fix it.
+
+4. PATH B: RUN THE FINISHED VERSION
+
+Use this if your build stalls, or if you would rather explore the app than build it.
+
+1. Get the link to the finished code from your facilitator.
+2. Open a terminal in the folder where you keep projects, and download the code (replace the link):
+
+git clone https://github.com/<facilitator>/workproof-ai.git
+cd workproof-ai
+
+Then continue with section 5.
+
+5. START THE APP
+
+In a terminal inside the project folder, run these two commands. The first takes a few minutes the first time.
+
+npm install
+npm run dev
+
+Open http://localhost:3000 in your browser. You should see the dashboard with a yellow DEMO MODE banner. Everything on screen is fictional and labelled DEMO DATA.
+
+Leave this terminal open while you use the app. To stop the app, click in the terminal and press Ctrl + C.
+
+6. TRY IT IN DEMO MODE
+
+1. Look at the profile card on the left. It shows skills found in a fictional CV.
+2. Click Add Alert. Enter a job title such as customer success and a location such as Lagos, with country code NG.
+3. Click Run Now on the alert. Scored matches appear on the right, each with a reason.
+4. Click View Details on a job to see how its score was worked out.
+5. Pause an alert with its switch, and look at Run History.
+
+7. ADD YOUR KEYS
+
+Create your settings file
+Your keys go in a private file called .env.local in the project folder. Create it from the example file:
+
+Windows (PowerShell)
+Copy-Item .env.example .env.local
+
+Mac or Linux
+cp .env.example .env.local
+
+Open .env.local in any text editor. Paste each key right after the equals sign, on the same line, with no spaces or quotes. For example: SERPER_API_KEY=abc123.
+
+Keep it private. Never share .env.local, never show it on screen and never upload it. The project is set up so that Git ignores this file.
+
+Serper key (real job search)
+1. Sign up at serper.dev.
+2. Open API Key in the dashboard and copy your key.
+3. In .env.local, set SERPER_API_KEY= followed by your key.
+
+Each search uses 2 Serper credits by default, one for each Google query. The app also stops itself at a monthly safety cap (SEARCH_MONTHLY_REQUEST_LIMIT, default 300).
+
+Gemini key (optional Gemini Mode)
+1. Go to aistudio.google.com/apikey and click Create API key.
+2. In .env.local, set GEMINI_API_KEY= followed by your key.
+
+Restart the app
+Every time you change .env.local, stop the app with Ctrl + C and run npm run dev again. It worked if the yellow demo banner has gone, and Settings > System Status says Serper is configured.
+
+8. RUN A REAL JOB SEARCH
+
+1. Add your own CV: click Replace CV, then upload a file or paste the text. Then click Edit Extracted Profile and fix anything that is wrong.
+2. Create an alert for the role and location you want, then click Run Now.
+3. Open a match and click Open Listing to see the original page.
+
+What you will notice:
+- Jobs carry an amber "Search result: unverified" badge. They come from Google, so the app only knows a short snippet of each.
+- Dates say "Date not verified", because Google's dates are not reliable posting dates.
+- Company says "Company not identified" when the page title does not state it. The app never guesses.
+- Always open the listing to check that the job is real and still open before you apply.
+
+Turn on Gemini Mode (optional)
+1. Go to Settings > Matching Mode and read what is sent to Google.
+2. Tick Turn on Gemini Mode and click Save Settings. The header changes from Standard Mode to Gemini Mode.
+3. Analyse your CV again and run a search. Reviewed jobs get an AI reviewed badge, and View Details shows the AI score, the keyword score and the combined score.
+
+Privacy: In Gemini Mode, your CV text (with contact details removed) goes to Google when it is analysed, and your extracted profile goes with each search. On Gemini's free tier, Google may use this data to improve its products. Use a fictional CV if you are presenting.
+
+9. GET ALERTS ON TELEGRAM (OPTIONAL)
+
+1. In Telegram, open @BotFather, send /newbot and follow the steps. Copy the token it gives you.
+2. Open a chat with your new bot and send it any message. Bots cannot message you first.
+3. In your browser, open https://api.telegram.org/bot<TOKEN>/getUpdates with your token in place of <TOKEN>. Find "chat":{"id": and copy the number after it.
+4. In .env.local, set TELEGRAM_BOT_TOKEN= and TELEGRAM_CHAT_ID=, then restart the app.
+5. In Settings > Notifications, click Test Telegram, then choose Telegram and click Save.
+
+10. PUT IT ONLINE (AFTER THE SESSION)
+
+Online, the app checks for new jobs every day even when your laptop is off. This takes about 30 minutes and needs GitHub and Vercel accounts. The project's own guide, docs/DEPLOYMENT.md, walks through every click. In short:
+
+1. Push your code to a private GitHub repository.
+2. Create a second private repository, workproof-data, with a README, and a GitHub token that can write to it.
+3. Import the code repository into Vercel and add your environment variables, including STORAGE_MODE=github and an APP_ACCESS_PASSWORD.
+4. Deploy, open your vercel.app address and unlock it with your password.
+
+11. IF SOMETHING GOES WRONG
+
+- node or npm is not recognised: install Node.js 22+, then close and reopen the terminal.
+- npm install fails: check node -v is 22 or higher. Delete the node_modules folder and try again.
+- Port 3000 is already in use: close the other app, or run npx next dev -p 3001 and open localhost:3001.
+- The demo banner will not go away: check the file is named .env.local (not .env.local.txt), the key name is spelt exactly, and you restarted the app.
+- Serper credits are used up: your free credits have run out. Add credits at serper.dev or use another account.
+- No results: use broader keywords, set freshness to Any, or click Show lower-scoring jobs.
+- Gemini Mode tickbox is grey: GEMINI_API_KEY is missing. Add it and restart.
+- CV upload fails: scanned PDFs cannot be read. Use Paste CV Text instead.
+- Anything else (Path A): copy the full error into your AI agent and ask it to fix it.
+
+12. CHECKLIST
+
+- The app opens at http://localhost:3000.
+- Demo mode shows labelled fictional data.
+- Your Serper key is in .env.local, and the demo banner has gone.
+- Your CV is uploaded and the extracted profile is corrected.
+- An alert finds real jobs, and you can open a listing.
+- Optional: Gemini Mode is on and jobs show an AI reviewed badge.
+- Optional: a Telegram test message arrived.
+- .env.local has never been shared or uploaded.

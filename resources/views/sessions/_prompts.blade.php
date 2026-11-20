@@ -29,6 +29,11 @@
                                 <i class="far fa-copy"></i> <span>Copy</span>
                             </button>
                         </header>
+                        @if ($prompt->note)
+                            {{-- Outside the copied block on purpose: pasted into an AI
+                                 tool, guidance would become part of the instruction. --}}
+                            <p class="ss-prompt-note">{{ $prompt->note }}</p>
+                        @endif
                         <pre id="prompt-{{ $prompt->id }}" class="ss-prompt-body">{{ $prompt->body }}</pre>
                     </article>
                 @endforeach

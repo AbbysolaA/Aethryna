@@ -214,4 +214,154 @@ class SessionPromptsTest extends TestCase
         $html = (new PanelRecap($panel->fresh(), 'Rae'))->build()->render();
         $this->assertStringNotContainsString('#prompts', $html);
     }
+
+    public function test_the_founders_prompts_seed_in_full_and_rerun_cleanly(): void
+    {
+        $this->seed(\Database\Seeders\Panel4Seeder::class);
+        $this->seed(\Database\Seeders\Panel4SplitSeeder::class);
+        $this->seed(\Database\Seeders\Panel4LineupSeeder::class);
+        $this->seed(\Database\Seeders\FoundersPromptsSeeder::class);
+        $this->seed(\Database\Seeders\FoundersPromptsSeeder::class);
+
+        $panel = PanelSession::where('slug', 'founders-build-live')->first();
+        $prompts = $panel->prompts()->with('speaker')->get();
+
+        $this->assertSame(4, $prompts->count());
+        $this->assertSame('Bola Naomi Soko', $prompts[0]->speaker->name);
+        $this->assertSame('Adeyinka Prime', $prompts[2]->speaker->name);
+
+        // The long build prompt arrives whole, beginning to end.
+        $build = $prompts->firstWhere('sort_order', 21)->body;
+        $this->assertGreaterThan(25000, strlen($build));
+        $this->assertStringStartsWith('You are an experienced full-stack software engineer', $build);
+        $this->assertStringEndsWith('**START IMPLEMENTATION NOW.**', $build);
+
+        // Locked, the page lists the titles; unlocked, it shows the texts.
+        $this->get('/sessions/founders-build-live')
+            ->assertSee('Certificate Studio: the full build prompt')
+            ->assertSee('WorkProof AI: participant guide (start here)')
+            ->assertDontSee('VIBE CODING FOUNDERS BUILD LIVE | CERTIFICATE STUDIO');
+
+        $this->withCookie('sc_prompts', json_encode([$panel->id]))
+            ->get('/sessions/founders-build-live')
+            ->assertSee('VIBE CODING FOUNDERS BUILD LIVE | CERTIFICATE STUDIO')
+            ->assertSee('Personal Job Alert Agent');
+    }
+
+    public function test_a_long_build_prompt_can_be_saved_from_the_admin(): void
+    {
+        $panel = $this->panelWithPrompts();
+        $this->actingAs(User::factory()->create(['role' => 'admin']));
+
+        $this->post(route('admin.prompts.store', $panel), [
+            'title' => 'A long build prompt', 'body' => str_repeat('Build it properly. ', 1800),
+        ])->assertSessionHasNoErrors();
+
+        $this->assertSame(1, SessionPrompt::where('title', 'A long build prompt')->count());
+    }
+
+    private function panel4WithAbisola(): PanelSession
+    {
+        $this->seed(\Database\Seeders\Panel4Seeder::class);
+        $panel = PanelSession::where('slug', 'panel-4')->first();
+        $panel->update(['status' => 'past', 'recording_url' => 'https://www.youtube.com/live/41qj4avx-Pg']);
+
+        $abisola = PanelSpeaker::firstOrCreate(['name' => 'Abisola Areola'], ['title' => 'Founder', 'bio' => 'B.']);
+        $panel->speakers()->syncWithoutDetaching([$abisola->id => ['sort_order' => 3]]);
+
+        return $panel;
+    }
+
+    public function test_abisolas_build_seeds_in_order_with_notes_kept_out_of_the_copy(): void
+    {
+        $panel = $this->panel4WithAbisola();
+        $this->seed(\Database\Seeders\Panel4PromptsSeeder::class);
+        $this->seed(\Database\Seeders\Panel4PromptsSeeder::class);
+
+        $prompts = $panel->prompts()->with('speaker')->get();
+        $this->assertSame(17, $prompts->count());
+        $this->assertSame('Job application assistant: start here', $prompts->first()->title);
+        $this->assertSame('A sample advert to practise with', $prompts->last()->title);
+        $this->assertTrue($prompts->every(fn ($p) => $p->speaker?->name === 'Abisola Areola'));
+
+        // The recording placeholder is filled and no public "4a" label.
+        $all = $prompts->pluck('body')->implode("\n");
+        $this->assertStringContainsString('https://www.youtube.com/live/41qj4avx-Pg', $all);
+        $this->assertStringNotContainsString('RECORDING LINK', $all);
+        $this->assertStringNotContainsString('Panel 4a', $all);
+
+        $html = $this->withCookie('sc_prompts', json_encode([$panel->id]))
+            ->get('/sessions/panel-4')->assertOk()->getContent();
+
+        // Notes show, but never inside the block the Copy button copies.
+        $this->assertStringContainsString('Real use: answer the questions at the end yourself', $html);
+        preg_match_all('#<pre[^>]*class="ss-prompt-body"[^>]*>(.*?)</pre>#s', $html, $blocks);
+        $this->assertCount(17, $blocks[1]);
+        foreach ($blocks[1] as $block) {
+            $this->assertStringNotContainsString('Tag every changed line [made-up]', $block);
+            $this->assertStringNotContainsString('Real use: answer the questions', $block);
+            $this->assertStringNotContainsString('caught a real slip', $block);
+        }
+    }
+
+    public function test_the_prompts_email_reaches_the_bank_once_with_both_sessions(): void
+    {
+        \Illuminate\Support\Facades\Mail::fake();
+
+        $founders = $this->panelWithPrompts();
+        $panel4 = $this->panel4WithAbisola();
+        $this->seed(\Database\Seeders\Panel4PromptsSeeder::class);
+        // A Panel 4 speaker whose prompts are not up yet.
+        $ore = PanelSpeaker::create(['name' => 'Ore Badmus', 'title' => 'T', 'bio' => 'B.']);
+        $panel4->speakers()->attach($ore->id, ['sort_order' => 2]);
+
+        SessionRegistration::create(['name' => 'Rae Smith', 'email' => 'rae@example.com', 'interest_type' => 'curious']);
+        SessionRegistration::create(['name' => 'Rae Again', 'email' => 'RAE@example.com', 'interest_type' => 'attendee']);
+        SessionRegistration::create(['name' => 'Janet Blair', 'email' => 'janet@example.com', 'interest_type' => 'curious']);
+
+        $this->artisan('panels:prompts-email', ['slugs' => ['panel-4', 'founders-build-live'], '--dry-run' => true])
+            ->expectsOutputToContain('2 would be emailed.')
+            ->assertSuccessful();
+        \Illuminate\Support\Facades\Mail::assertNothingSent();
+
+        $this->artisan('panels:prompts-email', ['slugs' => ['panel-4', 'founders-build-live']])
+            ->expectsOutputToContain('Sent 2 emails.')
+            ->assertSuccessful();
+        \Illuminate\Support\Facades\Mail::assertSent(\App\Mail\PromptsAvailable::class, 2);
+
+        // A rerun reaches nobody twice; a newly banked contact gets it alone.
+        SessionRegistration::create(['name' => 'New Person', 'email' => 'new@example.com', 'interest_type' => 'curious']);
+        $this->artisan('panels:prompts-email', ['slugs' => ['panel-4', 'founders-build-live']])
+            ->expectsOutputToContain('Sent 1 email.')
+            ->assertSuccessful();
+        \Illuminate\Support\Facades\Mail::assertSent(\App\Mail\PromptsAvailable::class, 3);
+
+        $mail = new \App\Mail\PromptsAvailable(collect([$panel4->fresh('speakers'), $founders->fresh('speakers')]), 'Rae Smith');
+        $built = $mail->build();
+        $this->assertTrue($built->hasReplyTo(config('organisation.email')));
+        $html = $built->render();
+
+        $this->assertStringContainsString('Hi Rae,', $html);
+        $this->assertStringContainsString('https://skillscoop.org/sessions/panel-4#prompts', $html);
+        $this->assertStringContainsString('https://skillscoop.org/sessions/founders-build-live#prompts', $html);
+        $this->assertStringContainsString('Prompts from Abisola Areola.', $html);
+        $this->assertStringContainsString('Prompts from Bola Naomi Soko.', $html);
+        // Panel 4 has speakers whose prompts are not up yet.
+        $this->assertStringContainsString('More prompts from the other speakers are on the way', $html);
+        $this->assertStringNotContainsString('localhost', $html);
+        // House style, in what readers see: the shared layout's comments and
+        // style block aside.
+        $this->assertStringNotContainsString('—', preg_replace(['/<!--.*?-->/s', '#<style.*?</style>#s'], '', $html));
+    }
+
+    public function test_the_prompts_email_refuses_a_session_with_no_prompts(): void
+    {
+        \Illuminate\Support\Facades\Mail::fake();
+        $this->panel4WithAbisola();
+        SessionRegistration::create(['name' => 'Rae Smith', 'email' => 'rae@example.com', 'interest_type' => 'curious']);
+
+        $this->artisan('panels:prompts-email', ['slugs' => ['panel-4']])->assertFailed();
+        $this->artisan('panels:prompts-email', ['slugs' => ['no-such-panel']])->assertFailed();
+        \Illuminate\Support\Facades\Mail::assertNothingSent();
+    }
 }

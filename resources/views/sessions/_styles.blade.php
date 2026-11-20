@@ -382,6 +382,11 @@
     .ss-prompt-head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; margin-bottom: 14px; }
     .ss-prompt-head h3 { margin: 0; font-size: 1.1rem; color: var(--ath-deep); }
     .ss-prompt-by { margin: 4px 0 0; font-size: 0.88rem; color: var(--ath-muted); }
+    .ss-prompt-note {
+        margin: 0 0 14px; padding: 12px 16px; border-radius: 12px;
+        background: rgba(238, 157, 29, 0.1); border-left: 4px solid var(--ath-gold);
+        font-size: 0.92rem; line-height: 1.6; color: var(--ath-text); white-space: pre-line;
+    }
     .ss-prompt-copy { background: var(--ath-teal); color: #fff; flex: 0 0 auto; border: none; cursor: pointer; }
     .ss-prompt-copy:hover { background: var(--ath-deep); }
     .ss-prompt-body {

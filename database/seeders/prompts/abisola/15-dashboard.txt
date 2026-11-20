@@ -1,0 +1,11 @@
+Build a dashboard called Application Desk, using the Evidence Desk design system and the five files in the tracker folder. It must answer one question: which application should I work on next, and what stops me applying?
+
+Show these sections, in this order:
+1. Headline figures. Include essential coverage, defined as: covered = 1, partial = 0.5, gap = 0, averaged across the Essential requirements only. Also show open gaps, claims checked and statement word count.
+2. The pipeline by stage.
+3. The requirements, each with its status.
+4. The claims, each with its evidence chips.
+5. The gap callouts, each with its next step.
+6. A chart of used and unused evidence lines.
+
+Do not use words that predict success. Show what is supported and what is not.

@@ -1,0 +1,29 @@
+Build a job application assistant that cannot invent facts
+
+The prompts behind Abisola Areola's live build on The Skills Co-op Sessions, Panel 4: Vibe Coding: Live Builds (20 October 2026). Copy them in order into Claude Code, or adapt them for the AI tool you use.
+
+WHAT YOU WILL BUILD
+
+An assistant that helps you write a job application using only facts you can prove. It has four parts:
+
+1. An evidence bank (me.md). Your CV turned into one checkable fact per line, each with an ID (E1, E2 and so on).
+2. Rules (rules.md). Six short rules, each with a yes/no test, that stop the AI writing around gaps or inventing claims.
+3. An application statement. Under 150 words, every claim followed by the ID of the evidence line behind it, plus a list of the gaps the advert exposes.
+4. A tracker and dashboard (optional). Your results saved to simple files, with a dashboard that answers one question: which application should I work on next, and what stops me applying?
+
+The idea underneath it: you own the output. The AI drafts and checks. You decide what gets sent.
+
+BEFORE YOU START
+
+- You need Claude Code (or any AI tool that can read and write files in a folder) and a folder to work in.
+- Put your CV or LinkedIn profile in the folder as a PDF.
+- Put the job advert text in a plain text or markdown file.
+- Use your real facts. In the live demo, some steps used made-up data because the CV and employers were fictional. Those steps are marked DEMO ONLY in their notes, and each has a real use version. Never let an AI invent evidence for a real application.
+
+NOTES ON USING THIS HONESTLY
+
+- The assistant drafts and checks. You decide what is sent.
+- The AI sends your CV details to the AI provider's servers to process them, so read the privacy terms of the tool you use before pasting in personal information.
+- Only add evidence you can back up. A gap you state honestly is better than a claim you cannot support in an interview.
+
+Built live on The Skills Co-op Sessions, Panel 4: Vibe Coding: Live Builds. Watch the recording: https://www.youtube.com/live/41qj4avx-Pg

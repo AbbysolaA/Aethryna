@@ -40,8 +40,12 @@
                 </div>
             </div>
             <div class="vl-field">
+                <label for="note-{{ $prompt->id }}">Note <span class="vl-opt">(optional, shown above the prompt, not copied)</span></label>
+                <textarea id="note-{{ $prompt->id }}" name="note" rows="2" maxlength="2000">{{ $prompt->note }}</textarea>
+            </div>
+            <div class="vl-field">
                 <label for="body-{{ $prompt->id }}">Prompt</label>
-                <textarea id="body-{{ $prompt->id }}" name="body" rows="8" required maxlength="20000">{{ $prompt->body }}</textarea>
+                <textarea id="body-{{ $prompt->id }}" name="body" rows="8" required maxlength="60000">{{ $prompt->body }}</textarea>
                 @error('body', $bag)<p class="vl-error">{{ $message }}</p>@enderror
             </div>
             <div class="vl-form-actions">
@@ -80,8 +84,12 @@
             </div>
         </div>
         <div class="vl-field">
+            <label for="new-note">Note <span class="vl-opt">(optional, shown above the prompt, not copied)</span></label>
+            <textarea id="new-note" name="note" rows="2" maxlength="2000" placeholder="For example: Real use: answer the questions yourself, with facts you can back up.">{{ old('note') }}</textarea>
+        </div>
+        <div class="vl-field">
             <label for="new-body">Prompt</label>
-            <textarea id="new-body" name="body" rows="8" required maxlength="20000" placeholder="Paste the prompt exactly as the speaker used it.">{{ old('body') }}</textarea>
+            <textarea id="new-body" name="body" rows="8" required maxlength="60000" placeholder="Paste the prompt exactly as the speaker used it.">{{ old('body') }}</textarea>
             @error('body', 'newPrompt')<p class="vl-error">{{ $message }}</p>@enderror
         </div>
         <div class="vl-form-actions">

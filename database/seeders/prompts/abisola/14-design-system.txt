@@ -1,0 +1,10 @@
+Create a design system called Evidence Desk for a personal job application dashboard.
+
+Colours: paper (the background), ink (the text), and three status colours named by meaning, not by hue: supported, gap and unsupported. Fonts: Fraunces for headings, Inter for body text and JetBrains Mono for evidence IDs and numbers. Visual idea: an audit ledger. Ruled lines, small mono-spaced reference numbers, and calm, factual tone.
+
+Rules:
+- Name colours by what they mean, for example "supported", never by what they look like.
+- Never rely on colour alone. Every status also has a text label or icon.
+- Text and key graphics must meet a contrast ratio of at least 4.5 to 1.
+
+Build six components: KPI card, status pill, evidence chip, gap callout, application card and score bar. Use stacked counts for the score bar. Map covered, partial and gap to supported, gap and unsupported.

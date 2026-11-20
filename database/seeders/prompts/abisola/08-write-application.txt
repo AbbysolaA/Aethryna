@@ -1,0 +1,1 @@
+Read job-advert.md. Write my application statement for this role, following rules.md exactly. Then give me the evidence table, the requirements list (covered, partial or gap) and the Gaps list.
