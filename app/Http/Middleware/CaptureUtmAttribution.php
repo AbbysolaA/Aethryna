@@ -25,6 +25,9 @@ class CaptureUtmAttribution
 {
     public const SESSION_KEY = 'utm_attribution';
 
+    /** The site that sent the visitor, for links shared without tags. */
+    public const REFERRER_KEY = 'landing_referrer';
+
     /**
      * The longest value worth keeping, matching the column width. Real
      * campaign names are two words; anything longer is somebody probing.
@@ -41,7 +44,43 @@ class CaptureUtmAttribution
             ]);
         }
 
+        if ($request->isMethod('GET') && ($host = $this->externalReferrerHost($request))) {
+            $request->session()->put(self::REFERRER_KEY, $host);
+        }
+
         return $next($request);
+    }
+
+    /** The external site that sent this visitor here, or null. */
+    public static function referrerHost(Request $request): ?string
+    {
+        $host = $request->session()->get(self::REFERRER_KEY);
+
+        return is_string($host) && $host !== '' ? $host : null;
+    }
+
+    /**
+     * Only another site counts: a click from one of our own pages to the
+     * next is not where somebody came from.
+     */
+    private function externalReferrerHost(Request $request): ?string
+    {
+        $host = parse_url((string) $request->headers->get('referer'), PHP_URL_HOST);
+
+        if (! is_string($host) || $host === '') {
+            return null;
+        }
+
+        $host = strtolower(preg_replace('/^www\./i', '', $host));
+        $ours = strtolower(preg_replace('/^www\./i', '', $request->getHost()));
+
+        if ($host === $ours || str_ends_with($host, '.'.$ours)) {
+            return null;
+        }
+
+        $host = preg_replace('/[^a-z0-9.\-]/', '', $host);
+
+        return $host === '' ? null : mb_substr($host, 0, self::MAX_LENGTH);
     }
 
     /**
