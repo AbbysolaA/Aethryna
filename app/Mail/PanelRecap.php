@@ -78,6 +78,8 @@ class PanelRecap extends Mailable
                 ? 'All three landed on the same rule without planning it: the AI does the work, you own the output.'
                 : null,
             'youtubeUrl'   => $youtube,
+            // Only when the session actually has prompts to offer.
+            'promptsUrl'   => $p->prompts()->exists() ? $publicUrl($p).'#prompts' : null,
             'nextTagline'  => $this->nextPanel?->tagline,
             'nextDate'     => $this->nextPanel?->event_date?->format('l j F Y, g.ia'),
             'nextUrl'      => $publicUrl($this->nextPanel),

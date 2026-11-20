@@ -3,7 +3,7 @@
 
     Data expected (see App\Mail\PanelRecap):
         firstName, panelTitle, panelDate, recordingUrl, panelUrl, speakers,
-        youtubeUrl, nextTagline, nextDate, nextUrl
+        youtubeUrl, promptsUrl, nextTagline, nextDate, nextUrl
 --}}
 @extends('emails.layout')
 
@@ -79,6 +79,16 @@
         </tr>
     @endif
 
+    @if ($promptsUrl)
+        <tr>
+            <td class="sc-pad" style="padding:24px 32px 0 32px;">
+                <p style="margin:0; font-family:'Karla',Arial,Helvetica,sans-serif; font-size:16px; line-height:26px; color:#2b333a;">
+                    <strong>Want to build it yourself?</strong> The exact prompts the speakers used are on the session page:
+                    <a href="{{ $promptsUrl }}" style="color:#055860; font-weight:700;">get the prompts</a>.
+                </p>
+            </td>
+        </tr>
+    @endif
     @if ($youtubeUrl)
         <tr>
             <td class="sc-pad" style="padding:24px 32px 0 32px;">

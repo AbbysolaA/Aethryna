@@ -65,6 +65,17 @@ class PanelSession extends Model
         return $this->hasMany(PanelMedia::class)->where('type', 'video')->orderBy('sort_order');
     }
 
+    /** The prompts behind the live builds, in the order they were used. */
+    public function prompts(): HasMany
+    {
+        return $this->hasMany(SessionPrompt::class)->orderBy('sort_order')->orderBy('id');
+    }
+
+    public function promptUnlocks(): HasMany
+    {
+        return $this->hasMany(PromptUnlock::class);
+    }
+
     // ── Scopes ───────────────────────────────────────────────────────────────
 
     public function scopeUpcoming($query)

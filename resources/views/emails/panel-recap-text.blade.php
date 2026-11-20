@@ -19,6 +19,10 @@ WHO BUILT
 {!! $closingNote !!}
 
 @endif
+@if ($promptsUrl)
+Want to build it yourself? The exact prompts the speakers used are on the session page: {!! $promptsUrl !!}
+
+@endif
 @if ($youtubeUrl)
 Each build is also going up on YouTube as its own video. Subscribe to the channel and you will get an alert the moment they land: {!! $youtubeUrl !!}
 
