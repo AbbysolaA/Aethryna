@@ -19,8 +19,10 @@ use Illuminate\Database\Seeder;
  */
 class FoundersCompleteSeeder extends Seeder
 {
-    // The share link's ?si= tracking parameter is dropped on purpose.
-    private const RECORDING = 'https://www.youtube.com/live/rhL-iNy403s';
+    // The StreamYard player, as supplied for the website. The same session
+    // is also on YouTube at https://www.youtube.com/live/rhL-iNy403s, which
+    // the recap email already linked to.
+    private const RECORDING = 'https://streamyard.com/e/aw3455fycpkx';
 
     public function run(): void
     {

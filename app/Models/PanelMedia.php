@@ -69,7 +69,9 @@ class PanelMedia extends Model
             'description'  => $this->caption
                 ? $this->caption.'. '.str($session->description)->limit(160)
                 : str($session->description)->limit(200)->toString(),
-            'thumbnailUrl' => $this->thumbnailUrl(),
+            // A StreamYard recording has no thumbnail service like YouTube's,
+            // and Search Console treats a video without one as incomplete.
+            'thumbnailUrl' => $this->thumbnailUrl() ?? $session->bannerUrl(),
             'uploadDate'   => ($session->event_date ?? $this->created_at)?->toIso8601String(),
             'embedUrl'     => $this->embedUrl(),
             'contentUrl'   => $this->url,

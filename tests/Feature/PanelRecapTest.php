@@ -202,19 +202,43 @@ class PanelRecapTest extends TestCase
         $founders = PanelSession::where('slug', 'founders-build-live')->first();
 
         $this->assertSame('past', $founders->status);
-        $this->assertSame('https://www.youtube.com/live/rhL-iNy403s', $founders->recording_url);
+        $this->assertSame('https://streamyard.com/e/aw3455fycpkx', $founders->recording_url);
         $this->assertSame(1, $founders->media()->where('type', 'video')->count());
 
-        $this->get('/sessions/founders-build-live')
-            ->assertOk()
-            ->assertSee('youtube-nocookie.com/embed/rhL-iNy403s', false);
+        $page = $this->get('/sessions/founders-build-live')->assertOk()->getContent();
+        $this->assertStringContainsString('<iframe src="https://streamyard.com/e/aw3455fycpkx"', $page);
+        // The video schema still carries a thumbnail: the session banner.
+        $this->assertStringContainsString('"thumbnailUrl":"'.$founders->bannerUrl().'"', $page);
 
         // The recap reads right for a session with no Panel 4 assumptions.
         $html = (new PanelRecap($founders->load('speakers'), 'Rae Smith'))->build()->render();
         $this->assertStringContainsString('three real builds', $html);
         $this->assertStringContainsString('Bola Naomi Soko', $html);
-        $this->assertStringContainsString('youtube.com/live/rhL-iNy403s', $html);
+        $this->assertStringContainsString('streamyard.com/e/aw3455fycpkx', $html);
         $this->assertStringNotContainsString('Panel 4 is not finished', $html);
         $this->assertStringNotContainsString('localhost', $html);
+    }
+
+    /** StreamYard gives out an <iframe> snippet; pasting it whole must work. */
+    public function test_the_recording_field_accepts_streamyards_embed_code(): void
+    {
+        $panel = $this->finishedPanel();
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $snippet = '<div style="width:100%;height:0px;position:relative;padding-bottom:56.25%;"><iframe src="https://streamyard.com/e/aw3455fycpkx" width="100%" height="100%" frameborder="0" title=Embed recording allowfullscreen style="width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden;"></iframe></div>';
+
+        $this->actingAs($admin)->patch(route('admin.panels.update', $panel), [
+            'title'         => $panel->title,
+            'tagline'       => $panel->tagline,
+            'description'   => $panel->description,
+            'event_date'    => '2026-10-20T18:30',
+            'status'        => 'past',
+            'sort_order'    => 4,
+            'recording_url' => $snippet,
+        ])->assertSessionHasNoErrors();
+
+        $panel->refresh();
+        $this->assertSame('https://streamyard.com/e/aw3455fycpkx', $panel->recording_url);
+        $this->assertSame('https://streamyard.com/e/aw3455fycpkx', $panel->videos()->first()->url);
     }
 }
