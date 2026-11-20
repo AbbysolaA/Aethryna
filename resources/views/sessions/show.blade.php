@@ -109,6 +109,9 @@
                             <i class="fas fa-play-circle"></i> Watch the recording
                         </a>
                     @endif
+                    @if($session->prompts->isNotEmpty())
+                        <a href="#prompts" class="ss-btn ss-btn-ghost"><i class="fas fa-terminal"></i> Get the prompts</a>
+                    @endif
                     <a href="{{ route('sessions') }}" class="ss-btn ss-btn-ghost">See the next panel</a>
                 @else
                     @if($session->event_date)
@@ -333,6 +336,10 @@
         </article>
     </div>
 </section>
+@endif
+
+@if($session->prompts->isNotEmpty())
+    @include('sessions._prompts')
 @endif
 
 {{-- Shareable whichever side of the event we are on: before, it is the

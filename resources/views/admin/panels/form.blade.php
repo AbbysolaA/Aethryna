@@ -193,6 +193,10 @@
             </form>
         </div>
 
+        @if ($editing)
+            @include('admin.panels._prompts')
+        @endif
+
     </div>
 </section>
 

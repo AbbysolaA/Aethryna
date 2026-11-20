@@ -29,6 +29,9 @@ Route::get('/stories', [PageController::class, 'stories'])->name('stories');
 Route::get('/sessions', [PageController::class, 'sessions'])->name('sessions');
 Route::post('/sessions/register', [PageController::class, 'registerSession'])->name('sessions.register');
 Route::get('/sessions/{panelSession}/calendar', [PageController::class, 'sessionCalendar'])->name('sessions.calendar');
+Route::post('/sessions/{panelSession}/prompts', [\App\Http\Controllers\SessionPromptController::class, 'unlock'])
+    ->middleware('throttle:10,60')
+    ->name('sessions.prompts.unlock');
 // Declared after /sessions/register so the literal path is matched first and
 // a panel can never be looked up by the slug "register".
 Route::get('/sessions/{panelSession}', [PageController::class, 'session'])->name('sessions.show');
@@ -235,6 +238,14 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
         ->name('panels.update');
     Route::delete('/panels/{panel}', [\App\Http\Controllers\Admin\PanelAdminController::class, 'destroy'])
         ->name('panels.destroy');
+
+    // The prompts behind each session's live builds.
+    Route::post('/panels/{panel}/prompts', [\App\Http\Controllers\Admin\SessionPromptAdminController::class, 'store'])
+        ->name('prompts.store');
+    Route::patch('/prompts/{prompt}', [\App\Http\Controllers\Admin\SessionPromptAdminController::class, 'update'])
+        ->name('prompts.update');
+    Route::delete('/prompts/{prompt}', [\App\Http\Controllers\Admin\SessionPromptAdminController::class, 'destroy'])
+        ->name('prompts.destroy');
 
     // Speakers are their own table because people return across panels.
     Route::get('/speakers', [\App\Http\Controllers\Admin\PanelAdminController::class, 'speakers'])

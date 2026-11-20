@@ -354,6 +354,44 @@
     .ss-expect-card p { color: var(--ath-muted); line-height: 1.7; font-size: 0.95rem; }
 
     /* ── Registration ─────────────────────────────────────────────────── */
+    /* Prompts from the live builds */
+    .ss-prompts { padding: 90px 0; background: var(--ath-light); }
+    .ss-prompts-header { max-width: 720px; margin-bottom: 36px; }
+    .ss-prompts-header h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); color: var(--ath-deep); margin: 8px 0 14px; }
+    .ss-prompts-header p { color: var(--ath-muted); line-height: 1.7; }
+    .ss-prompts-grid { display: grid; gap: 32px; align-items: start; }
+    @media (min-width: 900px) { .ss-prompts-grid { grid-template-columns: 1fr 1fr; } }
+    .ss-prompt-teasers { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+    .ss-prompt-teasers li {
+        display: flex; gap: 14px; align-items: flex-start;
+        background: #fff; border: 1px solid rgba(3, 139, 137, 0.12);
+        border-radius: 16px; padding: 16px 18px;
+    }
+    .ss-prompt-teasers i { color: var(--ath-gold); margin-top: 4px; }
+    .ss-prompt-teasers strong { display: block; color: var(--ath-deep); }
+    .ss-prompt-teasers em { font-style: normal; font-size: 0.88rem; color: var(--ath-muted); }
+    .ss-prompt-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+    .ss-prompt-optin { margin-bottom: 22px; }
+    .ss-prompt-small { margin: 14px 0 0; font-size: 0.85rem; color: var(--ath-muted); text-align: center; }
+    .ss-prompts-thanks { color: var(--ath-teal); font-weight: 700; margin-bottom: 20px; }
+    .ss-prompt-list { display: grid; gap: 20px; }
+    .ss-prompt {
+        background: #fff; border: 1px solid rgba(3, 139, 137, 0.12);
+        border-radius: 20px; padding: 24px; min-width: 0;
+    }
+    .ss-prompt-head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; margin-bottom: 14px; }
+    .ss-prompt-head h3 { margin: 0; font-size: 1.1rem; color: var(--ath-deep); }
+    .ss-prompt-by { margin: 4px 0 0; font-size: 0.88rem; color: var(--ath-muted); }
+    .ss-prompt-copy { background: var(--ath-teal); color: #fff; flex: 0 0 auto; border: none; cursor: pointer; }
+    .ss-prompt-copy:hover { background: var(--ath-deep); }
+    .ss-prompt-body {
+        margin: 0; padding: 18px; border-radius: 12px;
+        background: #f4f8f8; color: #1d2b2a;
+        font-size: 0.9rem; line-height: 1.6;
+        white-space: pre-wrap; word-break: break-word; overflow-x: auto;
+        max-height: 480px; overflow-y: auto;
+    }
+
     .ss-register { padding: 100px 0; background: var(--ath-light); }
     .ss-register-grid {
         display: grid;

@@ -122,9 +122,13 @@ class PageController extends Controller
             return redirect($panelSession->landing_path, 301);
         }
 
-        $panelSession->load(['speakers', 'images', 'videos']);
+        $panelSession->load(['speakers', 'images', 'videos', 'prompts.speaker']);
 
-        return view('sessions.show', ['session' => $panelSession]);
+        return view('sessions.show', [
+            'session'         => $panelSession,
+            'promptsUnlocked' => in_array($panelSession->id, SessionPromptController::unlockedIds(request()), true)
+                || session('prompts_unlocked'),
+        ]);
     }
 
     /**
