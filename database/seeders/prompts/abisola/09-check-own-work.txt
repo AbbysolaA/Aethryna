@@ -1,0 +1,1 @@
+Check the statement you just wrote. For every claim, tell me which line in me.md supports it and whether the wording, numbers and dates match exactly. List any claim that is not supported, and any word that breaks rules.md. If everything passes, say which rules you tested and how.

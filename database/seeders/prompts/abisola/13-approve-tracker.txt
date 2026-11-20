@@ -1,0 +1,1 @@
+Approve the format. Create the tracker files for this application, using the id app-001, the stage Drafting, and the closing date from job-advert.md. Save the statement results, requirements, claims, gaps and evidence lines.

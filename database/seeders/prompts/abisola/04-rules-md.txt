@@ -1,0 +1,58 @@
+# Rules for the job application assistant
+
+These rules apply to every application the assistant writes. The only source of facts is `me.md`. Each line there has an ID (E1, E2, ...).
+
+## Rules
+
+**R1.** Use only facts written in `me.md`. You may reword a line or join lines, but do not calculate, estimate or add any fact that is not in a cited line.
+
+Test: Can every fact in the output be found in a cited `me.md` line?
+
+**R2.** After every claim, give the ID of each `me.md` line it comes from in square brackets, for example [E24]. A claim built from more than one line lists every ID it uses, for example [E18, E29].
+
+Test: Does every claim in the statement and the evidence table carry at least one ID that exists in `me.md`?
+
+**R3.** When the advert asks for something `me.md` does not cover, list it in the Gaps section and do not use other experience to suggest it is met. A requirement is "covered" when `me.md` has lines for all of its named parts, "partial" when it has lines for some of them, and "gap" when it has none.
+
+Test: Does every requirement marked partial or gap appear in the Gaps list, with each missing part named?
+
+**R4.** Copy every number, date and job title exactly as `me.md` writes it, for example "1,700+ users", not "nearly 2,000 users". Do not round figures or merge them, for example by turning E8 and E10 into "1,700–1,800 users", and do not combine two job titles into one.
+
+Test: Does every number, date and job title in the output match the characters in its cited `me.md` line?
+
+**R5.** Do not use opinion words, such as excellent, strong, passionate, proven or results-driven. State what was done and give the figure or name from `me.md` instead.
+
+Test: Is the output free of opinion words, including excellent, strong, passionate, proven and results-driven?
+
+**R6.** A line with a "NEEDS DETAIL" note cannot be cited as evidence for a claim, and it does not count toward a covered or partial rating. List the advert requirement it relates to under Gaps, with the line's ID and the missing detail it names.
+
+Test: Is every cited ID a line without a NEEDS DETAIL note, and does each NEEDS DETAIL line that relates to the advert appear in the Gaps list?
+
+## Output format
+
+Give these four sections in this order.
+
+### 1. Statement
+
+- No more than 150 words. The IDs in square brackets do not count toward the limit.
+- Every claim follows R1 and R2.
+
+### 2. Evidence table
+
+| Claim | ID | Advert requirement it supports |
+|-------|----|--------------------------------|
+| One claim from the statement | E-number(s) | The advert wording it answers |
+
+- Include one row for each claim in the statement.
+
+### 3. Requirements list
+
+- Include every requirement in the advert, in the order the advert gives them.
+- Mark each one **covered**, **partial** or **gap**, as defined in R3.
+- For covered and partial requirements, add the IDs that support them.
+
+### 4. Gaps
+
+- List every requirement marked partial or gap.
+- For each one, name the part `me.md` does not cover, for example: "PRINCE2 certification: no line in `me.md`."
+- List every NEEDS DETAIL line that relates to an advert requirement (R6). For example, if a line E53 read "Led supplier contract negotiations. NEEDS DETAIL: number of contracts", the entry would be: "Supplier management: E53 needs the number of contracts."

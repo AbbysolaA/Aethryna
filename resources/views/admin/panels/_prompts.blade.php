@@ -40,6 +40,10 @@
                 </div>
             </div>
             <div class="vl-field">
+                <label for="note-{{ $prompt->id }}">Note <span class="vl-opt">(optional, shown above the prompt, not copied)</span></label>
+                <textarea id="note-{{ $prompt->id }}" name="note" rows="2" maxlength="2000">{{ $prompt->note }}</textarea>
+            </div>
+            <div class="vl-field">
                 <label for="body-{{ $prompt->id }}">Prompt</label>
                 <textarea id="body-{{ $prompt->id }}" name="body" rows="8" required maxlength="60000">{{ $prompt->body }}</textarea>
                 @error('body', $bag)<p class="vl-error">{{ $message }}</p>@enderror
@@ -78,6 +82,10 @@
                 <label for="new-order">Order</label>
                 <input id="new-order" name="sort_order" type="number" min="1" max="999" placeholder="Next" value="{{ old('sort_order') }}">
             </div>
+        </div>
+        <div class="vl-field">
+            <label for="new-note">Note <span class="vl-opt">(optional, shown above the prompt, not copied)</span></label>
+            <textarea id="new-note" name="note" rows="2" maxlength="2000" placeholder="For example: Real use: answer the questions yourself, with facts you can back up.">{{ old('note') }}</textarea>
         </div>
         <div class="vl-field">
             <label for="new-body">Prompt</label>

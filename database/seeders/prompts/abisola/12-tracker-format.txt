@@ -1,0 +1,9 @@
+Create a file called results-format.md for me to review. It describes how to save one application's results into five JSON files in a folder called tracker:
+
+- applications.json: one row per application, with id (for example app-001), role title, stage (Drafting, Submitted, Interview or Closed), closing date taken from job-advert.md, and statement word count.
+- requirements.json: one row per requirement in the advert, with application id, requirement text, whether it is Essential, Desirable or from the "You will" list, status (covered, partial or gap) and the evidence IDs that support it.
+- claims.json: one row per claim in the statement, with application id, claim text, evidence IDs and a check result (pass or fail).
+- gaps.json: one row per gap, with application id, the requirement, the missing part, any NEEDS DETAIL line involved, a next_step saying what I would need to find out or collect, and whether it is open or closed.
+- evidence.json: one row for every line in me.md, with its ID, date, text and whether this application used it.
+
+Rules: never change rows that belong to another application; use the application id on every row; do not create any file until I approve this format.

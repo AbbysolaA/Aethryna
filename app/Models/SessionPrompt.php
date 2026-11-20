@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /** A prompt a speaker used in a live build, for viewers to replicate. */
 class SessionPrompt extends Model
 {
-    protected $fillable = ['panel_session_id', 'panel_speaker_id', 'title', 'body', 'sort_order'];
+    protected $fillable = ['panel_session_id', 'panel_speaker_id', 'title', 'note', 'body', 'sort_order'];
 
     public function panelSession(): BelongsTo
     {

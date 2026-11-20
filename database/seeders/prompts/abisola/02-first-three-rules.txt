@@ -1,0 +1,15 @@
+Help me write a file called rules.md for a job application assistant.
+
+My three core rules, in plain English:
+1. The assistant may only use facts that are written in me.md.
+2. Every claim must point back to the evidence line it came from.
+3. If the job advert asks for something me.md does not cover, the assistant must say so instead of writing around it.
+
+Please turn them into rules.md with these requirements:
+- Number the rules R1, R2, R3.
+- Each rule is one instruction, in one or two sentences.
+- Under each rule, add a one-line "Test" that I can answer with yes or no.
+- Do not use vague words such as "accurate", "appropriate" or "good".
+- Add an "Output format" section: a statement of no more than 150 words, an evidence table (Claim, ID, Advert requirement it supports), a requirements list (covered, partial or gap) and a Gaps list.
+
+Before you write anything, ask me up to three questions if any rule is ambiguous. Then write the file.

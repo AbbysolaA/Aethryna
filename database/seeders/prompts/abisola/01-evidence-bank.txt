@@ -1,0 +1,11 @@
+I have attached my LinkedIn profile/resume as a PDF. I want to turn it into an evidence bank called me.md.
+
+For each thing I have done, write one line in this format: E1 | dates | one checkable fact
+
+Rules for every line:
+- One fact per line.
+- Include a number, a date or a named thing (a company, a tool, a course, a place).
+- Remove opinion words such as excellent, strong, passionate, proven or results-driven.
+- Use only what is in the PDF. If something is vague, write "NEEDS DETAIL: [what is missing]" instead of guessing.
+
+At the end, list up to five things that are too vague to use as evidence, and ask me one question about each so I can add the missing detail.

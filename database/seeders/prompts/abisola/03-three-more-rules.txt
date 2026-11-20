@@ -1,0 +1,1 @@
+Now add R4 (copy numbers, dates and job titles from me.md exactly, with no rounding or merging), R5 (no opinion words such as excellent, strong or passionate) and R6 (a line marked NEEDS DETAIL cannot prove a claim and goes under Gaps), in the same format.
