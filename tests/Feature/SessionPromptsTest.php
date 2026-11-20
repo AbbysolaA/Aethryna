@@ -364,4 +364,103 @@ class SessionPromptsTest extends TestCase
         $this->artisan('panels:prompts-email', ['slugs' => ['no-such-panel']])->assertFailed();
         \Illuminate\Support\Facades\Mail::assertNothingSent();
     }
+
+    public function test_an_unlock_from_a_tagged_link_records_the_platform(): void
+    {
+        $panel = $this->panelWithPrompts();
+
+        $this->get('/sessions/founders-build-live?utm_source=linkedin&utm_medium=social&utm_campaign=prompts')->assertOk();
+        $this->post(route('sessions.prompts.unlock', $panel), [
+            'name' => 'Rae Smith', 'email' => 'rae@example.com', 'keep_posted' => '1',
+        ]);
+
+        $unlock = PromptUnlock::sole();
+        $this->assertSame('linkedin', $unlock->utm_source);
+        $this->assertSame('prompts', $unlock->utm_campaign);
+        $this->assertSame('LinkedIn', $unlock->sourceLabel());
+
+        // Opting in carries the same attribution into the contacts bank.
+        $this->assertSame('linkedin', SessionRegistration::sole()->utm_source);
+    }
+
+    public function test_an_untagged_share_still_names_the_platform_from_the_referrer(): void
+    {
+        $panel = $this->panelWithPrompts();
+
+        $this->withHeader('referer', 'https://l.instagram.com/?u=https%3A%2F%2Fskillscoop.org')
+            ->get('/sessions/founders-build-live')->assertOk();
+        $this->post(route('sessions.prompts.unlock', $panel), ['name' => 'Rae Smith', 'email' => 'rae@example.com']);
+
+        $this->assertSame('l.instagram.com', PromptUnlock::sole()->referrer_host);
+        $this->assertSame('Instagram', PromptUnlock::sole()->sourceLabel());
+    }
+
+    public function test_our_own_pages_never_count_as_where_someone_came_from(): void
+    {
+        $panel = $this->panelWithPrompts();
+
+        $this->withHeader('referer', url('/sessions'))->get('/sessions/founders-build-live');
+        $this->post(route('sessions.prompts.unlock', $panel), ['name' => 'Rae Smith', 'email' => 'rae@example.com']);
+
+        $this->assertNull(PromptUnlock::sole()->referrer_host);
+        $this->assertSame('Direct or unknown', PromptUnlock::sole()->sourceLabel());
+    }
+
+    public function test_a_repeat_untagged_unlock_keeps_the_first_platform(): void
+    {
+        $panel = $this->panelWithPrompts();
+
+        $this->get('/sessions/founders-build-live?utm_source=tiktok');
+        $this->post(route('sessions.prompts.unlock', $panel), ['name' => 'Rae Smith', 'email' => 'rae@example.com']);
+
+        // A fresh visitor session with no tag or referrer.
+        $this->flushSession();
+        $this->post(route('sessions.prompts.unlock', $panel), ['name' => 'Rae Smith', 'email' => 'rae@example.com']);
+
+        $this->assertSame('TikTok', PromptUnlock::sole()->sourceLabel());
+    }
+
+    public function test_platform_labels_cover_tags_and_hosts(): void
+    {
+        $cases = [
+            ['linkedin', null, 'LinkedIn'],
+            ['LinkedIn', null, 'LinkedIn'],
+            [null, 'lnkd.in', 'LinkedIn'],
+            [null, 'm.facebook.com', 'Facebook'],
+            [null, 't.co', 'X'],
+            [null, 'www.google.co.uk', 'Google search'],
+            ['x', null, 'X'],
+            ['email', null, 'Email'],
+            ['podcast', null, 'Podcast'],
+            [null, 'blog.example.org', 'blog.example.org'],
+            [null, 'notinstagram.com', 'notinstagram.com'],
+            [null, null, 'Direct or unknown'],
+        ];
+
+        foreach ($cases as [$tag, $host, $expected]) {
+            $this->assertSame($expected, \App\Support\TrafficSource::label($tag, $host), "tag={$tag} host={$host}");
+        }
+    }
+
+    public function test_admin_sees_share_links_and_the_platform_breakdown(): void
+    {
+        $panel = $this->panelWithPrompts();
+
+        $this->get('/sessions/founders-build-live?utm_source=linkedin');
+        $this->post(route('sessions.prompts.unlock', $panel), ['name' => 'Rae Smith', 'email' => 'rae@example.com']);
+        $this->flushSession();
+        $this->get('/sessions/founders-build-live?utm_source=linkedin');
+        $this->post(route('sessions.prompts.unlock', $panel), ['name' => 'Janet Blair', 'email' => 'janet@example.com']);
+        $this->flushSession();
+        $this->post(route('sessions.prompts.unlock', $panel), ['name' => 'Sam Lee', 'email' => 'sam@example.com']);
+
+        $this->actingAs(User::factory()->create(['role' => 'admin']))
+            ->get(route('admin.panels.edit', $panel))
+            ->assertOk()
+            ->assertSee('Links to share')
+            ->assertSee('/sessions/founders-build-live?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=prompts#prompts', false)
+            ->assertSee('LinkedIn 2')
+            ->assertSee('Direct or unknown 1')
+            ->assertSee('Came from');
+    }
 }

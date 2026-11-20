@@ -97,16 +97,44 @@
         </div>
     </form>
 
+    @if ($prompts->isNotEmpty())
+        <h3 class="vl-unlocks-title">Links to share</h3>
+        <p class="vl-side-note">
+            Use the link for the platform you are posting on, so the unlocks below show which
+            platform brought people in. Each one opens the page at the prompts.
+        </p>
+        <div class="vl-share-links">
+            @foreach (\App\Support\TrafficSource::shareLinkPlatforms() as $source => [$platform, $medium])
+                @php($shareUrl = route('sessions.show', $panel).'?utm_source='.$source.'&utm_medium='.$medium.'&utm_campaign=prompts#prompts')
+                <div class="vl-share-link">
+                    <label for="share-{{ $source }}">{{ $platform }}</label>
+                    <div class="vl-share-row">
+                        <input id="share-{{ $source }}" type="text" readonly value="{{ $shareUrl }}" onclick="this.select()">
+                        <button type="button" class="vl-btn vl-btn-quiet vl-share-copy" data-copy="share-{{ $source }}">Copy</button>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    @endif
+
     @if ($unlocks->isNotEmpty())
+        @php($bySource = $unlocks->groupBy(fn ($u) => $u->sourceLabel())->map->count()->sortDesc())
         <h3 class="vl-unlocks-title">{{ $unlocks->count() }} {{ $unlocks->count() === 1 ? 'person has' : 'people have' }} unlocked the prompts, {{ $unlocks->where('opted_in', true)->count() }} joined the mailing list</h3>
+        <p class="vl-source-summary">
+            <strong>By platform:</strong>
+            @foreach ($bySource as $label => $count)
+                <span class="vl-source-pill">{{ $label }} {{ $count }}</span>
+            @endforeach
+        </p>
         <div class="vl-table-scroll">
             <table class="vl-table">
-                <thead><tr><th>Name</th><th>Email</th><th>Joined the list</th><th>When</th></tr></thead>
+                <thead><tr><th>Name</th><th>Email</th><th>Came from</th><th>Joined the list</th><th>When</th></tr></thead>
                 <tbody>
                     @foreach ($unlocks as $unlock)
                         <tr>
                             <td>{{ $unlock->name }}</td>
                             <td>{{ $unlock->email }}</td>
+                            <td>{{ $unlock->sourceLabel() }}</td>
                             <td>{{ $unlock->opted_in ? 'Yes' : 'No' }}</td>
                             <td>{{ $unlock->created_at->format('j M Y') }}</td>
                         </tr>
@@ -126,5 +154,29 @@
     .vl-unlocks-title { margin-top: 28px; }
     .vl-prompt-form textarea { width: 100%; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.9rem; }
     .vl-field-narrow { flex: 0 0 90px !important; }
+    .vl-share-links { display: grid; gap: 10px; margin-bottom: 8px; }
+    .vl-share-link label { display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 4px; }
+    .vl-share-row { display: flex; gap: 8px; }
+    .vl-share-row input { flex: 1 1 auto; min-width: 0; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.82rem; }
+    .vl-source-summary { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 12px; }
+    .vl-source-pill { background: rgba(3, 139, 137, 0.1); color: #055860; border-radius: 999px; padding: 3px 12px; font-size: 0.85rem; font-weight: 700; }
 </style>
+@endpush
+
+@push('scripts')
+<script>
+    document.querySelectorAll('.vl-share-copy').forEach(function (button) {
+        button.addEventListener('click', function () {
+            var input = document.getElementById(button.dataset.copy);
+            input.select();
+            (navigator.clipboard && window.isSecureContext
+                ? navigator.clipboard.writeText(input.value)
+                : Promise.resolve(document.execCommand('copy'))
+            ).then(function () {
+                button.textContent = 'Copied';
+                setTimeout(function () { button.textContent = 'Copy'; }, 2000);
+            });
+        });
+    });
+</script>
 @endpush

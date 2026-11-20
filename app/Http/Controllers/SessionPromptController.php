@@ -65,13 +65,21 @@ class SessionPromptController extends Controller
             'email'            => $email,
         ]);
         $unlock->name = $validated['name'];
+
+        // Where they came from. A repeat unlock that arrived untagged keeps
+        // the attribution of the visit that first brought them.
+        $attribution = \App\Http\Middleware\CaptureUtmAttribution::forRegistration($request);
+        $referrer = \App\Http\Middleware\CaptureUtmAttribution::referrerHost($request);
+        if ($attribution || $referrer) {
+            $unlock->fill($attribution + ['referrer_host' => $referrer]);
+        }
         // Once opted in, a later unlock without the tick does not undo it:
         // withdrawing is a reply to us, not a missed checkbox.
         $unlock->opted_in = $unlock->opted_in || $optedIn;
         $unlock->save();
 
         if ($optedIn) {
-            $this->joinTheBank($validated['name'], $email, $panelSession);
+            $this->joinTheBank($validated['name'], $email, $panelSession, $attribution);
         }
 
         $ids = array_values(array_unique([...self::unlockedIds($request), $panelSession->id]));
@@ -81,10 +89,10 @@ class SessionPromptController extends Controller
     }
 
     /** Into the contacts bank, so future recaps and sessions reach them. */
-    private function joinTheBank(string $name, string $email, PanelSession $panelSession): void
+    private function joinTheBank(string $name, string $email, PanelSession $panelSession, array $attribution = []): void
     {
         if (! SessionRegistration::whereRaw('lower(email) = ?', [$email])->exists()) {
-            SessionRegistration::create([
+            SessionRegistration::create($attribution + [
                 'panel_session_id' => null,
                 'name'             => $name,
                 'email'            => $email,
