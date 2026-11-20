@@ -1,0 +1,114 @@
+Build a Futuristic AI Certificate Generator App
+Create a fully functional, premium web application called:
+VIBE CODING FOUNDERS BUILD LIVE | CERTIFICATE STUDIO
+
+1. APP PURPOSE
+Build an interactive AI-powered certificate generator that creates personalised Certificates of Attendance for event participants.
+The application must allow me to manage attendees, customise certificates, preview designs and download individual certificates or all certificates in bulk.
+Generate a separate certificate for each person. Never combine names on one certificate.
+
+2. CERTIFICATE CONTENT
+Use the following wording, replacing [ATTENDEE NAME] with the correct individual name:
+CERTIFICATE OF ATTENDANCE
+This certificate is proudly presented to:
+[ATTENDEE NAME]
+For attending and participating in
+THE VIBE CODING FOUNDERS BUILD LIVE
+Celebrating creativity, innovation, AI-powered development and the future of building with technology.
+Date: as user to provide date of certificate
+Include a signature area labelled:
+FOUNDER / EVENT ORGANISER
+Do not invent a signature or organiser's name.
+
+3. VISUAL DESIGN
+Use the attached reference image as the primary design inspiration.
+Create premium, bold, futuristic certificates that feel like exclusive digital awards.
+Colour palette:
+• Electric pink and neon magenta
+• Bright turquoise
+• Sunshine yellow and coral
+• Holographic gradients
+• Subtle purple and blue highlights
+Use vibrant gradients blending pink, peach, yellow and turquoise. Avoid plain white templates and dull corporate colours.
+Certificate artwork:
+• A striking futuristic AI robot or humanoid on the left.
+• Glowing digital circuitry and technology effects.
+• Floating holographic code and futuristic coding interfaces.
+• Visual references to AI-powered app development.
+• A small playful technology illustration in the bottom-right corner.
+Use high-quality AI-generated artwork. The overall aesthetic should be colourful, sophisticated, imaginative and visually striking.
+
+4. CERTIFICATE LAYOUT
+Use an A4 landscape layout.
+Follow the reference image's composition:
+LEFT SECTION
+• Large futuristic AI robot illustration.
+• Deep contrasting background.
+• Glowing technology and digital effects.
+RIGHT SECTION
+• Large, bold CERTIFICATE OF ATTENDANCE heading.
+• Event name or subtitle.
+• "THIS CERTIFICATE IS PRESENTED TO:"
+• Attendee's name in large, elegant typography.
+• Prominent coloured underline beneath the name.
+• Attendance recognition statement.
+• Event date.
+• Organiser signature area.
+Ensure excellent spacing, visual hierarchy and readability. No overlapping, clipped text or spelling errors. The attendee's name must be a central visual feature.
+
+5. APPLICATION FEATURES
+Dashboard
+• Display the event name and branding.
+• Show all attendees.
+• Display the total number of attendees and generated certificates.
+• Provide a clear overview of certificate generation progress.
+Attendee management
+• Add, edit and remove attendees.
+• Generate individual certificates.
+• Generate certificates for everyone in one action.
+Certificate customisation
+• Select an attendee and preview their certificate.
+• Edit certificate wording and date.
+• Change colour themes.
+• Regenerate the AI artwork.
+• Preview the certificate in realistic A4 landscape proportions.
+Downloads
+• Export individual certificates as high-resolution PNG files.
+• Export individual certificates as print-ready A4 landscape PDFs.
+• Download all certificates together as a ZIP file.
+• Ensure bulk PDF exports contain one certificate per page.
+• Use high-resolution output suitable for professional printing, LinkedIn and email sharing.
+
+6. APPLICATION DESIGN
+The application itself should feel like a premium futuristic creative studio, not a basic administrative dashboard.
+Use:
+• Elegant modern typography.
+• Vibrant gradients and subtle glow effects.
+• Rounded interface elements.
+• Premium buttons and intuitive navigation.
+• Smooth, subtle animations.
+• Clean layouts and responsive components.
+• A polished desktop and mobile experience.
+Maintain a consistent visual identity between the dashboard, editor and certificates.
+
+7. TECHNICAL REQUIREMENTS
+Build the complete, working application, not a static mock-up.
+All controls and buttons must function correctly.
+Ensure:
+• Four attendees are preloaded.
+• Each certificate displays the correct individual name.
+• The default date is 18 November 2026.
+• Attendee management works.
+• Certificate editing and preview work.
+• Artwork and colour customisation work.
+• PNG, PDF and ZIP exports work.
+• PDFs use A4 landscape dimensions.
+• Bulk exports generate every attendee's certificate separately.
+• Text remains crisp and readable when printed.
+• The application works across desktop and mobile.
+Use reliable client-side or server-side export functionality. Do not leave placeholder buttons, simulated downloads or unfinished features.
+
+FINAL CREATIVE DIRECTION
+The finished product should feel like a futuristic AI-powered certificate studio for founders, innovators and technology builders.
+Prioritise exceptional visual design, professional certificate quality, effortless usability and fully working functionality.
+Start building immediately with the four preloaded attendees and the complete certificate design.

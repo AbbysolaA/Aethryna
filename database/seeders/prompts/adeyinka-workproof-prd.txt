@@ -1,0 +1,285 @@
+# WorkProof AI
+
+## Product Requirements Document (PRD)
+
+**Product:** WorkProof AI — Personal Job Alert Agent
+**Version:** 1.2
+**Event:** The Skills Co-op — Vibe Coding: Founders Build Live
+**Date:** November 2026
+
+## 1. Product Overview
+
+WorkProof AI is a simple web application that helps people discover job opportunities based on their CV, skills, experience, and career preferences.
+
+Instead of repeatedly searching job boards, users can create personalised job alerts, discover relevant opportunities whenever they want, and optionally receive new openings through Telegram or email.
+
+The application works locally on a computer or online through Vercel.
+
+**Core objective:** Help job seekers spend less time searching and more time applying for relevant opportunities.
+
+## 2. What We're Building
+
+A lightweight personal job discovery dashboard with six core capabilities:
+
+1. **CV Input:** Upload a CV (PDF, DOCX, TXT) or paste CV text.
+2. **Profile Analysis:** Identify skills, experience, and potential job categories, with options to edit the results.
+3. **Job Alerts:** Create multiple alerts based on roles, locations, experience levels, and preferences.
+4. **Job Discovery:** Search Google-indexed job pages using Serper and rank potential opportunities against the user's profile.
+5. **Results & History:** View job matches directly in the application, including results from previous searches.
+6. **Notifications:** Receive new matching opportunities through Telegram, Gmail, or the dashboard only.
+
+Users can search immediately or enable automatic daily checks.
+
+## 3. Core Features
+
+### 3.1 CV & Profile
+
+Users can upload a CV or paste its content directly into the application.
+
+WorkProof AI identifies potential skills, previous job titles, experience, and transferable skills.
+
+Two matching modes are supported:
+
+- **Standard Mode:** Built-in rule-based CV analysis. No AI API key required.
+- **Gemini Mode (Optional):** Uses Google's Gemini API for improved skill interpretation and matching explanations.
+
+Users can review, edit, replace, or delete their profile.
+
+### 3.2 Job Alerts
+
+Users can create and manage multiple independent alerts.
+
+Each alert includes:
+
+- Job title or search keywords.
+- Preferred location or country.
+- Remote, hybrid, on-site, or any.
+- Experience level.
+- Job posting freshness preference.
+- Minimum relevance threshold.
+- Active or paused status.
+
+Available actions:
+
+**Add Alert · Edit · Run Now · Pause/Resume · Delete · View Results**
+
+A **Run All Now** button searches all active alerts.
+
+Paused alerts do not run automatically.
+
+### 3.3 Job Search & Matching
+
+The application uses **Serper Google Search API** to discover public job postings from Google-indexed sources, including company career pages, recruitment websites, and potentially LinkedIn job listings.
+
+Serper is the job search provider; Gemini is not used to retrieve job listings.
+
+Each search result should display available information, including:
+
+- Job title.
+- Company, when identifiable.
+- Location, when available.
+- Posting date, when verifiable.
+- Relevance score and explanation.
+- Original job URL.
+
+The application must remove duplicate results, respect API limits, and avoid inventing missing job details.
+
+Each search uses a small number of Serper credits: two Google queries by default. Serper's free credits are a one-off allowance, so the application keeps a conservative usage cap and stops with a clear message when credits run out.
+
+**Important:** A Google search result is a potential opportunity, not confirmation that a vacancy remains open. Unknown publication dates must not be presented as verified recent postings.
+
+### 3.4 Job Matching
+
+The application ranks discovered opportunities against the user's skills, experience, selected job title, seniority, and location.
+
+Standard Mode uses transparent rule-based scoring.
+
+Optional Gemini Mode can improve CV understanding and explain why opportunities may be relevant.
+
+Match scores are relevance estimates, not predictions of hiring success.
+
+If Gemini is unavailable, WorkProof AI must continue functioning using Standard Mode.
+
+Gemini Mode is off by default. A Gemini API key alone does not switch it on, and the active mode (Standard Mode or Gemini Mode) is always shown in the interface.
+
+### 3.5 Results & Search History
+
+Users can view job search results directly inside WorkProof AI without waiting for Telegram or email notifications.
+
+Every search run records:
+
+- Date and time.
+- Associated alert.
+- Manual or automatic execution.
+- Results found.
+- Execution status.
+
+Users can open previous runs, inspect individual results, and follow original job links.
+
+Recent history is saved within reasonable storage limits.
+
+### 3.6 Notifications
+
+Users can choose one of three options:
+
+| Option | Description |
+| --- | --- |
+| Telegram | Receive job alerts through a Telegram bot |
+| Gmail | Receive job alerts through Gmail/Google Apps Script |
+| On-app only | View results directly in WorkProof AI |
+
+Notifications contain job titles, available company information, brief matching explanations, and original posting links.
+
+Previously notified jobs should not be repeatedly sent.
+
+CV contents must not be included in job alert messages.
+
+### 3.7 Automatic & Manual Searches
+
+Users can:
+
+- Run any individual alert immediately.
+- Run all active alerts.
+- Enable or disable automatic checks.
+- Pause or resume alerts.
+- View previous execution history.
+
+Daily automatic checks are supported through Vercel Cron when correctly configured.
+
+More frequent checks require a compatible scheduling service or hosting configuration.
+
+## 4. User Interface
+
+The interface should be clean, modern, mobile-friendly, and easy to navigate.
+
+**Design:** White background, purple accents (#5B35D5), rounded cards, clear typography, and minimal visual clutter.
+
+The application has four main sections:
+
+| Section | Function |
+| --- | --- |
+| Home | CV profile, alert overview, and recent results |
+| Alerts | Create, edit, run, pause, resume, and delete alerts |
+| Results | Job matches, individual job details, and run history |
+| Settings | Notifications, preferences, scheduling, and connection status |
+
+The homepage should feature prominent **Add Alert** and **Run All Now** buttons.
+
+Every alert should have its own **Run Now** action.
+
+The interface must provide clear loading, error, and empty states.
+
+No complicated charts or unnecessary pages are required.
+
+## 5. How the Application Works
+
+**Step 1:** Open WorkProof AI and upload or paste a CV.
+
+**Step 2:** Review and edit the extracted professional profile.
+
+**Step 3:** Create one or more job alerts.
+
+**Step 4:** Click Run Now to search for potential opportunities.
+
+**Step 5:** Serper retrieves Google search results related to the selected jobs and locations.
+
+**Step 6:** WorkProof AI ranks the results using Standard Mode or optional Gemini analysis.
+
+**Step 7:** Review matches, open job details, and visit the original posting pages.
+
+**Step 8:** Optionally enable Telegram or Gmail notifications.
+
+**Step 9:** When deployed and configured, WorkProof AI checks active alerts automatically each day.
+
+Users can return anytime to review previous searches or manage alerts.
+
+## 6. Technology & Hosting
+
+| Component | Technology |
+| --- | --- |
+| Web Application | Next.js + TypeScript |
+| Styling | Tailwind CSS |
+| Job Discovery | Serper Google Search API |
+| CV Processing | PDF/DOCX/text extraction |
+| Standard Matching | Rule-based TypeScript logic |
+| Optional AI Matching | Google Gemini API |
+| Notifications | Telegram Bot API / Gmail Apps Script |
+| Local Storage | JSON files |
+| Online Storage | Private GitHub JSON files |
+| Scheduling | Vercel Cron |
+| Hosting | Vercel |
+| Development | AI coding agent |
+
+**No traditional database or paid AI API is required.**
+
+### Running Locally
+
+WorkProof AI must run on localhost with local JSON storage.
+
+Running locally requires Node.js 22 or newer.
+
+Users should be able to test the interface and core functions in clearly labelled demo mode without external API credentials.
+
+Live Google job searches require a Serper API key.
+
+### Running Online
+
+The application can be deployed through Vercel using a free vercel.app subdomain, subject to the hosting plan's usage conditions.
+
+A private GitHub repository stores application settings, alerts, and history persistently.
+
+The deployed version supports daily automated checks without requiring the user's computer to remain switched on.
+
+## 7. Security & Privacy
+
+WorkProof AI is designed as a personal application, not a public multi-user service.
+
+Requirements:
+
+- No account registration.
+- Simple access-password protection for hosted deployments.
+- API credentials stored securely.
+- Private CV and profile information.
+- No secret keys exposed in public code.
+- Ability to delete saved CV information.
+- Fictional CVs and clearly labelled sample data during demonstrations.
+
+Gemini is optional. Users must explicitly enable it before CV-derived information is sent to Google's API, and should review the applicable data-handling terms.
+
+## 8. What We're Not Building
+
+Version 1 will not include:
+
+- Multi-user accounts or subscriptions.
+- Automatic job applications.
+- CV rewriting or cover-letter generation.
+- Interview scheduling.
+- Recruitment management systems.
+- Advanced analytics dashboards.
+- Native mobile applications.
+- Mandatory paid AI integrations.
+- Guaranteed verification of job openings.
+- Instant real-time job monitoring.
+
+These features are outside the scope of the workshop.
+
+## 9. Definition of Done
+
+WorkProof AI is functionally complete when users can:
+
+- Upload or paste a CV.
+- Review and edit their profile.
+- Create and manage multiple job alerts.
+- Run an individual alert or all active alerts.
+- Retrieve real Google search results through Serper.
+- View match explanations using Standard Mode.
+- Optionally enable Gemini-powered matching.
+- Open original job posting links.
+- View results from previous runs.
+- Configure and test Telegram or Gmail notifications.
+- Run the application locally without deployment.
+- Deploy to Vercel with persistent settings and daily scheduled checks.
+
+External integrations must be tested before being considered operational.
+
+**WorkProof AI — Your Experience. Your Skills. Your Next Opportunity.**

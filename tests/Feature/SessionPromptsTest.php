@@ -214,4 +214,49 @@ class SessionPromptsTest extends TestCase
         $html = (new PanelRecap($panel->fresh(), 'Rae'))->build()->render();
         $this->assertStringNotContainsString('#prompts', $html);
     }
+
+    public function test_the_founders_prompts_seed_in_full_and_rerun_cleanly(): void
+    {
+        $this->seed(\Database\Seeders\Panel4Seeder::class);
+        $this->seed(\Database\Seeders\Panel4SplitSeeder::class);
+        $this->seed(\Database\Seeders\Panel4LineupSeeder::class);
+        $this->seed(\Database\Seeders\FoundersPromptsSeeder::class);
+        $this->seed(\Database\Seeders\FoundersPromptsSeeder::class);
+
+        $panel = PanelSession::where('slug', 'founders-build-live')->first();
+        $prompts = $panel->prompts()->with('speaker')->get();
+
+        $this->assertSame(4, $prompts->count());
+        $this->assertSame('Bola Naomi Soko', $prompts[0]->speaker->name);
+        $this->assertSame('Adeyinka Prime', $prompts[2]->speaker->name);
+
+        // The long build prompt arrives whole, beginning to end.
+        $build = $prompts->firstWhere('sort_order', 21)->body;
+        $this->assertGreaterThan(25000, strlen($build));
+        $this->assertStringStartsWith('You are an experienced full-stack software engineer', $build);
+        $this->assertStringEndsWith('**START IMPLEMENTATION NOW.**', $build);
+
+        // Locked, the page lists the titles; unlocked, it shows the texts.
+        $this->get('/sessions/founders-build-live')
+            ->assertSee('Certificate Studio: the full build prompt')
+            ->assertSee('WorkProof AI: participant guide (start here)')
+            ->assertDontSee('VIBE CODING FOUNDERS BUILD LIVE | CERTIFICATE STUDIO');
+
+        $this->withCookie('sc_prompts', json_encode([$panel->id]))
+            ->get('/sessions/founders-build-live')
+            ->assertSee('VIBE CODING FOUNDERS BUILD LIVE | CERTIFICATE STUDIO')
+            ->assertSee('Personal Job Alert Agent');
+    }
+
+    public function test_a_long_build_prompt_can_be_saved_from_the_admin(): void
+    {
+        $panel = $this->panelWithPrompts();
+        $this->actingAs(User::factory()->create(['role' => 'admin']));
+
+        $this->post(route('admin.prompts.store', $panel), [
+            'title' => 'A long build prompt', 'body' => str_repeat('Build it properly. ', 1800),
+        ])->assertSessionHasNoErrors();
+
+        $this->assertSame(1, SessionPrompt::where('title', 'A long build prompt')->count());
+    }
 }
