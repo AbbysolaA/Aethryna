@@ -1,0 +1,47 @@
+{
+  "$description": "Aethryna colour palette bank. Each palette follows the 60/30/10 rule: dominant (60%), secondary (30%), accent (10%). 'observed' records how the reference landing page actually distributes the colours.",
+  "palettes": [
+    {
+      "id": "late-sets",
+      "name": "Late Sets",
+      "mood": "Jazz club, risograph print, nightlife, editorial",
+      "reference": "Basement Seven — 'Late Sets' landing page",
+      "colors": {
+        "dominant":  { "name": "Cream Paper",       "hex": "#F8DBC1" },
+        "secondary": { "name": "Riso Teal",         "hex": "#1D646C" },
+        "accent":    { "name": "Fluorescent Pink",  "hex": "#EA4F88" }
+      },
+      "intended": "60/30/10",
+      "observed": "60-40 / 40-40-20 (teal headline + info block and large pink hero image push teal and pink well past 30/10)",
+      "notes": "Grain/halftone textures suit it. To hit true 60/30/10, shrink the pink hero image or render it duotone teal with pink only on the CTA."
+    },
+    {
+      "id": "fired-twice",
+      "name": "Fired Twice",
+      "mood": "Ceramics, craft, earthy, calm luxury",
+      "reference": "Atelier Ruo — 'Fired twice' landing page",
+      "colors": {
+        "dominant":  { "name": "Raw Clay",    "hex": "#D0BCAC" },
+        "secondary": { "name": "Iron Brown",  "hex": "#461C0C" },
+        "accent":    { "name": "Turquoise",   "hex": "#269991" }
+      },
+      "intended": "60/30/10",
+      "observed": "80-20 overall, 60-30-10 by role (clay background dominates; brown is mostly type; turquoise only in the glaze)",
+      "notes": "Brown works best as text/linework rather than fills. Keep turquoise rare — it should feel like the glaze."
+    },
+    {
+      "id": "ribbon-finals",
+      "name": "Ribbon Finals",
+      "mood": "Sport, performance, premium events, bold contrast",
+      "reference": "Ritmo Lisboa — 'Ribbon Finals' landing page",
+      "colors": {
+        "dominant":  { "name": "Petrol Blue",   "hex": "#002D37" },
+        "secondary": { "name": "Ivory",         "hex": "#FEF0DD" },
+        "accent":    { "name": "Saffron Gold",  "hex": "#F7A724" }
+      },
+      "intended": "60/30/10",
+      "observed": "70-30 / 60-30-10 — the cleanest application of the rule of the three",
+      "notes": "Dark-mode friendly. Ivory for headlines and nav, gold for motion/hero accents and primary CTA."
+    }
+  ]
+}

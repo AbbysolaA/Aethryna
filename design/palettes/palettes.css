@@ -1,0 +1,20 @@
+/* Aethryna palette bank — drop in and pick a palette with a class on <body> or a section. */
+:root {
+  /* Late Sets */
+  --late-sets-cream-paper: #F8DBC1;
+  --late-sets-riso-teal: #1D646C;
+  --late-sets-fluorescent-pink: #EA4F88;
+  /* Fired Twice */
+  --fired-twice-raw-clay: #D0BCAC;
+  --fired-twice-iron-brown: #461C0C;
+  --fired-twice-turquoise: #269991;
+  /* Ribbon Finals */
+  --ribbon-finals-petrol-blue: #002D37;
+  --ribbon-finals-ivory: #FEF0DD;
+  --ribbon-finals-saffron-gold: #F7A724;
+}
+
+/* Role-based aliases: 60 = dominant, 30 = secondary, 10 = accent */
+.palette-late-sets     { --c-60: var(--late-sets-cream-paper);     --c-30: var(--late-sets-riso-teal);       --c-10: var(--late-sets-fluorescent-pink); }
+.palette-fired-twice   { --c-60: var(--fired-twice-raw-clay);      --c-30: var(--fired-twice-iron-brown);    --c-10: var(--fired-twice-turquoise); }
+.palette-ribbon-finals { --c-60: var(--ribbon-finals-petrol-blue); --c-30: var(--ribbon-finals-ivory);       --c-10: var(--ribbon-finals-saffron-gold); }
