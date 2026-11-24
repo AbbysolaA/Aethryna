@@ -7,9 +7,18 @@
       "mood": "Jazz club, risograph print, nightlife, editorial",
       "reference": "Basement Seven — 'Late Sets' landing page",
       "colors": {
-        "dominant":  { "name": "Cream Paper",       "hex": "#F8DBC1" },
-        "secondary": { "name": "Riso Teal",         "hex": "#1D646C" },
-        "accent":    { "name": "Fluorescent Pink",  "hex": "#EA4F88" }
+        "dominant": {
+          "name": "Cream Paper",
+          "hex": "#F8DBC1"
+        },
+        "secondary": {
+          "name": "Riso Teal",
+          "hex": "#1D646C"
+        },
+        "accent": {
+          "name": "Fluorescent Pink",
+          "hex": "#EA4F88"
+        }
       },
       "intended": "60/30/10",
       "observed": "60-40 / 40-40-20 (teal headline + info block and large pink hero image push teal and pink well past 30/10)",
@@ -21,9 +30,18 @@
       "mood": "Ceramics, craft, earthy, calm luxury",
       "reference": "Atelier Ruo — 'Fired twice' landing page",
       "colors": {
-        "dominant":  { "name": "Raw Clay",    "hex": "#D0BCAC" },
-        "secondary": { "name": "Iron Brown",  "hex": "#461C0C" },
-        "accent":    { "name": "Turquoise",   "hex": "#269991" }
+        "dominant": {
+          "name": "Raw Clay",
+          "hex": "#D0BCAC"
+        },
+        "secondary": {
+          "name": "Iron Brown",
+          "hex": "#461C0C"
+        },
+        "accent": {
+          "name": "Turquoise",
+          "hex": "#269991"
+        }
       },
       "intended": "60/30/10",
       "observed": "80-20 overall, 60-30-10 by role (clay background dominates; brown is mostly type; turquoise only in the glaze)",
@@ -35,13 +53,137 @@
       "mood": "Sport, performance, premium events, bold contrast",
       "reference": "Ritmo Lisboa — 'Ribbon Finals' landing page",
       "colors": {
-        "dominant":  { "name": "Petrol Blue",   "hex": "#002D37" },
-        "secondary": { "name": "Ivory",         "hex": "#FEF0DD" },
-        "accent":    { "name": "Saffron Gold",  "hex": "#F7A724" }
+        "dominant": {
+          "name": "Petrol Blue",
+          "hex": "#002D37"
+        },
+        "secondary": {
+          "name": "Ivory",
+          "hex": "#FEF0DD"
+        },
+        "accent": {
+          "name": "Saffron Gold",
+          "hex": "#F7A724"
+        }
       },
       "intended": "60/30/10",
       "observed": "70-30 / 60-30-10 — the cleanest application of the rule of the three",
       "notes": "Dark-mode friendly. Ivory for headlines and nav, gold for motion/hero accents and primary CTA."
+    },
+    {
+      "id": "lumen-aquarium",
+      "name": "Drift",
+      "mood": "Aquarium, underwater, nighttime glow, immersive",
+      "reference": "Lumen Aquarium — 'Drift with the jellies'",
+      "colors": {
+        "dominant": {
+          "name": "Deep Sea Blue",
+          "hex": "#012438"
+        },
+        "secondary": {
+          "name": "Foam White",
+          "hex": "#DBF4FC"
+        },
+        "accent": {
+          "name": "Sunset Orange",
+          "hex": "#F16F1B"
+        }
+      },
+      "intended": "60/30/10",
+      "observed": "60-30-10 by role; the glowing jellyfish pushes orange towards ~20%",
+      "notes": "Orange glows against the deep blue. Use it for the script headline word and glow effects; foam white for body type and outline buttons."
+    },
+    {
+      "id": "citra-zesty",
+      "name": "Zesty",
+      "mood": "Drinks, FMCG, playful, loud pop",
+      "reference": "Citra — 'ZESTY' sparkling lemonade page",
+      "colors": {
+        "dominant": {
+          "name": "Lemon Yellow",
+          "hex": "#FCDA25"
+        },
+        "secondary": {
+          "name": "Electric Lavender",
+          "hex": "#954BF6"
+        },
+        "accent": {
+          "name": "Charcoal",
+          "hex": "#2A272C"
+        }
+      },
+      "intended": "60/30/10",
+      "observed": "60-30-10, but here lavender is the 30 and charcoal is the 10 (the reverse of the swatch order)",
+      "notes": "The can sets the accent. Lavender for the big type, can and CTA circle; charcoal only for nav, small labels and one word of the headline."
+    },
+    {
+      "id": "hanare-kyoto",
+      "name": "Hanare",
+      "mood": "Ryokan, hospitality, Japanese minimal, calm luxury",
+      "reference": "Hanare — 'Seven rooms, one garden'",
+      "colors": {
+        "dominant": {
+          "name": "Stone Grey",
+          "hex": "#B8BECB"
+        },
+        "secondary": {
+          "name": "Deep Indigo",
+          "hex": "#142950"
+        },
+        "accent": {
+          "name": "Vermilion",
+          "hex": "#E93D0D"
+        }
+      },
+      "intended": "60/30/10",
+      "observed": "~60-10-30: the vermilion parasol takes far more than 10%, while indigo appears only as type",
+      "notes": "The accent comes from the hero object (the parasol). Indigo works as an elegant serif type colour; keep vermilion to the image and a single 'Book a night' tag."
+    },
+    {
+      "id": "kalda-glacier",
+      "name": "Glacier",
+      "mood": "Adventure travel, Iceland, cinematic, cold",
+      "reference": "Kalda — 'Inside the Glacier'",
+      "colors": {
+        "dominant": {
+          "name": "Black Basalt",
+          "hex": "#0B1013"
+        },
+        "secondary": {
+          "name": "Bone",
+          "hex": "#E8F3F6"
+        },
+        "accent": {
+          "name": "Glacier Blue",
+          "hex": "#1BA6CD"
+        }
+      },
+      "intended": "60/30/10",
+      "observed": "70-30 / 60-30-10, photo-led: the ice cave gives the blue",
+      "notes": "Spaced uppercase type in bone, with glacier blue on one keyword ('GLACIER'). Outline CTA buttons."
+    },
+    {
+      "id": "velluto-deep-seats",
+      "name": "Deep Seats",
+      "mood": "Furniture, interiors, fashion, tactile luxury",
+      "reference": "Velluto — 'DEEP SEATS'",
+      "colors": {
+        "dominant": {
+          "name": "Lilac",
+          "hex": "#C9BBD8"
+        },
+        "secondary": {
+          "name": "Deep Plum",
+          "hex": "#3F0820"
+        },
+        "accent": {
+          "name": "Velvet Green",
+          "hex": "#52AE4C"
+        }
+      },
+      "intended": "60/30/10",
+      "observed": "~50-20-30: the green sofa is large, but complementary contrast keeps it balanced",
+      "notes": "Pairs complementary purple and green. Condensed plum display type; green only through the product photo and maybe a small 'in stock' state."
     }
   ]
 }

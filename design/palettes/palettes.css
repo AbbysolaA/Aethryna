@@ -12,9 +12,34 @@
   --ribbon-finals-petrol-blue: #002D37;
   --ribbon-finals-ivory: #FEF0DD;
   --ribbon-finals-saffron-gold: #F7A724;
+  /* Drift */
+  --lumen-aquarium-deep-sea-blue: #012438;
+  --lumen-aquarium-foam-white: #DBF4FC;
+  --lumen-aquarium-sunset-orange: #F16F1B;
+  /* Zesty */
+  --citra-zesty-lemon-yellow: #FCDA25;
+  --citra-zesty-electric-lavender: #954BF6;
+  --citra-zesty-charcoal: #2A272C;
+  /* Hanare */
+  --hanare-kyoto-stone-grey: #B8BECB;
+  --hanare-kyoto-deep-indigo: #142950;
+  --hanare-kyoto-vermilion: #E93D0D;
+  /* Glacier */
+  --kalda-glacier-black-basalt: #0B1013;
+  --kalda-glacier-bone: #E8F3F6;
+  --kalda-glacier-glacier-blue: #1BA6CD;
+  /* Deep Seats */
+  --velluto-deep-seats-lilac: #C9BBD8;
+  --velluto-deep-seats-deep-plum: #3F0820;
+  --velluto-deep-seats-velvet-green: #52AE4C;
 }
 
 /* Role-based aliases: 60 = dominant, 30 = secondary, 10 = accent */
 .palette-late-sets     { --c-60: var(--late-sets-cream-paper);     --c-30: var(--late-sets-riso-teal);       --c-10: var(--late-sets-fluorescent-pink); }
 .palette-fired-twice   { --c-60: var(--fired-twice-raw-clay);      --c-30: var(--fired-twice-iron-brown);    --c-10: var(--fired-twice-turquoise); }
 .palette-ribbon-finals { --c-60: var(--ribbon-finals-petrol-blue); --c-30: var(--ribbon-finals-ivory);       --c-10: var(--ribbon-finals-saffron-gold); }
+.palette-lumen-aquarium { --c-60: var(--lumen-aquarium-deep-sea-blue); --c-30: var(--lumen-aquarium-foam-white); --c-10: var(--lumen-aquarium-sunset-orange); }
+.palette-citra-zesty { --c-60: var(--citra-zesty-lemon-yellow); --c-30: var(--citra-zesty-electric-lavender); --c-10: var(--citra-zesty-charcoal); }
+.palette-hanare-kyoto { --c-60: var(--hanare-kyoto-stone-grey); --c-30: var(--hanare-kyoto-deep-indigo); --c-10: var(--hanare-kyoto-vermilion); }
+.palette-kalda-glacier { --c-60: var(--kalda-glacier-black-basalt); --c-30: var(--kalda-glacier-bone); --c-10: var(--kalda-glacier-glacier-blue); }
+.palette-velluto-deep-seats { --c-60: var(--velluto-deep-seats-lilac); --c-30: var(--velluto-deep-seats-deep-plum); --c-10: var(--velluto-deep-seats-velvet-green); }
