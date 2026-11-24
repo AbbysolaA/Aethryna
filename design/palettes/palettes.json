@@ -5,7 +5,7 @@
       "id": "late-sets",
       "name": "Late Sets",
       "mood": "Jazz club, risograph print, nightlife, editorial",
-      "reference": "Basement Seven — 'Late Sets' landing page",
+      "reference": "Basement Seven: 'Late Sets' landing page",
       "colors": {
         "dominant": {
           "name": "Cream Paper",
@@ -28,7 +28,7 @@
       "id": "fired-twice",
       "name": "Fired Twice",
       "mood": "Ceramics, craft, earthy, calm luxury",
-      "reference": "Atelier Ruo — 'Fired twice' landing page",
+      "reference": "Atelier Ruo: 'Fired twice' landing page",
       "colors": {
         "dominant": {
           "name": "Raw Clay",
@@ -45,13 +45,13 @@
       },
       "intended": "60/30/10",
       "observed": "80-20 overall, 60-30-10 by role (clay background dominates; brown is mostly type; turquoise only in the glaze)",
-      "notes": "Brown works best as text/linework rather than fills. Keep turquoise rare — it should feel like the glaze."
+      "notes": "Brown works best as text/linework rather than fills. Keep turquoise rare: it should feel like the glaze."
     },
     {
       "id": "ribbon-finals",
       "name": "Ribbon Finals",
       "mood": "Sport, performance, premium events, bold contrast",
-      "reference": "Ritmo Lisboa — 'Ribbon Finals' landing page",
+      "reference": "Ritmo Lisboa: 'Ribbon Finals' landing page",
       "colors": {
         "dominant": {
           "name": "Petrol Blue",
@@ -67,14 +67,14 @@
         }
       },
       "intended": "60/30/10",
-      "observed": "70-30 / 60-30-10 — the cleanest application of the rule of the three",
+      "observed": "70-30 / 60-30-10: the cleanest application of the rule of the three",
       "notes": "Dark-mode friendly. Ivory for headlines and nav, gold for motion/hero accents and primary CTA."
     },
     {
       "id": "lumen-aquarium",
       "name": "Drift",
       "mood": "Aquarium, underwater, nighttime glow, immersive",
-      "reference": "Lumen Aquarium — 'Drift with the jellies'",
+      "reference": "Lumen Aquarium: 'Drift with the jellies'",
       "colors": {
         "dominant": {
           "name": "Deep Sea Blue",
@@ -97,7 +97,7 @@
       "id": "citra-zesty",
       "name": "Zesty",
       "mood": "Drinks, FMCG, playful, loud pop",
-      "reference": "Citra — 'ZESTY' sparkling lemonade page",
+      "reference": "Citra: 'ZESTY' sparkling lemonade page",
       "colors": {
         "dominant": {
           "name": "Lemon Yellow",
@@ -120,7 +120,7 @@
       "id": "hanare-kyoto",
       "name": "Hanare",
       "mood": "Ryokan, hospitality, Japanese minimal, calm luxury",
-      "reference": "Hanare — 'Seven rooms, one garden'",
+      "reference": "Hanare: 'Seven rooms, one garden'",
       "colors": {
         "dominant": {
           "name": "Stone Grey",
@@ -143,7 +143,7 @@
       "id": "kalda-glacier",
       "name": "Glacier",
       "mood": "Adventure travel, Iceland, cinematic, cold",
-      "reference": "Kalda — 'Inside the Glacier'",
+      "reference": "Kalda: 'Inside the Glacier'",
       "colors": {
         "dominant": {
           "name": "Black Basalt",
@@ -166,7 +166,7 @@
       "id": "velluto-deep-seats",
       "name": "Deep Seats",
       "mood": "Furniture, interiors, fashion, tactile luxury",
-      "reference": "Velluto — 'DEEP SEATS'",
+      "reference": "Velluto: 'DEEP SEATS'",
       "colors": {
         "dominant": {
           "name": "Lilac",
