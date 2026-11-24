@@ -21,6 +21,20 @@ Reusable palettes for future Aethryna projects. Each one is built on the **60/30
 - **Fired Twice**: brown works mainly as type and linework, so the page reads as 80-20 overall. Keep turquoise rare, like the glaze.
 - **Ribbon Finals**: the best example of the rule. Petrol background, ivory type and nav, gold reserved for the hero motion and the primary CTA.
 
+
+## Four-colour palettes by industry
+These are from the "which industry are you designing for?" set. Each has a **support** colour between the secondary and the accent, so the split is roughly 60 / 25 / 10 / 5. The hex codes were sampled from the video and are approximate (the room's warm light may tint them), so for print use the Pantone codes.
+
+| Palette | Industry | Dominant | Secondary | Support | Accent |
+|---|---|---|---|---|---|
+| **Veyra** | Tech / fintech / apps | Midnight Navy `#1F1D46` · 2768 CP | Electric Blue `#1E4994` · P 104-8 C | Ice Blue `#DDE9EB` · P 115-9 C | Chartreuse `#E2D800` · P 166-8 C |
+| **Little Crumb** | Bakery / café / food | Oat `#F7EFCF` · P 1-3 C | Toffee Brown `#3D1D20` · 4975 C | Olive `#A18D5D` · P 9-13 U | Strawberry Pink `#E9A5A0` · P 62-3 C |
+| **Wax Seal** | Law / finance / luxury stationery | Deep Teal `#042C35` · 5463 CP | Stone `#E1DFD9` · P 169-1 C | Slate Blue `#6781A7` · P 111-12 C | Burnt Orange `#A35A29` · P 28-16 C |
+| **Oriel** | Skincare / beauty / wellness | Nude `#EFC896` · P 20-2 C | Cream `#F3EDDC` · P 7-1 C | Terracotta `#B26542` · P 35-14 C | Gold `#D7AA3E` · P 10-15 C |
+
+- **Veyra**: chartreuse on navy is extremely loud, so keep it to the logo mark and one CTA.
+- **Wax Seal**: the burnt orange appears only as the wax seal, which is the best example in the bank of a 5% accent doing a lot of work.
+
 ## Rule of thumb: the accent is already in the product
 In the last five references, the accent colour comes from the **hero subject** (the jellyfish, the can, the parasol, the ice, the sofa). Pick the accent from your product photo first. Then choose a calm dominant colour and a high-contrast type colour around it. Because the photo already carries most of the accent, keep UI accents (CTAs, one highlighted word) small.
 

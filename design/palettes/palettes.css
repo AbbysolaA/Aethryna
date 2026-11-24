@@ -32,6 +32,26 @@
   --velluto-deep-seats-lilac: #C9BBD8;
   --velluto-deep-seats-deep-plum: #3F0820;
   --velluto-deep-seats-velvet-green: #52AE4C;
+  /* Veyra (Tech / fintech / apps) */
+  --veyra-midnight-navy: #1F1D46; /* Pantone 2768 CP */
+  --veyra-electric-blue: #1E4994; /* Pantone P 104-8 C */
+  --veyra-ice-blue: #DDE9EB; /* Pantone P 115-9 C */
+  --veyra-chartreuse: #E2D800; /* Pantone P 166-8 C */
+  /* Little Crumb (Bakery / café / food) */
+  --little-crumb-oat: #F7EFCF; /* Pantone P 1-3 C */
+  --little-crumb-toffee-brown: #3D1D20; /* Pantone 4975 C */
+  --little-crumb-olive: #A18D5D; /* Pantone P 9-13 U */
+  --little-crumb-strawberry-pink: #E9A5A0; /* Pantone P 62-3 C */
+  /* Wax Seal (Law / finance / luxury stationery / weddings) */
+  --wax-seal-deep-teal: #042C35; /* Pantone 5463 CP */
+  --wax-seal-stone: #E1DFD9; /* Pantone P 169-1 C */
+  --wax-seal-slate-blue: #6781A7; /* Pantone P 111-12 C */
+  --wax-seal-burnt-orange: #A35A29; /* Pantone P 28-16 C */
+  /* Oriel (Skincare / beauty / wellness) */
+  --oriel-nude: #EFC896; /* Pantone P 20-2 C */
+  --oriel-cream: #F3EDDC; /* Pantone P 7-1 C */
+  --oriel-terracotta: #B26542; /* Pantone P 35-14 C */
+  --oriel-gold: #D7AA3E; /* Pantone P 10-15 C */
 }
 
 /* Role-based aliases: 60 = dominant, 30 = secondary, 10 = accent */
@@ -43,3 +63,9 @@
 .palette-hanare-kyoto { --c-60: var(--hanare-kyoto-stone-grey); --c-30: var(--hanare-kyoto-deep-indigo); --c-10: var(--hanare-kyoto-vermilion); }
 .palette-kalda-glacier { --c-60: var(--kalda-glacier-black-basalt); --c-30: var(--kalda-glacier-bone); --c-10: var(--kalda-glacier-glacier-blue); }
 .palette-velluto-deep-seats { --c-60: var(--velluto-deep-seats-lilac); --c-30: var(--velluto-deep-seats-deep-plum); --c-10: var(--velluto-deep-seats-velvet-green); }
+
+/* Four-colour palettes also expose --c-support */
+.palette-veyra { --c-60: var(--veyra-midnight-navy); --c-30: var(--veyra-electric-blue); --c-support: var(--veyra-ice-blue); --c-10: var(--veyra-chartreuse); }
+.palette-little-crumb { --c-60: var(--little-crumb-oat); --c-30: var(--little-crumb-toffee-brown); --c-support: var(--little-crumb-olive); --c-10: var(--little-crumb-strawberry-pink); }
+.palette-wax-seal { --c-60: var(--wax-seal-deep-teal); --c-30: var(--wax-seal-stone); --c-support: var(--wax-seal-slate-blue); --c-10: var(--wax-seal-burnt-orange); }
+.palette-oriel { --c-60: var(--oriel-nude); --c-30: var(--oriel-cream); --c-support: var(--oriel-terracotta); --c-10: var(--oriel-gold); }

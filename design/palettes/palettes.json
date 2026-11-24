@@ -184,6 +184,134 @@
       "intended": "60/30/10",
       "observed": "~50-20-30: the green sofa is large, but complementary contrast keeps it balanced",
       "notes": "Pairs complementary purple and green. Condensed plum display type; green only through the product photo and maybe a small 'in stock' state."
+    },
+    {
+      "id": "veyra",
+      "name": "Veyra",
+      "industry": "Tech / fintech / apps",
+      "mood": "Bold, digital, high-energy",
+      "reference": "Veyra app brand identity",
+      "colors": {
+        "dominant": {
+          "name": "Midnight Navy",
+          "hex": "#1F1D46",
+          "pantone": "2768 CP"
+        },
+        "secondary": {
+          "name": "Electric Blue",
+          "hex": "#1E4994",
+          "pantone": "P 104-8 C"
+        },
+        "support": {
+          "name": "Ice Blue",
+          "hex": "#DDE9EB",
+          "pantone": "P 115-9 C"
+        },
+        "accent": {
+          "name": "Chartreuse",
+          "hex": "#E2D800",
+          "pantone": "P 166-8 C"
+        }
+      },
+      "intended": "60/25/10/5 (four-colour: dominant / secondary / support / accent)",
+      "hex_source": "Hex sampled from video screenshot (approximate; warm lighting may shift it). Use the Pantone code for print and verify the hex before brand work.",
+      "notes": "Navy carries the brand, electric blue for tiles and buttons, ice blue for light surfaces and wordmark tiles. Chartreuse only for the logo chevrons and key CTAs; it is very loud."
+    },
+    {
+      "id": "little-crumb",
+      "name": "Little Crumb",
+      "industry": "Bakery / café / food",
+      "mood": "Cosy, playful, handmade",
+      "reference": "Little Crumb bakery identity",
+      "colors": {
+        "dominant": {
+          "name": "Oat",
+          "hex": "#F7EFCF",
+          "pantone": "P 1-3 C"
+        },
+        "secondary": {
+          "name": "Toffee Brown",
+          "hex": "#3D1D20",
+          "pantone": "4975 C"
+        },
+        "support": {
+          "name": "Olive",
+          "hex": "#A18D5D",
+          "pantone": "P 9-13 U"
+        },
+        "accent": {
+          "name": "Strawberry Pink",
+          "hex": "#E9A5A0",
+          "pantone": "P 62-3 C"
+        }
+      },
+      "intended": "60/25/10/5 (four-colour: dominant / secondary / support / accent)",
+      "hex_source": "Hex sampled from video screenshot (approximate; warm lighting may shift it). Use the Pantone code for print and verify the hex before brand work.",
+      "notes": "Oat background, toffee for photos, headers and type, olive for illustrations (croissant, teapot), pink for the wordmark and cherries."
+    },
+    {
+      "id": "wax-seal",
+      "name": "Wax Seal",
+      "industry": "Law / finance / luxury stationery / weddings",
+      "mood": "Refined, trustworthy, heritage",
+      "reference": "Monogram stationery set (letterhead, envelope, cards)",
+      "colors": {
+        "dominant": {
+          "name": "Deep Teal",
+          "hex": "#042C35",
+          "pantone": "5463 CP"
+        },
+        "secondary": {
+          "name": "Stone",
+          "hex": "#E1DFD9",
+          "pantone": "P 169-1 C"
+        },
+        "support": {
+          "name": "Slate Blue",
+          "hex": "#6781A7",
+          "pantone": "P 111-12 C"
+        },
+        "accent": {
+          "name": "Burnt Orange",
+          "hex": "#A35A29",
+          "pantone": "P 28-16 C"
+        }
+      },
+      "intended": "60/25/10/5 (four-colour: dominant / secondary / support / accent)",
+      "hex_source": "Hex sampled from video screenshot (approximate; warm lighting may shift it). Use the Pantone code for print and verify the hex before brand work.",
+      "notes": "Deep teal backdrop, stone paper, slate blue business cards; burnt orange appears only as the wax seal, a tiny accent with a big effect."
+    },
+    {
+      "id": "oriel",
+      "name": "Oriel",
+      "industry": "Skincare / beauty / wellness",
+      "mood": "Warm, sun-kissed, natural",
+      "reference": "Oriel skincare packaging",
+      "colors": {
+        "dominant": {
+          "name": "Nude",
+          "hex": "#EFC896",
+          "pantone": "P 20-2 C"
+        },
+        "secondary": {
+          "name": "Cream",
+          "hex": "#F3EDDC",
+          "pantone": "P 7-1 C"
+        },
+        "support": {
+          "name": "Terracotta",
+          "hex": "#B26542",
+          "pantone": "P 35-14 C"
+        },
+        "accent": {
+          "name": "Gold",
+          "hex": "#D7AA3E",
+          "pantone": "P 10-15 C"
+        }
+      },
+      "intended": "60/25/10/5 (four-colour: dominant / secondary / support / accent)",
+      "hex_source": "Hex sampled from video screenshot (approximate; warm lighting may shift it). Use the Pantone code for print and verify the hex before brand work.",
+      "notes": "Skin tones (nude, terracotta) in the photography, cream for the packaging, gold for pump tops, lids and thin rules."
     }
   ]
 }
