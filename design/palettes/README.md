@@ -22,6 +22,19 @@ Reusable palettes for future Aethryna projects. Each one is built on the **60/30
 - **Ribbon Finals**: the best example of the rule. Petrol background, ivory type and nav, gold reserved for the hero motion and the primary CTA.
 
 
+## Recommended: meal planning and wellbeing apps → **Jollof Kitchen**
+Built for Project Phoenix-style apps (checklists, meal planner, streaks, rewards). It avoids the sage/cream/gold palette that keeps showing up by default.
+
+| Role | Colour | Use |
+|---|---|---|
+| 60 Background | Rice Paper `#FAF6F1` (cards `#FFFFFF`) | Calm, open base with lots of whitespace |
+| 25 Ink / brand | Aubergine Ink `#2B1E33`, Aubergine `#4A2F5C` | Text, headings, nav pill |
+| 10 Action | Jollof `#E0522B` (buttons and links in Jollof Deep `#C2401C`) | Progress ring, active tab, CTAs |
+| 5 Success | Cucumber `#23766B` | Ticks, "Ready now", done states |
+| Reward only | Plantain `#F2B33A` | Stars, badges, level-ups |
+
+Every text pairing passes WCAG AA (ink on paper 14.6:1, white on Jollof Deep 5.2:1, ink on Plantain 8.3:1). There's a dark mode too; see `palettes.json`.
+
 ## Four-colour palettes by industry
 These are from the "which industry are you designing for?" set. Each has a **support** colour between the secondary and the accent, so the split is roughly 60 / 25 / 10 / 5. The hex codes were sampled from the video and are approximate (the room's warm light may tint them), so for print use the Pantone codes.
 

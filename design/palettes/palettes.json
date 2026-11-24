@@ -312,6 +312,64 @@
       "intended": "60/25/10/5 (four-colour: dominant / secondary / support / accent)",
       "hex_source": "Hex sampled from video screenshot (approximate; warm lighting may shift it). Use the Pantone code for print and verify the hex before brand work.",
       "notes": "Skin tones (nude, terracotta) in the photography, cream for the packaging, gold for pump tops, lids and thin rules."
+    },
+    {
+      "id": "jollof-kitchen",
+      "name": "Jollof Kitchen",
+      "industry": "Meal planning / home wellbeing / habit apps",
+      "mood": "Warm, appetising, calm base with a joyful reward pop; ADHD-friendly",
+      "reference": "Recommended for Project Phoenix-style apps (meal plan, checklist, streaks, rewards). Deliberately avoids the sage/cream/gold default.",
+      "colors": {
+        "dominant": {
+          "name": "Rice Paper",
+          "hex": "#FAF6F1",
+          "use": "App background; cards are #FFFFFF; lines #ECE4DC"
+        },
+        "secondary": {
+          "name": "Aubergine Ink",
+          "hex": "#2B1E33",
+          "use": "Text, headings, floating nav pill; Aubergine #4A2F5C for brand fills; soft text #6B5E73"
+        },
+        "accent": {
+          "name": "Jollof",
+          "hex": "#E0522B",
+          "use": "Completion ring, active tab, highlights. For buttons and links with text use Jollof Deep #C2401C (AA 5.2:1 with white)"
+        },
+        "support": {
+          "name": "Cucumber",
+          "hex": "#23766B",
+          "use": "Done/success states, ticked boxes, 'Ready now'; tint #DDEFEA"
+        },
+        "reward": {
+          "name": "Plantain",
+          "hex": "#F2B33A",
+          "use": "Stars, badges and level-ups ONLY, always with ink text (8.3:1); tint #FCEBC4"
+        }
+      },
+      "dark_mode": {
+        "background": "#1C1422",
+        "card": "#271D2E",
+        "text": "#F3ECF5",
+        "text_soft": "#B8AABF",
+        "jollof": "#F06A43",
+        "cucumber": "#4FB3A4",
+        "plantain": "#F5BD52"
+      },
+      "traffic_lights": {
+        "quick": "#23766B",
+        "medium": "#D4892A",
+        "special": "#C2401C",
+        "note": "Always pair the dot with a text label"
+      },
+      "intended": "60 Rice Paper / 25 Aubergine / 10 Jollof / 5 Cucumber + Plantain (rewards only)",
+      "contrast": {
+        "ink_on_paper": "14.6:1",
+        "soft_text_on_paper": "5.6:1",
+        "white_on_jollof_deep": "5.2:1",
+        "white_on_cucumber": "5.4:1",
+        "ink_on_plantain": "8.3:1"
+      },
+      "notes": "Draws its accent from her actual food (jollof, pepper soup, plantain, cucumber, kimchi). Warm reds and oranges stimulate appetite; aubergine is calm and grounded without being green; teal success reads as 'fresh'. The reward yellow is reserved so stars still feel special."
     }
   ]
 }

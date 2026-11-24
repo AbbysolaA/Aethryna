@@ -52,6 +52,14 @@
   --oriel-cream: #F3EDDC; /* Pantone P 7-1 C */
   --oriel-terracotta: #B26542; /* Pantone P 35-14 C */
   --oriel-gold: #D7AA3E; /* Pantone P 10-15 C */
+  /* Jollof Kitchen (meal planning / wellbeing apps) */
+  --jollof-kitchen-rice-paper: #FAF6F1;
+  --jollof-kitchen-aubergine-ink: #2B1E33;
+  --jollof-kitchen-aubergine: #4A2F5C;
+  --jollof-kitchen-jollof: #E0522B;
+  --jollof-kitchen-jollof-deep: #C2401C;
+  --jollof-kitchen-cucumber: #23766B;
+  --jollof-kitchen-plantain: #F2B33A;
 }
 
 /* Role-based aliases: 60 = dominant, 30 = secondary, 10 = accent */
@@ -69,3 +77,4 @@
 .palette-little-crumb { --c-60: var(--little-crumb-oat); --c-30: var(--little-crumb-toffee-brown); --c-support: var(--little-crumb-olive); --c-10: var(--little-crumb-strawberry-pink); }
 .palette-wax-seal { --c-60: var(--wax-seal-deep-teal); --c-30: var(--wax-seal-stone); --c-support: var(--wax-seal-slate-blue); --c-10: var(--wax-seal-burnt-orange); }
 .palette-oriel { --c-60: var(--oriel-nude); --c-30: var(--oriel-cream); --c-support: var(--oriel-terracotta); --c-10: var(--oriel-gold); }
+.palette-jollof-kitchen { --c-60: var(--jollof-kitchen-rice-paper); --c-30: var(--jollof-kitchen-aubergine-ink); --c-support: var(--jollof-kitchen-cucumber); --c-10: var(--jollof-kitchen-jollof); --c-reward: var(--jollof-kitchen-plantain); }
