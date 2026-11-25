@@ -148,7 +148,7 @@ Use this as a reference library of colour palettes. When I ask for a design, sug
 ### 13. Jollof Kitchen
 - **Best for:** Meal planning / home wellbeing / habit apps
 - **Mood:** Warm, appetising, calm base with a joyful reward pop; ADHD-friendly
-- **Inspired by:** Recommended for Project Phoenix-style apps (meal plan, checklist, streaks, rewards). Deliberately avoids the sage/cream/gold default.
+- **Inspired by:** Recommended for Supperfold-style apps (formerly Project Phoenix) (meal plan, checklist, streaks, rewards). Deliberately avoids the sage/cream/gold default.
 - **Dominant (60%):** Rice Paper `#FAF6F1`. App background; cards are #FFFFFF; lines #ECE4DC
 - **Secondary (30%):** Aubergine Ink `#2B1E33`. Text, headings, floating nav pill; Aubergine #4A2F5C for brand fills; soft text #6B5E73
 - **Accent (10%):** Jollof `#E0522B`. Completion ring, active tab, highlights. For buttons and links with text use Jollof Deep #C2401C (AA 5.2:1 with white)

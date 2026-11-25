@@ -23,7 +23,7 @@ Reusable palettes for future Aethryna projects. Each one is built on the **60/30
 
 
 ## Recommended: meal planning and wellbeing apps → **Jollof Kitchen**
-Built for Project Phoenix-style apps (checklists, meal planner, streaks, rewards). It avoids the sage/cream/gold palette that keeps showing up by default.
+Built for Supperfold-style apps (formerly Project Phoenix) (checklists, meal planner, streaks, rewards). It avoids the sage/cream/gold palette that keeps showing up by default.
 
 | Role | Colour | Use |
 |---|---|---|
